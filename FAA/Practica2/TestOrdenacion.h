@@ -40,6 +40,7 @@ public:
    * param metodo2: Segundo metodo de ordenacion a comparar
    */
 	void comparar(int metodo1, int metodo2);
+	void compararTodos();
 
 	/*
 	* Calcula el caso medio de un metodo de ordenacion,

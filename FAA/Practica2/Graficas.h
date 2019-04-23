@@ -6,6 +6,7 @@
 #define _GRAFICA
 #include <string>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Graficas
@@ -26,5 +27,8 @@ public:
  * param nombre2: es el nombre del fichero de datos del segundo método de ordenación 
  */
 	void generarGraficaCMP(string metodo1,string metodo2);
+
+
+	void generarGraficaCMPtodos(vector<string> nombres);
 }; 
 #endif

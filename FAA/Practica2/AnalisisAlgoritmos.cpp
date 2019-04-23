@@ -40,7 +40,7 @@ int menu() {
 	/********************  OPERACIONES  *************************
 	**** 0. Salir                   1. Probar los metodos    ****
 	**** 2. Medir burbuja			3. Medir insercion       ****
-	**** 4. Medir seleccion 		                         ****
+	**** 4. Medir seleccion 		5. Comparar todos        ****
 	****       XY. X metodo 1, Y metodo 2 : (1, 2, 3)        ****
 	*************************************************************/
 	char c;
@@ -53,14 +53,15 @@ int menu() {
 			<< "-----         ANALISIS EXPERIMENTAL DE ALGORITMOS DE ORDENACION         -----\n\n"
 			<< "                         1.- Probar los metodos de ordenacion\n"
 			<< "                         2.- Obtener el caso medio de un metodo de ordenacion\n"
-			<< "                         3.- Comparar metodos\n"
+			<< "                         3.- Comparar dos metodos\n"
+			<< "                         4.- Comparar todos los metodos\n"
 			<< "                         0.- Salir\n"
 			<< "                  ---------------------------------\n"
 			<< "                       Elija una opcion: ";
 
 		c = cin.get();
 		system("cls");
-	} while (c != '1' && c != '2' && c != '3' && c != '0');
+	} while (c != '1' && c != '2' && c != '3' && c != '4' && c != '0');
 
 
 	switch (c) {
@@ -72,6 +73,9 @@ int menu() {
 		break;
 	case '3':
 		c = (menuAlgoritmos() * 10) + menuAlgoritmos();
+		break;
+	case '4':
+		c = 5;
 		break;
 	case '0':
 		c = 0;
@@ -99,7 +103,7 @@ int main()
 
 	do {
 		opt = menu();
-		if (opt > 10) {
+		if (opt > 10) {//Comparar dos
 			test.comparar(getConstante(opt / 10), getConstante(opt % 10));
 		} else {
 			switch(opt) {
@@ -110,6 +114,9 @@ int main()
 				case 3:
 				case 4:	//Probar
 					test.casoMedio(getConstante(opt-1));
+				break;
+				case 5: //Comparar todos
+					test.compararTodos();
 				break;
 			}
 		}

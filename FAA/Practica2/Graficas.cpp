@@ -28,24 +28,22 @@ void Graficas::generarGraficaMEDIO(string nombre_metodo,int orden)
 		<< "\n"
 		<< "N(x) = ";
 
-	for (int i = 0; i <= orden; i++) {
-		file << char(97+i);
-		for (int j = 0; j < orden - i; j++) {
-			file << "*x";
-		}
-		file << ((i==orden)? "\n" : " + ");
+	switch (orden) {
+		case CUADRADO:	file << "a*x*x + b*x + c\n";	break;
+		case NlogN:		file << "a*log(a)\n"; break;
 	}
 	file << "fit N(x) \"t" << nombre_metodo << ".dat\" using 1:2 via ";
-	for (int i = 0; i <= orden; i++) {
-		file << char(97 + i) << ((i==orden) ? "\n" : ",");
+	switch (orden) {
+		case CUADRADO:	file << "a,b,c\n"; break;
+		case NlogN:		file << "a\n";	break;
 	}
 
-	file << "plot N(x) title \"Aproximación\", \"t" << nombre_metodo << ".dat\" using 1:2 with lines title \"Resultado empírico\"\n"
+	file << "plot N(x) title \"Aproximación\", \"t" << nombre_metodo << ".dat\" using 1:2 title \"Resultado empírico\"\n"
 		 << "\n"
 		 << "set terminal pdf\n"
 		 << "set output \"busqueda" << nombre_metodo << ".pdf\"\n"
 		 << "replot\n"
-		 << "#pause 5 \"Pulsa Enter para continuar...\"\n"
+		 << "#pause -1 \"Pulsa Enter para continuar...\"\n"
 		 << "unset output";
 
 	file.close();
@@ -74,7 +72,32 @@ void  Graficas::generarGraficaCMP(string nombre1,string nombre2)
 		<< "set terminal pdf\n"
 		<< "set output \"busqueda" << nombre1 << nombre2 << ".pdf\"\n"
 		<< "replot\n"
-		<< "#pause 5 \"Pulsa Enter para continuar...\"\n"
+		<< "#pause -1 \"Pulsa Enter para continuar...\"\n"
+		<< "unset output";
+
+	file.close();
+}
+
+void  Graficas::generarGraficaCMPtodos(vector<string> nombres)
+{
+	ofstream file("grafica.gpl");
+	file << "#Archivo auto-generado, cortesia de B0vE\n";
+
+	file << "set title \"Comparativa de todos los algoritmos\"\n"
+		<< "set key top left vertical inside\n"
+		<< "set grid\n"
+		<< "set xlabel \"Talla (n)\"\n"
+		<< "set ylabel \"Tiempo(ms)\"\n"
+		<< "\n";
+
+	file << "plot ";
+	for (int algoritmo = 0; algoritmo < nombres.size(); algoritmo++)
+		file << "\"tTodos.dat\" using 1:" << (algoritmo + 2) << " with lines title \"" << nombres[algoritmo] << "\"" << (algoritmo == nombres.size()-1?"\n":", ");
+	file << "\n"
+		<< "set terminal pdf\n"
+		<< "set output \"busquedaComparativaTodos.pdf\"\n"
+		<< "replot\n"
+		<< "#pause -1 \"Pulsa Enter para continuar...\"\n"
 		<< "unset output";
 
 	file.close();
