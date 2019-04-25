@@ -30,6 +30,7 @@ public:
     void resumirfichero();
     void estadisticas(int tipo,int annoini,int annofin);
     bool asignar(cadena Fichero,cadena FicheroResumen);  //CHECK
+    bool eliminarVenta();
 };
 
 #endif // VENTAS_H_INCLUDED
