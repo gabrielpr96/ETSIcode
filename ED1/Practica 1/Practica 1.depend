@@ -119,3 +119,29 @@
 	"ventas.h"
 	"productos.h"
 
+1554979634 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 1\main.cpp
+	<iostream>
+	<conio.h>
+	<stdlib.h>
+	<cstring>
+	"ventas.h"
+	"productos.h"
+
+1556100713 c:\users\arlin-t2\desktop\etsicode\ed1\practica 1\ventas.h
+	<iostream>
+	<fstream>
+	<cstring>
+
+1554979628 c:\users\arlin-t2\desktop\etsicode\ed1\practica 1\productos.h
+	<fstream>
+	"ventas.h"
+
+1554981174 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 1\productos.cpp
+	"productos.h"
+	<conio.h>
+
+1554752008 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 1\vector.cpp
+	"vector.h"
+
+1554752008 c:\users\arlin-t2\desktop\etsicode\ed1\practica 1\vector.h
+

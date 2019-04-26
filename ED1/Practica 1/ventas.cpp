@@ -96,33 +96,6 @@ void ventas::anadirventa(int num){
     detalle.close();
 }
 
-void ventas::eliminarVenta(int del){
-    venta v, tmp;
-
-    detalle.open(fichero, ios::binary | ios::in | ios::out);   //Abro el archivo
-    if(detalle){   //Lo leo dentro para que el usuario no introduzca los datos en vano
-        v.producto = num;
-        cout << "Introduzca el dia, mes y anno de la venta: ";
-        cin >> v.fecha.dia >> v.fecha.mes >> v.fecha.anno;
-        cout << "Introduzca el numero de unidades vendidas: ";
-        cin >> v.unidades;
-        cout << "Introduzca el importe: ";
-        cin >> v.importe;
-
-
-        for(int i = tam-1; i < del){
-            detalle.seekg((int) -sizeof(venta), ios::cur);  //Retrodece una posicion
-                detalle.read((char *) &tmp, sizeof(venta));     //Lee la venta
-                if(compararFecha(tmp.fecha, v.fecha)){    //Comparacion de fechas
-                    detalle.write((char *) &tmp, sizeof(venta));    //Escrebe la venta una posicion más abajo
-                    detalle.seekg((int) -sizeof(venta)*2, ios::cur);    //Sube las dos posiciones que se ha movido
-        }
-    }else{
-        cout << "Error al abrir el fichero de ventas\n";
-    }
-    detalle.close();
-}
-
 void ventas::resumirfichero(){
     producto p;
     venta v;
