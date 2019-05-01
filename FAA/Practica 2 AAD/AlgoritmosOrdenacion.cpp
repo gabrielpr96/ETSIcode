@@ -15,8 +15,8 @@
 //#define MOD_PROBLEMA_2
 //#define MOD_PROBLEMA_5
 //#define MOD_PROBLEMA_6
-//#define MOD_PROBLEMA_7
-#define MOD_TRAZA
+#define MOD_PROBLEMA_7
+//#define MOD_TRAZA
 ///Fin de las modificaciones
 
 
@@ -69,7 +69,7 @@ void AlgoritmosOrdenacion :: ordenaInsercion(int v[], int size)
 void AlgoritmosOrdenacion :: ordenaSeleccion(int v[], int size)
 {
 	int posMin, aux;
-	for (int i = 0; i < size - 1; i++) {
+	for (int i = 0; i < size - 2; i++) {
 		posMin = i;
 		for (int j = i + 1; j < size; j++) {
 			if (v[j] < v[posMin])
@@ -136,13 +136,12 @@ void AlgoritmosOrdenacion::merge(int v[], int e, int m, int d)
 	delete[] B;
 }
 
-#ifndef MOD_PROBLEMA_7
+
 void AlgoritmosOrdenacion::ordenaQuicksort(int v[], int size)
 {
 	quicksort(v, 0, size - 1);
 }
-#endif
-#ifndef MOD_PROBLEMA_6
+#if !(defined(MOD_PROBLEMA_6) || defined(MOD_PROBLEMA_7))
 void AlgoritmosOrdenacion::quicksort(int v[], int e, int d) {
 	if (e < d) {
 		int q = partition(v, e, d);
@@ -247,7 +246,7 @@ void AlgoritmosOrdenacion::ordenaInsercion(int v[], int size)
 void AlgoritmosOrdenacion::ordenaSeleccion(int v[], int size)
 {
 	int posMin, aux;
-	for (int i = 0; i < size - 1; i++) {
+	for (int i = 0; i < size - 2; i++) {
 		posMin = i;
 		for (int j = i + 1; j < size; j++) {
 			if (v[j] < v[posMin])
@@ -325,17 +324,21 @@ void AlgoritmosOrdenacion::quicksort(int v[], int e, int d) {
 
 //Quick comprobando antes de meterse en el embrollo deque todos sean iguales.
 #ifdef MOD_PROBLEMA_7
-void AlgoritmosOrdenacion::ordenaQuicksort(int v[], int size)
-{
-	bool iguales = true;
-	int i = 1;
-	while (i < size && iguales) {
-		iguales = v[i-1] == v[i];
-		i++;
-	}
+void AlgoritmosOrdenacion::quicksort(int v[], int e, int d) {
+	if (e < d) {
+		bool iguales = true;
+		int i = e+1;
+		while (i <= d && iguales) {
+			iguales = v[i - 1] == v[i];
+			i++;
+		}
 
-	if(!iguales)
-		quicksort(v, 0, size - 1);
+		if (!iguales) {
+			int q = partition(v, e, d);
+			quicksort(v, e, q);
+			quicksort(v, q + 1, d);
+		}
+	}
 }
 #endif
 
@@ -447,7 +450,7 @@ void AlgoritmosOrdenacion::ordenaInsercion(int v[], int size)
 void AlgoritmosOrdenacion::ordenaSeleccion(int v[], int size)
 {
 	int posMin, aux;
-	for (int i = 0; i < size - 1; i++) {
+	for (int i = 0; i < size - 2; i++) {
 		posMin = i;
 		cout << "\nPasada desde " << (i + 1) << " hasta " << (size - 1) << "\n";
 		for (int j = i + 1; j < size; j++) {
@@ -558,10 +561,11 @@ int AlgoritmosOrdenacion::partition(int v[], int e, int d) {
 		while (v[++i] < x);
 		if (i >= j) {
 			cout << "Division: ";
+			cout << "i " << i << "  j " << j << "\n";
 			imprimir(v, gSize, -1, -1, e, d, j);
 			return j;
 		}
-		cout << "Intercambio: " << e << " a " << d << ": ";
+		cout << "Intercambio: " << i << " a " << j << ": ";
 		imprimir(v, gSize, i, j, e, d, -1);
 		swap(v[i], v[j]);
 	}

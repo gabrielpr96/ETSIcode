@@ -1,21 +1,28 @@
 # depslib dependency file v1.0
-1554988705 source:c:\users\usuario\desktop\ed1\practica 2\main.cpp
+1556625363 source:c:\users\usuario\desktop\practica 2\main.cpp
 	<iostream>
-	"cola.h"
+	<cstdlib>
+	<cstdio>
+	<conio.h>
+	<cstring>
+	"listaDinamica.h"
+	"colaDinamica.h"
+	"peluqueria.h"
 
-1554988617 c:\users\usuario\desktop\ed1\practica 2\cola.h
+1556627166 c:\users\usuario\desktop\practica 2\listadinamica.h
+	<cstdlib>
+	<cstring>
+	"colaDinamica.h"
 
-1554988758 source:c:\users\usuario\desktop\ed1\practica 2\cola.cpp
-	"cola.h"
-	<iostream>
+1556627178 c:\users\usuario\desktop\practica 2\coladinamica.h
 
-1554992744 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\main.cpp
-	<iostream>
-	"cola.h"
+1556624095 c:\users\usuario\desktop\practica 2\peluqueria.h
+	"listaDinamica.h"
+	"colaDinamica.h"
 
-1554992934 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\cola.h
+1556625227 source:c:\users\usuario\desktop\practica 2\peluqueria.cpp
+	"peluqueria.h"
 
-1554993576 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\cola.cpp
-	"cola.h"
-	<iostream>
+1556627169 source:c:\users\usuario\desktop\practica 2\listadinamica.cpp
+	"listaDinamica.h"
 

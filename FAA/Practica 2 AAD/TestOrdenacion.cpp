@@ -135,7 +135,7 @@ void TestOrdenacion::casoMedio(int metodo)
 
 
 		//Mostrar los datos
-		cout << "\t\t" << talla << "\t\t" << tiempo << "\n";
+		cout << "\t\t" << talla << "\t     " << setw(10)<<fixed<<setprecision(4) << tiempo << "\n"; ///TODO: Poner el setw, fixed y setpresition 4 a todo.
 		file << talla << "\t" << tiempo << "\n";
 	}
 	file.close();
@@ -189,7 +189,8 @@ void TestOrdenacion::comparar(int metodo1, int metodo2) {
 
 		//Mostrar los datos
 		cout.precision(4);
-		cout << "\t\t" << talla << "\t\t\t" << tiempo1 << "\t\t " << tiempo2 << "\n";
+		cout << "\t\t" << talla << "\t\t    "<< setw(10) << fixed << setprecision(4) << tiempo1
+			 << "\t     " << setw(10) << fixed << setprecision(4) << tiempo2 << "\n";
 		file << talla << "\t" << tiempo1 << "\t" << tiempo2 << "\n";
 	}
 	file.close();
@@ -242,7 +243,7 @@ void TestOrdenacion::compararTodos() {
 		cout.precision(4);
 		cout << "\t\t" << talla << "\t";
 		for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++)
-			cout << "\t\t" << tiempo[algoritmo];
+			cout << "\t    " << setw(10) << fixed << setprecision(4) << tiempo[algoritmo];
 		cout << "\n";
 		file << talla;
 		for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++)

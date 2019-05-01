@@ -103,7 +103,7 @@ void TestBusqueda::casoMedio(int metodo)
 	ofstream file("t" + nombreAlgoritmo[metodo] + ".dat");
 	if (file.fail())
 		cout << "Error al abrir al crear el archivo.\nNo se guardaran los datos.\n";
-	cout << "METOD: " << metodo << "\n";
+
 	double tiempo;
 	int pos;
 	///Control del orden, para el metodo binario
@@ -126,7 +126,7 @@ void TestBusqueda::casoMedio(int metodo)
 
 
 		//Mostrar los datos
-		cout << "\t\t" << talla << "\t\t" << tiempo << "\n";
+		cout << "\t\t" << talla << "\t    " << setw(10) << fixed << setprecision(4) << tiempo << "\n";
 		file << talla << "\t" << tiempo << "\n";
 	}
 	file.close();
@@ -184,7 +184,8 @@ void TestBusqueda::comparar(int metodo1, int metodo2) {
 
 		//Mostrar los datos
 		cout.precision(4);
-		cout << "\t\t" << talla << "\t\t\t" << tiempo1 << "\t\t " << tiempo2 << "\n";
+		cout << "\t\t" << talla << "\t\t    " << setw(10) << fixed << setprecision(4) << tiempo1
+			 << "\t    " << setw(10) << fixed << setprecision(4) << tiempo2 << "\n";
 		file << talla << "\t" << tiempo1 << "\t" << tiempo2 << "\n";
 	}
 	file.close();
@@ -240,7 +241,7 @@ void TestBusqueda::compararTodos() {
 		cout.precision(4);
 		cout << "\t\t" << talla << "\t";
 		for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++)
-			cout << "\t\t" << tiempo[algoritmo];
+			cout << "\t    " << setw(10) << fixed << setprecision(4) << tiempo[algoritmo];
 		cout << "\n";
 		file << talla;
 		for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++)

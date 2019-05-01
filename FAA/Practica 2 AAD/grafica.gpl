@@ -1,14 +1,16 @@
 #Archivo auto-generado, cortesia de B0vE
-set title "Comparativa de todos los algoritmos"
+set title "Tiempo de ordenación por Quicksort"
 set key top left vertical inside
 set grid
 set xlabel "Talla (n)"
 set ylabel "Tiempo(ms)"
 
-plot "tTodos.dat" using 1:2 with lines title "Burbuja", "tTodos.dat" using 1:3 with lines title "Insercion", "tTodos.dat" using 1:4 with lines title "Seleccion", "tTodos.dat" using 1:5 with lines title "Shell", "tTodos.dat" using 1:6 with lines title "Mergesort", "tTodos.dat" using 1:7 with lines title "Quicksort", "tTodos.dat" using 1:8 with lines title "ShakeSort", "tTodos.dat" using 1:9 with lines title "BrickSort"
+N(x) = a*x*x + b*x + c
+fit N(x) "tQuicksort.dat" using 1:2 via a,b,c
+plot N(x) title "Aproximación", "tQuicksort.dat" using 1:2 title "Resultado empírico"
 
 set terminal pdf
-set output "busquedaComparativaTodos.pdf"
+set output "busquedaQuicksort.pdf"
 replot
 #pause -1 "Pulsa Enter para continuar..."
 unset output
