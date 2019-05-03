@@ -1,9 +1,0 @@
-﻿  AlgoritmosOrdenacion.cpp
-  AnalisisAlgoritmos.cpp
-  ConjuntoInt.cpp
-  Graficas.cpp
-  Mtime.cpp
-  TestOrdenacion.cpp
-  Generando código...
-c:\users\margaret\desktop\etsicode\faa\practica 2\analisisalgoritmos.cpp(95): warning C4715: 'getConstante': no todas las rutas de acceso de control devuelven un valor
-  Practica2.vcxproj -> C:\Users\Margaret\Desktop\ETSIcode\FAA\Practica 2\x64\Debug\Practica2.exe
