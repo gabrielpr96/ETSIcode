@@ -24,6 +24,7 @@ public:
     bool esvacia();
     cliente primero();
     int longitud();
+    void vaciar();
     void clonar(cola c);
     bool comparar(cola c);
 };
