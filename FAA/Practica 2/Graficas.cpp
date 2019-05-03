@@ -41,7 +41,7 @@ void Graficas::generarGraficaMEDIO(string nombre_metodo,int orden)
 	file << "plot N(x) title \"Aproximación\", \"t" << nombre_metodo << ".dat\" using 1:2 title \"Resultado empírico\"\n"
 		 << "\n"
 		 << "set terminal pdf\n"
-		 << "set output \"busqueda" << nombre_metodo << ".pdf\"\n"
+		 << "set output \"ordenacion" << nombre_metodo << ".pdf\"\n"
 		 << "replot\n"
 		 << "#pause -1 \"Pulsa Enter para continuar...\"\n"
 		 << "unset output";

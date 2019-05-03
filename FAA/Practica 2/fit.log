@@ -306,3 +306,150 @@ correlation matrix of the fit parameters:
 a               1.000 
 b              -0.975  1.000 
 c               0.814 -0.909  1.000 
+
+
+*******************************************************************************
+Fri May 03 17:58:53 2019
+
+
+FIT:    data read from "tBurbuja.dat" using 1:2
+        format = x:z
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: N(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.53935e+012      delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-005
+ lambda	  : 290592
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+c               = 1
+
+After 9 iterations the fit converged.
+final sum of squares of residuals : 0.00243615
+rel. change during last iteration : -3.2176e-006
+
+degrees of freedom    (FIT_NDF)                        : 7
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0186553
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.000348022
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 1.66324e-006     +/- 8.119e-008   (4.881%)
+b               = -9.65168e-005    +/- 9.164e-005   (94.94%)
+c               = 0.0691098        +/- 0.02194      (31.75%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      c      
+a               1.000 
+b              -0.975  1.000 
+c               0.814 -0.909  1.000 
+
+
+*******************************************************************************
+Fri May 03 17:59:05 2019
+
+
+FIT:    data read from "tInsercion.dat" using 1:2
+        format = x:z
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: N(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.53936e+012      delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-005
+ lambda	  : 290592
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+c               = 1
+
+After 10 iterations the fit converged.
+final sum of squares of residuals : 0.000314937
+rel. change during last iteration : -3.27047e-015
+
+degrees of freedom    (FIT_NDF)                        : 7
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00670753
+variance of residuals (reduced chisquare) = WSSR/ndf   : 4.4991e-005
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 6.03763e-007     +/- 2.919e-008   (4.835%)
+b               = -4.70616e-005    +/- 3.295e-005   (70.01%)
+c               = 0.0201201        +/- 0.007889     (39.21%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      c      
+a               1.000 
+b              -0.975  1.000 
+c               0.814 -0.909  1.000 
+
+
+*******************************************************************************
+Fri May 03 17:59:10 2019
+
+
+FIT:    data read from "tSeleccion.dat" using 1:2
+        format = x:z
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: N(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.53936e+012      delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-005
+ lambda	  : 290592
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+c               = 1
+
+After 10 iterations the fit converged.
+final sum of squares of residuals : 0.000739603
+rel. change during last iteration : -5.27733e-015
+
+degrees of freedom    (FIT_NDF)                        : 7
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.010279
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.000105658
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 9.90174e-007     +/- 4.473e-008   (4.518%)
+b               = -2.41201e-006    +/- 5.049e-005   (2093%)
+c               = 0.0211957        +/- 0.01209      (57.04%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      c      
+a               1.000 
+b              -0.975  1.000 
+c               0.814 -0.909  1.000 

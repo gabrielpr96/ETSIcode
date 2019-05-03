@@ -34,8 +34,8 @@ bool ventas::asignar(cadena Fichero,cadena FicheroResumen){
 void ventas::mostrarventas(){
     venta v;
     producto p;
-    detalle.open(fichero, ios::in | ios::binary);
-    ifstream prods(ficheroresumen, ios::binary);
+    detalle.open(char *) fichero, ios::in | ios::binary);
+    ifstream prods(char *) ficheroresumen, ios::binary);
 
     cout << "-------------->LISTA DE VENTAS<--------------\n\n";
     while(detalle.read((char *) &v, sizeof(venta)) && !detalle.eof()){  //Leer y comprobar que no se haya acabado el archivo
