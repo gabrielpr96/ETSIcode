@@ -8,14 +8,19 @@
 
 #include "AlgoritmosOrdenacion.h"
 #include <iostream>
+#include <ctime>
 #include <windows.h>
 
 ///Modificaciones
 //#define MOD_PROBLEMA_1
 //#define MOD_PROBLEMA_2
 //#define MOD_PROBLEMA_5
-//#define MOD_PROBLEMA_6
+#define MOD_PROBLEMA_6
 //#define MOD_PROBLEMA_7
+//#define OPT_QUICK_RAND
+//#define OPT_QUICK_TAIL
+//#define OPT_SEL_STABLE
+//#define OPT_SEL_SILLY
 //#define MOD_TRAZA
 ///Fin de las modificaciones
 
@@ -65,7 +70,7 @@ void AlgoritmosOrdenacion :: ordenaInsercion(int v[], int size)
 }
 #endif
 
-#ifndef MOD_PROBLEMA_2
+#if !( defined(MOD_PROBLEMA_2) || defined(OPT_SEL_SILLY) || defined(OPT_SEL_STABLE))
 void AlgoritmosOrdenacion :: ordenaSeleccion(int v[], int size)
 {
 	int posMin, aux;
@@ -141,7 +146,7 @@ void AlgoritmosOrdenacion::ordenaQuicksort(int v[], int size)
 {
 	quicksort(v, 0, size - 1);
 }
-#if !(defined(MOD_PROBLEMA_6) || defined(MOD_PROBLEMA_7))
+#if !(defined(MOD_PROBLEMA_6) || defined(MOD_PROBLEMA_7) || defined(OPT_QUICK_RAND) || defined(OPT_QUICK_TAIL))
 void AlgoritmosOrdenacion::quicksort(int v[], int e, int d) {
 	if (e < d) {
 		int q = partition(v, e, d);
@@ -150,6 +155,7 @@ void AlgoritmosOrdenacion::quicksort(int v[], int e, int d) {
 	}
 }
 #endif
+#ifndef OPT_QUICK_RAND
 int AlgoritmosOrdenacion::partition(int v[], int e, int d) {
 	int x = v[e];
 	int i = e - 1;
@@ -161,6 +167,7 @@ int AlgoritmosOrdenacion::partition(int v[], int e, int d) {
 		swap(v[i], v[j]);
 	}
 }
+#endif
 
 void AlgoritmosOrdenacion::ordenaShakesort(int v[], int size)
 {
@@ -245,14 +252,14 @@ void AlgoritmosOrdenacion::ordenaInsercion(int v[], int size)
 #ifdef MOD_PROBLEMA_2
 void AlgoritmosOrdenacion::ordenaSeleccion(int v[], int size)
 {
-	int posMin, aux;
+	int posMin;
 	for (int i = 0; i < size - 2; i++) {
 		posMin = i;
 		for (int j = i + 1; j < size; j++) {
 			if (v[j] < v[posMin])
 				posMin = j;
 		}
-		if (v[posMin] != v[i]) {
+		if (posMin != i && v[posMin] != v[i]) {
 			swap(v[posMin], v[i]);
 		}
 	}
@@ -304,9 +311,7 @@ void seleccion(int v[], int size)
 			if (v[j] < v[posMin])
 				posMin = j;
 		}
-		aux = v[posMin];
-		v[posMin] = v[i];
-		v[i] = aux;
+		swap(v[posMin], v[i]);
 	}
 }
 void AlgoritmosOrdenacion::quicksort(int v[], int e, int d) {
@@ -338,6 +343,98 @@ void AlgoritmosOrdenacion::quicksort(int v[], int e, int d) {
 			quicksort(v, e, q);
 			quicksort(v, q + 1, d);
 		}
+	}
+}
+#endif
+
+#ifdef OPT_QUICK_RAND
+int AlgoritmosOrdenacion::partition(int v[], int e, int p) {
+	//srand(time(NULL));
+	swap(v[e + rand() % (p - e)], v[p]);
+
+	int x = v[p];
+	int i = (e - 1);
+
+	for (int j = e; j <= p - 1; j++) {
+		if (v[j] <= x) {
+			i++;
+			swap(v[i], v[j]);
+		}
+	}
+	swap(v[i + 1], v[p]);
+	return (i + 1);
+}
+
+void AlgoritmosOrdenacion::quicksort(int v[], int e, int p) {
+	if (e < p) {
+		int q = partition(v, e, p);
+
+		quicksort(v, e, q - 1);
+		quicksort(v, q + 1, p);
+	}
+}
+#endif
+#ifdef OPT_QUICK_TAIL
+void AlgoritmosOrdenacion::quicksort(int v[], int e, int p) {
+	while (e < p) {
+		/* pi is partitioning index, arr[p] is now
+		   at right place */
+		int q = partition(v, e, p);
+
+		// If left part is smaller, then recur for left 
+		// part and handle right part iteratively 
+		if (q - e < p - q) {
+			quicksort(v, e, q - 1);
+			e = q + 1;
+		}
+
+		// Else recur for right part 
+		else {
+			quicksort(v, q + 1, p);
+			p = q - 1;
+		}
+	}
+}
+#endif
+#ifdef OPT_SEL_SILLY
+void AlgoritmosOrdenacion::ordenaSeleccion(int v[], int size) {
+	int posMin, aux;
+	for (int i = 0; i < size - 2; i++) {
+		posMin = i;
+		for (int j = i + 1; j < size; j++) {
+			if (v[j] < v[posMin])
+				posMin = j;
+		}
+		if (posMin != i && v[posMin] != v[i]) {
+			aux = v[posMin];
+			v[posMin] = v[i];
+			v[i] = aux;
+		}
+	}
+}
+#endif
+#ifdef OPT_SEL_STABLE
+void AlgoritmosOrdenacion::ordenaSeleccion(int v[], int size) {
+	// Iterate through array elements 
+	for (int i = 0; i < size - 1; i++) {
+
+		// Loop invariant : Elements till a[i - 1] 
+		// are already sorted. 
+
+		// Find minimum element from  
+		// arr[i] to arr[n - 1]. 
+		int min = i;
+		for (int j = i + 1; j < size; j++)
+			if (v[min] > v[j])
+				min = j;
+
+		// Move minimum element at current i. 
+		int key = v[min];
+		while (min > i) {
+			v[min] = v[min - 1];
+			min--;
+		}
+		v[i] = key;
 	}
 }
 #endif

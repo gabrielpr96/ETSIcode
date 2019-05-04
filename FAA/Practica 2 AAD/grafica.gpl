@@ -1,13 +1,15 @@
-set title "Medio Burbuja"
+#Archivo auto-generado, cortesia de B0vE
+set title "Tiempo de ordenación por Seleccion"
 set key top left vertical inside
 set grid
 set xlabel "Talla (n)"
-set ylabel "Tiempo (ms)"
+set ylabel "Tiempo(ms)"
 
-plot "Burbuja.dat" using 1:2 with lines title "Burbuja"
+
+plot "tSeleccionBase.dat" using 1:2 with lines title "Base", "tSeleccionSilly.dat" using 1:2 with lines title "Comprobacion", "tSeleccionStable.dat" using 1:2 with lines title "Estable"
 
 set terminal pdf
-set output "Burbuja.pdf"
+set output "Seleccion.pdf"
 replot
 #pause -1 "Pulsa Enter para continuar..."
 unset output
