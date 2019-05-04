@@ -47,7 +47,7 @@ void Graficas::generarGraficaMEDIO(string nombre_metodo,int orden)
 	file << "\nplot N(x) title \"Aproximación\", \"t" << nombre_metodo << ".dat\" using 1:2 title \"Resultado empírico\"\n"
 		 << "\n"
 		 << "set terminal pdf\n"
-		 << "set output \"busqueda" << nombre_metodo << ".pdf\"\n"
+		 << "set output \"" << nombre_metodo << ".pdf\"\n"
 		 << "replot\n"
 		 << "#pause -1 \"Pulsa Enter para continuar...\"\n"
 		 << "unset output";
@@ -76,7 +76,7 @@ void  Graficas::generarGraficaCMP(string nombre1,string nombre2)
 		<< nombre1 << nombre2 << ".dat\" using 1:3 with lines title \"" << nombre2 << "\"\n"
 		<< "\n"
 		<< "set terminal pdf\n"
-		<< "set output \"busqueda" << nombre1 << nombre2 << ".pdf\"\n"
+		<< "set output \"" << nombre1 << nombre2 << ".pdf\"\n"
 		<< "replot\n"
 		<< "#pause -1 \"Pulsa Enter para continuar...\"\n"
 		<< "unset output";
@@ -101,7 +101,7 @@ void  Graficas::generarGraficaCMPtodos(vector<string> nombres)
 		file << "\"tTodos.dat\" using 1:" << (algoritmo + 2) << " with lines title \"" << nombres[algoritmo] << "\"" << (algoritmo == nombres.size()-1?"\n":", ");
 	file << "\n"
 		<< "set terminal pdf\n"
-		<< "set output \"busquedaComparativaTodos.pdf\"\n"
+		<< "set output \"ComparativaTodos.pdf\"\n"
 		<< "replot\n"
 		<< "#pause -1 \"Pulsa Enter para continuar...\"\n"
 		<< "unset output";

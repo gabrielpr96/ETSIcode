@@ -1,14 +1,14 @@
 #Archivo auto-generado, cortesia de B0vE
-set title "Comparativa Insercion con Seleccion"
+set title "Comparativa Quicksort con Seleccion"
 set key top left vertical inside
 set grid
 set xlabel "Talla (n)"
 set ylabel "Tiempo(ms)"
 
-plot "tInsercionSeleccion.dat" using 1:2 with lines title "Insercion", "tInsercionSeleccion.dat" using 1:3 with lines title "Seleccion"
+plot "tQuicksortSeleccion.dat" using 1:2 with lines title "Quicksort", "tQuicksortSeleccion.dat" using 1:3 with lines title "Seleccion"
 
 set terminal pdf
-set output "busquedaInsercionSeleccion.pdf"
+set output "QuicksortSeleccion.pdf"
 replot
 #pause -1 "Pulsa Enter para continuar..."
 unset output
