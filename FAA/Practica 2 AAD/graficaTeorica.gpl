@@ -3,8 +3,12 @@ set key top left vertical inside
 set grid
 set xlabel "Talla (n)"
 set ylabel "Tiempo (ms)"
+set xrange [0:100]
 
-plot "Burbuja.dat" using 1:2 with lines title "Burbuja"
+Burbuja(x) = (5/4)*x*(x-1)
+Seleccion(x) = ((x*(x-1))/2)+(3*(x-1))
+Insercion(x) = (x-1)*((x+14)/4)
+plot Burbuja(x), Seleccion(x), Insercion(x)
 
 set terminal pdf
 set output "Burbuja.pdf"
