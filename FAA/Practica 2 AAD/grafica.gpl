@@ -1,15 +1,14 @@
 #Archivo auto-generado, cortesia de B0vE
-set title "Tiempo de ordenación por Seleccion"
+set title "Comparativa Seleccion con Quicksort"
 set key top left vertical inside
 set grid
 set xlabel "Talla (n)"
 set ylabel "Tiempo(ms)"
 
-
-plot "tSeleccionBase.dat" using 1:2 with lines title "Base", "tSeleccionSilly.dat" using 1:2 with lines title "Comprobacion", "tSeleccionStable.dat" using 1:2 with lines title "Estable"
+plot "tSeleccionQuicksort.dat" using 1:2 with lines title "Seleccion", "tSeleccionQuicksort.dat" using 1:3 with lines title "Quicksort"
 
 set terminal pdf
-set output "Seleccion.pdf"
+set output "SeleccionQuicksort.pdf"
 replot
 #pause -1 "Pulsa Enter para continuar..."
 unset output

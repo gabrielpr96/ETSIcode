@@ -15,7 +15,7 @@
 //#define MOD_PROBLEMA_1
 //#define MOD_PROBLEMA_2
 //#define MOD_PROBLEMA_5
-#define MOD_PROBLEMA_6
+//#define MOD_PROBLEMA_6
 //#define MOD_PROBLEMA_7
 //#define OPT_QUICK_RAND
 //#define OPT_QUICK_TAIL
