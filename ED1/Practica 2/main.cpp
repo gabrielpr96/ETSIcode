@@ -10,7 +10,7 @@
 using namespace std;
 
 char menu(){
-    system("cls");
+    //system("cls");
     cout << "Peluquería Corte 2.0\n"
          << "----------------------------------\n"
          << "1. Leer fichero (rescatar copia)\n"
@@ -23,9 +23,11 @@ char menu(){
          << "8. Volcar a fichero (crear copia)\n"
          << "0. Salir\n"
          << "----------------------------------\n"
-         << "Introduzca una operacion";
+         << "Introduzca una operacion: ";
     char opt;
     cin >> opt;
+    while(opt < '0' || opt > '8')
+        opt = menu();
     return opt;
 }
 
@@ -35,6 +37,7 @@ int main(){
     char opt;
     do{
         opt = menu();
+        //system("cls");
         switch(opt){
             //!Ponerle cabeceras a todas las opciones
             case '1':
@@ -113,8 +116,11 @@ int main(){
                 p.VolcarPeluqueria(fichero);
             break;
         }
-        cout << "\n\nPulse una tecla para regresar al menu.";
-        cin.ignore();
+        if(opt != '0'){
+            cout << "\n\nPulse una tecla para regresar al menu.";
+            cin.ignore();
+            cin.ignore();
+        }
     }while(opt != '0');
     return 0;
 }

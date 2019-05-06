@@ -1,7 +1,8 @@
 #include "listaDinamica.h"
-
+#include <iostream>
 lista::lista(){
     peluquero *elementos = new peluquero[INCREMENTO];
+    std::cout << "Reservo: " << elementos << "\n";
     if(elementos == NULL){
         Tama = n = -1;
     }else{
@@ -10,6 +11,7 @@ lista::lista(){
     }
 }
 lista::~lista(){
+    std::cout << "\t\t\tsoy destruido";
     if(elementos != NULL)
         delete [] elementos;
     elementos = NULL;
@@ -26,25 +28,32 @@ bool lista::pertenece(peluquero &e){
     return posicion(e)!=1;
 }
 void lista::insertar(int i, peluquero &e){
+    std::cout << "\tinserto en " << elementos << "\n";
+    std::cout << "n: " << n << " Tama: " << Tama << "\n";
     if(n == Tama){//Agrandar la tabla
        peluquero *elementosTMP = new peluquero[Tama+INCREMENTO];
         if(elementosTMP != NULL){
             for(int i = 0; i < n; i++)
                 copiarpeluquero(elementosTMP[i], elementos[i]);
             Tama += INCREMENTO;
+            std::cout << "voy a eliminar " << elementos << "\n";
             delete [] elementos;
+            std::cout << "justo liverado\n";
             elementos = elementosTMP;
+        std::cout << "Nuevo tamano: " << Tama << "\n";
         }
     }
 
     if(n < Tama){//Agregar el elemento, desplazando los demas
         for(int pos = n-1; pos >= i-1; pos--)
-            copiarpeluquero(elementos[pos+1], elementos[pos]);
+            copiarpeluquero(elementos[pos-1], elementos[pos]);
         copiarpeluquero(elementos[i-1], e);
         n++;
     }
+    std::cout << "\tTermino de insertar en : " << elementos << "\n";
 }
 void lista::eliminar(int i){
+    std::cout << "\t\t\tElimino un elemento " << elementos << "\n";
     while(i < n){
         copiarpeluquero(elementos[i-1], elementos[i]);
         i++;

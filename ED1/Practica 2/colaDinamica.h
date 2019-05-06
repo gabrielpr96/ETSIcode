@@ -1,6 +1,8 @@
 #ifndef COLADINAMICA_H_INCLUDED
 #define COLADINAMICA_H_INCLUDED
 
+#define INCREMENTO 2
+
 typedef char cadena[50];
 
 struct cliente{
@@ -16,6 +18,7 @@ class cola{
     int inicio, fin; //principio y fin de la cola
     int Tama; //Capacidad de la tabla
     int ne; //Nº de elementos
+    bool compararClientes(cliente c1, cliente c2);
 public:
     cola(); // constructor de la clase
     ~cola();

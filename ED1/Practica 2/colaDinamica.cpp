@@ -1,8 +1,12 @@
+#include <cstdlib>
+#include <cstring>
 #include "colaDinamica.h"
+
+#include <iostream>
 
 cola::cola(){
     elementos = new cliente[INCREMENTO];
-    if(elementos == null){
+    if(elementos == NULL){
         ne = fin = inicio = -1;
         Tama = -1;
     }else{
@@ -11,16 +15,16 @@ cola::cola(){
     }
 }
 cola::~cola(){
-    if(elementos != null)
-        delete [] elementos
+    if(elementos != NULL)
+        delete [] elementos;
     elementos = NULL;
     ne = fin = inicio = -1;
     Tama = 0;
 }
 void cola::encolar(cliente e){
     if(ne == Tama){
-        cliente *elementosTMP = new cliente[TAMA+INCREMENTO];
-        if(elementosTMP != null){
+        cliente *elementosTMP = new cliente[Tama+INCREMENTO];
+        if(elementosTMP != NULL){
             for(int i = 0; i < ne; i++){
                 //Emoueza a copiar ya desfragmentado
                 elementosTMP[i] = elementos[inicio];
@@ -48,7 +52,7 @@ void cola::desencolar(){
     ne--;
 
     if(Tama-ne >= INCREMENTO && Tama > INCREMENTO){
-        cliente elementosTMP = new cliente[Tama-INCREMENTO];
+        cliente *elementosTMP = new cliente[Tama-INCREMENTO];
         if(elementosTMP != NULL){
             for(int i = 0; i < ne; i++){
                 elementosTMP[i] = elementos[inicio];
@@ -81,7 +85,7 @@ void cola::vaciar(){
 void cola::clonar(cola c){
     vaciar();
     while(!c.esvacia()){
-        tmp.encolar(c.primero());
+        encolar(c.primero());
         c.desencolar();
     }
 }
@@ -95,7 +99,7 @@ bool cola::comparar(cola c){
     while(!c.esvacia()){
         tmp.encolar(primero());
         if(igual)
-            igual = primero() == c.primero();
+            igual = compararClientes(primero(), c.primero());
 
         c.desencolar();
         desencolar();
@@ -108,4 +112,12 @@ bool cola::comparar(cola c){
     }
 
     return igual;
+}
+
+bool cola::compararClientes(cliente c1, cliente c2){
+    return strcmp(c1.Nombre, c2.Nombre) == 0 &&
+            strcmp(c1.Apellidos, c2.Apellidos) == 0 &&
+            c1.Edad == c2.Edad &&
+            c1.HoraLlegada  == c2.HoraLlegada &&
+            c1.TipoServicio == c2.TipoServicio;
 }

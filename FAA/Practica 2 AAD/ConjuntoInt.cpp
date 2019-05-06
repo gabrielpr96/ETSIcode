@@ -51,18 +51,30 @@ void ConjuntoInt::GeneraVector (int tam)
 }
 
 void ConjuntoInt::ordenarCreciente() {
-	int x, j;
-	for (int i = 1; i < tamano; i++) {
-		x = datos[i];
-		j = i - 1;
-		while (j >= 0 && x < datos[j]) {
-			datos[j + 1] = datos[j];
-			j--;
+	int posMin, aux;
+	for (int i = 0; i < tamano - 2; i++) {
+		posMin = i;
+		for (int j = i + 1; j < tamano; j++) {
+			if (datos[j] < datos[posMin])
+				posMin = j;
 		}
-		datos[j + 1] = x;
+		aux = datos[posMin];
+		datos[posMin] = datos[i];
+		datos[i] = aux;
 	}
 }
 void ConjuntoInt::ordenarDeCreciente() {
+	int posMax, aux;
+	for (int i = 0; i < tamano - 2; i++) {
+		posMax = i;
+		for (int j = i + 1; j < tamano; j++) {
+			if (datos[j] > datos[posMax])
+				posMax = j;
+		}
+		aux = datos[posMax];
+		datos[posMax] = datos[i];
+		datos[i] = aux;
+	}
 }
 
 void ConjuntoInt::escribe()
