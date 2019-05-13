@@ -28,8 +28,8 @@ public:
     cliente primero();
     int longitud();
     void vaciar();
-    void clonar(cola c);
-    bool comparar(cola c);
+    void clonar(cola &c);
+    bool comparar(cola &c); //! DEPRECATED
 };
 
 #endif // COLADINAMICA_H_INCLUDED

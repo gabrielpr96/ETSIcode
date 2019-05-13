@@ -14,6 +14,7 @@ struct peluquerof{
 class peluqueria{
     lista L; //lista de los técnicos que están atendiendo
 public:
+    peluqueria();
     void AbrirPeluqueria(char *nombrefichero);
     void IncorporarPeluquero(peluquerof t);
     bool RetirarPeluquero(int codigo);

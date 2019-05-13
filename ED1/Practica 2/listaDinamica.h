@@ -22,6 +22,7 @@ public:
     lista(); // constructor de la clase
     ~lista();// destructor de la clase
     lista(peluquero &e);
+    void vaciar();
     bool esvacia();
     int longitud();
     //void anadirIzq(peluquero e); No necesario implementar

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1556625363 source:c:\users\usuario\desktop\practica 2\main.cpp
+1557228763 source:c:\users\usuario\desktop\practica 2\main.cpp
 	<iostream>
 	<cstdlib>
 	<cstdio>
@@ -9,41 +9,44 @@
 	"colaDinamica.h"
 	"peluqueria.h"
 
-1556627166 c:\users\usuario\desktop\practica 2\listadinamica.h
+1557227014 c:\users\usuario\desktop\practica 2\listadinamica.h
 	<cstdlib>
 	<cstring>
 	"colaDinamica.h"
 
-1556627178 c:\users\usuario\desktop\practica 2\coladinamica.h
+1557227804 c:\users\usuario\desktop\practica 2\coladinamica.h
 
-1556624095 c:\users\usuario\desktop\practica 2\peluqueria.h
+1557228700 c:\users\usuario\desktop\practica 2\peluqueria.h
 	"listaDinamica.h"
 	"colaDinamica.h"
 
-1556625227 source:c:\users\usuario\desktop\practica 2\peluqueria.cpp
+1557231154 source:c:\users\usuario\desktop\practica 2\peluqueria.cpp
+	<fstream>
+	<iostream>
 	"peluqueria.h"
 
-1556627169 source:c:\users\usuario\desktop\practica 2\listadinamica.cpp
+1557231373 source:c:\users\usuario\desktop\practica 2\listadinamica.cpp
 	"listaDinamica.h"
+	<iostream>
 
-1557157275 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.cpp
+1557224261 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.cpp
 	<cstdlib>
 	<cstring>
 	"colaDinamica.h"
 	<iostream>
 
-1557154547 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.h
+1557224204 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.h
 
 1557156905 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listadinamica.cpp
 	"listaDinamica.h"
 	<iostream>
 
-1557078100 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listadinamica.h
+1557223414 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listadinamica.h
 	<cstdlib>
 	<cstring>
 	"colaDinamica.h"
 
-1557156920 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\main.cpp
+1557225163 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\main.cpp
 	<iostream>
 	<cstdlib>
 	<cstdio>
@@ -53,7 +56,7 @@
 	"colaDinamica.h"
 	"peluqueria.h"
 
-1557078100 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\peluqueria.h
+1557225100 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\peluqueria.h
 	"listaDinamica.h"
 	"colaDinamica.h"
 
@@ -61,4 +64,10 @@
 	<fstream>
 	<iostream>
 	"peluqueria.h"
+
+1557227861 source:c:\users\usuario\desktop\practica 2\coladinamica.cpp
+	<cstdlib>
+	<cstring>
+	"colaDinamica.h"
+	<iostream>
 

@@ -54,7 +54,7 @@ int AlgoritmosBusqueda::BinariaRc(int v[], int left, int right, int key)
 	if (left > right)
 		return - 1;
 
-	int middle = (right+left+1) / 2;
+	int middle = left + (right-left)/2;
 
 	if (key == v[middle])
 		return middle;
@@ -83,7 +83,7 @@ int AlgoritmosBusqueda::TernariaRc(int v[], int left, int right, int key)
 	if (left > right)
 		return -1;
 
-	int div = (right - left +1) / 3;
+	int div = (right - left) / 3;
 
 	if (key == v[left + div])
 		return left + div;

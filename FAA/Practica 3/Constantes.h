@@ -11,7 +11,7 @@ enum algoritmosOrdenacion { BURBUJA, INSERCION, SELECCION, SHELL, MERGESORT, QUI
 enum algoritmosBusquedaClave{SECUENCIALIt, BINARIARc, TERNARIARc};
 
 /* Constantes para indicar el Orden de complejidad*/
-enum ordenes {logN,N, NlogN,CUADRADO, AXpB, AX3t2pB};
+enum ordenes {N, NlogN,CUADRADO, AXpB, AX3t2pB, log2N, log3N};
 
 enum casosInstancia { MEJOR, PEOR, MEDIO };
 

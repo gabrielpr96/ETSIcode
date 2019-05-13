@@ -22,11 +22,11 @@ using namespace std;
 TestBusqueda::TestBusqueda()
 {
 	nombreAlgoritmo.push_back("SecuencialI");
-	complegidadAlgoritmo.push_back(AXpB);
+	complegidadAlgoritmo.push_back(N);
 	nombreAlgoritmo.push_back("BinariaR");
-	complegidadAlgoritmo.push_back(logN);
+	complegidadAlgoritmo.push_back(log2N);
 	nombreAlgoritmo.push_back("TernariaR");
-	complegidadAlgoritmo.push_back(logN);
+	complegidadAlgoritmo.push_back(log3N);
 } 
 TestBusqueda::~TestBusqueda()
 {
@@ -99,7 +99,55 @@ void TestBusqueda::comprobarMetodosBusqueda(){
  */
 void TestBusqueda::comparar(int metodo1, int metodo2) 
 {
-   //** ESCRIBIR PARA COMPLETAR LA PRACTICA **//
+	cout << "\t  Comparativa del algoritmo " << nombreAlgoritmo[metodo1] << " y " << nombreAlgoritmo[metodo2] << "\n\n"
+		<< "\t             \t\t       \t      TIEMPO (ms)\n"
+		<< "\t       TALLA \t\t       \t" << nombreAlgoritmo[metodo1] << "  \t" << nombreAlgoritmo[metodo2] << "\n";
+
+	ofstream file("t" + nombreAlgoritmo[metodo1] + nombreAlgoritmo[metodo2] + ".dat");
+	if (file.fail())
+		cout << "Error al abrir al crear el archivo.\nNo se guardaran los datos.\n";
+
+	ConjuntoInt::setCaso(MEJOR);
+	double tiempo1, tiempo2; int tmp;
+	for (int talla = TALLA_INI; talla <= TALLA_FIN; talla += TALLA_DELTA) {
+		ConjuntoInt *v = new ConjuntoInt(talla);
+
+		tiempo1 = 0;
+		tiempo2 = 0;
+		for (int i = 0; i < REPETICIONES*5; i++) {
+			v->GeneraVector(talla);
+			tiempo1 += buscaEnArrayDeInt(v->GeneraKey(), v->getDatos(), talla, metodo1, tmp);
+			v->GeneraVector(talla);
+			tiempo2 += buscaEnArrayDeInt(v->GeneraKey(), v->getDatos(), talla, metodo2, tmp);
+			v->vaciar();
+		}
+		tiempo1 /= REPETICIONES*5;
+		tiempo2 /= REPETICIONES*5;
+
+		delete v;
+
+
+		//Mostrar los datos
+		cout.precision(4);
+		cout << "\t\t" << talla << "\t\t    " << setw(10) << fixed << setprecision(4) << tiempo1
+			<< "\t     " << setw(10) << fixed << setprecision(4) << tiempo2 << "\n";
+		if(talla != TALLA_INI)
+			file << talla << "\t" << tiempo1 << "\t" << tiempo2 << "\n";
+	}
+	file.close();
+
+	//Generar grafica
+	char opt;
+	cout << "\nGenerar grafica (s, n): ";
+	cin >> opt;
+	if (opt == 's' || opt == 'S') {
+		Graficas g;
+		g.generarGraficaCMP(nombreAlgoritmo[metodo1], nombreAlgoritmo[metodo2]);
+		cout << "La grafica fue generada.\n\n";
+		system("start grafica.gpl");
+	} else cout << "No se generara la grafica.\n\n";
+
+	system("pause");
 }
 /*
  * Calcula el caso medio de un metodo de búsqueda,
@@ -108,10 +156,107 @@ void TestBusqueda::comparar(int metodo1, int metodo2)
  */
 void TestBusqueda::casoMedio(int metodo)
 {
-   //** ESCRIBIR PARA COMPLETAR LA PRACTICA **//
+	cout << "\t  Medicion del algoritmo " << nombreAlgoritmo[metodo] << "\n"
+		<< "\t       TALLA \t       TIEMPO (ms)\n";
+
+	ofstream file("t" + nombreAlgoritmo[metodo] + ".dat");
+	if (file.fail())
+		cout << "Error al abrir al crear el archivo.\nNo se guardaran los datos.\n";
+
+	ConjuntoInt::setCaso(MEJOR);
+	double tiempo; int tmp;
+	for (int talla = TALLA_INI; talla <= TALLA_FIN; talla += TALLA_DELTA) {
+		ConjuntoInt *v = new ConjuntoInt(talla);
+
+		tiempo = 0;
+		for (int i = 0; i < REPETICIONES*5; i++) {
+			v->GeneraVector(talla);
+			tiempo += buscaEnArrayDeInt(v->GeneraKey() ,v->getDatos(), talla, metodo, tmp);
+			v->vaciar();
+		}
+		tiempo /= REPETICIONES*5;
+
+		delete v;
+
+
+		//Mostrar los datos
+		cout << "\t\t" << talla << "\t     " << setw(10) << fixed << setprecision(4) << tiempo << "\n"; ///TODO: Poner el setw, fixed y setpresition 4 a todo.
+		if (talla != TALLA_INI)
+			file << talla << "\t" << tiempo << "\n";
+	}
+	file.close();
+
+	//Generar grafica
+	char opt;
+	cout << "\nGenerar grafica (s, n): ";
+	cin >> opt;
+	if (opt == 's' || opt == 'S') {
+		Graficas g;
+		g.generarGraficaMEDIO(nombreAlgoritmo[metodo], complegidadAlgoritmo[metodo]);
+		cout << "La grafica fue generada.\n\n";
+		system("start grafica.gpl");
+	} else cout << "No se generara la grafica.\n\n";
+
+	system("pause");
 }	
 
 void TestBusqueda::compararTodos()
 {
-	//** ESCRIBIR PARA COMPLETAR LA PRACTICA **//
+	cout << "\t  Comparativa de todos los algoritmos \t"
+		<< "\n\n"
+		<< "             \t\t       \t      TIEMPO (ms)\n"
+		<< "       TALLA \t\t       \t";
+	for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++)
+		cout << nombreAlgoritmo[algoritmo] << "  \t";
+	cout << "\n";
+
+	ofstream file("tTodos.dat");
+	if (file.fail())
+		cout << "Error al abrir al crear el archivo.\nNo se guardaran los datos.\n";
+
+	ConjuntoInt::setCaso(MEJOR);
+	double *tiempo = new double[nombreAlgoritmo.size()]; int tmp;
+	for (int talla = TALLA_INI/10; talla <= TALLA_FIN/10; talla += TALLA_DELTA/10) {
+		ConjuntoInt *v = new ConjuntoInt(talla);
+
+		for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++) {
+			tiempo[algoritmo] = 0;
+			for (int i = 0; i < REPETICIONES*10; i++) {
+				v->GeneraVector(talla);
+				tiempo[algoritmo] += buscaEnArrayDeInt(v->GeneraKey(), v->getDatos(), talla, algoritmo, tmp);
+				v->vaciar();
+			}
+			tiempo[algoritmo] /= REPETICIONES*10;
+		}
+
+		delete v;
+
+
+		//Mostrar los datos
+		cout.precision(4);
+		cout << "\t" << talla << "\t";
+		for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++)
+			cout << "\t    " << setw(10) << fixed << setprecision(4) << tiempo[algoritmo];
+		cout << "\n";
+		if (talla != TALLA_INI/10) {
+			file << talla;
+			for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++)
+				file << "\t" << tiempo[algoritmo];
+			file << "\n";
+		}
+	}
+	file.close();
+
+	//Generar grafica
+	char opt;
+	cout << "\nGenerar grafica (s, n): ";
+	cin >> opt;
+	if (opt == 's' || opt == 'S') {
+		Graficas g;
+		g.generarGraficaCMPtodos(nombreAlgoritmo);
+		cout << "La grafica fue generada.\n\n";
+		system("start grafica.gpl");
+	} else cout << "No se generara la grafica.\n\n";
+
+	system("pause");
 }

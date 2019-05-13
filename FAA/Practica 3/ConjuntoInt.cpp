@@ -31,23 +31,21 @@ int* ConjuntoInt::getDatos()
 
 int ConjuntoInt::GeneraKey()
 {
-	return datos[rand() % tamano];
-	//return datos[tamano / 2];
+	//return datos[rand() % tamano];
+	return datos[tamano / 2];
 	//return rand()%10000; //genera un número aleatorio entre 1 y 999
 }
 
 void ConjuntoInt::GeneraVector (int tam)
 {
- tamano=tam;
- for (int i = 0; i < tamano; i++)
-	 datos[i] = rand() % 10000;
- switch (casoInstancia) {
-	case MEJOR: ordenarCreciente(); break;
-	case MEDIO: break;
-	case PEOR: ordenarDeCreciente(); break;
- }
-
- 
+	 tamano=tam;
+	 for (int i = 0; i < tamano; i++)
+		 datos[i] = rand() % 10000;
+	 switch (casoInstancia) {
+		case MEJOR: ordenarCreciente(); break;
+		case MEDIO: break;
+		case PEOR: ordenarDeCreciente(); break;
+	 }
 }
 
 void ConjuntoInt::ordenarCreciente() {

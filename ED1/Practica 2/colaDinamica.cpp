@@ -82,14 +82,20 @@ void cola::vaciar(){
     ne = fin = inicio = 0;
     Tama = INCREMENTO;
 }
-void cola::clonar(cola c){
+void cola::clonar(cola &c){
     vaciar();
+    cola cTMP; //Para no cargarme la original
     while(!c.esvacia()){
         encolar(c.primero());
+        cTMP.encolar(c.primero());
         c.desencolar();
     }
+    while(!cTMP.esvacia()){
+        c.encolar(cTMP.primero());
+        cTMP.desencolar();
+    }
 }
-bool cola::comparar(cola c){
+bool cola::comparar(cola &c){   //! DEPRECATED
     if(c.longitud() != longitud()) return false;
 
     bool igual = true;

@@ -146,7 +146,7 @@ void TestOrdenacion::casoMedio(int metodo)
 	cin >> opt;
 	if (opt == 's' || opt == 'S') {
 		Graficas g;
-		g.generarGraficaMEDIO(nombreAlgoritmo[metodo], CUADRADO);
+		g.generarGraficaMEDIO(nombreAlgoritmo[metodo], complegidadAlgoritmo[metodo]);
 		cout << "La grafica fue generada.\n\n";
 		system("start grafica.gpl");
 	}else cout << "No se generara la grafica.\n\n";

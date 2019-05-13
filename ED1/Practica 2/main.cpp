@@ -10,8 +10,8 @@
 using namespace std;
 
 char menu(){
-    //system("cls");
-    cout << "Peluquería Corte 2.0\n"
+    system("cls");
+    cout << "Peluqueria Corte 2.0\n"
          << "----------------------------------\n"
          << "1. Leer fichero (rescatar copia)\n"
          << "2. Insertar peluquero\n"
@@ -37,7 +37,7 @@ int main(){
     char opt;
     do{
         opt = menu();
-        //system("cls");
+        system("cls");
         switch(opt){
             //!Ponerle cabeceras a todas las opciones
             case '1':
@@ -51,6 +51,7 @@ int main(){
             break;
             case '2':
                 peluquerof Ptmp;
+                cin.ignore();
                 cout << "Nombre del peluquero: ";
                 gets(Ptmp.Nombre);
                 cout << "Apellidos del peluquero: ";

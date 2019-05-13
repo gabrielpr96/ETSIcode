@@ -29,17 +29,21 @@ void Graficas::generarGraficaMEDIO(string nombre_metodo,int orden)
 		<< "N(x) = ";
 
 	switch (orden) {
+		case N:			file << "a*x + b";	break;
 		case CUADRADO:	file << "a*x*x + b*x + c";	break;
 		case NlogN:		file << "a*x*(log(x)/log(2))"; break;
-		case logN:		file << "a+(log(x)/log(2))"; break;
 		case AXpB:		file << "a*x + b";	break;
 		case AX3t2pB:	file << "a*sqrt(x*x*x) + b"; break;
+		case log2N:		file << "a+ b*(log(x)/log(2))"; break;
+		case log3N:		file << "a+ b*(log(x)/log(3))"; break;
 	}
 	file << "\nfit N(x) \"t" << nombre_metodo << ".dat\" using 1:2 via ";
 	switch (orden) {
 		case CUADRADO:	file << "a,b,c"; break;
-		case NlogN:
-		case logN:		file << "a";	break;
+		case NlogN:		file << "a";	break;
+		case log2N:
+		case log3N:
+		case N:
 		case AXpB:
 		case AX3t2pB:		file << "a,b";	break;
 	}
