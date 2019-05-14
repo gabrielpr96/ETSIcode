@@ -1,6 +1,7 @@
 #include "listaDinamica.h"
 #include <iostream>
 lista::lista(){
+    /*
     elementos = new peluquero[INCREMENTO];
     if(elementos == NULL){
         Tama = n = -1;
@@ -8,6 +9,9 @@ lista::lista(){
         Tama = INCREMENTO;
         n = 0;
     }
+    */
+    elementos = NULL;
+    vaciar();
 }
 lista::~lista(){
     if(elementos != NULL)
@@ -17,6 +21,8 @@ lista::~lista(){
 }
 lista::lista(peluquero &e){}
 void lista::vaciar(){
+    if(elementos != NULL)
+        delete [] elementos;
     elementos = new peluquero[INCREMENTO];
     if(elementos == NULL){
         Tama = n = -1;

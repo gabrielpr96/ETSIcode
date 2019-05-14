@@ -98,7 +98,9 @@ void peluqueria::Mostrar(){
             << "Codigo: " << pTMP->Codigo << "\n"
             << "Lista de clientes: \n";
 
+        cout << "Tamano: " << pTMP->Col.longitud() << "\n";
         cTMP.clonar(pTMP->Col);
+        cout << "Tamano: " << cTMP.longitud() << "\n";
         while(!cTMP.esvacia()){
             cliTMP = cTMP.primero();
             cTMP.desencolar();
@@ -120,23 +122,14 @@ void peluqueria::IncorporarPeluquero(peluquerof t){
     strcpy(pTMP.Nombre, t.Nombre);
     strcpy(pTMP.Apellidos, t.Apellidos);
 
-    int nPeluqueros = L.longitud();
-    int i = 1, iNuevo = -1;
-    while(i <= nPeluqueros && nPeluqueros == L.longitud()){//Esa es una forma de saber que aun no se ha insertado
-        if(L.observar(i).Codigo > t.Codigo){
-            iNuevo = i;
-        }else if(i == nPeluqueros){
-            iNuevo = i+1;
-        }else{
-            i++;
-        }
-        if(iNuevo != -1)
-            L.insertar(iNuevo, pTMP);
-    }
+    int pos = posicionCorrecta(t.Codigo);
+    L.insertar(pos, pTMP);
+    //cout << "Insertado en " << pos << "\n";
 
     //Ahora hay que calcular cuantos clientes hay del tipo que este nuevo peluquero puede antender
     int nClientes = 0;
     int nPeluquerosCompatibles = 0;
+    int nPeluqueros = L.longitud();
     for(int i = 1; i <= nPeluqueros; i++){
         if(L.observar(i).TipoServicio == t.TipoServicio){
             nClientes += L.observar(i).Col.longitud();
@@ -144,51 +137,45 @@ void peluqueria::IncorporarPeluquero(peluquerof t){
         }
     }
     nClientes /= nPeluquerosCompatibles; // Cuanto le toca a cada uno
+    //cout << "Cada uno debe tener " << nClientes << "\n";
 
-    i = 1;
-    while(L.observar(iNuevo).Col.longitud() < nClientes){
-        if(L.observar(i).TipoServicio == t.TipoServicio && i != iNuevo){
-            L.observar(iNuevo).Col.encolar(L.observar(i).Col.primero());
-            L.observar(i).Col.desencolar();
-        }
-        i++;
-        if(i == nPeluqueros) //Ojo con no meterle sus propios clientes
-            i = 1;
+    peluquero *pNuevo = &L.observar(pos);
+    peluquero *pMayor;
+    while(pNuevo->Col.longitud() < nClientes){
+        pMayor = &L.observar(peluqueroMasOcupado(t.TipoServicio, t.Codigo));   //Encontrar el mas ocupado
+        //cout << "El mas ocupado es " << pMayor->Nombre << "\n";
+        pNuevo->Col.encolar(pMayor->Col.primero());   //Mover el cliente
+        pMayor->Col.desencolar();
     }
 }
 bool peluqueria::RetirarPeluquero(int codigo){
     //Primero encontrarlo en la lista
-    int nClientes = L.longitud(), iEliminar = -1;
-    int i = 1;
-    while(i <= nClientes && iEliminar == -1){
-        if(L.observar(i).Codigo == codigo)
-            iEliminar = i;
-        i++;
-    }
+    int pos = buscarPorCodigo(codigo);
 
-    if(iEliminar != -1){//Comprobar que no sea el unico de su especialidad
-            bool tieneSuplente = false;
-        if(iEliminar != -1){//Reasignar sus clientes
-            i = 1;
-            while(!L.observar(iEliminar).Col.esvacia()){
-                i++;
+    if(pos != -1){
+        peluquero *pRetirar = &L.observar(pos);
+        int i = 1;
+        bool tieneSuplente = false;
+        while(!tieneSuplente){
+            tieneSuplente = L.observar(i++).TipoServicio == pRetirar->TipoServicio;
+        }
+        if(tieneSuplente){
+            while(!pRetirar->Col.esvacia()){
+                L.observar(peluqueroMenosOcupado(pRetirar->TipoServicio, codigo)).Col.encolar(pRetirar->Col.primero());
+                pRetirar->Col.desencolar();
             }
+            L.eliminar(posicionCorrecta(pRetirar->Codigo));
             return true;
         }
     }
+
     return false;
 }
 bool peluqueria::IncorporarCliente(cliente cli){
     //determinar el peluquero con la cola mas corta de su especialidad
-    int pSeleccionado = -1;
-
-    int nPeluqueros = L.longitud();
-    for(int i = 1; i <= nPeluqueros; i++){
-        if(L.observar(i).TipoServicio == cli.TipoServicio && (pSeleccionado == -1 || L.observar(i).Col.longitud() < L.observar(pSeleccionado).Col.longitud()))
-            pSeleccionado = i;
-    }
-
+    int pSeleccionado = peluqueroMenosOcupado(cli.TipoServicio, -1);
     cout << "pSeleccionado: " << pSeleccionado << "\n";
+
     if(pSeleccionado != -1){
         //Asignarselo
         cout << "Voy a asignarselo a " << L.observar(pSeleccionado).Nombre << "\n";
@@ -198,4 +185,50 @@ bool peluqueria::IncorporarCliente(cliente cli){
 bool peluqueria::EliminarCliente(cadena Nombre, cadena Apelllidos){
 }
 bool peluqueria::AtenderCliente(int CodigoPeluquero){
+}
+
+
+int peluqueria::buscarPorCodigo(int Codigo){
+    int nClientes = L.longitud(), iPeluquero = -1;
+    int i = 1;
+    while(i <= nClientes && iPeluquero == -1){
+        if(L.observar(i).Codigo == Codigo)
+            iPeluquero = i;
+        i++;
+    }
+    return iPeluquero;
+}
+int peluqueria::posicionCorrecta(int Codigo){
+    int nPeluqueros = L.longitud();
+    int i = 1, iNuevo = -1;
+    while(iNuevo == -1){//Esa es una forma de saber que aun no se ha insertado
+        if(L.observar(i).Codigo > Codigo){
+            iNuevo = i;
+        }else if(i == nPeluqueros){
+            iNuevo = i+1;
+        }else{
+            i++;
+        }
+    }
+    return iNuevo;
+}
+int peluqueria::peluqueroMasOcupado(int Servicio, int codigoIgnorar){
+    int i = 1, nPeluqueros = L.longitud(), iMayor = -1;
+    while(i <= nPeluqueros){
+        if(L.observar(i).Codigo != codigoIgnorar && L.observar(i).TipoServicio == Servicio &&
+           (iMayor == -1 || L.observar(i).Col.longitud() > L.observar(iMayor).Col.longitud()))
+            iMayor = i;
+        i++;
+    }
+    return iMayor;
+}
+int peluqueria::peluqueroMenosOcupado(int Servicio, int codigoIgnorar){
+    int i = 1, nPeluqueros = L.longitud(), iMenor = -1;
+    while(i <= nPeluqueros){
+        if(L.observar(i).Codigo != codigoIgnorar && L.observar(i).TipoServicio == Servicio &&
+           (iMenor == -1 || L.observar(i).Col.longitud() < L.observar(iMenor).Col.longitud()))
+            iMenor = i;
+        i++;
+    }
+    return iMenor;
 }

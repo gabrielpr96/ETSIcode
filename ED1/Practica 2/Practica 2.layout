@@ -2,46 +2,51 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="colaDinamica.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="peluqueria.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2339" topLine="74" />
+			<Cursor1 position="3248" topLine="42" />
 		</Cursor>
+		<Folding>
+			<Collapse line="6" />
+			<Collapse line="46" />
+			<Collapse line="117" />
+			<Collapse line="150" />
+			<Collapse line="190" />
+			<Collapse line="200" />
+			<Collapse line="214" />
+		</Folding>
+	</File>
+	<File name="colaDinamica.cpp" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1231" topLine="39" />
+		</Cursor>
+		<Folding>
+			<Collapse line="94" />
+		</Folding>
 	</File>
 	<File name="colaDinamica.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="746" topLine="0" />
+			<Cursor1 position="85" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="peluqueria.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="497" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="listaDinamica.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="105" topLine="63" />
-		</Cursor>
-	</File>
-	<File name="listaDinamica.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="559" topLine="6" />
+			<Cursor1 position="2101" topLine="48" />
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1871" topLine="36" />
+			<Cursor1 position="3194" topLine="75" />
 		</Cursor>
 	</File>
-	<File name="peluqueria.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="listaDinamica.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5485" topLine="12" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-			<Collapse line="10" />
-			<Collapse line="46" />
-			<Collapse line="85" />
-			<Collapse line="115" />
-		</Folding>
-	</File>
-	<File name="peluqueria.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="569" topLine="0" />
+			<Cursor1 position="152" topLine="6" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

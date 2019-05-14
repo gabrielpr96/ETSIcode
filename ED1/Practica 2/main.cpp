@@ -16,7 +16,7 @@ char menu(){
          << "1. Leer fichero (rescatar copia)\n"
          << "2. Insertar peluquero\n"
          << "3. Insertar cliente\n"
-         << "4. Retirar peluqiero\n"
+         << "4. Retirar peluquero\n"
          << "5. Atender cliente\n"
          << "6. Mostrar peluqueria\n"
          << "7. Eliminar un cliente\n"
@@ -33,6 +33,7 @@ char menu(){
 
 int main(){
     peluqueria p;
+    p.AbrirPeluqueria("inicial.dat"); //Eliminar
 
     char opt;
     do{
@@ -51,6 +52,7 @@ int main(){
             break;
             case '2':
                 peluquerof Ptmp;
+
                 cin.ignore();
                 cout << "Nombre del peluquero: ";
                 gets(Ptmp.Nombre);
@@ -67,6 +69,7 @@ int main(){
                 cliente Ctmp;
                 int h, m;
 
+                cin.ignore();
                 cout << "Nombre del cliente: ";
                 gets(Ctmp.Nombre);
                 cout << "Apellidos del cliente: ";

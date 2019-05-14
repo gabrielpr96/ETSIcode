@@ -13,6 +13,10 @@ struct peluquerof{
 
 class peluqueria{
     lista L; //lista de los técnicos que están atendiendo
+    int buscarPorCodigo(int Codigo);
+    int posicionCorrecta(int Codigo);
+    int peluqueroMasOcupado(int Servicio, int codigoIgnorar);
+    int peluqueroMenosOcupado(int Servicio, int codigoIgnorar);
 public:
     peluqueria();
     void AbrirPeluqueria(char *nombrefichero);

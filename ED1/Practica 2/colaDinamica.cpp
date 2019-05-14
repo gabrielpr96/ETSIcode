@@ -13,6 +13,7 @@ cola::cola(){
         ne = fin = inicio = 0;
         Tama = INCREMENTO;
     }
+    std::cout << "Soy la cola " << this << " y me han dado " << elementos << "\n";
 }
 cola::~cola(){
     if(elementos != NULL)
@@ -28,22 +29,20 @@ void cola::encolar(cliente e){
             for(int i = 0; i < ne; i++){
                 //Emoueza a copiar ya desfragmentado
                 elementosTMP[i] = elementos[inicio];
-                //inicio++;
-                //if(inicio == Tama) inicio = 0;
-                inicio = (inicio)%Tama;
+                inicio = (inicio+1)%Tama;
             }
             inicio = 0;
             fin = ne;
             Tama += INCREMENTO;
             delete [] elementos;
             elementos = elementosTMP;
+
+        std::cout << "Soy la cola " << this << " y mi nuevo elementos es " << elementos << "\n";
         }
     }
     if(ne < Tama){
         elementos[fin] = e;
         fin = (fin+1)%Tama;
-        //fin++;
-        //if(fin == Tama) fin = 0;
         ne++;
     }
 }
@@ -51,17 +50,22 @@ void cola::desencolar(){
     inicio = (inicio+1)%Tama;
     ne--;
 
-    if(Tama-ne >= INCREMENTO && Tama > INCREMENTO){
+    if(Tama-ne == INCREMENTO && Tama > INCREMENTO){
+        std::cout << "\nTama: " << Tama << "  ne: " << ne << "\n";
+        std::cout << "Soy la cola " << this << " y mi elementos es " << elementos << "\n";
         cliente *elementosTMP = new cliente[Tama-INCREMENTO];
         if(elementosTMP != NULL){
             for(int i = 0; i < ne; i++){
+                std::cout << "Copio el " << inicio << " en el nuevo " << i << "\n";
                 elementosTMP[i] = elementos[inicio];
                 inicio = (inicio+1)%Tama;
             }
             Tama -= INCREMENTO;
             inicio = 0;
             fin = Tama;
+            std::cout << "Voy a liberar " << elementos << " me quedo con " << elementosTMP << "\n";
             delete [] elementos;
+            std::cout << "He liberado\n";
             elementos = elementosTMP;
         }
     }
@@ -92,7 +96,9 @@ void cola::clonar(cola &c){
     }
     while(!cTMP.esvacia()){
         c.encolar(cTMP.primero());
+        std::cout << "Encolar.\n";
         cTMP.desencolar();
+        std::cout << "DesEncolar.\n";
     }
 }
 bool cola::comparar(cola &c){   //! DEPRECATED
