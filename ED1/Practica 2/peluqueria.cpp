@@ -1,13 +1,15 @@
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include "peluqueria.h"
 
 using namespace std;
 
 peluqueria::peluqueria(){
-    L.vaciar();
+    //L.vaciar();
 }
 
+void printn(char c, int n);
 void peluqueria::AbrirPeluqueria(char *nombrefichero){
     ifstream file(nombrefichero, ios::binary);
 
@@ -37,9 +39,9 @@ void peluqueria::AbrirPeluqueria(char *nombrefichero){
             //cout << "Incorporado\n";
         }
 
-        cout << "Fichero cargado correctamente.\n";
+        cout << "\tFichero cargado correctamente.\n";
     }else{
-        cout << "No se pudo abrir el fichero.\n";
+        cout << "\tNo se pudo abrir el fichero.\n";
     }
 
     file.close();
@@ -50,69 +52,86 @@ void peluqueria::VolcarPeluqueria(char *nombrefichero){
     if(file){
         int nPeluqueros = L.longitud(), nClientes = 0;
         peluquerof pfTMP;
-        peluquero pTMP;
+        peluquero *pTMP;
         cliente cTMP;
         cola colaTMP;
 
         file.write((char *) &nPeluqueros, sizeof(int));
         for(int i = 0; i < nPeluqueros; i++){
             file.seekp(sizeof(int) + sizeof(peluquerof)*i, ios::beg);
-            cout << "SEEK: " << (sizeof(int) + sizeof(peluquerof)*i) << "\n";
-            pTMP = L.observar(i+1);
-            strcpy(pfTMP.Nombre,pTMP.Nombre);
-            strcpy(pfTMP.Apellidos,pTMP.Apellidos);
-            pfTMP.Codigo = pTMP.Codigo;
-            pfTMP.TipoServicio = pTMP.TipoServicio;
+            //cout << "SEEK: " << (sizeof(int) + sizeof(peluquerof)*i) << "\n";
+            pTMP = &L.observar(i+1);
+            strcpy(pfTMP.Nombre,pTMP->Nombre);
+            strcpy(pfTMP.Apellidos,pTMP->Apellidos);
+            pfTMP.Codigo = pTMP->Codigo;
+            pfTMP.TipoServicio = pTMP->TipoServicio;
             file.write((char *) &pfTMP, sizeof(peluquerof));
 
-            colaTMP.clonar(pTMP.Col);
+            colaTMP.clonar(pTMP->Col);
             while(!colaTMP.esvacia()){
                 cTMP = colaTMP.primero();
                 file.seekp(sizeof(int) + sizeof(peluquerof)*nPeluqueros + sizeof(int) + sizeof(cliente)*nClientes, ios::beg);
-                cout << " SEEK:  " << (sizeof(int) + sizeof(peluquerof)*nPeluqueros + sizeof(int) + sizeof(cliente)*nClientes) << "\n";
+                //cout << " SEEK:  " << (sizeof(int) + sizeof(peluquerof)*nPeluqueros + sizeof(int) + sizeof(cliente)*nClientes) << "\n";
                 file.write((char *) &cTMP, sizeof(cliente));
                 colaTMP.desencolar();
                 nClientes+=1;
             }
         }
 
-        cout << "Fichero guardado correctamente.\n";
+        file.seekp(sizeof(int) + sizeof(peluquerof)*nPeluqueros, ios::beg);
+        file.write((char *) &nClientes, sizeof(int));
+
+
+        cout << "\tFichero guardado correctamente.\n";
     }else{
-        cout << "No se pudo guardar el fichero.\n";
+        cout << "\tNo se pudo guardar el fichero.\n";
     }
 
     file.close();
 }
 void peluqueria::Mostrar(){
-    cout << "Peluqueros activos:\n\n";
-
     int nPeluqueros = L.longitud();
     peluquero *pTMP;
     cola cTMP;
     cliente cliTMP;
+    cadena nTMP;
+
+
+   // printn(32,5); printn(204,1);printn(205,68);printn(185,1); cout << "\n";
+    //printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+
+
+    //printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    //printn(32,5); printn(200,1); printn(205,68); printn(188,1); cout << "\n";
+
     for(int i = 1; i <= nPeluqueros; i++){
         pTMP = &L.observar(i);
-        cout << "Nombre: " << pTMP->Nombre << "\n"
-            << "Apellidos: " << pTMP->Apellidos << "\n"
-            << "Tipo de servicio: " << pTMP->TipoServicio << "\n"
-            << "Codigo: " << pTMP->Codigo << "\n"
-            << "Lista de clientes: \n";
 
-        cout << "Tamano: " << pTMP->Col.longitud() << "\n";
+        printn(32,5); printn(201,1); printn(205,68); printn(187,1); cout << "\n";
+        strcpy(nTMP, pTMP->Apellidos);
+        strcat(nTMP, ", ");
+        strcat(nTMP, pTMP->Nombre);
+        printn(32,5); printn(186,1); cout << " Peluquero " << setw(2) << pTMP->Codigo << ": " << setw(31) << left << nTMP << "Tipo de servicio: " << pTMP->TipoServicio << "   "; printn(186,1); cout << "\n";
+        printn(32,5); printn(204,1);printn(205,68);printn(185,1); cout << "\n";
+        printn(32,5); printn(186,1); cout << setw(30) << "  Apellidos y nombre" <<"  "<< setw(10) << "Edad" <<"   "<< setw(10) << "Servicio" <<"   "<< setw(10) << "Llegada   "; printn(186,1); cout << "\n";
+        printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+
+        //cout << "Tamano: " << pTMP->Col.longitud() << "\n";
         cTMP.clonar(pTMP->Col);
-        cout << "Tamano: " << cTMP.longitud() << "\n";
+        //cout << "Tamano: " << cTMP.longitud() << "\n";
         while(!cTMP.esvacia()){
             cliTMP = cTMP.primero();
             cTMP.desencolar();
 
-            cout << "\tNombre: " << cliTMP.Nombre << "\n"
-                << "\tApellidos: " << cliTMP.Apellidos << "\n"
-                << "\tEdad: " << cliTMP.Edad << "\n"
-                << "\tHora de llegada: " << (cliTMP.HoraLlegada/60) << ":" << (cliTMP.HoraLlegada%60) << "\n"
-                << "\tTipo de servicio: " << cliTMP.TipoServicio << "\n\n"; //Esta linea es redundante
+
+            strcpy(nTMP, cliTMP.Apellidos);
+            strcat(nTMP, ", ");
+            strcat(nTMP, cliTMP.Nombre);
+            printn(32,5); printn(186,1); cout << "  " << setw(30) << nTMP <<" "<< setw(2) << cliTMP.Edad <<"             "<< setw(1) << cliTMP.TipoServicio <<"          "<< setw(2) << (cliTMP.HoraLlegada/60) << ":" << setw(2) << setfill('0') << (cliTMP.HoraLlegada%60) << "    " << setfill(' '); printn(186,1); cout << "\n";
+
         }
 
-        cout << "-------------------------------\n\n";
+        printn(32,5); printn(200,1); printn(205,68); printn(188,1); cout << "\n\n";
     }
 }
 void peluqueria::IncorporarPeluquero(peluquerof t){
@@ -154,17 +173,16 @@ bool peluqueria::RetirarPeluquero(int codigo){
 
     if(pos != -1){
         peluquero *pRetirar = &L.observar(pos);
-        int i = 1;
-        bool tieneSuplente = false;
-        while(!tieneSuplente){
-            tieneSuplente = L.observar(i++).TipoServicio == pRetirar->TipoServicio;
-        }
-        if(tieneSuplente){
+
+        int i = 1, nPeluqueros = L.longitud();
+        while(!(L.observar(i).Codigo != codigo && L.observar(i).TipoServicio == pRetirar->TipoServicio) && i <= nPeluqueros) i++;
+
+        if(i <= nPeluqueros || pRetirar->Col.esvacia()){
             while(!pRetirar->Col.esvacia()){
                 L.observar(peluqueroMenosOcupado(pRetirar->TipoServicio, codigo)).Col.encolar(pRetirar->Col.primero());
                 pRetirar->Col.desencolar();
             }
-            L.eliminar(posicionCorrecta(pRetirar->Codigo));
+            L.eliminar(pos);
             return true;
         }
     }
@@ -174,17 +192,54 @@ bool peluqueria::RetirarPeluquero(int codigo){
 bool peluqueria::IncorporarCliente(cliente cli){
     //determinar el peluquero con la cola mas corta de su especialidad
     int pSeleccionado = peluqueroMenosOcupado(cli.TipoServicio, -1);
-    cout << "pSeleccionado: " << pSeleccionado << "\n";
 
     if(pSeleccionado != -1){
         //Asignarselo
-        cout << "Voy a asignarselo a " << L.observar(pSeleccionado).Nombre << "\n";
+        //cout << "Voy a asignarselo a " << L.observar(pSeleccionado).Nombre << "\n";
         L.observar(pSeleccionado).Col.encolar(cli);
+
+        return true;
     }
+
+    return false;
 }
 bool peluqueria::EliminarCliente(cadena Nombre, cadena Apelllidos){
+    int nPeluqueros = L.longitud();
+    peluquero *pTMP;
+    cola cTMP;
+    bool eliminado = false;
+    int i = 1;
+    while(i <= nPeluqueros && !eliminado){
+        cTMP.vaciar();
+        pTMP = &L.observar(i);
+        while(!pTMP->Col.esvacia()){
+            if(!eliminado && strcmp(pTMP->Col.primero().Nombre, Nombre) == 0 && strcmp(pTMP->Col.primero().Apellidos, Apelllidos) == 0)
+                eliminado = true; //Si coincide, no lo copio
+            else
+                cTMP.encolar(pTMP->Col.primero());
+            pTMP->Col.desencolar();
+        }
+        //Restaurar la cola, sin el eliminado
+        pTMP->Col.clonar(cTMP);
+        i++;
+    }
+
+    return eliminado;
 }
 bool peluqueria::AtenderCliente(int CodigoPeluquero){
+    int pos = buscarPorCodigo(CodigoPeluquero);
+    if(pos != -1){
+        peluquero *pTMP = &L.observar(pos);
+        if(!pTMP->Col.esvacia()){
+            pTMP->Col.desencolar();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    return false;
 }
 
 

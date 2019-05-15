@@ -68,7 +68,7 @@ void lista::eliminar(int i){
     if(Tama-n >= INCREMENTO && Tama > INCREMENTO){
         peluquero *elementosTMP = new peluquero[Tama-INCREMENTO];
         if(elementosTMP != NULL){
-            for(int pos = 0; pos < Tama; pos++)
+            for(int pos = 0; pos < Tama-INCREMENTO; pos++) //!Muy importate NO llegar hasta el final
                 copiarpeluquero(elementosTMP[pos], elementos[pos]);
             Tama -= INCREMENTO;
             delete [] elementos;

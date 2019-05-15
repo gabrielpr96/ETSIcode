@@ -29,15 +29,15 @@
 	"listaDinamica.h"
 	<iostream>
 
-1557846487 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.cpp
+1557929643 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.cpp
 	<cstdlib>
 	<cstring>
 	"colaDinamica.h"
 	<iostream>
 
-1557832640 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.h
+1557918225 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.h
 
-1557829200 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listadinamica.cpp
+1557929039 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listadinamica.cpp
 	"listaDinamica.h"
 	<iostream>
 
@@ -46,7 +46,7 @@
 	<cstring>
 	"colaDinamica.h"
 
-1557830318 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\main.cpp
+1557937046 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\main.cpp
 	<iostream>
 	<cstdlib>
 	<cstdio>
@@ -60,9 +60,10 @@
 	"listaDinamica.h"
 	"colaDinamica.h"
 
-1557831258 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\peluqueria.cpp
+1557937852 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\peluqueria.cpp
 	<fstream>
 	<iostream>
+	<iomanip>
 	"peluqueria.h"
 
 1557836250 source:c:\users\usuario\desktop\practica 2\coladinamica.cpp

@@ -9,21 +9,60 @@
 
 using namespace std;
 
+
+void printn(char c, int n){
+    for(int i = 0; i < n; i++)
+        cout << c;
+}
+void printTitulo(const char *titulo){
+    cout << "\n";
+
+    printn(32,5); printn(201,1); printn(205,68); printn(187,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "Peluquer"<<char(161)<<"a Corte 2.0"; printn(32,24);printn(186,1); cout << "\n";
+    printn(32,5); printn(204,1);printn(205,68);printn(185,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+
+    int div = (68-strlen(titulo))/2, extra = (68-strlen(titulo))-(2*div);
+    printn(32,5); printn(186,1);printn(32, div); cout << titulo; printn(32, div+extra);printn(186,1); cout << "\n";
+
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(200,1); printn(205,68); printn(188,1); cout << "\n";
+
+    cout << "\n\n";
+}
 char menu(){
     system("cls");
-    cout << "Peluqueria Corte 2.0\n"
-         << "----------------------------------\n"
-         << "1. Leer fichero (rescatar copia)\n"
-         << "2. Insertar peluquero\n"
-         << "3. Insertar cliente\n"
-         << "4. Retirar peluquero\n"
-         << "5. Atender cliente\n"
-         << "6. Mostrar peluqueria\n"
-         << "7. Eliminar un cliente\n"
-         << "8. Volcar a fichero (crear copia)\n"
-         << "0. Salir\n"
-         << "----------------------------------\n"
-         << "Introduzca una operacion: ";
+
+    cout << "\n";
+    printn(32,5); printn(201,1); printn(205,68); printn(187,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "Peluquer"<<char(161)<<"a Corte 2.0"; printn(32,24);printn(186,1); cout << "\n";
+    printn(32,5); printn(204,1);printn(205,68);printn(185,1); cout << "\n";
+
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "1. Leer fichero"; printn(32,29);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "2. Insertar peluquero"; printn(32,23);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "3. Insertar cliente"; printn(32,25);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "4. Retirar peluquero"; printn(32,24);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "5. Atender cliente"; printn(32,26);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "6. Mostrar peluqueria"; printn(32,23);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "7. Eliminar un cliente"; printn(32,22);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "8. Volcar a fichero"; printn(32,25);printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(186,1);printn(32,24); cout << "0. Salir"; printn(32,36);printn(186,1); cout << "\n";
+
+    printn(32,5); printn(186,1); printn(32,68); printn(186,1); cout << "\n";
+    printn(32,5); printn(200,1); printn(205,68); printn(188,1); cout << "\n";
+
+    cout << "\t\tIntroduzca una operacion: ";
+
     char opt;
     cin >> opt;
     while(opt < '0' || opt > '8')
@@ -42,87 +81,107 @@ int main(){
         switch(opt){
             //!Ponerle cabeceras a todas las opciones
             case '1':
-                //!Listar todos los .dat
-                cout << "Nombre del fichero a cargar: ";
+                printTitulo("Abrir un archivo guardado");
+
+                cout << "\tNombre del fichero a cargar: ";
                 cadena archivo;
                 cin >> archivo;
                 strcat(archivo, ".dat");
+                cin.ignore();
 
                 p.AbrirPeluqueria(archivo);
             break;
             case '2':
+                printTitulo("Insertar un peluquero");
                 peluquerof Ptmp;
 
                 cin.ignore();
-                cout << "Nombre del peluquero: ";
+                cout << "\tNombre del peluquero: ";
                 gets(Ptmp.Nombre);
-                cout << "Apellidos del peluquero: ";
+                cout << "\tApellidos del peluquero: ";
                 gets(Ptmp.Apellidos);
-                cout << "Codigo del peluquero: ";
+                cout << "\tCodigo del peluquero: ";
                 cin >> Ptmp.Codigo;
-                cout << "Tipo de servicio del peluquero: ";
+                cout << "\tTipo de servicio del peluquero: ";
                 cin >> Ptmp.TipoServicio;
+                cin.ignore();
 
                 p.IncorporarPeluquero(Ptmp);
+                cout << "\n\tPeluquero agregado correctamente.";
             break;
             case '3':
+                printTitulo("Insertar un cliente");
                 cliente Ctmp;
                 int h, m;
 
                 cin.ignore();
-                cout << "Nombre del cliente: ";
+                cout << "\tNombre del cliente: ";
                 gets(Ctmp.Nombre);
-                cout << "Apellidos del cliente: ";
+                cout << "\tApellidos del cliente: ";
                 gets(Ctmp.Apellidos);
-                cout << "Edad del cliente: ";
+                cout << "\tEdad del cliente: ";
                 cin >> Ctmp.Edad;
-                cout << "Tipo de servicio solicitado: ";
+                cout << "\tTipo de servicio solicitado: ";
                 cin >> Ctmp.TipoServicio;
-                cout << "Hora de llegada (horas minutos): ";
+                cout << "\tHora de llegada (horas minutos): ";
                 cin >> h >> m;
                 Ctmp.HoraLlegada = h*60 + m;
+                cin.ignore();
 
-                p.IncorporarCliente(Ctmp);
+                cout << "\n\t" << (p.IncorporarCliente(Ctmp)?"Cliente agregado correctamente.":"No se pudo agregar el cliente.") << "\n";
             break;
             case '4':
+                printTitulo("Retirar un peluquero");
                 int idP;
 
-                cout << "Codigo del peluquero a retirar: ";
+                cout << "\tCodigo del peluquero a retirar: ";
                 cin >> idP;
+                cin.ignore();
 
-                cout << "\n" << (p.RetirarPeluquero(idP)?"Peluquero retirado correctamente.":"No se pudo retirar al peluquero.") << "\n";
+                cout << "\n\t" << (p.RetirarPeluquero(idP)?"Peluquero retirado correctamente.":"No se pudo retirar al peluquero.") << "\n";
             break;
             case '5':
+                printTitulo("Atender a un cliente");
                 int idC;
 
-                cout << "Codigo del peluquero que atiende: ";
+                cout << "\tCodigo del peluquero que atiende: ";
                 cin >> idC;
+                cin.ignore();
 
-                cout << "\n" << (p.AtenderCliente(idC)?"El peluquero atendio a un cliente nuevo.":"El peluquero no pudo atendar a un nuevo cliente.") << "\n";
+                cout << "\n\t" << (p.AtenderCliente(idC)?"El peluquero atendio a un cliente nuevo.":"El peluquero no pudo atendar a un nuevo cliente.") << "\n";
             break;
             case '6':
+                printTitulo("Mostrar el almacen");
+
                 p.Mostrar();
+                cin.ignore();
             break;
             case '7':
+                printTitulo("Eliminar un cliente");
                 cadena nombre, apellidos;
-                cout << "Nombre del peluquero: ";
-                gets(nombre);
-                cout << "Apellidos del peluquero: ";
-                gets(apellidos);
 
-                cout << "\n" << (p.EliminarCliente(nombre, apellidos)?"Cliente eliminado correctamente.":"No se pudo eliminar al cliente.") << "\n";
+                cin.ignore();
+                cout << "\tNombre del cliente: ";
+                cin.getline(nombre, sizeof(cadena));
+                cout << "\tApellidos del cliente: ";
+                cin.getline(apellidos, sizeof(cadena));
+
+                cout << "\n\t" << (p.EliminarCliente(nombre, apellidos)?"Cliente eliminado correctamente.":"No se pudo eliminar al cliente.") << "\n";
             break;
             case '8':
-                cout << "Nombre del fichero a guardar: ";
+                printTitulo("Guardar a un archivo");
+
+                cout << "\tNombre del fichero a guardar: ";
                 cadena fichero;
                 cin >> fichero;
+                cin.ignore();
+
                 strcat(fichero, ".dat");
                 p.VolcarPeluqueria(fichero);
             break;
         }
         if(opt != '0'){
-            cout << "\n\nPulse una tecla para regresar al menu.";
-            cin.ignore();
+            cout << "\n\n\n\tPulse una tecla para regresar al menu.";
             cin.ignore();
         }
     }while(opt != '0');

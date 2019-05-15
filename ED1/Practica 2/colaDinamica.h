@@ -1,7 +1,7 @@
 #ifndef COLADINAMICA_H_INCLUDED
 #define COLADINAMICA_H_INCLUDED
 
-#define INCREMENTO 2
+#define INCREMENTO 1
 
 typedef char cadena[50];
 
