@@ -30,24 +30,40 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-g" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="colaDinamica.cpp" />
-		<Unit filename="colaDinamica.h" />
-		<Unit filename="listaDinamica.cpp" />
-		<Unit filename="listaDinamica.h">
-			<Option target="&lt;{~None~}&gt;" />
+		<Unit filename="colaDinamica.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 		</Unit>
+		<Unit filename="colaDinamica.h" />
+		<Unit filename="colaEnlazada.cpp" />
+		<Unit filename="colaEnlazada.h" />
+		<Unit filename="colaEstatica.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="colaEstatica.h" />
+		<Unit filename="listaDinamica.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="listaDinamica.h" />
+		<Unit filename="listaEnlazada.cpp" />
+		<Unit filename="listaEnlazada.h" />
+		<Unit filename="listaEstatica.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="listaEstatica.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="peluqueria.cpp" />
-		<Unit filename="peluqueria.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="peluqueria.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
+			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

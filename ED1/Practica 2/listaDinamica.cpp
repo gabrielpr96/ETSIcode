@@ -19,7 +19,10 @@ lista::~lista(){
     elementos = NULL;
     Tama = n = 0;
 }
-lista::lista(peluquero &e){}
+lista::lista(peluquero &e){
+    vaciar();
+    insertar(1, e);
+}
 void lista::vaciar(){
     if(elementos != NULL)
         delete [] elementos;
@@ -38,7 +41,7 @@ int lista::longitud(){
     return n;
 }
 bool lista::pertenece(peluquero &e){
-    return posicion(e)!=1;
+    return posicion(e)!=-1;
 }
 void lista::insertar(int i, peluquero &e){
     if(n == Tama){//Agrandar la tabla

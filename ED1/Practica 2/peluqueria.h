@@ -1,8 +1,8 @@
 #ifndef PELUQUERIA_H_INCLUDED
 #define PELUQUERIA_H_INCLUDED
 
-#include "listaDinamica.h"
-#include "colaDinamica.h"
+#include "listaEnlazada.h" //Cambiar para otra implementacion
+#include "colaEnlazada.h"
 
 struct peluquerof{
     int Codigo;

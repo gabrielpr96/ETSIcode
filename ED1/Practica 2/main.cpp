@@ -3,8 +3,6 @@
 #include <cstdio>
 #include <conio.h> //!Remplazar
 #include <cstring>
-#include "listaDinamica.h"
-#include "colaDinamica.h"
 #include "peluqueria.h"
 
 using namespace std;
@@ -72,7 +70,7 @@ char menu(){
 
 int main(){
     peluqueria p;
-    p.AbrirPeluqueria("inicial.dat"); //Eliminar
+    //p.AbrirPeluqueria("inicial.dat"); //Eliminar
 
     char opt;
     do{
