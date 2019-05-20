@@ -19,6 +19,6 @@ enum casosInstancia { MEJOR, PEOR, MEDIO };
 static const int REPETICIONES = 100;
 
 /* Constantes para indicar la variacion de las tallas del vector */
-enum valoresTallas { TALLA_INI = 1000, TALLA_FIN = 10000, TALLA_DELTA = 1000 };
+enum valoresTallas { TALLA_INI = 100, TALLA_FIN = 1000, TALLA_DELTA = 100 };
 
 #endif

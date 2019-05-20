@@ -216,17 +216,17 @@ void TestBusqueda::compararTodos()
 
 	ConjuntoInt::setCaso(MEJOR);
 	double *tiempo = new double[nombreAlgoritmo.size()]; int tmp;
-	for (int talla = TALLA_INI/10; talla <= TALLA_FIN/10; talla += TALLA_DELTA/10) {
+	for (int talla = TALLA_INI; talla <= TALLA_FIN; talla += TALLA_DELTA) {
 		ConjuntoInt *v = new ConjuntoInt(talla);
 
 		for (int algoritmo = 0; algoritmo < nombreAlgoritmo.size(); algoritmo++) {
 			tiempo[algoritmo] = 0;
-			for (int i = 0; i < REPETICIONES*10; i++) {
+			for (int i = 0; i < REPETICIONES; i++) {
 				v->GeneraVector(talla);
 				tiempo[algoritmo] += buscaEnArrayDeInt(v->GeneraKey(), v->getDatos(), talla, algoritmo, tmp);
 				v->vaciar();
 			}
-			tiempo[algoritmo] /= REPETICIONES*10;
+			tiempo[algoritmo] /= REPETICIONES;
 		}
 
 		delete v;
