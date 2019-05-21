@@ -24,6 +24,7 @@ AlgoritmosBusqueda:: ~AlgoritmosBusqueda() { }
 	 * param key: clave o elemento a buscar
 	 * return posición de la clave en el array
 	 */
+
 int AlgoritmosBusqueda::busquedaSecuencialIt(int v[], int size,int key)
 {
 	int i = 0;
@@ -33,6 +34,7 @@ int AlgoritmosBusqueda::busquedaSecuencialIt(int v[], int size,int key)
 	else
 		return i;
 }
+
 
 /*
 	 * Función busquedaBinariaRc, implementa el método de búsqueda binaria Recursivo
@@ -48,6 +50,7 @@ int AlgoritmosBusqueda::busquedaBinariaRc(int v[], int size,int key)
 }
 
 #include <iostream>
+
 
 int AlgoritmosBusqueda::BinariaRc(int v[], int left, int right, int key)
 {
@@ -65,6 +68,7 @@ int AlgoritmosBusqueda::BinariaRc(int v[], int left, int right, int key)
 			return BinariaRc(v, middle + 1, right, key);
 }
 	
+
 /*
 	 * Función busquedaTernariaRc, implementa el método de búsqueda ternaria recursiva
 	 * param v: el array de enteros donde buscar
@@ -77,6 +81,7 @@ int AlgoritmosBusqueda::busquedaTernariaRc(int v[], int size,int key)
 {
 	return TernariaRc(v, 0, size - 1, key);
 }
+
 
 int AlgoritmosBusqueda::TernariaRc(int v[], int left, int right, int key)
 {

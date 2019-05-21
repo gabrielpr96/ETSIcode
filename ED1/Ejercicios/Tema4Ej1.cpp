@@ -22,6 +22,44 @@ struct nodoColegio {
     nodoColegio *sig;
 };
 
+void colegioMasVotado(nodoColegio *colegios){
+    nodoColegio *cTMP = colegios;
+    nodoUrna *uTMP;
+    nodoVoto *vTMP;
+
+    int votosMax = -1, votosTMP, cMax;
+
+    int i = 0;
+    cTMP = colegios;
+    while(cTMP != NULL){
+        votosTMP = 0;
+
+        uTMP = cTMP->urnas;
+        while(uTMP != NULL){
+            vTMP = uTMP->votos;
+
+            while(vTMP != NULL){
+                votosTMP++;
+                vTMP = vTMP->sig;
+            }
+
+            uTMP = uTMP->sig;
+        }
+
+        if(votosTMP > votosMax){
+            votosMax = votosTMP;
+            cMax = cTMP->idColegio;
+        }
+
+        i++;
+        cTMP = cTMP->sig;
+    }
+
+    if(votosMax == -1)
+        cout << "No hay colegios.\n";
+    else
+        cout << "El colegio mas botado es el " << cMax << " con " << votosMax << " votos.\n";
+}
 void eliminar(nodoColegio **colegios){
     nodoColegio *cTMP = *colegios, *cBOR;
     nodoUrna *uTMP, *uBOR;
@@ -157,6 +195,7 @@ char menu(char &c){
         <<"3. Insertar un voto.\n"
         <<"4. Mostrar votos.\n"
         <<"5. Escrutar.\n"
+        <<"6. Colegio con mas votos.\n"
         <<"0. Salir.\n\n"
         <<"Opcion: ";
     cin >> c;
@@ -206,6 +245,9 @@ int main(){
             break;
             case '5'://Escrutar
                 escrutinio(colegios);
+            break;
+            case '6'://Escrutar
+                colegioMasVotado(colegios);
             break;
         }
         if(opt != '0'){

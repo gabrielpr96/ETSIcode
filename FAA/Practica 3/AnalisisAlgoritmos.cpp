@@ -51,7 +51,7 @@ int menuCasosInstancia() {
 	system("cls");
 
 	do {
-		cout << " FAA. Practica 2 y AAD. Curso 18/19 \n"
+		cout << "\n FAA. Practica 3. Curso 18/19 \n"
 			<< "                                                           Borja Lopez Pineda \n"
 			<< "-----                           MENU AJUSTES                            -----\n"
 			<< "-----                SELECCIONE UN CASO PARA LA INSTANCIA               -----\n\n"
@@ -86,7 +86,7 @@ int menuAjustes() {
 	system("cls");
 
 	do {
-		cout << " FAA. Practica 2 y AAD. Curso 18/19 \n"
+		cout << "\n FAA. Practica 3. Curso 18/19 \n"
 			<< "                                                           Borja Lopez Pineda \n"
 			<< "-----                           MENU AJUSTES                            -----\n\n"
 			<< "                     1.- Cambiar el caso de la instancia\n\n"
@@ -116,7 +116,7 @@ int menuAlgoritmosBusqueda() {
 
 	system("cls");
 	do {
-		cout << " FAA. Practica 2 y AAD. Curso 18/19 \n"
+		cout << "\n FAA. Practica 3. Curso 18/19 \n"
 			<< "                                                           Borja Lopez Pineda \n"
 			<< "-----            MENU SELECCION DE ALGORITMOS DE ORDENACION              -----\n\n"
 			<< "                         1.- Busqueda Secuencial Iterativa\n"
@@ -148,7 +148,7 @@ int menuAlgoritmosOrdenacion() {
 
 	system("cls");
 	do {
-		cout << " FAA. Practica 2 y AAD. Curso 18/19 \n"
+		cout << "\n FAA. Practica 3. Curso 18/19 \n"
 			<< "                                                           Borja Lopez Pineda \n"
 			<< "-----             MENU SELECCION DE ALGORITMOS DE BUSQUEDA               -----\n\n"
 			<< "                         1.- Burbuja\n"
@@ -200,7 +200,7 @@ int menuOperaciones(bool ordenacion) {
 	system("cls");
 
 	do {
-		cout << " FAA. Practica 2 y AAD. Curso 18/19 \n"
+		cout << "\n FAA. Practica 3. Curso 18/19 \n"
 			<< "                                                           Borja Lopez Pineda \n"
 			<< "-----                   MENU ALGORITMOS DE "<<(ordenacion?"ORDENACION":"BUSQUEDA  ")<<"                   -----\n\n"
 			<< "                         1.- Probar los metodos de " << (ordenacion ? "ordenacion" : "busqueda") << "\n"
@@ -249,7 +249,7 @@ int menu() {
 	system("cls");
 
 	do {
-		cout << " FAA. Practica 2 y AAD. Curso 18/19 \n"
+		cout << "\n FAA. Practica 3. Curso 18/19 \n"
 			<< "                                                           Borja Lopez Pineda \n"
 			<< "-----                           MENU PRINCIPAL                          -----\n"
 			<< "-----   ANALISIS EXPERIMENTAL DE ALGORITMOS DE ORDENACION Y BUSQUEDA    -----\n\n"
