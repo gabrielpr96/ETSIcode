@@ -1,13 +1,13 @@
-set title "Medio Burbuja"
+set title "Comparación teórica"
 set key top left vertical inside
-set grid
+#set grid
 set xlabel "Talla (n)"
 set ylabel "Tiempo (OEs)"
 set xrange [0:100]
 
-Lineal(x) = x
-Binaria(x) = 5+3*(log(x)/log(2))
-Ternaria(x) = 10+2*(log(x)/log(3))
+Lineal(x) = 6+3*x
+Binaria(x) = 4+5*(log(x)/log(2))
+Ternaria(x) = 4.5+9*(log(x)/log(3))
 plot Lineal(x), Binaria(x), Ternaria(x)
 
 
