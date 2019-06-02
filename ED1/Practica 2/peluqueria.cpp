@@ -254,6 +254,8 @@ int peluqueria::buscarPorCodigo(int Codigo){
     return iPeluquero;
 }
 int peluqueria::posicionCorrecta(int Codigo){
+    if(L.esvacia()) return 1;
+
     int nPeluqueros = L.longitud();
     int i = 1, iNuevo = -1;
     while(iNuevo == -1){//Esa es una forma de saber que aun no se ha insertado

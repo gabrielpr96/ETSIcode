@@ -41,7 +41,7 @@ void peluqueria::AbrirPeluqueria(char *nombrefichero){
         file.read((char *) &nClientes, sizeof(int));
         for(int i = 0; i < nClientes; i++){
             file.read((char *) &cTMP, sizeof(cTMP));
-            IncorporarCliente(cTMP);
+            L.observar(cTMP.Peluquero).Col.encolar(cTMP);
         }
 
 
