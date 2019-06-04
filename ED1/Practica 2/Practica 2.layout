@@ -2,9 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="peluqueria.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="listaEnlazada.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3431" topLine="102" />
+			<Cursor1 position="272" topLine="48" />
+		</Cursor>
+	</File>
+	<File name="listaEnlazada.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="227" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -14,6 +19,11 @@
 		<Folding>
 			<Collapse line="30" />
 		</Folding>
+	</File>
+	<File name="peluqueria.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5038" topLine="120" />
+		</Cursor>
 	</File>
 	<File name="peluqueria.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -27,37 +37,12 @@
 	</File>
 	<File name="colaEnlazada.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="171" topLine="0" />
+			<Cursor1 position="171" topLine="9" />
 		</Cursor>
 	</File>
 	<File name="colaEnlazada.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="344" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="listaEnlazada.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="480" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="2" />
-			<Collapse line="6" />
-			<Collapse line="24" />
-			<Collapse line="35" />
-			<Collapse line="38" />
-			<Collapse line="41" />
-			<Collapse line="44" />
-			<Collapse line="59" />
-			<Collapse line="75" />
-			<Collapse line="78" />
-			<Collapse line="81" />
-			<Collapse line="91" />
-			<Collapse line="99" />
-		</Folding>
-	</File>
-	<File name="listaEnlazada.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="130" topLine="9" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -133,6 +133,8 @@ void peluqueria::Mostrar(){
 
         printn(32,5); printn(200,1); printn(205,68); printn(188,1); cout << "\n\n";
     }
+
+    cout << "shit " << L.observar(1).TipoServicio << "\n";
 }
 void peluqueria::IncorporarPeluquero(peluquerof t){
     peluquero pTMP;
