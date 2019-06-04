@@ -6,7 +6,13 @@
 using namespace std;
 
 peluqueria::peluqueria(){
-    //L.vaciar();
+    L.vaciar();
+    clientes_atendidos = NULL;
+    max_codigo_peluquero = 0;
+}
+peluqueria::~peluqueria(){
+    if(clientes_atendidos != NULL)
+        delete clientes_atendidos;
 }
 
 void printn(char c, int n);
@@ -35,8 +41,22 @@ void peluqueria::AbrirPeluqueria(char *nombrefichero){
         file.read((char *) &nClientes, sizeof(int));
         for(int i = 0; i < nClientes; i++){
             file.read((char *) &cTMP, sizeof(cTMP));
-            IncorporarCliente(cTMP);
-            //cout << "Incorporado\n";
+            L.observar(cTMP.Peluquero).Col.encolar(cTMP);
+        }
+
+
+        if(clientes_atendidos != NULL){
+            delete clientes_atendidos;
+            clientes_atendidos = NULL;
+        }
+        max_codigo_peluquero = 0;
+        int nPeluReg, nRegCant;
+        file.read((char *) &nPeluReg, sizeof(int));
+        if(!file.eof()){
+            for(int i = 0; i < nPeluReg; i++){
+                file.read((char *) &nRegCant, sizeof(int));
+                registrarTrabajo(i+1, nRegCant);
+            }
         }
 
         cout << "\tFichero cargado correctamente.\n";
@@ -80,6 +100,12 @@ void peluqueria::VolcarPeluqueria(char *nombrefichero){
 
         file.seekp(sizeof(int) + sizeof(peluquerof)*nPeluqueros, ios::beg);
         file.write((char *) &nClientes, sizeof(int));
+
+
+        file.seekp(0, ios::end);
+        file.write((char *) &max_codigo_peluquero, sizeof(int));
+        for(int i = 0; i < max_codigo_peluquero; i++)
+            file.write((char *) &clientes_atendidos[i], sizeof(int));
 
 
         cout << "\tFichero guardado correctamente.\n";
@@ -133,8 +159,6 @@ void peluqueria::Mostrar(){
 
         printn(32,5); printn(200,1); printn(205,68); printn(188,1); cout << "\n\n";
     }
-
-    cout << "shit " << L.observar(1).TipoServicio << "\n";
 }
 void peluqueria::IncorporarPeluquero(peluquerof t){
     peluquero pTMP;
@@ -195,6 +219,8 @@ bool peluqueria::IncorporarCliente(cliente cli){
     //determinar el peluquero con la cola mas corta de su especialidad
     int pSeleccionado = peluqueroMenosOcupado(cli.TipoServicio, -1);
 
+    cli.Peluquero = pSeleccionado;
+
     if(pSeleccionado != -1){
         //Asignarselo
         //cout << "Voy a asignarselo a " << L.observar(pSeleccionado).Nombre << "\n";
@@ -235,6 +261,8 @@ bool peluqueria::AtenderCliente(int CodigoPeluquero){
         if(!pTMP->Col.esvacia()){
             pTMP->Col.desencolar();
 
+            registrarTrabajo(CodigoPeluquero, 1);
+
             return true;
         }
 
@@ -244,6 +272,111 @@ bool peluqueria::AtenderCliente(int CodigoPeluquero){
     return false;
 }
 
+void peluqueria::ClienteMasMayor(){
+    cliente cMayor, cTMP;
+    peluquero *pMayor = NULL,*pTMP;
+    cMayor.Edad = -1;
+
+    int nPeluqueros = L.longitud(), nMayor;
+    for(int i = 1; i <= nPeluqueros; i++){
+        pTMP = &L.observar(i);
+        int j = 0, nClientes = pTMP->Col.longitud();
+        while(j < nClientes){
+            cTMP = pTMP->Col.primero();
+            pTMP->Col.encolar(cTMP);
+            pTMP->Col.desencolar();
+            if(cTMP.Edad > cMayor.Edad){
+                cMayor = cTMP;
+                pMayor = pTMP;
+                nMayor = j+1;
+            }
+            j++;
+        }
+    }
+
+    if(cMayor.Edad == -1)
+        cout << "\tNo hay clientes.\n";
+    else
+        cout << "\tEl cliente mas mayor se llama: " << cMayor.Nombre << " " << cMayor.Apellidos << " y tiene " << cMayor.Edad << " anos.\n"
+            << "\tFue registrado a las " << (cTMP.HoraLlegada/60) << ":" << setw(2) << setfill('0') << (cTMP.HoraLlegada%60) << setfill(' ') << ", solicito servicio tipo " << cTMP.TipoServicio << ".\n\n"
+            << "\tEl peluquero que le atendera es " << pMayor->Nombre << " " << pMayor->Apellidos << " con codigo " << pMayor->Codigo << ".\n"
+            << "\tEste peluquero tiene a " << pMayor->Col.longitud() << " clientes en cola, " << cMayor.Nombre << " es el numero " << nMayor << ".\n\n";
+}
+void peluqueria::ResumenSituacion(){
+    peluquero *pTMP;
+    cliente cTMP;
+
+    int nPeluqueros = L.longitud(), nClientes, nTIPO, nSOLICITUDES, nTOTAL = 0;
+    peluquero *pTIPO[nPeluqueros];
+
+    for(int tServicio = 1; tServicio <= 3; tServicio++){
+        cout << "\t\tTipo de servicio " << tServicio << ".\n\n";
+
+        nTIPO = 0;
+        nSOLICITUDES = 0;
+        for(int i = 1; i <= nPeluqueros; i++){
+            pTMP = &L.observar(i);
+            if(pTMP->TipoServicio == tServicio){
+                pTIPO[nTIPO] = pTMP;
+                nTIPO++;
+                nSOLICITUDES += pTMP->Col.longitud();
+            }
+        }
+        nTOTAL += nSOLICITUDES;
+
+        cout << "\tHay " << nTIPO << " peluqueros que ofrecen este tipo y " << nSOLICITUDES << " clientes que lo requieren.\n\n";
+
+        for(int i = 0; i < nTIPO; i++){
+            pTMP = pTIPO[i];
+            cout << "\tEl peluquero " << pTMP->Codigo << " se llama " << pTMP->Nombre << " " << pTMP->Apellidos << ", tiene " << pTMP->Col.longitud() << " cliente/s.\n"
+                << "\tSe llama/n:\n";
+            int j = 0, nClientes = pTMP->Col.longitud();
+            while(j < nClientes){
+                cTMP = pTMP->Col.primero();
+                pTMP->Col.encolar(cTMP);
+                pTMP->Col.desencolar();
+                j++;
+                cout << "\t\t" << cTMP.Nombre << " " << cTMP.Apellidos << ".\n";
+            }
+            cout << "\n";
+        }
+
+        cout << "\t-----------------------------------------------\n\n";
+    }
+
+    cout << "\n\tEn total hay " << L.longitud() << " peluqueros, para " << nTOTAL << " clientes.\n\n";
+}
+
+void peluqueria::VerEstadistica(){
+    if(clientes_atendidos == NULL)
+        cout << "\tNo hay datos registrados.\n";
+    else{
+        peluquero *pTMP;
+        int nPeluqueros = L.longitud();
+        for(int i = 1; i <= nPeluqueros; i++){
+            pTMP = &L.observar(i);
+            cout << "\t" << pTMP->Nombre << " " << pTMP->Apellidos << " ha atendido a " << (pTMP->Codigo<=max_codigo_peluquero?clientes_atendidos[pTMP->Codigo-1]:0) << " cliente/s.\n\n";
+        }
+    }
+}
+void peluqueria::registrarTrabajo(int codigo, int cantidad){
+    if(max_codigo_peluquero <= codigo){
+        int *clientes_atendidosTMP = new int[codigo];
+
+        if(clientes_atendidos != NULL){
+            for(int i = 0; i < max_codigo_peluquero; i++)
+                clientes_atendidosTMP[i] = clientes_atendidos[i];
+            delete clientes_atendidos;
+        }
+
+        clientes_atendidos = clientes_atendidosTMP;
+        for(int j = max_codigo_peluquero; j < codigo; j++)
+            clientes_atendidos[j] = 0;
+        max_codigo_peluquero = codigo;
+    }
+
+    clientes_atendidos[codigo-1] += cantidad;
+}
 
 int peluqueria::buscarPorCodigo(int Codigo){
     int nClientes = L.longitud(), iPeluquero = -1;
