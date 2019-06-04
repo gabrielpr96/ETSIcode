@@ -133,8 +133,6 @@ void peluqueria::Mostrar(){
 
         printn(32,5); printn(200,1); printn(205,68); printn(188,1); cout << "\n\n";
     }
-
-    cout << "shit " << L.observar(1).TipoServicio << "\n";
 }
 void peluqueria::IncorporarPeluquero(peluquerof t){
     peluquero pTMP;
@@ -177,7 +175,8 @@ bool peluqueria::RetirarPeluquero(int codigo){
         peluquero *pRetirar = &L.observar(pos);
 
         int i = 1, nPeluqueros = L.longitud();
-        while(!(L.observar(i).Codigo != codigo && L.observar(i).TipoServicio == pRetirar->TipoServicio) && i <= nPeluqueros) i++;
+        while(i <= nPeluqueros && !(L.observar(i).Codigo != codigo && L.observar(i).TipoServicio == pRetirar->TipoServicio))
+            i++;
 
         if(i <= nPeluqueros || pRetirar->Col.esvacia()){
             while(!pRetirar->Col.esvacia()){
