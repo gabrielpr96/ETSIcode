@@ -14,11 +14,21 @@
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="300" topLine="15" />
+			<Cursor1 position="107" topLine="15" />
 		</Cursor>
 		<Folding>
 			<Collapse line="30" />
 		</Folding>
+	</File>
+	<File name="peluqueria.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5038" topLine="120" />
+		</Cursor>
+	</File>
+	<File name="peluqueria.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="77" topLine="0" />
+		</Cursor>
 	</File>
 	<File name="colaDinamica.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -30,19 +40,9 @@
 			<Cursor1 position="171" topLine="9" />
 		</Cursor>
 	</File>
-	<File name="peluqueria.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="77" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="colaEnlazada.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="344" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="peluqueria.cpp" open="1" top="1" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6678" topLine="166" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

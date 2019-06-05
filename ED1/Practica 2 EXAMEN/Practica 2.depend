@@ -1,0 +1,105 @@
+# depslib dependency file v1.0
+1558005959 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\colaestatica.cpp
+	<cstdlib>
+	<cstring>
+	"colaEstatica.h"
+	<iostream>
+
+1557984104 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\colaestatica.h
+
+1558007925 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listaestatica.cpp
+	"listaEstatica.h"
+	<iostream>
+
+1558007989 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listaestatica.h
+	<cstdlib>
+	<cstring>
+	"colaEstatica.h"
+
+1558009588 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\main.cpp
+	<iostream>
+	<cstdlib>
+	<cstdio>
+	<conio.h>
+	<cstring>
+	"peluqueria.h"
+
+1558009643 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\peluqueria.h
+	"listaEnlazada.h"
+	"colaEnlazada.h"
+
+1557938316 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\peluqueria.cpp
+	<fstream>
+	<iostream>
+	<iomanip>
+	"peluqueria.h"
+
+1557929643 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.cpp
+	<cstdlib>
+	<cstring>
+	"colaDinamica.h"
+	<iostream>
+
+1557918225 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\coladinamica.h
+
+1558011122 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\colaenlazada.cpp
+	<cstdlib>
+	<cstring>
+	"colaEnlazada.h"
+	<iostream>
+
+1558007191 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listadinamica.cpp
+	"listaDinamica.h"
+	<iostream>
+
+1557775222 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listadinamica.h
+	<cstdlib>
+	<cstring>
+	"colaDinamica.h"
+
+1558015904 source:c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listaenlazada.cpp
+	"listaEnlazada.h"
+	<iostream>
+
+1558015555 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\listaenlazada.h
+	<cstdlib>
+	<cstring>
+	"colaEnlazada.h"
+
+1558010557 c:\users\arlin-t2\desktop\etsicode\ed1\practica 2\colaenlazada.h
+
+1558014724 source:c:\users\usuario\desktop\practica 2\colaenlazada.cpp
+	<cstdlib>
+	<cstring>
+	"colaEnlazada.h"
+	<iostream>
+
+1558014158 c:\users\usuario\desktop\practica 2\colaenlazada.h
+
+1558019506 source:c:\users\usuario\desktop\practica 2\listaenlazada.cpp
+	"listaEnlazada.h"
+	<iostream>
+
+1558019156 c:\users\usuario\desktop\practica 2\listaenlazada.h
+	<cstdlib>
+	<cstring>
+	"colaEnlazada.h"
+
+1559647755 source:c:\users\usuario\desktop\practica 2\peluqueria.cpp
+	<fstream>
+	<iostream>
+	<iomanip>
+	"peluqueria.h"
+
+1559646494 c:\users\usuario\desktop\practica 2\peluqueria.h
+	"listaEnlazada.h"
+	"colaEnlazada.h"
+
+1559647953 source:c:\users\usuario\desktop\practica 2\main.cpp
+	<iostream>
+	<cstdlib>
+	<cstdio>
+	<conio.h>
+	<cstring>
+	"peluqueria.h"
+
