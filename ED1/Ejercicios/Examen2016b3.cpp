@@ -1,7 +1,6 @@
 #include <iostream>
 
 using namespace std;
-
 struct TNodo_Lista{
     char Datos;
     TNodo_Lista *siguiente;
@@ -26,6 +25,7 @@ public:
     void intercalar(lista &l2);
 };
 
+void mostrar(const char * nombre, lista &l);
 
 lista::lista(){
     elementos = NULL;
@@ -109,12 +109,20 @@ TNodo_Lista* lista::Anterior(int i){
 void lista::intercalar(lista &l2){
     ///Meter aquí el código
 
+    TNodo_Lista *nTMP = elementos, *nINT;
     if(!(esvacia() || l2.esvacia())){
-        int i = 2;
         while(!l2.esvacia()){
-            insertar(i, l2.observar(1));
-            i += i<n?2:1;
-            l2.eliminar(1);
+            nINT = l2.elementos;
+            l2.elementos = nINT->siguiente;
+            nINT->siguiente = nTMP->siguiente;
+            nTMP->siguiente = nINT;
+            nTMP = nINT;
+
+            n++;
+            l2.n--;
+
+            if(nTMP->siguiente != NULL)
+                nTMP = nTMP->siguiente;
         }
     }
 
