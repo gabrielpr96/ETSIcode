@@ -5,6 +5,12 @@
 
 using namespace std;
 
+void generarDatos(){
+    ofstream file("BIBLIO.dat");
+    file << "10 4 3\n5 2 8\n12 2 2\n0 0 0";
+    file.close();
+}
+
 struct TNodo_Lista{
      int n;
      TNodo_Lista *sig;
@@ -143,6 +149,7 @@ void seleccion(const char *origen, const char *destino){
 
 
 int main(){
+    generarDatos();
     seleccion("BIBLIO.dat", "BIBLIO.out");
     return 0;
 }
