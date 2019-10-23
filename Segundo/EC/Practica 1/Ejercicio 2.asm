@@ -1,12 +1,11 @@
 data segment
-    
-    ;CADENA      DB 02h,0Fh,05h,0Ah
-    CADENA      DB 1,0,1,0
-    PESO_HEX    DW 1000h,100h,10h,1h
-    PESO_BIN    DB 8,4,2,1
-    VALOR_HEX   DW 0
-    VALOR_CO1   DB 0
-    SIGNO_CO1   DB 0
+                                  
+    CADENA      DB 1,1,1,1
+    PESO        DB 1000b,100b,10b,1b
+    VALOR_BCS   DB 0
+    SIGNO_BCS   DB 0
+    VALOR_CO2   DB 0
+    SIGNO_CO2   DB 0
     
 ends
 
@@ -16,42 +15,42 @@ ends
 
 code segment
 start:
+
     ;Inicializar el segmento de datos
     MOV AX, SEG CADENA
-    MOV DS, AX       
-     
+    MOV DS, AX              
     
-    MOV AH, 00h       ;Muy importante poner esa parte a 00h porque la multiplicacion deja residuos ahi                 
+    
+    MOV AH, 0
+                                     
     MOV AL, CADENA[0]
-    MUL PESO_HEX[0]       
-    MOV BX, AX
+    MOV SIGNO_BCS, AL
     
-    MOV AH, 00h  
     MOV AL, CADENA[1]
-    MUL PESO_HEX[2]   ;MUY MUYIMPORTANTE sumar de 2 en dos posiciones de memoria, es un DW    
-    ADD BX, AX
+    MUL PESO[1]       
+    MOV BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[2]
-    MUL PESO_HEX[4]       
+    MUL PESO[2]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[3]
-    MUL PESO_HEX[6]       
+    MUL PESO[3]       
     ADD BX, AX
     
-    MOV VALOR_HEX, BX
+    MOV VALOR_BCS, BL
+    
     
     ;Evaluar si es positivo o no
     MOV AL, CADENA[0]
     AND AL, AL         ;Esto es lo que se me ha ocurrido a mi para comprobarlo
     JNZ ESNEGATIVO:
     ;No es negativo luego
+    MOV BX, 0
     JMP FINALIZAR
     
     ESNEGATIVO:       
-    ;Es negativo, lo invierto y lo indico
+    ;Es negativo, lo invierto, lo indico y le sumo uno
     
     MOV AL, CADENA[1]
     NOT AL
@@ -68,32 +67,33 @@ start:
     AND AL, 00000001b
     MOV CADENA[3], AL
     
-    MOV SIGNO_CO1, 1
+    MOV SIGNO_CO2, 1
+    MOV BX, 1
     
     FINALIZAR:
     
-    MOV BX, 0
     MOV AH, 00h  
     MOV AL, CADENA[1]
-    MUL PESO_BIN[1]    
+    MUL PESO[1]    
     ADD BX, AX
                             
     MOV AH, 00h  
     MOV AL, CADENA[2]
-    MUL PESO_BIN[2]       
+    MUL PESO[2]       
     ADD BX, AX
                             
     MOV AH, 00h  
     MOV AL, CADENA[3]
-    MUL PESO_BIN[3]       
+    MUL PESO[3]       
     ADD BX, AX
     
-    MOV VALOR_CO1, BL                
-                 
+    MOV VALOR_CO2, BL
+           
                     
     ;Devolver el control al OS    
     MOV AX, 4C00h
     INT 21h  
+
 ends
 
 end start

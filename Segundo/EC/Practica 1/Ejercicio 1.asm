@@ -1,10 +1,8 @@
 data segment
-    
-    ;CADENA      DB 02h,0Fh,05h,0Ah
-    CADENA      DB 1,0,1,0
-    PESO_HEX    DW 1000h,100h,10h,1h
-    PESO_BIN    DB 8,4,2,1
-    VALOR_HEX   DW 0
+                                  
+    CADENA      DB 1,1,1,1
+    PESO    DB 1000b,100b,10b,1b
+    VALOR_BIN   DB 0
     VALOR_CO1   DB 0
     SIGNO_CO1   DB 0
     
@@ -16,32 +14,32 @@ ends
 
 code segment
 start:
+
     ;Inicializar el segmento de datos
     MOV AX, SEG CADENA
-    MOV DS, AX       
-     
+    MOV DS, AX              
     
-    MOV AH, 00h       ;Muy importante poner esa parte a 00h porque la multiplicacion deja residuos ahi                 
+    
+    MOV AH, 0
+                                     
     MOV AL, CADENA[0]
-    MUL PESO_HEX[0]       
+    MUL PESO[0]       
     MOV BX, AX
     
-    MOV AH, 00h  
     MOV AL, CADENA[1]
-    MUL PESO_HEX[2]   ;MUY MUYIMPORTANTE sumar de 2 en dos posiciones de memoria, es un DW    
+    MUL PESO[1]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[2]
-    MUL PESO_HEX[4]       
+    MUL PESO[2]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[3]
-    MUL PESO_HEX[6]       
+    MUL PESO[3]       
     ADD BX, AX
     
-    MOV VALOR_HEX, BX
+    MOV VALOR_BIN, BL
+    
     
     ;Evaluar si es positivo o no
     MOV AL, CADENA[0]
@@ -75,25 +73,26 @@ start:
     MOV BX, 0
     MOV AH, 00h  
     MOV AL, CADENA[1]
-    MUL PESO_BIN[1]    
+    MUL PESO[1]    
     ADD BX, AX
                             
     MOV AH, 00h  
     MOV AL, CADENA[2]
-    MUL PESO_BIN[2]       
+    MUL PESO[2]       
     ADD BX, AX
                             
     MOV AH, 00h  
     MOV AL, CADENA[3]
-    MUL PESO_BIN[3]       
+    MUL PESO[3]       
     ADD BX, AX
     
-    MOV VALOR_CO1, BL                
-                 
+    MOV VALOR_CO1, BL
+           
                     
     ;Devolver el control al OS    
     MOV AX, 4C00h
     INT 21h  
+
 ends
 
 end start
