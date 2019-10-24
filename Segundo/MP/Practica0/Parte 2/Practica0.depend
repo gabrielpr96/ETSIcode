@@ -1,0 +1,59 @@
+# depslib dependency file v1.0
+1571306502 source:c:\users\usuario\desktop\practica0\practica0\main.cpp
+	<iostream>
+	<iomanip>
+	<cstdlib>
+	<fstream>
+	"complejo.h"
+
+1571303921 c:\users\usuario\desktop\practica0\libreriapractica0\include\lib.h
+
+1571306922 source:c:\users\usuario\desktop\practica0\practica0\src\complejo.cpp
+	<iostream>
+	<cmath>
+	"complejo.h"
+
+1571306882 c:\users\usuario\desktop\practica0\practica0\include\complejo.h
+
+1571907996 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\src\complejo.cpp
+	<iostream>
+	<cmath>
+	"complejo.h"
+
+1571908016 c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\include\complejo.h
+
+1571908005 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\main.cpp
+	<iostream>
+	<iomanip>
+	<cstdlib>
+	<fstream>
+	"complejo.h"
+
+1571910656 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\main2\src\complejo.cpp
+	<iostream>
+	<cmath>
+	"complejo.h"
+
+1571910635 c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\main2\include\complejo.h
+
+1571909653 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\main2\main.cpp
+	<iostream>
+	<iomanip>
+	<cstdlib>
+	<fstream>
+	"complejo.h"
+
+1571911169 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\parte 2\main.cpp
+	<iostream>
+	<iomanip>
+	<cstdlib>
+	<fstream>
+	"complejo.h"
+
+1571910635 c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\parte 2\include\complejo.h
+
+1571910656 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\parte 2\src\complejo.cpp
+	<iostream>
+	<cmath>
+	"complejo.h"
+

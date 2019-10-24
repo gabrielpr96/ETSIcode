@@ -17,8 +17,17 @@ class complejo
         void set();
         void ver() const;
 
-        complejo operator+(const complejo b) const;
+        complejo operator+(const complejo &b) const;
+        complejo operator+(const int &b) const;
         complejo operator-() const;
+
+        complejo operator++();
+        complejo operator++(int flag);
+
+        bool operator==(const complejo &b) const;
+        bool operator==(const int &b) const;
+
+        operator int() const;
 
     protected:
 
@@ -27,7 +36,7 @@ class complejo
         int imaginario;
 };
 
-complejo operator+(int a, const complejo b);
-std::ostream& operator<<(std::ostream& s, const complejo o);
+complejo operator+(int a, const complejo &b);
+std::ostream& operator<<(std::ostream& s, const complejo &o);
 
 #endif // COMPLEJO_H

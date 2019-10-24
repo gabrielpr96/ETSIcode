@@ -24,7 +24,7 @@ void complejo::ver() const {
     cout << real << (imaginario<0?"-":"+") << abs(imaginario) << "i";
 }
 
-complejo complejo::operator+(const complejo b) const {
+complejo complejo::operator+(const complejo &b) const {
     return complejo(real+b.real, imaginario+b.imaginario);
 }
 complejo complejo::operator-() const {
@@ -33,11 +33,11 @@ complejo complejo::operator-() const {
 
 
 
-complejo operator+(int a, const complejo b){
+complejo operator+(int a, const complejo &b){
     return complejo(b.getr()+a, b.geti());
 }
 
-ostream& operator<<(ostream& s, complejo o) {
+ostream& operator<<(ostream& s, const complejo &o) {
     s << o.getr() << (o.geti()<0?"-":"+") << abs(o.geti()) << "i";
     return s;
 }

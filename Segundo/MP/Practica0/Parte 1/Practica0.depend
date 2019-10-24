@@ -15,3 +15,17 @@
 
 1571306882 c:\users\usuario\desktop\practica0\practica0\include\complejo.h
 
+1571907996 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\src\complejo.cpp
+	<iostream>
+	<cmath>
+	"complejo.h"
+
+1571908016 c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\include\complejo.h
+
+1571908005 source:c:\users\usuario\desktop\etsicode-master\segundo\mp\practica0\main.cpp
+	<iostream>
+	<iomanip>
+	<cstdlib>
+	<fstream>
+	"complejo.h"
+
