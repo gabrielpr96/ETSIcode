@@ -22,6 +22,8 @@ int main(){
     ++a;       cout << a << endl;    //a =3-2i
     a++;       cout << a << endl;   //a= 4-2i
 
+    int i = (int)a;
+
     int r = (int)a;             //r= (int) a devuelve la parte realde a (4)
     e.set(8,0);//e = 8+0i
     if (e==b)

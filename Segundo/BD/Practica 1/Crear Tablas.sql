@@ -35,7 +35,7 @@ CREATE TABLE PILOTO (
   puntos NUMBER(38, 0) DEFAULT 0,
   CONSTRAINT pilotoClave PRIMARY KEY (codPiloto),
   CONSTRAINT pilotoClaveAjena FOREIGN KEY (coche) REFERENCES COCHE (codCoche),
-  CONSTRAINT pilotoPilotoNoPuedeSerCop CHECK(nombreP != nombreP),
+  CONSTRAINT pilotoPilotoNoPuedeSerCop CHECK(nombreP != nombreCop),
   CONSTRAINT pilotoPuntosValidos CHECK(puntos >= 0),
   CONSTRAINT pilotoGrupoSanguineoValido CHECK(grupoS IN ('A', 'B', 'AB', '0')),
   CONSTRAINT pilotoRhValido CHECK(rh IN ('+', '-'))
