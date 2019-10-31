@@ -2,10 +2,10 @@ data segment
                                   
     CADENA      DB 5, 0, 0, 0, 0, 0, 0
     PESO        DB 1000b,100b,10b,1b
+    VALOR_BCS   DB 0
+    SIGNO_BCS   DB '+'
     VALOR_CO1   DB 0
     SIGNO_CO1   DB '+'
-    VALOR_CO2   DB 0
-    SIGNO_CO2   DB '+'
     
 ends
 
@@ -33,120 +33,80 @@ start:
     SUB CADENA[5], 30h
     
     
-    ;Calcular complemento a 1
+    ;Calculo del signo magnitud
     MOV AH, 0
-                                     
-    ;Evaluar si es positivo o no
-    CMP CADENA[2], 1    
-    JE ESNEGATIVO1:
-    ;No es negativo luego
     
-    MOV BX, 0
-    MOV AH, 00h  
+    CMP CADENA[2], 1
+    JE BCS_NEGATIVO
+    JMP BCS_FIN
+    BCS_NEGATIVO:
+        MOV SIGNO_BCS, '-'
+    BCS_FIN:          
+    
     MOV AL, CADENA[3]
-    MUL PESO[1]    
-    ADD BX, AX
+    MUL PESO[1]       
+    MOV BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[4]
     MUL PESO[2]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[5]
     MUL PESO[3]       
     ADD BX, AX
     
-    JMP FINALIZAR1
-    
-    ESNEGATIVO1:       
-    ;Es negativo, lo invierto y lo indico
-    
-    MOV BX, 0
-    MOV AH, 00h  
-    MOV AL, CADENA[3]
-    NOT AL
-    AND AL, 00000001b
-    MUL PESO[1]    
-    ADD BX, AX
-                            
-    MOV AH, 00h  
-    MOV AL, CADENA[4]
-    NOT AL   
-    AND AL, 00000001b
-    MUL PESO[2]       
-    ADD BX, AX
-                            
-    MOV AH, 00h  
-    MOV AL, CADENA[5]
-    NOT AL  
-    AND AL, 00000001b
-    MUL PESO[3]       
-    ADD BX, AX
-    
-    MOV SIGNO_CO1, '-'
-    
-    FINALIZAR1:
-    
-    MOV VALOR_CO1, BL
+    MOV VALOR_BCS, BL
     
     
-    ;Calcular complemento a 2
+    ;Calculo de complemento a 1
     ;Evaluar si es positivo o no
     CMP CADENA[2], 1
-    JE ESNEGATIVO2:
+    JE ESNEGATIVO:
     ;No es negativo luego
     MOV BX, 0
+    JMP FINALIZAR
     
-    MOV AH, 00h  
-    MOV AL, CADENA[3]
-    MUL PESO[1]    
-    ADD BX, AX
-                            
-    MOV AH, 00h  
-    MOV AL, CADENA[4]
-    MUL PESO[2]       
-    ADD BX, AX
-                            
-    MOV AH, 00h  
-    MOV AL, CADENA[5]
-    MUL PESO[3]       
-    ADD BX, AX
-    
-    JMP FINALIZAR2
-    
-    ESNEGATIVO2:       
+    ESNEGATIVO:       
     ;Es negativo, lo invierto, lo indico y le sumo uno
-    MOV BX, 1
-    MOV AH, 00h
-      
+    
     MOV AL, CADENA[3]
     NOT AL
     AND AL, 00000001b
+    MOV CADENA[3], AL
+    
+    MOV AL, CADENA[4]
+    NOT AL   
+    AND AL, 00000001b
+    MOV CADENA[4], AL
+    
+    MOV AL, CADENA[5]
+    NOT AL  
+    AND AL, 00000001b
+    MOV CADENA[5], AL
+    
+    MOV SIGNO_CO1, '-'
+    MOV BX, 0
+    
+    FINALIZAR:
+    
+    MOV AH, 00h  
+    MOV AL, CADENA[3]
     MUL PESO[1]    
     ADD BX, AX
                             
     MOV AH, 00h  
     MOV AL, CADENA[4]
-    NOT AL   
-    AND AL, 00000001b
     MUL PESO[2]       
     ADD BX, AX
                             
     MOV AH, 00h  
     MOV AL, CADENA[5]
-    NOT AL  
-    AND AL, 00000001b
     MUL PESO[3]       
     ADD BX, AX
     
-    MOV SIGNO_CO2, '-'
-    
-    FINALIZAR2:
-    
-    ADD VALOR_CO2, BL
-    
-    
+    MOV VALOR_CO1, BL
+       
+       
     ;Mostrar el resultado por pantalla
     ;Mover el segmento a la memoria de video
     MOV AX, 0B800h
@@ -155,34 +115,33 @@ start:
     ;Fondo negro y letras blancas
     MOV AH, 00001111b
     
-    ;Mostrar complemento a 1
+    ;Mostrar signo magnitud
     MOV AH, 00001111b
-    MOV AL, 'C'
+    MOV AL, 'S'
     MOV ES:[160], AX
-    MOV AL, '1'
+    MOV AL, 'M'
     MOV ES:[162], AX
     MOV AL, ':'
     MOV ES:[164], AX
-    MOV AL, SIGNO_CO1
+    MOV AL, SIGNO_BCS
     MOV ES:[168], AX
-    MOV AL, VALOR_CO1
+    MOV AL, VALOR_BCS
     ADD AL, 30h
     MOV ES:[170], AX
     
-    ;Mostrar complemento a 2
+    ;Mostrar complemento a 1
     MOV AH, 00001111b
     MOV AL, 'C'
     MOV ES:[320], AX
-    MOV AL, '2'
+    MOV AL, '1'
     MOV ES:[322], AX
     MOV AL, ':'
     MOV ES:[324], AX
-    MOV AL, SIGNO_CO2
+    MOV AL, SIGNO_CO1
     MOV ES:[328], AX
-    MOV AL, VALOR_CO2
+    MOV AL, VALOR_CO1
     ADD AL, 30h
-    MOV ES:[330], AX 
-           
+    MOV ES:[330], AX       
                     
     ;Devolver el control al OS    
     MOV AX, 4C00h

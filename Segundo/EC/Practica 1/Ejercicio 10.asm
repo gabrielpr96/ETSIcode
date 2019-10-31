@@ -4,8 +4,8 @@ data segment
     PESO_HEX    DW 1000h,100h,10h,1h
     PESO_BIN    DB 8,4,2,1
     VALOR_HEX   DW 0
-    VALOR_CO1   DB 0
-    SIGNO_CO1   DB '+'
+    VALOR_EXZ   DB 0
+    SIGNO_EXZ   DB '+'
     
 ends
 
@@ -60,7 +60,7 @@ start:
     HEXFIN: 
     
      
-    ;Calcular el binario
+    ;Calcular el hexadecimal
     MOV AH, 00h       ;Muy importante poner esa parte a 00h porque la multiplicacion deja residuos ahi                 
     MOV AL, CADENA[2]
     MUL PESO_HEX[0]       
@@ -84,51 +84,47 @@ start:
     MOV VALOR_HEX, BX
      
      
-    ;Calcular el hexadecimal
-    ;Evaluar si es positivo o no
-    CMP CADENA[2], 1
-    JE ESNEGATIVO
-    JMP FINALIZAR
-    
-    ESNEGATIVO:       
-    ;Es negativo, lo invierto y lo indico
-    
-    MOV AL, CADENA[3]
-    NOT AL
-    AND AL, 00000001b
-    MOV CADENA[3], AL
-    
-    MOV AL, CADENA[4]
-    NOT AL   
-    AND AL, 00000001b
-    MOV CADENA[4], AL
-    
-    MOV AL, CADENA[5]
-    NOT AL  
-    AND AL, 00000001b
-    MOV CADENA[5], AL
-    
-    MOV SIGNO_CO1, '-'
-    
-    FINALIZAR:
-    
+    ;Calcular el exceso z
     MOV BX, 0
-    MOV AH, 00h  
+    MOV AH, 0
+                                     
+    MOV AL, CADENA[2]
+    MUL PESO_BIN[0]       
+    MOV BX, AX
+    
     MOV AL, CADENA[3]
-    MUL PESO_BIN[1]    
+    MUL PESO_BIN[1]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[4]
     MUL PESO_BIN[2]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[5]
     MUL PESO_BIN[3]       
     ADD BX, AX
     
-    MOV VALOR_CO1, BL                
+    ;Compruebo si es negativo
+    CMP BL, 8
+    JB NEGATIVO_EXZ
+             
+    ;Si no es negativo, solo le quito el exceso
+    SUB BL, 8
+    
+    JMP FINALIZAR_EXZ
+    
+    
+    NEGATIVO_EXZ:
+    ;Bit de signo y resta de 8-BL
+    MOV BH, BL
+    MOV BL, 8
+    SUB BL, BH
+    
+    MOV SIGNO_EXZ, '-'
+    
+    FINALIZAR_EXZ:
+    
+    MOV VALOR_EXZ, BL                
     
     
     ;Mostrar el resultado por pantalla
@@ -139,16 +135,18 @@ start:
     ;Fondo negro y letras blancas
     MOV AH, 00001111b
     
-    ;Mostrar complemento a 1
-    MOV AL, 'C'
+    ;Mostrar exceso z
+    MOV AL, 'E'
     MOV ES:[160], AX
-    MOV AL, '1'
-    MOV ES:[162], AX
-    MOV AL, ':'
+    MOV AL, 'X'
+    MOV ES:[162], AX 
+    MOV AL, 'Z'
     MOV ES:[164], AX
-    MOV AL, SIGNO_CO1
+    MOV AL, ':'
+    MOV ES:[166], AX
+    MOV AL, SIGNO_EXZ
     MOV ES:[168], AX
-    MOV AL, VALOR_CO1
+    MOV AL, VALOR_EXZ
     ADD AL, 30h
     MOV ES:[170], AX
     

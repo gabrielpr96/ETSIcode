@@ -2,8 +2,7 @@ data segment
                                   
     CADENA      DB 5, 0, 0, 0, 0, 0, 0
     PESO        DB 1000b,100b,10b,1b
-    VALOR_CO2   DB 0
-    SIGNO_CO2   DB '+'
+    VALOR_BIN   DB 0
     VALOR_EXZ   DB 0
     SIGNO_EXZ   DB '+'
     
@@ -33,60 +32,26 @@ start:
     SUB CADENA[5], 30h
      
     
-    ;Calcular el complemento a 2
-    ;Evaluar si es positivo o no
-    CMP CADENA[2], 1
-    JE ESNEGATIVO:
-    ;No es negativo luego
-    MOV BX, 0
-        
-    MOV AH, 00h  
+    ;Calcular el valor binario
+    MOV AH, 0
+                                     
+    MOV AL, CADENA[2]
+    MUL PESO[0]       
+    MOV BX, AX
+    
     MOV AL, CADENA[3]
-    MUL PESO[1]    
+    MUL PESO[1]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[4]
     MUL PESO[2]       
     ADD BX, AX
                             
-    MOV AH, 00h  
     MOV AL, CADENA[5]
     MUL PESO[3]       
     ADD BX, AX
     
-    JMP FINALIZAR
-    
-    ESNEGATIVO:       
-    ;Es negativo, lo invierto, lo indico y le sumo uno
-    MOV BX, 1
-    MOV AH, 00h
-      
-    MOV AL, CADENA[3]
-    NOT AL
-    AND AL, 00000001b
-    MUL PESO[1]    
-    ADD BX, AX
-                            
-    MOV AH, 00h  
-    MOV AL, CADENA[4]
-    NOT AL   
-    AND AL, 00000001b
-    MUL PESO[2]       
-    ADD BX, AX
-                            
-    MOV AH, 00h  
-    MOV AL, CADENA[5]
-    NOT AL  
-    AND AL, 00000001b
-    MUL PESO[3]       
-    ADD BX, AX
-    
-    MOV SIGNO_CO2, '-'
-    
-    FINALIZAR:
-    
-    MOV VALOR_CO2, BL
+    MOV VALOR_BIN, BL
     
     ;Calcular exceso z con z = 2^(n-1) = 8
     ;Se podria hacer pasandolo a complemento a 2 negando el bit n-1 pero lo voy a hacer un poco mas divertido
@@ -140,19 +105,27 @@ start:
     ;Fondo negro y letras blancas
     MOV AH, 00001111b
     
-    ;Mostrar complemento a 2
-    MOV AH, 00001111b
-    MOV AL, 'C'
+    ;Mostrar binario natural
+    MOV AL, 'B'
     MOV ES:[160], AX
-    MOV AL, '2'
+    MOV AL, 'I'
     MOV ES:[162], AX
-    MOV AL, ':'
+    MOV AL, 'N'
     MOV ES:[164], AX
-    MOV AL, SIGNO_CO2
-    MOV ES:[168], AX
-    MOV AL, VALOR_CO2
+    MOV AL, ':'
+    MOV ES:[166], AX
+    ;Poner el estilo primero
+    MOV ES:[169], AH
+    MOV ES:[171], AH
+    ;Poner los digitos
+    MOV AH, 0
+    MOV AL, VALOR_BIN
+    MOV BL, 10d
+    DIV BL
     ADD AL, 30h
-    MOV ES:[170], AX
+    MOV ES:[168], AL
+    ADD AH, 30h
+    MOV ES:[170], AH
     
     ;Mostrar exceso z
     MOV AH, 00001111b
