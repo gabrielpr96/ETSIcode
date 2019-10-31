@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1572517064 source:c:\users\usuario\desktop\practica 1\main.cpp
+	<iostream>
+	"Fecha.h"
+	"Cliente.h"
+
+1572517438 source:c:\users\usuario\desktop\practica 1\src\fecha.cpp
+	<cmath>
+	<iostream>
+	"Fecha.h"
+
+1572517422 c:\users\usuario\desktop\practica 1\include\fecha.h
+	<iostream>
+
+1572517231 source:c:\users\usuario\desktop\practica 1\src\cliente.cpp
+	<string.h>
+	"Cliente.h"
+
+1572517525 c:\users\usuario\desktop\practica 1\include\cliente.h
+	"Fecha.h"
+
+1572531382 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\fecha.cpp
+	<cmath>
+	<iostream>
+	"Fecha.h"
+
+1572531301 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\fecha.h
+	<iostream>
+
+1572530339 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\cliente.cpp
+	<string.h>
+	"Cliente.h"
+
+1572531459 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\cliente.h
+	"Fecha.h"
+
+1572530354 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\main.cpp
+	<cstdlib>
+	<iostream>
+	"Fecha.h"
+	"Cliente.h"
+
