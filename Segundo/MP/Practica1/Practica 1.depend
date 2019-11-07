@@ -40,3 +40,53 @@
 	"Fecha.h"
 	"Cliente.h"
 
+1573118558 source:c:\users\usuario\desktop\practica1\src\cliente.cpp
+	<string.h>
+	"Cliente.h"
+
+1572949478 c:\users\usuario\desktop\practica1\include\cliente.h
+	"Fecha.h"
+
+1573121422 c:\users\usuario\desktop\practica1\include\fecha.h
+	<iostream>
+
+1573121618 source:c:\users\usuario\desktop\practica1\src\fecha.cpp
+	<cmath>
+	<iostream>
+	"Fecha.h"
+
+1573121486 source:c:\users\usuario\desktop\practica1\src\contrato.cpp
+	"Contrato.h"
+	<iostream>
+
+1573121246 c:\users\usuario\desktop\practica1\include\contrato.h
+	"fecha.h"
+
+1573122212 source:c:\users\usuario\desktop\practica1\prueba 2.cpp
+	<cstdlib>
+	<iostream>
+	"Fecha.h"
+	"Cliente.h"
+	"Contrato.h"
+	"ContratoTP.h"
+	"ContratoMovil.h"
+
+1573121673 c:\users\usuario\desktop\practica1\include\contratotp.h
+	"contrato.h"
+
+1573122206 c:\users\usuario\desktop\practica1\include\contratomovil.h
+	"contrato.h"
+
+1573122122 source:c:\users\usuario\desktop\practica1\src\contratotp.cpp
+	"ContratoTP.h"
+
+1573122120 source:c:\users\usuario\desktop\practica1\src\contratomovil.cpp
+	"ContratoMovil.h"
+	"string.h"
+
+1573118378 source:c:\users\usuario\desktop\practica1\prueba 1.cpp
+	<cstdlib>
+	<iostream>
+	"Fecha.h"
+	"Cliente.h"
+

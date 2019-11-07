@@ -17,6 +17,9 @@ int main(){
     f3=f4++;//indica que método/s se esta ejecutando aqui
     ++f4;
     f1=2+f2+3;
+
+
+
     cout << "Fechas:"; f1.ver();cout << ", ";f2.ver();cout << ", ";
     f3.ver();cout << ", "; f4.ver(); cout << endl;
 

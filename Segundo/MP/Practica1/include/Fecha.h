@@ -22,6 +22,7 @@ public:
     Fecha operator++(int flag);
     Fecha operator+(int a) const;
 
+    void verBonita(std::ostream& s);
 
 friend Fecha operator+(const int &a, const Fecha &f);
 friend std::ostream& operator<<(std::ostream& s, const Fecha &o);
