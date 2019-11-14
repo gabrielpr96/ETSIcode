@@ -19,19 +19,19 @@
 1572517525 c:\users\usuario\desktop\practica 1\include\cliente.h
 	"Fecha.h"
 
-1572531382 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\fecha.cpp
+1573554519 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\fecha.cpp
 	<cmath>
 	<iostream>
 	"Fecha.h"
 
-1573400247 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\fecha.h
+1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\fecha.h
 	<iostream>
 
-1573118558 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\cliente.cpp
+1573554519 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\cliente.cpp
 	<string.h>
 	"Cliente.h"
 
-1572949478 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\cliente.h
+1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\cliente.h
 	"Fecha.h"
 
 1572530354 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\main.cpp
@@ -40,29 +40,29 @@
 	"Fecha.h"
 	"Cliente.h"
 
-1573118558 source:c:\users\usuario\desktop\practica1\src\cliente.cpp
+1573554519 source:c:\users\usuario\desktop\practica1\src\cliente.cpp
 	<string.h>
 	"Cliente.h"
 
-1572949478 c:\users\usuario\desktop\practica1\include\cliente.h
+1573554519 c:\users\usuario\desktop\practica1\include\cliente.h
 	"Fecha.h"
 
-1573121422 c:\users\usuario\desktop\practica1\include\fecha.h
+1573554519 c:\users\usuario\desktop\practica1\include\fecha.h
 	<iostream>
 
-1573121618 source:c:\users\usuario\desktop\practica1\src\fecha.cpp
+1573554519 source:c:\users\usuario\desktop\practica1\src\fecha.cpp
 	<cmath>
 	<iostream>
 	"Fecha.h"
 
-1573121486 source:c:\users\usuario\desktop\practica1\src\contrato.cpp
+1573554519 source:c:\users\usuario\desktop\practica1\src\contrato.cpp
 	"Contrato.h"
 	<iostream>
 
-1573121246 c:\users\usuario\desktop\practica1\include\contrato.h
+1573726467 c:\users\usuario\desktop\practica1\include\contrato.h
 	"fecha.h"
 
-1573122212 source:c:\users\usuario\desktop\practica1\prueba 2.cpp
+1573725709 source:c:\users\usuario\desktop\practica1\prueba 2.cpp
 	<cstdlib>
 	<iostream>
 	"Fecha.h"
@@ -71,16 +71,16 @@
 	"ContratoTP.h"
 	"ContratoMovil.h"
 
-1573121673 c:\users\usuario\desktop\practica1\include\contratotp.h
+1573726445 c:\users\usuario\desktop\practica1\include\contratotp.h
 	"contrato.h"
 
-1573122206 c:\users\usuario\desktop\practica1\include\contratomovil.h
+1573554519 c:\users\usuario\desktop\practica1\include\contratomovil.h
 	"contrato.h"
 
-1573122122 source:c:\users\usuario\desktop\practica1\src\contratotp.cpp
+1573726443 source:c:\users\usuario\desktop\practica1\src\contratotp.cpp
 	"ContratoTP.h"
 
-1573122120 source:c:\users\usuario\desktop\practica1\src\contratomovil.cpp
+1573723704 source:c:\users\usuario\desktop\practica1\src\contratomovil.cpp
 	"ContratoMovil.h"
 	"string.h"
 
@@ -99,23 +99,67 @@
 	"ContratoTP.h"
 	"ContratoMovil.h"
 
-1573121246 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contrato.h
+1573726467 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contrato.h
 	"fecha.h"
 
-1573121673 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratotp.h
+1573726445 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratotp.h
 	"contrato.h"
 
-1573122206 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratomovil.h
+1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratomovil.h
 	"contrato.h"
 
-1573121486 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contrato.cpp
+1573554519 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contrato.cpp
 	"Contrato.h"
 	<iostream>
 
-1573122302 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratomovil.cpp
+1573750953 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratomovil.cpp
 	"ContratoMovil.h"
 	"string.h"
 
-1573122298 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratotp.cpp
+1573750947 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratotp.cpp
 	"ContratoTP.h"
+
+1573724515 source:c:\users\usuario\desktop\practica1\prueba 3.cpp
+	<cstdlib>
+	<iostream>
+	"Fecha.h"
+	"Cliente.h"
+	"Contrato.h"
+	"ContratoTP.h"
+	"ContratoMovil.h"
+	"Empresa.h"
+
+1573724462 c:\users\usuario\desktop\practica1\include\empresa.h
+	"Fecha.h"
+	"Cliente.h"
+	"Contrato.h"
+	"ContratoTP.h"
+	"ContratoMovil.h"
+
+1573726414 source:c:\users\usuario\desktop\practica1\src\empresa.cpp
+	"Empresa.h"
+	"Fecha.h"
+
+1573750904 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\prueba 3.cpp
+	<cstdlib>
+	<iostream>
+	"Fecha.h"
+	"Cliente.h"
+	"Contrato.h"
+	"ContratoTP.h"
+	"ContratoMovil.h"
+	"Empresa.h"
+
+1573747778 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\empresa.h
+	"Fecha.h"
+	"Cliente.h"
+	"Contrato.h"
+	"ContratoTP.h"
+	"ContratoMovil.h"
+
+1573750838 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\empresa.cpp
+	<typeinfo>
+	<cstdio>
+	"Empresa.h"
+	"Fecha.h"
 

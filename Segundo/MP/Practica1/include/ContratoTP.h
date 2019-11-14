@@ -9,7 +9,7 @@ class ContratoTP : public Contrato{
     static float precio;
 
 public:
-    ContratoTP(long int dni, Fecha f, int minutos);
+    ContratoTP(long int dni, Fecha f, int minutosHablados);
     ContratoTP(const ContratoTP &c);
     ~ContratoTP();
 

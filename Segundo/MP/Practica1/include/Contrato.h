@@ -14,7 +14,7 @@ protected:
 
 public:
     Contrato(long int dni, Fecha f);
-    ~Contrato();
+    virtual ~Contrato();
 
     long int getDniContrato() const {return this->dniContrato;};
     Fecha getFechaContrato() const {return this->fechaContrato;};
@@ -24,7 +24,8 @@ public:
     void setFechaContrato(Fecha f){this->fechaContrato = f;};
     void setMinutosHablados(int minutosHablados){this->minutosHablados = minutosHablados;};
 
-    void ver() const;
+    virtual void ver() const;
+    virtual float factura() const = 0;
 };
 
 std::ostream& operator<<(std::ostream& s, const Contrato &o);
