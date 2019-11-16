@@ -163,3 +163,9 @@
 	"Empresa.h"
 	"Fecha.h"
 
+1573905232 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\prueba 1.cpp
+	<cstdlib>
+	<iostream>
+	"Fecha.h"
+	"Cliente.h"
+

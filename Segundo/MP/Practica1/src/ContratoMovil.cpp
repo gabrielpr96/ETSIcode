@@ -4,6 +4,7 @@
 ContratoMovil::ContratoMovil(long int dni, Fecha f, float precioMinuto, int minutosHablados, const char *nac) : Contrato(dni, f){
     this->precioMinuto = precioMinuto;
     this->minutosHablados = minutosHablados;
+    delete this->nac;
     this->nac = new char[strlen(nac)+1];
     strcpy(this->nac, nac);
 
