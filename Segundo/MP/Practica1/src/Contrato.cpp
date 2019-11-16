@@ -17,8 +17,6 @@ void Contrato::ver() const{
 
 
 std::ostream& operator<<(std::ostream& s, const Contrato &o) {
-    s << o.getDniContrato() << "(" << o.getIdContrato() << " - ";
-    o.getFechaContrato().verBonita(s);
-    s  << ")";
+    s << o.getDniContrato() << "(" << o.getIdContrato() << " - " << o.getFechaContrato() << ")";
     return s;
 }

@@ -71,9 +71,9 @@ Fecha Fecha::operator+(int a) const{
     return r;
 }
 
-void Fecha::verBonita(std::ostream& s){
-    s << (dia<10?"0":"") << dia << " ";
-    switch(mes){
+std::ostream& operator<<(std::ostream& s, const Fecha &o) {
+    s << (o.getDia()<10?"0":"") << o.getDia() << " ";
+    switch(o.getMes()){
         case 1: s << "ene"; break;
         case 2: s << "feb"; break;
         case 3: s << "mar"; break;
@@ -87,13 +87,7 @@ void Fecha::verBonita(std::ostream& s){
         case 11: s << "nov"; break;
         case 12: s << "dic"; break;
     }
-    s << " " << anio;
-}
-
-
-std::ostream& operator<<(std::ostream& s, const Fecha &o) {
-    s << (o.dia<10?"0":"") << o.dia << "/" << (o.mes<10?"0":"") << o.mes << "/" << o.anio;
-    return s;
+    s << " " << o.getAnio();
 }
 
 

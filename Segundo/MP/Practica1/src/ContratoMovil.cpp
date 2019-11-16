@@ -4,7 +4,6 @@
 ContratoMovil::ContratoMovil(long int dni, Fecha f, float precioMinuto, int minutosHablados, const char *nac) : Contrato(dni, f){
     this->precioMinuto = precioMinuto;
     this->minutosHablados = minutosHablados;
-    delete this->nac;
     this->nac = new char[strlen(nac)+1];
     strcpy(this->nac, nac);
 
@@ -21,7 +20,7 @@ ContratoMovil::~ContratoMovil(){
 
 
 void ContratoMovil::ver() const{
-    std::cout << dniContrato << " (" << idContrato << " - " << fechaContrato << ") " << minutosHablados << "m, " << nac << " " << precioMinuto;
+    std::cout << *this;
 }
 float ContratoMovil::factura() const{
     return precioMinuto*minutosHablados;
@@ -35,8 +34,6 @@ void ContratoMovil::setNacionalidad(const char *nac){
 
 
 std::ostream& operator<<(std::ostream& s, const ContratoMovil &o) {
-    s << o.getDniContrato() << " (" << o.getIdContrato() << " - ";
-    o.getFechaContrato().verBonita(s);
-    s  << ") " << o.getMinutosHablados() << "m, " << o.getNacionalidad() << " " << o.getPrecioMinuto() << " - " << o.factura() << "e"; //TODO: Intentar imprimir el euro
+    s << o.getDniContrato() << " (" << o.getIdContrato() << " - " << o.getFechaContrato() << ") " << o.getMinutosHablados() << "m, " << o.getNacionalidad() << " " << o.getPrecioMinuto() << " - " << o.factura() << "e"; //TODO: Intentar imprimir el euro
     return s;
 }

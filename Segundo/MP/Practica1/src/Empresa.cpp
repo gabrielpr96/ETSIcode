@@ -117,6 +117,17 @@ bool Empresa::cancelarContrato(int idContrato){
         }else i++;
     }
 
+    //Si la tabla esta menos de medio vacia, la reduzco a la mitad
+    if(ncon < nmaxcon/2){
+        nmaxcon /= 2;
+        Contrato **tmp = new Contrato*[nmaxcon];
+        for(int i = 0; i < ncon; i++)
+            tmp[i] = contratos[i];
+
+        delete [] contratos;
+        contratos = tmp;
+    }
+
     return eliminado;
 }
 
@@ -126,11 +137,7 @@ bool Empresa::bajaCliente(long int dni){
 
     while(i < ncon){
         if(contratos[i]->getDniContrato() == dni){
-            delete contratos[i];
-            int j = i;
-            while(j < ncon-1)
-                contratos[j] = contratos[++j];
-            ncon--;
+            cancelarContrato(contratos[i]->getIdContrato());
         }else i++;
     }
 
