@@ -16,6 +16,7 @@ ContratoMovil::ContratoMovil(const ContratoMovil &c) : Contrato(c.getDniContrato
 }
 
 ContratoMovil::~ContratoMovil(){
+    delete [] this->nac;
 }
 
 

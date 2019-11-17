@@ -5,6 +5,7 @@
 #define PRECIO_EXCESO 0.15
 
 class ContratoTP : public Contrato{
+private:
     static int limiteMinutos;
     static float precio;
 
