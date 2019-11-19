@@ -2,6 +2,7 @@
 
 int ContratoTP::limiteMinutos = 300;
 float ContratoTP::precio = 10;
+const float ContratoTP::PRECIO_EXCESO = 0.15;
 
 ContratoTP::ContratoTP(long int dni, Fecha f, int minutosHablados) : Contrato(dni, f){
     this->minutosHablados = minutosHablados;

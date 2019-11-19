@@ -2,12 +2,11 @@
 #define CONTRATOTP_H
 #include "contrato.h"
 
-#define PRECIO_EXCESO 0.15
-
 class ContratoTP : public Contrato{
 private:
     static int limiteMinutos;
     static float precio;
+    static const float PRECIO_EXCESO;
 
 public:
     ContratoTP(long int dni, Fecha f, int minutosHablados);
