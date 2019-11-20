@@ -12,7 +12,7 @@ Cliente::~Cliente(){
 }
 
 void Cliente::setNombre(char *nombre){
-    delete this->nombre;
+    delete [] this->nombre;
     this->nombre = new char[strlen(nombre)+1];
     strcpy(this->nombre, nombre);
 }

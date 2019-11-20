@@ -27,7 +27,7 @@
 1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\fecha.h
 	<iostream>
 
-1573554519 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\cliente.cpp
+1574023820 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\cliente.cpp
 	<string.h>
 	"Cliente.h"
 
@@ -102,7 +102,7 @@
 1573726467 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contrato.h
 	"fecha.h"
 
-1573916029 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratotp.h
+1574187423 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratotp.h
 	"contrato.h"
 
 1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratomovil.h
@@ -116,7 +116,7 @@
 	"ContratoMovil.h"
 	"string.h"
 
-1573916198 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratotp.cpp
+1574187442 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratotp.cpp
 	"ContratoTP.h"
 
 1573724515 source:c:\users\usuario\desktop\practica1\prueba 3.cpp
@@ -163,7 +163,7 @@
 	"Empresa.h"
 	"Fecha.h"
 
-1573905232 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\prueba 1.cpp
+1573905301 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\prueba 1.cpp
 	<cstdlib>
 	<iostream>
 	"Fecha.h"

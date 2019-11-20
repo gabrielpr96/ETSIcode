@@ -4,6 +4,8 @@ data segment
     PESO        DB 8,4,2,1
     VALORES_HEX DB '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'
     VALOR_HEX   DB 0
+    
+    ;Valor absoluto en decimal y character con el signo correspondiente
     VALOR_CO1   DB 0
     SIGNO_CO1   DB '+'
     
@@ -33,23 +35,22 @@ start:
     
      
     ;Calcular el hexadecimal
-    MOV AH, 0
                                      
     MOV AL, CADENA[2]
     MUL PESO[0]       
-    MOV BX, AX
+    MOV BL, AL
     
     MOV AL, CADENA[3]
     MUL PESO[1]       
-    ADD BX, AX
+    ADD BL, AL
                             
     MOV AL, CADENA[4]
     MUL PESO[2]       
-    ADD BX, AX
+    ADD BL, AL
                             
     MOV AL, CADENA[5]
     MUL PESO[3]       
-    ADD BX, AX
+    ADD BL, AL
     
     MOV VALOR_HEX, BL
      
@@ -57,46 +58,36 @@ start:
     ;Calcular el complemento a 1
     ;Evaluar si es positivo o no
     CMP CADENA[2], 1
-    JE ESNEGATIVO
+    JE  ESNEGATIVO
     JMP FINALIZAR
     
     ESNEGATIVO:       
     ;Es negativo, lo invierto y lo indico
-    
-    MOV AL, CADENA[3]
-    NOT AL
-    AND AL, 00000001b
-    MOV CADENA[3], AL
-    
-    MOV AL, CADENA[4]
-    NOT AL   
-    AND AL, 00000001b
-    MOV CADENA[4], AL
-    
-    MOV AL, CADENA[5]
-    NOT AL  
-    AND AL, 00000001b
-    MOV CADENA[5], AL
-    
-    MOV SIGNO_CO1, '-'
-    
+        
+        NOT CADENA[3]
+        AND CADENA[3], 00000001b
+                                
+        NOT CADENA[4]
+        AND CADENA[4], 00000001b
+        
+        NOT CADENA[5]
+        AND CADENA[5], 00000001b
+        
+        MOV SIGNO_CO1, '-'
+        
     FINALIZAR:
-    
-    MOV BX, 0
-    MOV AH, 00h  
+                 
     MOV AL, CADENA[3]
     MUL PESO[1]    
-    ADD BX, AX
-                            
-    MOV AH, 00h  
+    MOV BL, AL
+    
     MOV AL, CADENA[4]
     MUL PESO[2]       
-    ADD BX, AX
-                            
-    MOV AH, 00h  
+    ADD BL, AL
+     
     MOV AL, CADENA[5]
     MUL PESO[3]       
-    ADD BX, AX
+    ADD BL, AL
     
     MOV VALOR_CO1, BL                
     
@@ -137,8 +128,6 @@ start:
     MOV SI, BX
     MOV AL, VALORES_HEX[SI]
     MOV ES:[330], AX
-    
-    
                  
                     
     ;Devolver el control al OS    
