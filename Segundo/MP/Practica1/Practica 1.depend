@@ -40,26 +40,26 @@
 	"Fecha.h"
 	"Cliente.h"
 
-1573554519 source:c:\users\usuario\desktop\practica1\src\cliente.cpp
+1574243433 source:c:\users\usuario\desktop\practica1\src\cliente.cpp
 	<string.h>
 	"Cliente.h"
 
-1573554519 c:\users\usuario\desktop\practica1\include\cliente.h
+1574243433 c:\users\usuario\desktop\practica1\include\cliente.h
 	"Fecha.h"
 
-1573554519 c:\users\usuario\desktop\practica1\include\fecha.h
+1574243433 c:\users\usuario\desktop\practica1\include\fecha.h
 	<iostream>
 
-1573554519 source:c:\users\usuario\desktop\practica1\src\fecha.cpp
+1574243433 source:c:\users\usuario\desktop\practica1\src\fecha.cpp
 	<cmath>
 	<iostream>
 	"Fecha.h"
 
-1573554519 source:c:\users\usuario\desktop\practica1\src\contrato.cpp
+1574243433 source:c:\users\usuario\desktop\practica1\src\contrato.cpp
 	"Contrato.h"
 	<iostream>
 
-1573726467 c:\users\usuario\desktop\practica1\include\contrato.h
+1574243433 c:\users\usuario\desktop\practica1\include\contrato.h
 	"fecha.h"
 
 1573725709 source:c:\users\usuario\desktop\practica1\prueba 2.cpp
@@ -71,16 +71,16 @@
 	"ContratoTP.h"
 	"ContratoMovil.h"
 
-1573726445 c:\users\usuario\desktop\practica1\include\contratotp.h
+1574243433 c:\users\usuario\desktop\practica1\include\contratotp.h
 	"contrato.h"
 
-1573554519 c:\users\usuario\desktop\practica1\include\contratomovil.h
+1574243433 c:\users\usuario\desktop\practica1\include\contratomovil.h
 	"contrato.h"
 
-1573726443 source:c:\users\usuario\desktop\practica1\src\contratotp.cpp
+1574243433 source:c:\users\usuario\desktop\practica1\src\contratotp.cpp
 	"ContratoTP.h"
 
-1573723704 source:c:\users\usuario\desktop\practica1\src\contratomovil.cpp
+1574243433 source:c:\users\usuario\desktop\practica1\src\contratomovil.cpp
 	"ContratoMovil.h"
 	"string.h"
 
@@ -119,7 +119,7 @@
 1574187442 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratotp.cpp
 	"ContratoTP.h"
 
-1573724515 source:c:\users\usuario\desktop\practica1\prueba 3.cpp
+1574327246 source:c:\users\usuario\desktop\practica1\prueba 3.cpp
 	<cstdlib>
 	<iostream>
 	"Fecha.h"
@@ -129,14 +129,16 @@
 	"ContratoMovil.h"
 	"Empresa.h"
 
-1573724462 c:\users\usuario\desktop\practica1\include\empresa.h
+1574243433 c:\users\usuario\desktop\practica1\include\empresa.h
 	"Fecha.h"
 	"Cliente.h"
 	"Contrato.h"
 	"ContratoTP.h"
 	"ContratoMovil.h"
 
-1573726414 source:c:\users\usuario\desktop\practica1\src\empresa.cpp
+1574327060 source:c:\users\usuario\desktop\practica1\src\empresa.cpp
+	<typeinfo>
+	<cstdio>
 	"Empresa.h"
 	"Fecha.h"
 

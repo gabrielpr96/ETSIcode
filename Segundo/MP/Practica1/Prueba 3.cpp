@@ -31,14 +31,14 @@ int main(){
     if (ok) cout << "El Contrato 4 ha sido cancelado\n"; else cout << "El Contrato 4 no existe\n";
 
     ok=Yoigo.bajaCliente(75547001); //debe eliminar el cliente y sus 3 Contratos
-    if (ok) cout << "El cliente 75547001 y sus Contratos han sido cancelados\n"; else cout << "El cliente 75547001 no existe\n";
+    if (ok) cout << "El cliente 75547001 y sus Contratos han sido cancelados\n\n"; else cout << "El cliente 75547001 no existe\n\n";
 
     Yoigo.ver();
 
     Yoigo.descuento(20);
     cout << "\nTras rebajar un 20% la tarifa de los ContratosMovil...\n\n";
     Yoigo.ver();
-    cout <<"Yoigo tiene " << Yoigo. nContratosTP () << " Contratos de Tarifa Plana\n";
+    cout <<"\nYoigo tiene " << Yoigo. nContratosTP () << " Contratos de Tarifa Plana\n\n";
 
     system("PAUSE");
     return 0;

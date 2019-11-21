@@ -26,7 +26,7 @@ Empresa::~Empresa(){
 
 void Empresa::crearContrato(){
     long int dni;
-    cout << "Introduzca el DNI: ";
+    cout << "Introduzca DNI: ";
     cin >> dni;
 
     int iCliente = -1, i = 0;
@@ -36,54 +36,45 @@ void Empresa::crearContrato(){
         else i++;
     }
 
-    if(iCliente == -1){
-        cout << "El DNI introducido no se corresponde con ningun cliente registrado.\n";
-        if(ncli == nmaxcli){
-            cout << "No se puede ingresar un nuevo cliente, cantidad maxima alcanzada.\n";
-        }else{
-            cout << "Se procede a registrar un nuevo cliente.\n";
-            iCliente = ncli++;
-            char nombre[50];
-            int dia, mes, annio;
-            cout << "Introduzca el nombre del cliente: ";
-            cin.ignore();
-            gets(nombre);
-            cout << "Introduzca la fecha en que se da de alta (dia, mes y annio): ";
-            cin >> dia >> mes >> annio;
-            clientes[iCliente] = new Cliente(dni, nombre, Fecha(dia, mes, annio));
-            cout << "Cliente creado correctamente.\n\n";
-        }
-    }else{
-        cout << "Cliente seleccionado.\n\n";
+    if(iCliente == -1 && ncli < nmaxcli){
+        iCliente = ncli++;
+        char nombre[50];
+        int dia, mes, anio;
+        cout << "Nombre del cliente: ";
+        cin.ignore();
+        gets(nombre);
+        cout << "Fecha de registro (dia, mes, anio): ";
+        cin >> dia >> mes >> anio;
+        clientes[iCliente] = new Cliente(dni, nombre, Fecha(dia, mes, anio));
     }
 
     if(iCliente != -1){
         int tipoContrato;
-        cout << "Introduzca el tipo de contrato que desea (1. Movil 2. Tarifa Plana): ";
+        cout << "Tipo de contrato a abrir (1-Tariafa Plana, 2-Movil): ";
         cin >> tipoContrato;
+
+        int dia, mes, anio;
+        cout << "Fecha del contrato (dia, mes, anio): ";
+        cin >> dia >> mes >> anio;
 
         int minutosHablados;
         cout << "Introduzca los minutos hablados: ";
         cin >> minutosHablados;
-        int dia, mes, annio;
-        cout << "Introduzca la fecha del contrato (dia, mes y annio): ";
-        cin >> dia >> mes >> annio;
-        if(tipoContrato == 1){
-            char nac[20];
-            cout << "Introduzca la nacionalidad: ";
-            cin >> nac;
+
+
+        if(tipoContrato == 2){
             float precioMinuto;
-            cout << "Introduzca el precio por minuto: ";
+            cout << "Precio minuto: ";
             cin >> precioMinuto;
-            contratos[ncon++] = new ContratoMovil(dni, Fecha(dia, mes, annio), precioMinuto, minutosHablados, nac);
-        }else if(tipoContrato == 2){
+            char nac[20];
+            cout << "Nacionalidad: ";
+            cin >> nac;
+            contratos[ncon++] = new ContratoMovil(dni, Fecha(dia, mes, anio), precioMinuto, minutosHablados, nac);
+        }else if(tipoContrato == 1){
             //El contrato de tarifa plana no requiere mas datos
-            contratos[ncon++] = new ContratoTP(dni, Fecha(dia, mes, annio), minutosHablados);
+            contratos[ncon++] = new ContratoTP(dni, Fecha(dia, mes, anio), minutosHablados);
         }else{
-            cout << "Tipo de contrato invalido.\n Operación cancelada.\n\n";
-            delete clientes[iCliente];
-            ncli--;
-            iCliente = -1;
+            cout << "Tipo de contrato invalido.\n Operación cancelada.\n";
         }
 
         //Si la tabla esta llena, la amplio al doble
@@ -96,11 +87,10 @@ void Empresa::crearContrato(){
             delete [] contratos;
             contratos = tmp;
         }
+    }else{
+        cout << "No se pudo registrar al cliente.\n";
     }
-
-    if(iCliente != -1){
-        cout << "\nContrato registrado correctamente.\n\n";
-    }
+    cout << endl;
 }
 
 bool Empresa::cancelarContrato(int idContrato){
@@ -163,8 +153,7 @@ int Empresa::descuento(float porcentaje)const{
     porcentaje = 1 - porcentaje/100;
 
     for(int i = 0; i < ncon; i++){
-        if(typeid(*contratos[i]) == typeid(ContratoMovil)){
-            ContratoMovil *c = dynamic_cast<ContratoMovil*>(contratos[i]);
+        if(ContratoMovil *c = dynamic_cast<ContratoMovil*>(contratos[i])){
             c->setPrecioMinuto(c->getPrecioMinuto()*porcentaje);
             afectados++;
         }
@@ -193,7 +182,7 @@ void Empresa::ver() const {
     cout << endl << "Contratos:" << endl;
     for(int i = 0; i < ncon; i++){
         contratos[i]->ver();
-        cout << " - " << contratos[i]->factura() << "e" << endl;
+        cout << endl;
     }
 }
 

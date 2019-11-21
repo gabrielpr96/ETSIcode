@@ -34,15 +34,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Prueba 1.cpp" />
+		<Unit filename="Prueba 1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Prueba 2.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Prueba 3.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="Prueba 3.cpp" />
 		<Unit filename="include/Cliente.h" />
 		<Unit filename="include/Contrato.h" />
 		<Unit filename="include/ContratoMovil.h" />
