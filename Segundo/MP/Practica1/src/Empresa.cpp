@@ -1,5 +1,4 @@
 #include <typeinfo>
-#include <cstdio>
 #include "Empresa.h"
 #include "Fecha.h"
 
@@ -42,7 +41,7 @@ void Empresa::crearContrato(){
         int dia, mes, anio;
         cout << "Nombre del cliente: ";
         cin.ignore();
-        gets(nombre);
+        cin.getline(nombre, 50);
         cout << "Fecha de registro (dia, mes, anio): ";
         cin >> dia >> mes >> anio;
         clientes[iCliente] = new Cliente(dni, nombre, Fecha(dia, mes, anio));

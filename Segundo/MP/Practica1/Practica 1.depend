@@ -19,19 +19,19 @@
 1572517525 c:\users\usuario\desktop\practica 1\include\cliente.h
 	"Fecha.h"
 
-1573911380 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\fecha.cpp
+1574243433 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\fecha.cpp
 	<cmath>
 	<iostream>
 	"Fecha.h"
 
-1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\fecha.h
+1574243433 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\fecha.h
 	<iostream>
 
-1574023820 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\cliente.cpp
+1574243433 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\cliente.cpp
 	<string.h>
 	"Cliente.h"
 
-1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\cliente.h
+1574243433 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\cliente.h
 	"Fecha.h"
 
 1572530354 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\main.cpp
@@ -99,24 +99,24 @@
 	"ContratoTP.h"
 	"ContratoMovil.h"
 
-1573726467 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contrato.h
+1574243433 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contrato.h
 	"fecha.h"
 
-1574187423 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratotp.h
+1574243433 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratotp.h
 	"contrato.h"
 
-1573554519 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratomovil.h
+1574243433 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\contratomovil.h
 	"contrato.h"
 
-1573911439 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contrato.cpp
+1574243433 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contrato.cpp
 	"Contrato.h"
 	<iostream>
 
-1574023632 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratomovil.cpp
+1574243433 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratomovil.cpp
 	"ContratoMovil.h"
 	"string.h"
 
-1574187442 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratotp.cpp
+1574243433 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\contratotp.cpp
 	"ContratoTP.h"
 
 1574327246 source:c:\users\usuario\desktop\practica1\prueba 3.cpp
@@ -142,7 +142,7 @@
 	"Empresa.h"
 	"Fecha.h"
 
-1573905324 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\prueba 3.cpp
+1574327246 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\prueba 3.cpp
 	<cstdlib>
 	<iostream>
 	"Fecha.h"
@@ -152,16 +152,16 @@
 	"ContratoMovil.h"
 	"Empresa.h"
 
-1573747778 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\empresa.h
+1574243433 c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\include\empresa.h
 	"Fecha.h"
 	"Cliente.h"
 	"Contrato.h"
 	"ContratoTP.h"
 	"ContratoMovil.h"
 
-1573912054 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\empresa.cpp
+1574797991 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\empresa.cpp
 	<typeinfo>
-	<cstdio>
+	<cstring>
 	"Empresa.h"
 	"Fecha.h"
 
