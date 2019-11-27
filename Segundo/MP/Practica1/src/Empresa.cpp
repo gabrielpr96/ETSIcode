@@ -1,4 +1,5 @@
 #include <typeinfo>
+#include <cstdio>
 #include "Empresa.h"
 #include "Fecha.h"
 

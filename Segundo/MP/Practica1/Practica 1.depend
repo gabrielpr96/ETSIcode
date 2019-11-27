@@ -159,9 +159,9 @@
 	"ContratoTP.h"
 	"ContratoMovil.h"
 
-1574797991 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\empresa.cpp
+1574799584 source:c:\users\arlin-t2\desktop\etsicode\segundo\mp\practica1\src\empresa.cpp
 	<typeinfo>
-	<cstring>
+	<cstdio>
 	"Empresa.h"
 	"Fecha.h"
 
