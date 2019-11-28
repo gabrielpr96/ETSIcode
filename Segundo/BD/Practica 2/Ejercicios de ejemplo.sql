@@ -77,6 +77,17 @@ FROM EI.MATRICULA M INNER JOIN EI.ALUMNO AL ON(alum = nAl) INNER JOIN EI.ASIGNAT
 WHERE A.nombre = 'Bases de Datos I' AND año = 2002 AND sep >= 5
 ;
 
+--EI-14. Alumnos que hayan nacido en la misma ciudad que Samuel Toscano Villegas y tengan el mismo número de hermanos que Beatriz Rico Vázquez
+SELECT nombre
+FROM EI.ALUMNO
+WHERE lugar = ( SELECT lugar
+                FROM EI.ALUMNO
+                WHERE nombre = 'Samuel Toscano Villegas')
+    AND nH = ( SELECT nh
+                FROM EI.ALUMNO
+                WHERE nombre = 'Beatriz Rico Vázquez')
+;
+
 --EI-15. Alumnos matriculados en BDII y no en BDI
 SELECT nombre
 FROM EI.ALUMNO
