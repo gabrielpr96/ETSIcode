@@ -5,9 +5,8 @@
 
 using namespace std;
 
-Empresa::Empresa(){
+Empresa::Empresa() : nmaxcli(100){
     ncli = 0;
-    nmaxcli = 100;
 
     ncon = 0;
     nmaxcon = 10;

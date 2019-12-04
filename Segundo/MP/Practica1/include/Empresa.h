@@ -13,7 +13,7 @@ using namespace std;
 class Empresa{
     Cliente *clientes[100];//array estático (tamaño 100)de punteros a Clientes
     int ncli;           //para saber cuántosclientes hay en el array (al principio 0)
-    int nmaxcli;//para saber cuántoscaben en el arrayclientes(100)
+    const int nmaxcli;//para saber cuántoscaben en el arrayclientes(100)
     Contrato **contratos;//array dinámico de punteros a Contratos
     int ncon;            //para saber cuántosContratos hay en el array (al principio 0)
     int nmaxcon;//para saber cuántoscaben en el array Contratos
