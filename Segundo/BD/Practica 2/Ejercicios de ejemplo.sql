@@ -176,19 +176,43 @@ WHERE ( SELECT COUNT(*)
 ;
 
 --EI-26. Para cada asignatura y año académico, mostrar el nombre de la asignatura, el año, el número de alumnos que se han presentado y la nota media obtenida en la convocatoria de febrero_junio
-
---Aqui hay que agrupar, eso ya lo veremos luego
-
---EI-25. Obtener, mediante una consulta correlacionada, los nombres de los profesores que tienen más antigüedad que, al menos, otros cinco profesores. 
-
---EI-26. Para cada asignatura y año académico, mostrar el nombre de la asignatura, el año, el número de alumnos que se han presentado y la nota media obtenida en la convocatoria de febrero_junio
+SELECT nombre, año, COUNT(*), AVG(feb_jun)
+FROM EI.MATRICULA INNER JOIN EI.ASIGNATURA USING(idAsig)
+GROUP BY nombre, año
+;
 
 --EI-27. Obtener un listado con el nombre del alumno, el nombre de la asignatura y el número de veces que se ha matriculado en esa asignatura, pero sólo cuando se haya matriculado 3 o más años
+SELECT AL.nombre AS nombreAlmuno, ASIG.nombre AS nombreAsignatura, count(*) AS nMatriculas
+FROM EI.MATRICULA INNER JOIN EI.ASIGNATURA ASIG USING(idAsig) INNER JOIN EI.ALUMNO AL ON(nAl = alum)
+GROUP BY AL.nombre, ASIG.nombre
+HAVING count(*) >= 3
+;
 
 --EI-28. Nombre de los alumnos que hayan sacado más de un 5 de nota media en junio del 2002
+SELECT nombre
+FROM EI.MATRICULA INNER JOIN EI.ALUMNO ON(nAl = alum)
+WHERE año=2002
+GROUP BY nombre
+HAVING AVG(feb_jun) > 5
+;
 
 --EI-29. Nombre de las asignaturas y número de alumnos matriculados de las asignaturas donde se hayan matriculado más alumnos en el año 2002
+SELECT nombre
+FROM EI.MATRICULA INNER JOIN EI.ASIGNATURA USING(idAsig)
+WHERE año=2002
+GROUP BY nombre
+HAVING count(*)>=ALL(SELECT count(*)
+                    FROM EI.MATRICULA
+                    WHERE año=2002
+                    GROUP BY idAsig)
+;
 
 --EI- 30. Obtener el número total de alumnos que han suspendido en cada asignatura en junio de 2002, pero sólo de aquellas asignaturas en las que se hayan matriculado más de 50 alumnos
+SELECT count(*)
+FROM EI.MATRICULA
+WHERE feb_jun < 5 AND año=2002 AND idAsig IN(SELECT idAsig
+                                                FROM EI.MATRICULA
+                                                GROUP BY idAsig
+                                                HAVING count(*) > 50)
+GROUP BY idAsig
 
---

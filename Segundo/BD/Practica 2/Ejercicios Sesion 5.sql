@@ -2,17 +2,16 @@
 SELECT nombreP
 FROM WRC.PILOTO PI
 WHERE NOT EXISTS( SELECT *
-                  FROM WRC.PILOTO INNER JOIN WRC.CORRE USING(codPiloto) INNER JOIN WRC.RALLY USING(codRally)
+                  FROM WRC.RALLY INNER JOIN WRC.CORRE USING(codRally) INNER JOIN WRC.PILOTO USING(codPiloto)
                   WHERE nombreP = 'Marcus Gronholm' AND NOT EXISTS( SELECT *
-                                                                    FROM WRC.CORRE CO
-                                                                    WHERE PI.codPiloto = CO.codPiloto
+                                                                    FROM WRC.RALLY INNER JOIN WRC.CORRE USING(codRally) 
+                                                                    WHERE PI.codPiloto = codPiloto
+                                                                        AND nombre = 'Rally de Montecarlo'
                                                                   )
-                        AND nombre = 'Rally de Montecarlo' AND PI.codPiloto = CO.codPiloto
+                        AND nombre = 'Rally de Montecarlo'
                   )
       AND nombreP <> 'Marcus Gronholm'
 ;
-
-
 
 --WRC-22. Nombre de los rallies junto con el número de tramos de cada uno de ellos
 SELECT nombre, COUNT(numeroTramo)
