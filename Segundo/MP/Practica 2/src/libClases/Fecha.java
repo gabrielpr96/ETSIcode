@@ -94,9 +94,11 @@ public final class Fecha implements Cloneable, Proceso {
             if(datos.length != 3){
                 valida = false;
             }else{
-                f = new Fecha(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]));
-                int maxDias[] = {0,31,f.bisiesto()?29:28,31,30,31,30,31,31,30,31,30,31};
-                valida = f.getMes() >= 1 && f.getMes() <= 12 && f.getDia() >= 1 && f.getDia() <= maxDias[f.getMes()];
+                int fDia = Integer.parseInt(datos[0]), fMes = Integer.parseInt(datos[1]), fAnio = Integer.parseInt(datos[2]);
+                int maxDias[] = {0,31,(fAnio%400 == 0 || (fAnio%4 == 0 && fAnio%100 != 0))?29:28,31,30,31,30,31,31,30,31,30,31};
+                valida = fMes >= 1 && fMes <= 12 && fDia >= 1 && fDia <= maxDias[fMes];
+                if(valida)
+                    f = new Fecha(fDia, fMes, fAnio);
             }
             if(!valida)
                 System.out.println("Fecha no valida");
