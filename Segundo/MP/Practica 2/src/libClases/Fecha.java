@@ -85,8 +85,24 @@ public final class Fecha implements Cloneable, Proceso {
     }
     public static Fecha pedirFecha(){
         Scanner s = new Scanner(System.in);
-        System.out.print("Introduzca una fecha[dia mes anio]: ");
-        return new Fecha(s.nextInt(), s.nextInt(), s.nextInt());
+        Fecha f = null;
+        boolean valida;
+        
+        do{
+            System.out.print("Introduzca una fecha[dia mes anio]: ");
+            String[] datos = s.nextLine().split("/");
+            if(datos.length != 3){
+                valida = false;
+            }else{
+                f = new Fecha(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Integer.parseInt(datos[2]));
+                int maxDias[] = {0,31,f.bisiesto()?29:28,31,30,31,30,31,31,30,31,30,31};
+                valida = f.getMes() >= 1 && f.getMes() <= 12 && f.getDia() >= 1 && f.getDia() <= maxDias[f.getMes()];
+            }
+            if(!valida)
+                System.out.println("Fecha no valida");
+        }while(!valida);
+        
+        return f;
     }
     
     @Override
