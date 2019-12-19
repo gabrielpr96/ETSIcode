@@ -63,11 +63,11 @@ public class ClienteTarifaPlana extends Cliente{
         return super.toString()+" "+nacionalidad+" ["+limiteMinutos+" por "+tarifa+"] "+minutosHablados+" ---> "+factura();
     }
     @Override
-    public Cliente clone(){
+    public Object clone(){
         return new ClienteTarifaPlana(getNif(), getNombre(), getFechaNac(), getFechaAlta(), getMinutos(), getNacionalidad());
     }
     @Override
     public boolean equals(Object o){
-        return o.getClass() == ClienteTarifaPlana.class && getNif().equals(((Cliente)o).getNif());
+        return o instanceof ClienteTarifaPlana && getNif().equals(((Cliente)o).getNif());
     }
 }

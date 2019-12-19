@@ -13,7 +13,7 @@ public final class Fecha implements Cloneable, Proceso {
         setFecha(dia, mes, anio);
     }
     public Fecha(Fecha f){
-        setFecha(f.dia, f.mes, f.anio);
+        this(f.dia, f.mes, f.anio);
     }
     
     public int getDia(){
@@ -59,7 +59,7 @@ public final class Fecha implements Cloneable, Proceso {
     }
     
     public Fecha diaSig(){
-        Fecha f = new Fecha(this);
+        Fecha f = (Fecha)clone();
         
         f.dia ++;
 
@@ -103,7 +103,7 @@ public final class Fecha implements Cloneable, Proceso {
             if(!valida)
                 System.out.println("Fecha no valida");
         }while(!valida);
-        
+        s.close();
         return f;
     }
     
@@ -112,13 +112,14 @@ public final class Fecha implements Cloneable, Proceso {
         return (dia<10?"0":"")+dia+"/"+(mes<10?"0":"")+mes+"/"+anio;
     }
     @Override
-    public Fecha clone(){
-        try {
-            return (Fecha) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(Fecha.class.getName()).log(Level.SEVERE, null, ex);
+    public Object clone(){
+        Object obj=null;
+        try{
+            obj=super.clone();
+        }catch(CloneNotSupportedException ex){
+            
         }
-        return null;
+        return obj;
     }
     
     @Override
@@ -127,7 +128,7 @@ public final class Fecha implements Cloneable, Proceso {
     }
     @Override
     public boolean equals(Object o){
-        if(o.getClass() != Fecha.class) return false;
+        if(!(o instanceof Fecha)) return false;
         Fecha f = (Fecha)o;
         return dia == f.dia && mes == f.mes && anio == f.anio;
     }

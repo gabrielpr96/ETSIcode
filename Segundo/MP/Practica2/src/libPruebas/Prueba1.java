@@ -7,14 +7,15 @@ public class Prueba1 {
         final Fecha f1 = new Fecha(29,2,2001), f2 = new Fecha(f1), f3 = (Fecha) f1.clone();
         Fecha fnac1 = new Fecha(7,3,1980), fnac2 = fnac1.diaSig(),
         fnac3 = new Fecha(27,06,1995), aux;
+        
+        System.out.println("FECHA 2 "+fnac2);
+        
         System.out.print("Fechas: " + f1.toString() + ", " + f2 + ", " + f3 + "\n");
         System.out.println(f2.diaSig()+ " " + (f2.getDia()-2) + " " +f2+ " " + f2.getAnio());
         if (!f3.bisiesto() && f1.equals(f2))
         System.out.println(f3.getAnio() + " no fue bisiesto. " + f1 + " igual a " + f3);
         f3.setFecha(5,12,2001);
         if (!f1.equals(f3) && Fecha.mayor(f1,f2)==false && Fecha.mayor(f3,f1))
-        System.out.println(f3 + " mayor que " + f1 + ". " + f1 + " no es mayor que " + f2);
-
         f1.setFecha(1,1,2001); f2.setFecha(2,2,2002); f3.setFecha(3,3,2003);
         System.out.print("Fecha alta por defecto: " + Cliente.getFechaPorDefecto() + "\n");
         Cliente c1=new Cliente("793X","Ana Pi",new Fecha(2,2,1972),f3), c2=new Cliente(c1);

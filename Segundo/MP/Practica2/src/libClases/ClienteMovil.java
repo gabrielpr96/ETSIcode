@@ -9,34 +9,26 @@ public class ClienteMovil extends Cliente{
         super(NIF, nom, fNac, fAlta);
         this.minutosHablados = minutosHablados;
         this.precioMinuto = precioMinuto;
-        this.fechaPermanencia = new Fecha(fPermanencia);
+        this.fechaPermanencia = (Fecha)fPermanencia.clone();
     }
 
     public ClienteMovil(String NIF, String nom, Fecha fNac, Fecha fAlta, float minutosHablados, float precioMinuto) {
-        super(NIF, nom, fNac, fAlta);
-        this.minutosHablados = minutosHablados;
-        this.precioMinuto = precioMinuto;
-        this.fechaPermanencia = new Fecha(fAlta);
-        fechaPermanencia.setAnio(fechaPermanencia.getAnio()+1);
+        this(NIF, nom, fNac, fAlta, new Fecha(fAlta.getDia(), fAlta.getMes(), fAlta.getAnio()+1), minutosHablados, precioMinuto);
     }
     
     public ClienteMovil(String NIF, String nom, Fecha fNac, float minutosHablados, float precioMinuto) {
-        super(NIF, nom, fNac);
-        this.minutosHablados = minutosHablados;
-        this.precioMinuto = precioMinuto;
-        this.fechaPermanencia = getFechaAlta();
-        fechaPermanencia.setAnio(fechaPermanencia.getAnio()+1);
+        this(NIF, nom, fNac, getFechaPorDefecto(), minutosHablados, precioMinuto);
     }
 
     public ClienteMovil(ClienteMovil c) {
         super(c);
         this.minutosHablados = c.minutosHablados;
         this.precioMinuto = c.precioMinuto;
-        this.fechaPermanencia = new Fecha(fechaPermanencia);
+        this.fechaPermanencia = (Fecha)fechaPermanencia.clone();
     }
     
     public Fecha getFPermanencia(){
-        return new Fecha(fechaPermanencia);
+        return (Fecha)fechaPermanencia.clone();
     }
     public float getMinutos(){
         return minutosHablados;
@@ -46,7 +38,7 @@ public class ClienteMovil extends Cliente{
     }
     
     public void setFPermanencia(Fecha f){
-        this.fechaPermanencia = new Fecha(f);
+        this.fechaPermanencia = (Fecha)f.clone();
     }
     public void setMinutos(float m){
         minutosHablados = m;
@@ -65,11 +57,11 @@ public class ClienteMovil extends Cliente{
         return super.toString()+" "+fechaPermanencia+" "+minutosHablados+" x "+precioMinuto+" ---> "+factura();
     }
     @Override
-    public Cliente clone(){
+    public Object clone(){
         return new ClienteMovil(getNif(), getNombre(), getFechaNac(), getFechaAlta(), getFPermanencia(), getMinutos(), getPrecioMinuto());
     }
     @Override
     public boolean equals(Object o){
-        return o.getClass() == ClienteMovil.class && getNif().equals(((Cliente)o).getNif());
+        return o instanceof ClienteMovil && getNif().equals(((Cliente)o).getNif());
     }
 }

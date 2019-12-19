@@ -17,23 +17,15 @@ public class Cliente implements Cloneable, Proceso {
     public Cliente(String NIF, String nom, Fecha fNac, Fecha fAlta){
         this.nif = NIF;
         this.nombre = nom;
-        this.fechaNac = new Fecha(fNac);
-        this.fechaAlta = new Fecha(fAlta);
+        this.fechaNac = (Fecha)fNac.clone();
+        this.fechaAlta = (Fecha)fAlta.clone();
         this.codCliente = contador++;
     }
     public Cliente(String NIF, String nom, Fecha fNac){
-        this.nif = NIF;
-        this.nombre = nom;
-        this.fechaNac = new Fecha(fNac);
-        this.fechaAlta = new Fecha(FECHA_POR_DEFECTO);
-        this.codCliente = contador++;
+        this(NIF, nom, fNac, (Fecha)FECHA_POR_DEFECTO.clone());
     }
     public Cliente(Cliente c){
-        this.nif = c.nif;
-        this.nombre = c.nombre;
-        this.fechaNac = new Fecha(c.fechaNac);
-        this.fechaAlta = new Fecha(c.fechaAlta);
-        this.codCliente = contador++;
+        this(c.nif, c.nombre, (Fecha)c.fechaNac.clone(), (Fecha)c.fechaAlta.clone());
     }
     
     public String getNombre(){
@@ -43,10 +35,10 @@ public class Cliente implements Cloneable, Proceso {
         return nif;
     }
     public Fecha getFechaAlta(){
-        return new Fecha(fechaAlta);
+        return (Fecha)fechaAlta.clone();
     }
     public Fecha getFechaNac(){
-        return new Fecha (fechaNac);
+        return (Fecha)fechaNac.clone();
     }
     public int getCodCliente(){
         return codCliente;
@@ -65,7 +57,7 @@ public class Cliente implements Cloneable, Proceso {
     }
     @Override
     public boolean equals(Object o){
-        return o.getClass() == Cliente.class && nif.equals(((Cliente)o).nif);
+        return o instanceof Cliente && nif.equals(((Cliente)o).nif);
     }
     
     @Override
@@ -73,12 +65,12 @@ public class Cliente implements Cloneable, Proceso {
         return nif+" "+fechaNac+": "+nombre+" ("+codCliente+" - "+fechaAlta+")";
     }
     @Override
-    public Cliente clone(){
-        return new Cliente(nif, nombre, fechaNac, fechaAlta);
+    public Object clone(){
+        return (Object) new Cliente(nif, nombre, fechaNac, fechaAlta);
     }
     
     public static Fecha getFechaPorDefecto(){
-        return new Fecha(FECHA_POR_DEFECTO);
+        return (Fecha)FECHA_POR_DEFECTO.clone();
     }
     public static void setFechaPorDefecto(Fecha f){
         FECHA_POR_DEFECTO.setFecha(f.getDia(), f.getMes(), f.getAnio());
