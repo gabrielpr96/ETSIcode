@@ -41,6 +41,7 @@ public class ClienteTarifaPlana extends Cliente{
         this.nacionalidad = nac;
     }
     
+    @Override
     public float factura(){
         return tarifa + (minutosHablados>limiteMinutos?(minutosHablados-limiteMinutos)*sobreCoste:0);
     }

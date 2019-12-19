@@ -89,7 +89,7 @@ public final class Fecha implements Cloneable, Proceso {
         boolean valida;
         
         do{
-            System.out.print("Introduzca una fecha[dia mes anio]: ");
+            System.out.print("Introduce una fecha (dd/mm/aaaa): ");
             String[] datos = s.nextLine().split("/");
             if(datos.length != 3){
                 valida = false;
@@ -103,13 +103,12 @@ public final class Fecha implements Cloneable, Proceso {
             if(!valida)
                 System.out.println("Fecha no valida");
         }while(!valida);
-        s.close();
         return f;
     }
     
     @Override
     public String toString(){
-        return (dia<10?"0":"")+dia+"/"+(mes<10?"0":"")+mes+"/"+anio;
+        return String.format("%02d/%02d/%02d", dia, mes, anio);
     }
     @Override
     public Object clone(){

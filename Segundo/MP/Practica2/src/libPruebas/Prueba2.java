@@ -22,8 +22,8 @@ public class Prueba2 {
         g.alta(cm2);
         g.alta(ct[1]);
         g.alta(cm3);
-        g.alta();
-        g.alta();//añade un ClienteMovil 100Z Pepe Luis, 2/2/1972 1/1/2001, //40.30, 0.04 1/1/2010 y otrocon nif 106T
+        g.alta();   //añade un ClienteMovil 100Z Pepe Luis, 2/2/1972 1/1/2001 40.30, 0.04 1/1/2010
+        g.alta();   //otro con nif 106T
         g.alta(ct[1]);  //no lo debe de añadir ya que existe
         System.out.println("Grupo g:\n" + g);
         g.baja("547B"); //elimina el cliente con nif 547B
@@ -31,7 +31,8 @@ public class Prueba2 {
         g.baja(); //pregunta que cliente desea eliminar (106T) y decimos que SI
         g.alta(cm2);System.out.println("#####\nClientes del grupo g:");
         System.out.println(g + "Factura: " + g.factura() +"\n---\n");
-        gcopia=(Empresa)g.clone();gcopia.baja("805W");
+        gcopia=(Empresa)g.clone();
+        gcopia.baja("805W");
         gcopia.baja("106T");
         gcopia.alta(ct[3]); //el 106T no existe
         g.baja("953H"); //elimina el cliente con 953H

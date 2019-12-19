@@ -29,55 +29,96 @@ public class Empresa implements Cloneable, Proceso{
         Cliente c;
         String NIF, nombre;
         Fecha fNac, fAlta;
-        int mHablados;
+        float mHablados;
         Scanner s = new Scanner(System.in);
         
-        System.out.println("DNI: ");
+        System.out.print("DNI: ");
         NIF = s.nextLine();
-        System.out.println("Nombre: ");
-        nombre = s.nextLine();
-        System.out.println("Fecha de nacimiento: ");
-        fNac = Fecha.pedirFecha();
-        System.out.println("Fecha de alta: ");
-        fAlta = Fecha.pedirFecha();
-        System.out.println("Minutos que habla al mes: ");
-        mHablados = s.nextInt();
         
-        System.out.println("Indique tipo de cliente (1-Movil, 2-Tarifa Plana): ");
-        if(s.nextInt() == 1){
-            int pMinuto;
-            Fecha fPermanencia;
-            System.out.println("Precio por minuto:");
-            pMinuto = s.nextInt();
-            System.out.println("Fecha fin permanencia:");
-            fPermanencia = Fecha.pedirFecha();
-            
-            c = new ClienteMovil(NIF, nombre, fNac, fAlta, fPermanencia, mHablados, pMinuto);
+        int pos = buscarCliente(NIF);
+        if(pos != -1){
+            System.out.println("Ya existe un cliente con ese DNI:\n"+clientes[pos]+"\n");
         }else{
-            String nacionalidad;
-            System.out.println("Nacionalidad: ");
-            nacionalidad = s.nextLine();
-            
-            c = new ClienteTarifaPlana(NIF, nombre, fNac, fAlta, mHablados, nacionalidad);
+            System.out.print("Nombre: ");
+            nombre = s.nextLine();
+            System.out.println("Fecha de nacimiento: ");
+            fNac = Fecha.pedirFecha();
+            System.out.println("Fecha de alta: ");
+            fAlta = Fecha.pedirFecha();
+            System.out.print("Minutos que habla al mes: ");
+            mHablados = s.nextFloat();
+
+            System.out.print("Indique tipo de cliente (1-Movil, 2-Tarifa Plana): ");
+            if(s.nextInt() == 1){
+                float pMinuto;
+                Fecha fPermanencia;
+                System.out.print("Precio por minuto: ");
+                pMinuto = s.nextFloat();
+                System.out.println("Fecha fin permanencia:");
+                fPermanencia = Fecha.pedirFecha();
+
+                c = new ClienteMovil(NIF, nombre, fNac, fAlta, fPermanencia, mHablados, pMinuto);
+            }else{
+                String nacionalidad;
+                System.out.print("Nacionalidad: ");
+                nacionalidad = s.nextLine();
+
+                c = new ClienteTarifaPlana(NIF, nombre, fNac, fAlta, mHablados, nacionalidad);
+            }
+
+            alta(c);
         }
-        
-        
-        s.close();
-        alta(c);
     }
     
     public void baja(String codigo){
-        throw new UnsupportedOperationException("Not supported yet.");
+        int pos = buscarCliente(codigo);
+        if(pos != -1){
+            for(int i = pos; i < nClientes-1; i++)
+                clientes[i] = clientes[i+1];
+            nClientes--;
+        }
+        if(nClientes < clientes.length - INCREMENTO){
+            Cliente[] tmp = new Cliente[clientes.length-INCREMENTO];
+            for(int i = 0; i < tmp.length; i++)
+                tmp[i] = clientes[i];
+            clientes = tmp;
+        }
     }
     public void baja(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        Scanner s = new Scanner(System.in);
+        
+        System.out.print("Introduzca nif cliente a dar de baja: ");
+        int pos = buscarCliente(s.nextLine());
+        if(pos == -1)
+            System.out.println("No se ha encontrado el cliente.");
+        else{
+            Cliente c = clientes[pos];
+            System.out.println(c);
+            System.out.print("¿Seguro que desea eliminarlo (s/n)? ");
+            if(s.nextLine().equals("s")){
+                baja(c.getNif());
+                System.out.println("El cliente "+c.getNombre()+" con nif "+c.getNif()+" ha sido eliminado.\n");
+            }else{
+                System.out.println("El cliente con nif "+c.getNif()+" no se elimina.\n");
+            }
+        }
     }
     
     public float factura(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        float factura = 0;
+        
+        for(int i = 0; i  < nClientes; i++)
+            factura += clientes[i].factura();
+        
+        return factura;
     }
     public void descuento(int porcentaje){
-        throw new UnsupportedOperationException("Not supported yet.");
+        float descuento = (float)((100-porcentaje))/100.0f;
+        for(int i = 0; i  < nClientes; i++)
+            if(clientes[i] instanceof ClienteMovil){
+                ClienteMovil c = (ClienteMovil)clientes[i];
+                c.setPrecioMinuto(c.getPrecioMinuto()*descuento);
+            }
     }
     
     public int getN(){
@@ -102,7 +143,7 @@ public class Empresa implements Cloneable, Proceso{
         boolean encontrado = false;
         
         int i = 0;
-        while(i < nClientes)
+        while(i < nClientes && !encontrado)
             if(clientes[i].getNif().equals(dni))
                 encontrado = true;
             else i++;
@@ -115,17 +156,31 @@ public class Empresa implements Cloneable, Proceso{
     
     @Override
     public void ver() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println(this);
     }
     
     @Override
     public Object clone(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        Empresa obj=null;
+        try{
+            obj= (Empresa)super.clone();
+            obj.clientes = clientes.clone();
+            for(int i = 0; i < nClientes; i++)
+                obj.clientes[i] = (Cliente)clientes[i].clone();
+        }catch(CloneNotSupportedException ex){
+            
+        }
+        return (Object)obj;
     }
     
     @Override
     public String toString(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        String texto = "";
+        
+        for(int i = 0; i < nClientes; i++)
+            texto += clientes[i]+"\n";
+        
+        return texto;
     }
     
 }

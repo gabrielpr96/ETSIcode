@@ -51,6 +51,11 @@ public class Cliente implements Cloneable, Proceso {
         this.fechaAlta.setFecha(f.getDia(), f.getMes(), f.getAnio());
     }
     
+    //Deberia ser abstracto pero hay el main de prueba daria fallo.
+    public float factura(){
+        throw new UnsupportedOperationException("No se puede faacturar un cliente sin tipo.");
+    }
+    
     @Override
     public void ver(){
         System.out.println(this);

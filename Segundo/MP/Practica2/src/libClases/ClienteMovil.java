@@ -47,6 +47,7 @@ public class ClienteMovil extends Cliente{
         precioMinuto = p;
     }
     
+    @Override
     public float factura(){
         return minutosHablados*precioMinuto;
     }
