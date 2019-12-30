@@ -28,26 +28,26 @@ public class Cliente implements Cloneable, Proceso {
         this(c.nif, c.nombre, (Fecha)c.fechaNac.clone(), (Fecha)c.fechaAlta.clone());
     }
     
-    public String getNombre(){
+    public final String getNombre(){
         return nombre;
     }
-    public String getNif(){
+    public final String getNif(){
         return nif;
     }
-    public Fecha getFechaAlta(){
+    public final Fecha getFechaAlta(){
         return (Fecha)fechaAlta.clone();
     }
-    public Fecha getFechaNac(){
+    public final Fecha getFechaNac(){
         return (Fecha)fechaNac.clone();
     }
-    public int getCodCliente(){
+    public final int getCodCliente(){
         return codCliente;
     }
     
-    public void setNombre(String nom){
+    public final void setNombre(String nom){
         this.nombre = nom;
     }
-    public void setFechaAlta(Fecha f){
+    public final void setFechaAlta(Fecha f){
         this.fechaAlta.setFecha(f.getDia(), f.getMes(), f.getAnio());
     }
     
@@ -71,13 +71,13 @@ public class Cliente implements Cloneable, Proceso {
     }
     @Override
     public Object clone(){
-        return (Object) new Cliente(nif, nombre, fechaNac, fechaAlta);
+        return new Cliente(this);
     }
     
-    public static Fecha getFechaPorDefecto(){
+    public final static Fecha getFechaPorDefecto(){
         return (Fecha)FECHA_POR_DEFECTO.clone();
     }
-    public static void setFechaPorDefecto(Fecha f){
+    public final static void setFechaPorDefecto(Fecha f){
         FECHA_POR_DEFECTO.setFecha(f.getDia(), f.getMes(), f.getAnio());
     }
     

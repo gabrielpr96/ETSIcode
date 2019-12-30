@@ -1,10 +1,10 @@
-﻿.MODEL SMALL
+.MODEL SMALL
 .CODE
 	org 100h
 Programa_Int:
 	JMP Reside
-	CONT dB 0
-	MSJ dB '00:000'
+	CONT DB 0
+	MSJ DB '00:00'
 	
 Rutina_Servicio PROC
 	CLI
@@ -17,7 +17,7 @@ Rutina_Servicio PROC
 	INC CONT
 		CMP CONT, 18
 		JB SALIR
-		MOV CONT, 0
+		MOV CONT, 0 
 		
 		MOV AX, 0B800h
 		MOV ES, AX
@@ -32,11 +32,10 @@ Rutina_Servicio PROC
 		CMP SI, 4
 		JBE BSTR
 		
-		INC MSJ[4]
 		;Controlar el reloj
 		
 		CMP MSJ[4], '9'
-		JNE SALIR
+		JNE TIMEINC
 		MOV MSJ[4], '0'
 		INC MSJ[3]
 		
@@ -53,8 +52,11 @@ Rutina_Servicio PROC
 		CMP MSJ[0], '6'
 		JNE SALIR
 		MOV MSJ[0], '0'
+		JMP SALIR
 		
 		
+		TIMEINC:
+		INC MSJ[4]
 		SALIR:
 
 
