@@ -22,10 +22,10 @@ public class Cliente implements Cloneable, Proceso {
         this.codCliente = contador++;
     }
     public Cliente(String NIF, String nom, Fecha fNac){
-        this(NIF, nom, fNac, (Fecha)FECHA_POR_DEFECTO.clone());
+        this(NIF, nom, fNac, FECHA_POR_DEFECTO);
     }
     public Cliente(Cliente c){
-        this(c.nif, c.nombre, (Fecha)c.fechaNac.clone(), (Fecha)c.fechaAlta.clone());
+        this(c.nif, c.nombre, c.fechaNac, c.fechaAlta);
     }
     
     public final String getNombre(){
