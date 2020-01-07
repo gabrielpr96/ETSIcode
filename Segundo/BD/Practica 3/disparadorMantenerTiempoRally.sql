@@ -1,0 +1,5 @@
+CREATE OR REPLACE TRIGGER mantenerTiempoRally  IS
+
+BEGIN
+
+END
