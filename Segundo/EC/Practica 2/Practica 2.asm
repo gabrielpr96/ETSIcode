@@ -8,10 +8,6 @@ Programa_Int:
 	
 Rutina_Servicio PROC
 	CLI
-	PUSH AX		;Guarda valor de AX
-	PUSH BX		;Guarda valor de BX
-	PUSH CX		;Guarda valor de CX
-	PUSH DX		;Guarda valor de DX
 	         
 	     
 	INC CONT
@@ -60,10 +56,6 @@ Rutina_Servicio PROC
 		SALIR:
 
 
-	POP AX		;Reestablece valor de AX
-	POP BX		;Reestablece valor de BX
-	POP CX		;Reestablece valor de CX
-	POP DX		;Reestablece valor de DX
 	STI
 	IRET
 ENDP
