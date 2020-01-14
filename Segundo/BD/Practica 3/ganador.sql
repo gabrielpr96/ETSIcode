@@ -14,7 +14,7 @@ BEGIN
   SELECT COUNT(*) INTO nTramos FROM TRAMO WHERE codRally=cod_rally;
   
   SELECT codPiloto INTO cod_piloto FROM CORRE C1 WHERE codRally = cod_rally GROUP BY codPiloto HAVING COUNT(*) = nTramos
-  AND SUM(tiempo) < ALL (SELECT SUM(tiempo) FROM CORRE C2 WHERE codRally = cod_Rally AND C1.codPiloto <> C2.codPiloto GROUP BY codPiloto HAVING COUNT(*) = 3);
+  AND SUM(tiempo) < ALL (SELECT SUM(tiempo) FROM CORRE C2 WHERE codRally = cod_Rally AND C1.codPiloto <> C2.codPiloto GROUP BY codPiloto HAVING COUNT(*) = nTramos);
   
   SELECT nombrep INTO nom_piloto FROM PILOTO WHERE codPiloto = cod_piloto;
   
