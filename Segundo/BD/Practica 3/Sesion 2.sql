@@ -16,10 +16,9 @@ Execute dbms_output.put_line(rallyCompletado('Rally de Cataluña','Juan Perez'));
 INSERT INTO TRAMO VALUES ('R001', 4, 50, 'A');
 INSERT INTO CORRE VALUES ('P001','R001',4,10);
 UPDATE CORRE SET tiempo=20 WHERE codRally='R001' AND codPiloto='P001' AND numerotramo=4 AND tiempo=10;
-UPDATE CORRE SET tiempo=20, codPiloto='P003', codRally='R001' WHERE codRally='R001' AND codPiloto='P001' AND numerotramo=4 AND tiempo=20;
-DELETE FROM CORRE WHERE codRally='R001' AND codPiloto='P003' AND numerotramo=4;
+DELETE FROM CORRE WHERE codRally='R001' AND codPiloto='P001' AND numerotramo=4;
 
-SELECT * FROM PARTICIPA WHERE codRally='R001' AND (codPiloto='P001' OR codPiloto='P003');
-SELECT codRally, codPiloto, SUM(tiempo) FROM CORRE WHERE codRally='R001' AND (codPiloto='P001' OR codPiloto='P003') GROUP BY codRally, codPiloto;
+SELECT * FROM PARTICIPA WHERE codRally='R001' AND codPiloto='P001';
+SELECT codRally, codPiloto, SUM(tiempo) FROM CORRE WHERE codRally='R001' AND codPiloto='P001' GROUP BY codRally, codPiloto;
 
 INSERT INTO CORRE VALUES ('P002','R002',4,10);
