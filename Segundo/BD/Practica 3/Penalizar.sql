@@ -19,7 +19,6 @@ BEGIN
   SELECT codPiloto INTO cod_piloto FROM PILOTO WHERE nombreP=a_piloto;
   SELECT codRally INTO cod_rally FROM RALLY WHERE nombre=a_rally;
   
-  --TODO: Encontrar la forma de poner tabuladores y saltos de linea
   dbms_output.put_line(a_rally||'     (Antes de la actualización)');
   dbms_output.put_line('==============================================');
   FOR v_penalizacion IN c_penalizacion() LOOP
@@ -28,6 +27,7 @@ BEGIN
   
   UPDATE PARTICIPA SET penalizacion=penalizacion+a_cantidad WHERE codRally=cod_rally AND codPiloto=cod_piloto;
   
+  dbms_output.put_line('');
   dbms_output.put_line(a_rally||'     (Despues de la actualización)');
   dbms_output.put_line('==============================================');
   FOR v_penalizacion IN c_penalizacion() LOOP

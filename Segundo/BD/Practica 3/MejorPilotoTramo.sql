@@ -4,7 +4,8 @@ PROCEDURE mejor_piloto_tramo (a_piloto PILOTO.nombreP%TYPE) IS
   existe INTEGER;
   CURSOR c_rally IS
     SELECT codRally, nombre
-    FROM RALLY
+    FROM RALLY INNER JOIN PARTICIPA USING(codRally) INNER JOIN PILOTO USING(codPiloto)
+    WHERE nombreP=a_piloto
   ;
   CURSOR c_mejorTiempo(cRally RALLY.codRALLY%TYPE) IS
     SELECT numeroTramo, MIN(tiempo) AS mejorTiempo

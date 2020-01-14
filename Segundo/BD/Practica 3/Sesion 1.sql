@@ -22,3 +22,7 @@ ORDER BY mejorTiempo
 ;
 
 CALL mejor_piloto_tramo('Sebastien Loeb');
+
+SELECT codRally, nombre
+FROM RALLY INNER JOIN PARTICIPA USING(codRally) INNER JOIN PILOTO USING(codPiloto)
+WHERE nombreP='Sebastien Loeb'
