@@ -187,13 +187,18 @@ public class Empresa implements Cloneable, Proceso{
     //Eliminar clientes movil cn una factura menor a la factura media d los clientes movil
     public void eliminarMenosFactura(){
         float media = 0;
-        for(int i = 0; i < nClientes; i++)
-            media += clientes[i].factura();
-        media /= nClientes;
+        int nMovil = 0;
+        for(int i = 0; i < nClientes; i++){
+            if(clientes[i].getClass().equals(ClienteMovil.class)){
+                media += clientes[i].factura();
+                nMovil ++;
+            }
+        }
+        media /= nMovil;
         
         int i = 0;
         while(i < nClientes)
-            if(clientes[i].factura() < media)
+            if(clientes[i].getClass().equals(ClienteMovil.class) && clientes[i].factura() < media)
                 baja(clientes[i].getNif());
             else i++;
     }
@@ -251,7 +256,7 @@ public class Empresa implements Cloneable, Proceso{
         
         //Prueba del primer metodo
         g.eliminarMenosFactura();
-        System.out.println("Grupo g eliminados los clientes por debajo de la media:\n" + g);
+        System.out.println("Grupo g eliminados los clientes moviles por debajo de la media:\n" + g);
         
         //Prueba del tercer metodo
         g.eliminarSelectivo("Española", 2004);
