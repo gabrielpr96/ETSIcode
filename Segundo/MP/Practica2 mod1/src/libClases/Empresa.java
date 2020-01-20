@@ -259,8 +259,8 @@ public class Empresa implements Cloneable, Proceso{
         g.clienteMasJoven();
         
         //Prueba del primer metodo
-        g.eliminarMenosFactura();
-        System.out.println("Grupo g eliminados los clientes moviles por debajo de la media:\n" + g);
+        int eliminados = g.eliminarMenosFactura();
+        System.out.println("Grupo g eliminados "+eliminados+" cliente/s moviles por debajo de la media:\n" + g);
         
         //Prueba del tercer metodo
         g.eliminarSelectivo("Española", 2004);
