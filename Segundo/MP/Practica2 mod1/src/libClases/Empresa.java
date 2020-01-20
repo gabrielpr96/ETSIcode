@@ -185,7 +185,7 @@ public class Empresa implements Cloneable, Proceso{
  
     
     //Eliminar clientes movil cn una factura menor a la factura media d los clientes movil
-    public void eliminarMenosFactura(){
+    public int eliminarMenosFactura(){
         float media = 0;
         int nMovil = 0;
         for(int i = 0; i < nClientes; i++){
@@ -197,10 +197,14 @@ public class Empresa implements Cloneable, Proceso{
         media /= nMovil;
         
         int i = 0;
-        while(i < nClientes)
-            if(clientes[i].getClass().equals(ClienteMovil.class) && clientes[i].factura() < media)
+        int eliminados = 0;
+        while(i < nClientes){
+            if(clientes[i].getClass().equals(ClienteMovil.class) && clientes[i].factura() < media){
                 baja(clientes[i].getNif());
-            else i++;
+                eliminados++;
+            }else i++;
+        }
+        return eliminados;
     }
     
     //Mostrar los clientes mas jovenes d la empresa (fecha d nacimiento mas alta)
