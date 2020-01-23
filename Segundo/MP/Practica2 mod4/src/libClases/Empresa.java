@@ -1,6 +1,5 @@
 package libClases;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -183,73 +182,102 @@ public class Empresa implements Cloneable, Proceso{
         
         return texto;
     }
- 
     
-    //
-    public static void subirPrecioAMP(Empresa e, int anios){
-        for(int i = 0; i < e.nClientes; i++){
-            if(e.clientes[i].getClass().equals(ClienteMovil.class)){
-                ClienteMovil cm = (ClienteMovil)e.clientes[i];
-                if(Fecha.diffAnios(cm.getFPermanencia(), cm.getFechaAlta()) >= anios){
-                    cm.setPrecioMinuto(cm.getPrecioMinuto()*1.05f);
-                }
+    
+    //4.a)
+    public void eliminarPermanencia(float minutos){
+        for(int i = 0; i < nClientes; i++){
+            if(clientes[i].getClass().equals(ClienteMovil.class)){
+                ClienteMovil cm = (ClienteMovil)clientes[i];
+                if(cm.getMinutos() > minutos)
+                    cm.setFPermanencia(cm.getFechaAlta());
             }
         }
     }
     
-    //Sacar un float con la facturacion total de todos los contratosTP
-    public float resumenFacturaTP(){
-        float total = 0;
-        for(int i = 0; i < nClientes; i++){
-            if(clientes[i].getClass().equals(ClienteTarifaPlana.class))
-                total += clientes[i].factura();
-        }
-        return total;
+    //4.b)
+    public static void nacionalidadUnica(Empresa e){
+        for(int i = 0; i < e.nClientes; i++)
+            if(e.clientes[i].getClass().equals(ClienteTarifaPlana.class) &&
+                    e.contarNacionalidad(((ClienteTarifaPlana)e.clientes[i]).getNacionalidad()) == 1)
+                System.out.println("Solo hay un cliente con la nacionalidad "+((ClienteTarifaPlana)e.clientes[i]).getNacionalidad());
+    }
+    private int contarNacionalidad(String nacionalidad){
+        int n = 0;
+        
+        for(int i = 0; i < nClientes; i++)
+            if(clientes[i].getClass().equals(ClienteTarifaPlana.class) &&
+                    ((ClienteTarifaPlana)clientes[i]).getNacionalidad().equals(nacionalidad))
+                n++;
+                    
+        return n;
     }
     
-    //Eliminar peores, el/los que facturan menos clientes de contrato TP y una nacionalidad en concreto
-    public void eliminarPeoresTP(String nacionalidad){
-        Object o = null;
-        o.equals(null);
-        
-        float peor = -1;
-        for(int i = 0; i < nClientes; i++)
-            if(clientes[i].getClass().equals(ClienteTarifaPlana.class))
-                if(((ClienteTarifaPlana)clientes[i]).getNacionalidad().equals(nacionalidad) && (peor < 0 && clientes[i].factura() < peor))
-                    peor = clientes[i].factura();
+    //4.c)
+    public static int portar(Empresa destino, Empresa origen){
+        int n = 0;
         
         int i = 0;
-        while(i < nClientes){
-            if(clientes[i].factura() == peor)
-                baja(clientes[i].getNif());
-            else i++;
+        while(i < origen.nClientes){
+            if(destino.buscarCliente(origen.clientes[i].getNif()) == -1){
+                destino.alta(origen.clientes[i]);
+                origen.baja(origen.clientes[i].getNif());
+                n++;
+            }else i++;
         }
+        
+        return n;
     }
     
-    
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Fecha f1=new Fecha(29,2,2001), f2= new Fecha(f1), f3=new Fecha(29,2,2004);
         Fecha fnac1 = new Fecha(7,3,1980), fnac2 = new Fecha(27,06,1995);
         ClienteTarifaPlana [] ct= new ClienteTarifaPlana[4];
         ClienteMovil cm1 = new ClienteMovil("547B", "Luis Perez", fnac2, 50.50f, 0.03f);
-        ClienteMovil cm2 = new ClienteMovil("777F", "Joe Sam", fnac2.diaSig(), 50.50f, 0.02f);
-        ClienteMovil cm3 = new ClienteMovil("787J", "Billy Edwawrd", cm2.getFechaNac(), 50.50f, 0.02f); //Este lo he puesto yo
+        ClienteMovil cm2 = (ClienteMovil) cm1.clone(); //lo crea con los mismos datos que cm1
+        ClienteMovil cm3 = new ClienteMovil("777F", "Joe Sam", fnac2.diaSig(), 40.50f, 0.02f);
         ct[0] = new ClienteTarifaPlana("805W","Luz Casal", fnac1, f3, 375.09f, "Española");
         ct[1] = new ClienteTarifaPlana("953H","Paz Padilla", fnac2,f2, 290.00f, "Española");
         ct[2] = new ClienteTarifaPlana("106T","Elton John", fnac2, 340.75f, "Inglesa");
         ct[3] = new ClienteTarifaPlana("467X","Messi", fnac2.diaSig(), 300.00f, "Argentina");
+        System.out.println("Codigos: " + cm1.getCodCliente() +","+ cm2.getCodCliente() + ", "+ ct[0].getCodCliente() +", "+ ct[2].getCodCliente() +"\n");
         Empresa g=new Empresa();
         g.alta(cm1);
         g.alta(ct[0]);
         g.alta(ct[2]);
-        g.alta(new ClienteTarifaPlana("433W","Rosi de Palma", fnac1, f3, 375.09f, "Canaria"));
-        g.alta(ct[1]);
         g.alta(cm2);
-        g.alta(cm3);
         g.alta(ct[1]);
+        g.alta(ct[3]);
+        g.alta(cm3);
+        g.alta(new ClienteMovil("012H", "Bravito Bujias", fnac2, 25, 0.3f));
+        g.alta(new ClienteMovil("345G", "Lola Suarez", fnac2, 75, 0.3f));
         
         System.out.println("Grupo g:\n" + g);
         
-        //
-    } 
+        //Prueba 4.a
+        g.eliminarPermanencia(50f); //Lola Suarez y Luis Perez ya no tienen permanencia, Joe Sam y Bravito Bujias aun la tienen.
+        System.out.println("Grupo g tras eliinar permanencia a los contratos moviles que hablan mas de 50 minutos:\n" + g);
+        
+        //Prueba 4.b
+        Empresa.nacionalidadUnica(g); //Españoles hay 2, Ingleses y Argentinos solo uno de cada.
+        
+        //Prueba 4.c
+        Empresa Simyo = new Empresa(), Yoigo = new Empresa();
+        Simyo.alta(ct[0]);
+        Simyo.alta(ct[1]);
+        Simyo.alta(cm1);
+        Simyo.alta(cm2);
+        Yoigo.alta(ct[1]);
+        Yoigo.alta(ct[2]);
+        Yoigo.alta(ct[3]);
+        Yoigo.alta(cm2);
+        Yoigo.alta(cm3);
+        
+        System.out.println("\nEmpresa Simyo antes:\n" + Simyo); //  Luz Casal, Paz Padilla, Luis Perez
+        System.out.println("Empresa Yoigo antes:\n" + Yoigo); //    Paz Padilla, Elton John, Messi, Luis Perez, Joe Sam
+        int nPortados = Empresa.portar(Simyo, Yoigo);
+        System.out.println("Empresa Simyo despues:\n" + Simyo); //  Luz Casal, Paz Padilla, Luis Perez, Elton John, Messi, Joe Sam
+        System.out.println("Empresa Yoigo despues:\n" + Yoigo); //  Paz Padilla, Luis Perez
+        System.out.println("Se han portado "+nPortados+" clientes."); // 3 clientes
+    }
 }
