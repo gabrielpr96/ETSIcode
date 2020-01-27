@@ -60,6 +60,7 @@ public:
 
     Socio& operator=(const Socio& s){
         if(&s != this){
+            delete [] nombre;
             nombre = new char[strlen(s.nombre)+1];
             strcpy(nombre, s.nombre);
             edad = s.edad;

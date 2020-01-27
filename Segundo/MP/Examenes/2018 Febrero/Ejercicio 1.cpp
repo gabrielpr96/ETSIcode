@@ -24,8 +24,9 @@ public:
         return valor;
     }
 
-    Par& operator=(const Par& P){
-        valor = P.valor;
+    Par& operator=(const Par& p){
+        cout << "ASIG: " << p.clave << " " << p.valor << "\n";
+        valor = p.valor;
         return *this;
     }
 
@@ -77,13 +78,12 @@ ostream& operator<<(ostream& s, const ParEtiquetado& p) {
     return s;
 }
 
-
 int main() {
     Par a(4.5), b(5.0), c(a);
     const Par x=a.copia();
     float n=x; //El compilador lo remplaza por float n = (float)x LLama al operator float() de Par que devuelve un float y se lo asigna a n
     cout << "a:" << a << " b:" << b << " c:" << c << endl;
-    a=4; //El compilador lo remplaza por a = Par(4) se crea un nuevo objeto Par con el constructor de un parametro
+    a=4; //El compilador lo remplaza por a = Par(4) se crea un nuevo objeto Par con el constructor de un parametro. Luego llama al operador asignacion porque a ya fue creada.
     b=1+x+b; //El compilador lo remplaza b = Par(1+(float)x+(float)b) hace la suma con floats y crea una nuevo objeto Par con el constructor de un parametro
     Par y;  //Se crea un nuevo objeto con el constructor de un parametro usando el parametro por defecto.
     cout << "a:" << a << " b:" << b << " c:" << c << endl;
