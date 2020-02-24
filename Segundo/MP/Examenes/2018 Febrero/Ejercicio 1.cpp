@@ -25,7 +25,6 @@ public:
     }
 
     Par& operator=(const Par& p){
-        cout << "ASIG: " << p.clave << " " << p.valor << "\n";
         valor = p.valor;
         return *this;
     }
