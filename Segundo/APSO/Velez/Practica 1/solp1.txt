@@ -1,0 +1,152 @@
+Practicas de APSO		PRACTICA 1
+
+
+
+	ALUMNO: Borja Lopez Pineda
+
+
+NOTAS:
+
+1) No nos podemos mover de directorio mientras no se especifique
+2) Si un punto requiere mas de una orden, en la solucion apareceran 
+todas las necesarias para llevar a cabo ese punto.
+3) La pregunta solo se considerara correcta si usa las rutas relativas
+o absolutas correctamente
+
+
+1. Crear en vuestro directorio personal un directorio llamado "prac1" con rutas 
+relativas
+
+	mkdir prac1
+
+2. Copiar el fichero "p1.txt" que se encuentra en /home/so/velez/MI en el directorio
+"prac1" con rutas absolutas.
+
+	cp /home/so/velez/MI/p1.txt /home/borja.lopez248/prac1/p1.txt
+
+3. Abrir una nueva sesion (sesion 2)(nuevo terminal). En esta nueva sesion nos movemos
+al directorio "prac1" con rutas relativas. Editamos con el "joe" el fichero "p1.txt" 
+mediante rutas absolutas. Desde esta sesion solo podremos modificar el fichero 
+"p1.txt" para ir anyadiendo las soluciones a cada pregunta. Las siguientes preguntas
+se haran desde la primera sesion.
+
+	cd prac1
+	joe /home/borja.lopez248/prac1/p1.txt
+
+4. Crear dentro del directorio "prac1", mediante ruta absoluta, el directorio
+"prac11". Moverse al directorio "prac11" mediante ruta relativa.
+
+	/home/borja.lopez248/prac1/prac11
+	cd prac1/prac11/	
+
+5. Crear desde aqui, con un solo comando, y mediante rutas relativas, cuatro
+directorios que sean hijos de "prac1", llamandolos "prac12", "prac13", "prac14" 
+y "prac15"
+
+	mkdir ../prac12 ../prac13 ../prac14 ../prac15
+
+6. Moveros al directorio raiz con el comando mas corto posible. Visualizar desde 
+aqui el contenido del fichero "p1.txt" que habeis copiado en vuestro directorio 
+"prac1" mediante rutas relativas. Moveros al directorio "prac13" mediante ruta 
+relativa. Visualizar desde aqui el fichero "p1.txt" del directorio "prac1" 
+mediante rutas relativas.
+
+	cd /
+	cat home/borja.lopez248/prac1/p1.txt
+	cd home/borja.lopez248/prac1/prac13/
+	cat ../p1.txt
+
+7. Crear mediante rutas absolutas con el "joe" un fichero llamado "prueba13" en 
+el directorio "prac13" cuyo contenido sera:
+
+ "Esto es un fichero de prueba perteneciente al usuario (tu nombre de usuario)"
+
+	joe prueba13
+	Esto es un fichero de prueba perteneciente al usuario borja.lopez248
+	^K X
+
+Crear con el "joe" un fichero llamado "prueba12" en el directorio "prac12" mediante 
+rutas relativas cuyo contenido sea:
+
+ "Esto es un fichero de prueba perteneciente al usuario (tu nombre de usuario)"
+
+	joe ../prac12/prueba12
+	Esto es un fichero de prueba perteneciente al usuario borja.lopez248
+	^K X
+
+8. Crea con el comando "joe" un fichero llamado "ejemplo01" en el directorio
+"prac11", usando rutas relativas, que contenga la frase: 
+
+ "Esto es un fichero ejemplo creado con el joe en la practica 1"
+
+	joe ../prac11/ejemplo01
+	Esto es un fichero ejemplo creado con el joe en la practica 1
+	^K X
+
+9. Copiar los ficheros "prueba12" y "prueba13" al directorio "prac11", mediante 
+rutas relativas.
+
+	cp ../prac12/prueba12 ../prac13/prueba13 ../prac11/
+
+10. Copiar el fichero "prueba12" del directorio "prac12" al directorio "prac14", 
+mediante rutas relativas, con el nombre "prueba14"
+
+	cp ../prac12/prueba12 ../prac14/prueba14
+
+11. Crear dentro del directorio "prac12" dos directorios llamados "temp1" y "temp2", 
+con rutas relativas
+
+	mkdir ../prac12/temp1 ../prac12/temp2
+
+12. Moveros al directorio "prac1" con rutas relativas. Mover el fichero "prueba13" 
+del directorio "prac13" al directorio "temp1" con rutas relativas. Copiar los 
+ficheros "prueba12" del directorio "prac12" y "prueba14" del directorio
+"prac14" al directorio "temp1" con rutas relativas y con un solo comando y sin usar 
+construcciones globales.
+
+	cd ..
+	mv prac13/prueba13 prac12/temp1/prueba13
+	cp prac12/prueba12 prac14/prueba14 prac12/temp1/
+
+
+13. Copiar todos los ficheros del directorio "temp1" que empiecen por "p" ,  
+el penultimo caracter sea un "1" y terminen en un numero del 1 al 5 al directorio
+"temp2" utilizando las construcciones globales adecuadas y rutas relativas.
+
+	cp prac12/temp1/p*1[1-5] prac12/temp2/
+
+14. Borrar todos los ficheros del directorio "temp1" cuyo penultimo caracter sea
+un numero usando costrucciones globales y rutas absolutas.
+
+	rm /home/borja.lopez248/prac1/prac12/temp1/*[0-9]?
+
+15. Borrar el directorio "temp1" con rutas absolutas. Borrar el directorio "temp2" 
+sin borrar previamente los ficheros que hay dentro y con rutas relativas (Se usa 
+el comando "rm" con una opcion. Buscar la opcion adecuada con la ayuda del comando 
+"man")
+
+	man rm
+	rmdir /home/borja.lopez248/prac1/prac12/temp1/
+	rm -r prac12/temp2/
+
+16. Nos movemos a nuestro directorio personal con el comando mas breve posible. 
+Comprobamos que estamos en nuestro directorio personal con el comando 
+correspondiente.
+
+	cd
+	pwd
+
+17. Vamos a la sesion en la que tenemos editado el fichero "p1.txt" (sesion 2) 
+con el "joe". Salvamos el fichero con el nombre "solp1.txt". Debe quedar grabado 
+en el directorio "prac1" con el nombre "solp1.txt". Volvemos a la primera sesion.
+
+	^K D
+	solp1.txt
+
+18. Ejecutamos el comando: "chmod 700 prac1/solp1.txt". Si nos da un error comprobar 
+que el fichero "solp1.txt" tiene el nombre correcto y que se encuentra en el 
+directorio "prac1". Si no da errores, hemos terminado
+
+	chmod 700 prac1/solp1.txt
+
+
