@@ -1,0 +1,77 @@
+1.
+	cd ~/ModuloI/Practica1
+	
+2.
+	mkdir ../Practica2
+
+3.
+	chmod 700 ../Practica2
+
+4.
+	cd ModuloI/Practica2
+	joe solucion2	
+
+5.
+	cd /home/borja.lopez248/ModuloI/Practica2
+
+6.
+	find /var -type d -name "*data*"
+
+7.
+	find /etc -type f -mtime -100
+
+8.
+	cp /etc/passwd /etc/group .
+
+9.
+	grep borja.lopez248 passwd
+	grep borja.lopez248 group
+	grep users group
+
+10.
+	wc -m group
+
+11.
+	wc -L group
+
+12.
+	sort -r group
+
+13.
+	head -3 passwd
+
+14.
+	tail -3 passwd
+
+15.
+	ln -s ~/ModuloI/Practica2/solucion2 ~/sol2
+
+16.
+	who -H
+
+17.
+	groups
+
+18.
+	cal -m 1 2010
+
+19.
+	date "+%A %d del  %g"
+
+20.
+	who | grep borja.lopez248
+
+21.
+	top
+
+22.
+
+23.
+	ps t0
+	kill 15361
+
+24.
+	mesg n
+
+25.
+	write pedro
