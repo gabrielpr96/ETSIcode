@@ -82,7 +82,7 @@ y que cuelgan de tu directorio personal, que sean mas nuevos que el fichero
 "solp1.txt" que se encuentra en vuestro directorio "prac1" y que hayan sido 
 modificados hace menos de 3 dias. Usa rutas absolutas en todo momento.
 
-	find ~ ! -type d -anewer ../../../prac1/solp1.txt
+	find ~ ! -type d -anewer /home/borja.lopez248/prac1/solp1.txt -ctime 3
 
 9. Consulta con el "grep" donde aparecen en los ficheros "f1.txt" y
 "f2.txt" del directorio "prac2" los caracteres "llama", sea en mayuscula 
