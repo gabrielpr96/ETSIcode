@@ -89,7 +89,7 @@ modificados hace menos de 3 dias. Usa rutas absolutas en todo momento.
 o en minuscula (con un solo comando). Debe aparecer 5 veces en "f1.txt" y 
 6 veces en "f2.txt" para estar correcto 
 
-	grep "llama" -c --ignore-case ../../f[12].txt
+	grep "llama" -ci ../../f[12].txt
 
 10. ¿Cuantos bytes ocupa el fichero "f21.txt"? Indica dos comandos 
 distintos con los que puedes averiguar el tamanyo en bytes de un fichero.
