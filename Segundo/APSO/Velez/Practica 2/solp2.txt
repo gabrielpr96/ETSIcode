@@ -2,7 +2,8 @@ Practicas de APSO		PRACTICA 2
 
 
 
-	ALUMNO: Borja Lopez Pineda
+	ALUMNO:______________________________________________________
+
 
 NOTAS:
 
@@ -75,21 +76,21 @@ en minusculas), su penultimo caracter no sea un numero y su ultimo caracter
 sea un numero.
 
 	cd ../prac23/tmp2/
-	find ~ -type d -name "?[rRtT]*[!0-9][0-9]"
+	find ~ -name "?[rRtT]*[!0-9][0-9]"
 
 8. Busca los ficheros que no sean directorios (pueden ser de cualquier otro tipo) 
 y que cuelgan de tu directorio personal, que sean mas nuevos que el fichero 
 "solp1.txt" que se encuentra en vuestro directorio "prac1" y que hayan sido 
 modificados hace menos de 3 dias. Usa rutas absolutas en todo momento.
 
-	find ~ ! -type d -anewer /home/borja.lopez248/prac1/solp1.txt -ctime 3
+	find ~ ! -type d -anewer ../../../prac1/solp1.txt
 
 9. Consulta con el "grep" donde aparecen en los ficheros "f1.txt" y
 "f2.txt" del directorio "prac2" los caracteres "llama", sea en mayuscula 
 o en minuscula (con un solo comando). Debe aparecer 5 veces en "f1.txt" y 
 6 veces en "f2.txt" para estar correcto 
 
-	grep "llama" -ci ../../f[12].txt
+	grep "llama" -c --ignore-case ../../f[12].txt
 
 10. ¿Cuantos bytes ocupa el fichero "f21.txt"? Indica dos comandos 
 distintos con los que puedes averiguar el tamanyo en bytes de un fichero.
@@ -118,8 +119,8 @@ Haz lo mismo pero ordenando de mayor a menor y guarda el resultado en el
 directorio "prac22" con el nombre "usu.orden.parriba"
 
 	cd
-	sort /home/so/velez/MI/usuarios04-05.txt > prac2/prac22/usu.orden.pabajo
-	sort -r /home/so/velez/MI/usuarios04-05.txt > prac2/prac22/usu.orden.parriba	
+	sort /home/so/velez/MI/usuarios04-05.txt -o prac2/prac22/usu.orden.pabajo
+	sort -r /home/so/velez/MI/usuarios04-05.txt -o prac2/prac22/usu.orden.parriba	
 
 14. Visualiza el fichero "f1.txt". Visualiza las 2 ultimas lineas del fichero 
 "solf1.txt" que se encuentra en el directorio "/home/so/velez/MI" para ver la

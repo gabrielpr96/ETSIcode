@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1583408760 source:c:\users\arlin-t2\desktop\etsicode\segundo\edii\practica 1\multiconjunto\multiconjunto.cpp
+	"Multiconjunto.h"
+
+1583399290 c:\users\arlin-t2\desktop\etsicode\segundo\edii\practica 1\multiconjunto\multiconjunto.h
+
+1583408719 source:c:\users\arlin-t2\desktop\etsicode\segundo\edii\practica 1\multiconjunto\main.cpp
+	<iostream>
+	"Multiconjunto.h"
+
