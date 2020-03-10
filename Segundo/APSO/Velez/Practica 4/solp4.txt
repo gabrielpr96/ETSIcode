@@ -89,8 +89,8 @@ punto y terminen en "e", "y" o "c" y visualice su contenido uno a uno.
 
 
 	cd ../prac43
-	alias fnuevos='find $HOME ! -type d -atime -3 -name ".*[eyc]"'
-	ls -l $(fnuevos)
+	alias fnuevos='find $HOME ! -type d -amin -180 -name ".*[eyc]"'
+	more $(fnuevos)
 
 
 7. Visualiza todos los alias del sistema. Crea cinco nuevos alias:
