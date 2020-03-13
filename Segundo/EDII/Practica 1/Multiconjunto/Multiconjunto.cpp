@@ -53,3 +53,4 @@ template<typename T> bool Multiconjunto<T>::pertenece(const T& objeto) const{
 
 template class Multiconjunto<int>;
 template class Multiconjunto<char>;
+template class Multiconjunto<Persona>;

@@ -1,6 +1,8 @@
 #ifndef MULTICONJUNTO_H_INCLUDED
 #define MULTICONJUNTO_H_INCLUDED
 
+#include <Persona.h>
+
 template <typename T>
 class Multiconjunto {
 public:
@@ -27,3 +29,8 @@ private:
 };
 
 #endif // MULTICONJUNTO_H_INCLUDED
+
+
+//template class Multiconjunto<int>;
+//template class Multiconjunto<char>;
+//template class Multiconjunto<Persona>;

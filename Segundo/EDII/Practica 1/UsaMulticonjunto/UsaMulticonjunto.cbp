@@ -2,25 +2,28 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Multiconjunto" />
+		<Option title="UsaMulticonjunto" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Multiconjunto" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/UsaMulticonjunto" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../Multiconjunto" />
 					<Add directory="../Persona" />
 				</Compiler>
 				<Linker>
+					<Add library="../Multiconjunto/obj/Debug/Multiconjunto.o" />
 					<Add library="../Persona/obj/Debug/persona.o" />
+					<Add directory="../Multiconjunto/obj/Debug" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/Multiconjunto" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/UsaMulticonjunto" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -36,8 +39,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Multiconjunto.cpp" />
-		<Unit filename="Multiconjunto.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
