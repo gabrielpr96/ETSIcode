@@ -1,0 +1,45 @@
+1.
+	mkdir ModuloI/Practica5
+
+2.
+	YO="Borja Lopez Pineda"
+
+3.
+	export YO
+
+4.
+	joe ModuloI/Practica5/saludos
+		date
+		echo "Saludos $YO"
+		ps -u
+	chmod u+x ModuloI/Practica5/saludos
+	./ModuloI/Practica5/saludos
+
+5.
+	joe ModuloI/Practica5/contador
+		echo "Al guión $0 se le han pasado $# parámetros"
+		echo $@
+		echo "En el directorio $1 hay $(find ! -type d -name "*$2*" | wc -l) ficheros que contienen la cadena $2"
+		echo '"Fin del guión"'
+	chmod u+x ModuloI/Practica5/contador
+	./ModuloI/Practica5/contador
+
+6.
+	man sleep
+
+7.
+	joe ModuloI/Practica5/persona1
+		echo "Edad: "
+		EDAD=$(cat)
+		alias ocultos='find . ! -type d -name ".*"'
+		echo "'Fin del guión'"
+	chmod u+x ModuloI/Practica5/persona1
+	./ModuloI/Practica5/persona1
+
+8.
+	. ./ModuloI/Practica5/persona1
+
+9.
+	ocultos
+
+
