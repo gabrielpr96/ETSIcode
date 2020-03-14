@@ -1,0 +1,81 @@
+1.
+	mkdir ModuloI/Practica4
+
+2.
+	set
+
+3.
+	ksh
+	//Principalmente cambia el prompt.
+	//No, el tabulador muestra opciones numeradas y agrega espacios.
+
+4.
+	sh
+	//El prompt es el mismo que el de ksh pero distinto al de bash.
+	//No, el tabulador no autocompleta y agrega tabulaciones.
+
+5.
+	exit
+	exit
+
+6.
+	set -x
+	//set -o xtrace
+
+7.
+	ls –r s*
+	//ls --color=auto -r 's*'
+
+8.
+	set -f
+	//ls --color=auto -r 's*'
+
+9.
+	set +x
+	set +f
+
+10.
+	P4=$HOME/ModuloI/Practica4
+
+11.
+	cd $P4
+
+12.
+	man echo
+
+13.
+	echo "El directorio de trabajo actual es $PWD"
+
+14.
+	unset HOME
+
+15.
+	//No funciona.
+	//-bash: cd: HOME not set
+	//cd usa la variable HOME y esta ya no existe
+
+16.
+	alias | sort -r >losalias
+
+17.
+	alias fecha='date +"%d del %m de %Y"'
+
+18.
+	alias p4='cd $P4'
+
+19.
+	cd ../Practica2
+	p4
+
+20.
+	PS1='$USER $PWD => '
+
+21.
+	joe ../../.profile
+		PATH=$PATH:.
+
+22.
+	joe ../../.profile
+		echo "Bienvenido $USER"
+
+
