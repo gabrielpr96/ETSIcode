@@ -1,0 +1,62 @@
+1.
+	mkdir ModuloI/Practica3
+
+2.
+	find ~ ! -type d -size -100c -printf "%f \t%sb\n"
+	
+3.
+	cp /home/so/pedro/infinito ModuloI/Practica3/
+
+4.
+	chmod a+x ModuloI/Practica3
+
+5.
+	./ModuloI/Practica3/infinito
+
+6.
+	ps -u
+
+7.
+	Ctrl+C
+
+8.
+	./ModuloI/Practica3/infinito &
+
+9.
+	ps
+
+10.
+	fg
+	Ctrl+C
+
+11.
+	find ~ ! -type d -size -100c -printf "%f \t%sb\n" >ModuloI/Practica3/pequeños
+
+12.
+	id -un >ModuloI/Practica3/minfo
+	tty >>ModuloI/Practica3/minfo
+	id -gn >>ModuloI/Practica3/minfo
+
+13.
+	find /etc ! -type d -mtime +100 2>/dev/null
+
+14.
+	find /etc ! -type d -mtime +100 2>ModuloI/Practica3/err
+
+15.
+	find /var ! -type d -name "cr*" &>ModuloI/Practica3/crons
+
+16.
+	find ~ -type d | wc -l
+
+17.
+	who | sort -r >ModuloI/Practica3/usersort
+
+18.
+	more $(find ~ ! -type d -name "[sc]*")
+
+19.
+	cp $(find ~ ! -type d -ctime +15) ModuloI/Practica3/
+
+20.
+	cat $(find /usr ! -type d -name "RE*" | head -2)
