@@ -1,10 +1,107 @@
 1.
+	mkdir ModuloI/Practica6
+
 2.
+	joe ModuloI/Practica6/argumentos
+		echo "Se han pasado $# argumentos, y son:"
+		I=1
+		for A in "$@"; do
+			echo "El argumento $I vale $A"
+			I=$(($I+1))
+		done
+	chmod u+x ModuloI/Practica6/argumentos
+
 3.
+	joe ModuloI/Practica6/verdire
+		DIR=""
+		if (test $# -ge 1) then
+			if (test -d $1) then
+				DIR=$1
+			else
+				echo "Error, el parametro pasado no es un directorio"
+			fi
+		else
+			DIR=$HOME 
+		fi
+			if (test ! -z $DIR) then
+			while true; do
+				clear
+				ls -l $DIR
+				sleep 1s
+			done
+		fi
+	chmod u+x ModuloI/Practica6/verdire
+
 4.
+	joe ModuloI/Practica6/nprimeros
+		if (test -d $1) then
+			I=1
+			 while (test $I -le $2) do
+                echo "El nombre del fichero $I es $(ls $1 | head -$I | tail -1)"
+                I=$(($I+1))
+			done
+		else
+			echo "El primer parametro debe ser un directorio"
+		fi
+	chmod u+x ModuloI/Practica6/nprimeros
+
 5.
+	joe ModuloI/Practica6/busca
+		if (test $# -ge 2) then
+			if (test -d $1) then
+				for I in $1/*$2*; do
+					if (test -d $I) then
+						du -sh $I 2>/dev/null
+					fi
+				done
+			else
+				echo "El primer parametro debe ser un directorio"
+			fi
+		else
+			echo "Se necesitan dos parametros"
+		fi
+	chmod u+x ModuloI/Practica6/busca
+	//¿ls muestra el tamaño de un directorio?
 6.
+	joe ModuloI/Practica6/miron
+		if (test $# -ge 1) then
+			if (test -f $1) then
+				more $1
+			elif (test -d $1) then
+				ls -la $1
+			else
+				echo "El archivo $1 no es ni un directorio ni un fichero regular, o no existe"
+			fi
+		else
+			echo "Se necesitan un parametro"
+		fi
+	chmod u+x ModuloI/Practica6/miron
+
 7.
+	mkdir ModuloI/Practica6/largos ModuloI/Practica6/cortos
+
 8.
+	joe ModuloI/Practica6/selector
+		for I in $@; do
+			if (test -f $I) then
+				case $I in
+					???????*)
+						cp $I $HOME/ModuloI/Practica6/largos/
+					;;
+					*)
+						cp $I $HOME/ModuloI/Practica6/cortos/
+					;;
+				esac
+			else
+				echo "El fichero $I no existe en el directorio de trabajo o no es un fichero regular"
+			fi
+		done
+	chmod u+x ModuloI/Practica6/selector
+
 9.
+	man cut
+
 10.
+	joe ModuloI/Practica6/gente
+		who | cut -d ' ' -f1 | sort | uniq
+	chmod u+x ModuloI/Practica6/gente
