@@ -83,6 +83,7 @@
 8.
 	joe ModuloI/Practica6/selector
 		for I in $@; do
+			I=./$I
 			if (test -f $I) then
 				case $I in
 					???????*)

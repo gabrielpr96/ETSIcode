@@ -154,7 +154,7 @@ pantalla y los ficheros deben ser visualizados por orden alfabetico.
 
 	cd prac5/guiones/
 	joe vertodo
-		more $(find . ! -type d -name "x*.[cp]" -newer $1 2>/dev/null | sort)
+		more $(find . ! -type d -name "s*.[cp]" -newer $1 2>/dev/null | sort)
 	chmod u+x vertodo
 
 

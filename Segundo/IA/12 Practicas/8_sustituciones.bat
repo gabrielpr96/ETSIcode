@@ -1,0 +1,5 @@
+(clear)
+(load 8_sustituciones.clp)
+(load 8_sustituciones.datos.clp)
+(reset)
+(run)
