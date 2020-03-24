@@ -1,4 +1,4 @@
 (clear)
-(load 6_minimo.clp)
+(load 9_union.clp)
 (reset)
 (run)

@@ -1,0 +1,5 @@
+(clear)
+(load 12_banderas.clp)
+(load 12_banderas.datos.clp)
+(reset)
+(run)

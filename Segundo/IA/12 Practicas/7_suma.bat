@@ -1,5 +1,4 @@
 (clear)
 (load 7_suma.clp)
-(load 7_suma.datos.clp)
 (reset)
 (run)

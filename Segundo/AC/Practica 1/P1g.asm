@@ -18,6 +18,7 @@
 	MOV AX, 0A000h
 	MOV ES, AX
 	
+	MOV colour, 0F3h
 	MOV DI, 0
 	BCLF:
 	MOV AL, colour
@@ -26,10 +27,10 @@
 			MOV ES:[DI], AL
 			INC SI
 			INC DI
-		CMP SI, 3200
+		CMP SI, 320*10
 		JB BCLE
 	INC colour
-	CMP colour, 0Fh
+	CMP colour, 0F3h
 	JBE BCLF
 	
 	

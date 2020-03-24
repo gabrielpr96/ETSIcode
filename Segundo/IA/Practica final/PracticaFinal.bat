@@ -1,0 +1,5 @@
+(clear)
+(load PracticaFinal.clp)
+(load PracticaFinal.datos.clp)
+(reset)
+(run)

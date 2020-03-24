@@ -226,6 +226,6 @@ de lectura y los otros solo el de ejecucion.
 10. Consulta el numero de procesos total que tienes activos en este preciso 
 momento (contando los de todas las ventanas abiertas). (Se usa ps y wc)
 
-	ps -u | wc -l
+	ps -uh | wc -l
 
 
