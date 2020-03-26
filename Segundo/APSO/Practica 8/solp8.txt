@@ -1,0 +1,151 @@
+1.
+	more /etc/passwd
+	//Aparece la información referente a los usuarios del sistema
+	//El primer campo es el nombre de usuario
+	//El segundo campo tiene la contraseña, aparece una x porque la contraseña se guarda en /etc/shadow
+	//El tercero es el identificador de usuario
+	//El cuarto es el identificador de grupo
+	//El quinto tiene información adicional del usuario, como su nombre completo
+	//El sexto es el directiorio personal
+	//El cuarto es la shell del usuario
+	sudo more /etc/shadow
+	//Muestra información sobre la contraseña de los usuarios, solo lo puede leer el usuario root
+	//El primer campo es el nombre de usuario
+	//El segundo campo es la contraseña encriptada
+	//El tercer campo es la última fecha de modificación
+	//El cuarto campo son los dias que deben transcurrir para que el usuario pueda cambiar de nuevo su contraseña
+	//El quinto campo son los días maximos que tiene el usuario para cambiar la contraseña
+	//El sexto campo son el número de dias previos al último dia para cambiar la contraseña que se avisara de la necesidad del cambio
+	//El septimo campo indica si la cuenta está bloqueada por no haber cambiado la contraseña en el plazo
+	//El octabo campo es el día que expira la cuenta
+
+2.
+	more /etc/group
+	//Contiene información sobre los grupos de usuarios
+	//El primer campo es el nombre del grupo
+	//El segundo campo es la contraseña del grupo, una x significa que se guarda en /etc/gshadow
+	//El tercer campo es el identificador del grupo
+	//El cuerto campo es una lista de usuarios que tienen a este grupo como secundario
+
+3.
+	more /etc/adduser.conf
+	//Este archivo tiene la configuración para los programas adduser y addgroup
+	//DSHELL es la shell por defecto para los nuevos usuarios
+	//DHOME es la ruta donde se creará el directorio de usuario
+	//GROUPHOME si está activada agrega un subdirectorio usuario dentro de la carpeta personal
+	//LETTERHOMES si está activa crea los directorios personales en un subdirectorio
+	//SKEL el directorio donde se copian los ficheros de configuracion de usuario
+	//FIRST_SYSTEM_UID y LAST_SYSTEM_UID es el rango de identificadores de usuario
+	//USERSGROUPS si está activado se creará un grupo por cada usuario
+	//USERS_GID es el identificador del grupo para los nuevos usuarios
+	//DIR_MODE son los permisos para la carpeta de usuario
+	//SETGID_HOME si está activado se asociara el directorio personal al grupo
+	//QUOTAUSER es el usuario del que heredan las cuetos
+	//NAME_REGEX si FORCE_BADNAME esta activada, el nombre de usuario debe satisfaces esta expresion regular para permitir crear el usuario
+	//SKEL_IGNORE_REGEX si el nombre coincide con estra expresión, los ficheros skel no se copiarán
+	//EXTRA_GROUPS si ADD_EXTRA_GROUPS esta activo el usuario se agregará adicionalmente a estos grupos
+
+4.
+	sudo adduser usuariosistema
+	grep "^usuariosistema" </etc/passwd
+
+5.
+	sudo addgroup practica8
+	grep "^usuariosistema" </etc/group
+	//El identificador del grupo es 1002
+
+6.
+	sudo joe /etc/adduser.conf
+		//Para que sea su grupo
+		USERSGROUPS=no
+		USERS_GID=1002
+		//Para que sea su grupo extra
+		ADD_EXTRA_GROUPS=1
+		EXTRA_GROUPS="practica8"
+
+7.
+	sudo adduser user1
+	sudo adduser user2
+	grep "^user[12]" </etc/passwd	
+
+8.
+	sudo adduser user1 users
+	sudo adduser user2 users
+	grep "^users" </etc/group
+	//Aparecen como pertenecientes extra
+
+9.
+	sudo usermod -m -d /home/user2b user2
+
+10.
+	su user2
+	cd
+	pwd
+	//echo $HOME
+	exit
+
+11.
+	sudo deluser --remove-all-files --backup-to /home user1
+
+12.
+	sudo adduser --uid 1005 user3
+
+13.
+	sudo apt install ksh
+	sudo usermod -s /bin/ksh user3
+	su user3
+	exit
+
+14.
+	sudo cat /etc/shadow | grep "^apso" | cut -d ":" -f 8
+	//sudo chage -l apso
+	
+
+15.
+	sudo usermod -e 2019-6-1 user2
+	//sudo chage -E 2019-6-1 user2
+
+16.
+	sudo delgroup practica8
+	//Avisa de que existen usuarios que aún tienen ese grupo como grupo primario y no lo borra
+
+17.
+	sudo apt install quota
+
+18.
+	mount
+
+19.
+	sudo joe /etc/fstab
+
+20.
+	quotacheck -augmv
+
+21.
+	ls /aquota.user
+	//Sí existe
+
+22.
+	sudo quotaon -ugv /
+
+23.
+	sudo adduser user4
+
+24.
+	sudo edquota -u user4
+
+25.
+	sudo repquota /
+
+26.
+	sudo edquota -t
+
+27.
+	su user4	
+
+28.
+	quota
+
+29.
+	cd
+	for ((i=1;i<=200;i++)); do touch $i; done

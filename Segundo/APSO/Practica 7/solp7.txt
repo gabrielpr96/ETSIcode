@@ -1,0 +1,36 @@
+13.
+	sudo apt install joe
+
+14.
+	sudo joe /etc/apt/sources.list
+	//sudo add-apt-repository --remove multiverse
+
+15.
+	sudo apt update
+
+16.
+	apt search devede
+
+17.
+	sudo apt install aptitude
+
+18.
+	sudo aptitude install plank
+
+19.
+	sudo apt autoclean
+
+20.
+	apt download libncurses5-dev
+
+21.
+	sudo dpkg -i libncurses5-dev_6.1-1ubuntu1.18.04_i386.deb
+	sudo apt install -f
+	sudo dpkg -i libncurses5-dev_6.1-1ubuntu1.18.04_i386.deb
+22.
+	wget http://ardownload.adobe.com/pub/adobe/reader/unix/8.x/8.1.7/esp/AdobeReader_esp-8.1.7-1.i486.tar.gz
+
+23.
+	tar -xzvf AdobeReader_esp-8.1.7-1.i486.tar.gz
+	cd AdobeReader
+	 ./INSTALL
