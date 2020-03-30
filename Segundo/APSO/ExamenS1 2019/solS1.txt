@@ -1,0 +1,82 @@
+1.
+	mkdir -p ExamenS1/Guiones/Resultados ExamenS1/Info/Temporal
+	cd $HOME/ExamenS1/Info/Temporal
+	chmod go-rwx -R ../..
+	
+2.
+	cp /home/so/ficheros/[cC]* $HOME/ExamenS1/Info
+	cp ../*.????* .
+	cp ../?? ../../Guiones/Resultados
+	cd
+	rm -r ExamenS1/Info/Temporal
+
+3.
+	joe .profile
+		PATH=$PATH:.
+		df -h /
+		date +"Bienvenido a Polifemo, son las %H:%M del %A"
+
+4.
+	find /usr -type l -ctime +60 -name "??" >ExamenS1/Guiones/Resultados/enlacesUSR 2>&1
+	echo "$(id -u) $(id -g) $(groups)" >>ExamenS1/Guiones/Resultados/enlacesUSR
+	
+5.
+	ps -u predro | grep "bash$" | wc -l
+	who | grep "172.17." | sort
+
+6.
+	cat $(find /usr -name "w*.c" 2>/dev/null) | grep "include" | wc -l
+
+7.
+	apt download jed
+	apt search tritium
+	at 12:35
+	chmod 000 $HOME/ExamenS1
+	tar -zcvf examen.tgz ExamenS1
+
+8.
+	mkdir /boot/kernels
+	mv /boot/vmlinuz-3.8.0-29-generic /boot/kernels
+	mv /boot/initrd.img-3.8.0-29-generic /boot/kernels
+	update-grub
+	cat /etc/adduser.conf
+	//USERGROUPS=no
+	//USERS_GID=100
+	//No, esta desactivado. Se le asigna el grupo con id 100, users.
+	quota -s
+
+9.
+	cd ExamenS1/Guiones
+	joe Creador
+		if [ -d $1 ]; then
+			ln -s $HOME "$1/home"
+			RESULTADO='LINK'
+		else
+			read -p "Introduzca un codigo de error: " CODIGO
+			RESULTADO="$CODIGO"
+		fi
+	chmod u+x Creador
+	. Creador ~/ExamenS1/Guiones/Resultados/
+
+10.
+	joe nuevos
+		if [ $# -eq 2 ]; then
+			if [ -d $1 ] && [ -d $2 ]; then
+				rm Resultados/recientes
+				COUNT=0
+				for I in $1/*; do
+					if [ $I -nt $2 ]; then
+						echo "El fichero $I es mas reciente que $2" >>Resultados/recientes
+						COUNT=$(($COUNT+1))
+					fi
+				done
+				echo "Numero de ficheros que cumplen la condicion: $COUNT"
+			else
+				echo "Ambos parametros deben ser directorios validos"
+				exit
+			fi
+		else
+			echo "Se deben pasar dos parametros"
+			exit -1
+		fi
+	chmod u+x nuevos
