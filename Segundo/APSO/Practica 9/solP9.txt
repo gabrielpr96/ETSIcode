@@ -1,0 +1,108 @@
+1.
+	sudo cp /etc/default/grub /etc/default/grub_original
+
+2.
+	sudo joe /etc/default/grub
+		GRUB_TIMEOUT_STYLE=menu
+		GRUB_TIMEOUT=60
+		GRUB_DISABLE_RECOVERY="true"
+		GRUB_GFXMODE=800x600
+		GRUB_INIT_TUNE="480 440 1"
+	sudo chmod -x /etc/grub.d/20_memtest86+
+	sudo update-grub
+
+3.
+	sudo reboot now
+
+4.
+	sudo mkdir /boot/kernels
+	sudo mv /boot/vmlinuz-5.3.0-28-generic /boot/kernels/
+	sudo mv /boot/initrd.img-5.3.0-28-generic /boot/kernels/
+	sudo mv /boot/initrd.img-5.3.0-28-generic /boot/kernels/
+	sudo update-grub
+	sudo reboot now
+
+5.
+	dmesg | grep EXT4
+
+6.
+	systemctl --type=service --state=active
+
+7.
+	journalctl -u NetworkManager | grep Error
+
+8.
+	systemctl get-default
+
+9.
+	sudo apt install ssh
+
+10.
+	systemctl status ssh
+	ssh localhost
+
+11.
+	service ssh status
+	//Activo
+
+12.
+	cat /lib/systemd/system/ssh.service
+	//En caso de fallo (on-failure)
+
+13.
+	sudo service ssh stop
+
+14.
+	sudo systemctl disable ssh
+
+15.
+	sudo systemctl mask ssh
+
+16.
+	service ssh status
+	//Enmascarado e inactivo
+
+17.
+	sudo systemctl unmask ssh
+	sudo service ssh start
+
+18.
+	sudo systemctl enable ssh
+	//TODO: comprobar que se inicia al reiniciar
+
+19.
+	pstree -g
+
+20.
+	sudo joe /etc/cron.hourly/repetidor
+		#!/bin/sh
+		#Agrega una linea
+		echo "Ejecutado cron a las $(date)" >>/home/apso/cadahora
+	sudo chmod a+x /etc/cron.hourly/repetidor
+
+21.
+	sudo apt install at
+
+22.
+	date
+
+23.
+	sudo chmod a+w cadahora
+	at now + 4 mins
+	echo "linea generada por la orden at a las $(date)" >>/home/apso/cadahora
+
+24.
+	cp /etc/cron.hourly/repetidor .
+
+25.
+	sudo chmod a+x cadahora
+	at -f cadahora now + 15 minutes
+
+26.
+	atq
+
+27.
+	at -r 4
+
+28.
+	sudo shutdown +3 "Guardad y salid que esto se va a apagar
