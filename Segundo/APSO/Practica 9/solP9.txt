@@ -88,15 +88,15 @@
 
 23.
 	sudo chmod a+w cadahora
-	at now + 4 mins
+	at now + 4 minutes
 	echo "linea generada por la orden at a las $(date)" >>/home/apso/cadahora
 
 24.
-	cp /etc/cron.hourly/repetidor .
+	cp /etc/cron.hourly/repetidor ./programado
 
 25.
-	sudo chmod a+x cadahora
-	at -f cadahora now + 15 minutes
+	sudo chmod a+x programado
+	at -f programado now + 15 minutes
 
 26.
 	atq
@@ -105,4 +105,4 @@
 	at -r 4
 
 28.
-	sudo shutdown +3 "Guardad y salid que esto se va a apagar
+	sudo shutdown 3 "Guardad y salid que esto se va a apagar"
