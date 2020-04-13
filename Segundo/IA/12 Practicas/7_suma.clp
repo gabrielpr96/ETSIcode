@@ -1,7 +1,23 @@
-(defrule SumarVector
-	(vector $?x)
+(defrule inicio
+	(not (suma ?))
 	=>
-	(printout t "Suma: " (+ (expand$ ?x)) crlf)
+	(assert (suma 0))
+)
+
+(defrule SumarVector
+	?v <- (vector ?x $?y)
+	?r <- (suma ?s)
+	=>
+	(retract ?v ?r)
+	(assert (suma (+ ?s ?x)))
+	(assert (vector $?y))
+)
+
+(defrule final
+	(vector)
+	(suma ?s)
+	=>
+	(printout t "Suma: " ?s crlf)
 )
 
 (deffacts vectores

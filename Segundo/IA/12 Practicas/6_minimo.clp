@@ -1,7 +1,8 @@
 (defrule Minimo
-	(vector $?x)
+	(vector $? ?x $?)
+	(not (vector $? ?y&:(< ?y ?x) $?))
 	=>
-	(printout t "Minimo: " (min (expand$ ?x)) crlf)
+	(printout t "Minimo: " ?x crlf)
 )
 
 (deffacts vectores
