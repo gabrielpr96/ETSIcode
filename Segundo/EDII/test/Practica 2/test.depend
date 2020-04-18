@@ -92,3 +92,30 @@
 1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excep_abb.h
 	"excepcion.h"
 
+1586790770 source:c:\users\usuario\desktop\etsicode\segundo\edii\test\practica 2\main.cpp
+	<iostream>
+	<cstdlib>
+	"arbin.h"
+
+1586790282 c:\users\usuario\desktop\etsicode\segundo\edii\test\arbin\arbin.h
+	"nodoB.h"
+	"excep_arbin.h"
+
+1586790314 c:\users\usuario\desktop\etsicode\segundo\edii\test\arbin\nodob.h
+	<stdlib.h>
+
+1586790294 c:\users\usuario\desktop\etsicode\segundo\edii\test\arbin\excep_arbin.h
+	"excepcion.h"
+
+1586790302 c:\users\usuario\desktop\etsicode\segundo\edii\test\arbin\excepcion.h
+	<string>
+	<stdexcept>
+
+1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\test\arbin\abb.h
+	"nodoB.h"
+	"excep_abb.h"
+	"arbin.h"
+
+1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\test\arbin\excep_abb.h
+	"excepcion.h"
+
