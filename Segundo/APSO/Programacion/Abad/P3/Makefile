@@ -1,0 +1,10 @@
+all: A B C
+
+A: A.c
+	cc -o A A.c
+
+B: B.c
+	cc -o B B.c
+
+C: C.c
+	cc -o C C.c

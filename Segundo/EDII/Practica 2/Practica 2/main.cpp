@@ -67,11 +67,10 @@ template <typename T>
 int numHojas(const Arbin<T>& a, const typename Arbin<T>::Iterador& r) {
     if(r.arbolVacio())
         return 0;
+    else if(a.subIzq(r).arbolVacio() && a.subDer(r).arbolVacio())
+        return 1;
     else
-        if(a.subIzq(r).arbolVacio() && a.subDer(r).arbolVacio())
-            return 1;
-        else
-            return numHojas(a, a.subIzq(r)) + numHojas(a, a.subDer(r));
+        return numHojas(a, a.subIzq(r)) + numHojas(a, a.subDer(r));
 }
 
 /****************************************************************************/

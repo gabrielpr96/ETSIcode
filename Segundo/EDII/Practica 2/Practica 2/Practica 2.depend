@@ -60,7 +60,7 @@
 1586960496 c:\users\usuario\desktop\practica 2\arbin\excep_abb.h
 	"excepcion.h"
 
-1586960497 source:c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\practica 2\main.cpp
+1587319132 source:c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\practica 2\main.cpp
 	<iostream>
 	<cstdlib>
 	<queue>
@@ -70,25 +70,25 @@
 	"abb.h"
 	"excepcion.h"
 
-1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\arbin.h
+1363091698 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\arbin.h
 	"nodoB.h"
 	"excep_arbin.h"
 
-1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\nodob.h
+1144354256 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\nodob.h
 	<stdlib.h>
 
-1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excep_arbin.h
+1331892184 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excep_arbin.h
 	"excepcion.h"
 
-1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excepcion.h
+1587318366 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excepcion.h
 	<string>
 	<stdexcept>
 
-1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\abb.h
+1331888804 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\abb.h
 	"nodoB.h"
 	"excep_abb.h"
 	"arbin.h"
 
-1586960496 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excep_abb.h
+1331892184 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excep_abb.h
 	"excepcion.h"
 
