@@ -121,12 +121,8 @@ template <typename T>
 int hijos(const Arbin<T>& a, const typename Arbin<T>::Iterador& r){
     if(r.arbolVacio())
         return 0;
-    else{
-        int n = 0;
-        if(!a.subIzq(r).arbolVacio()) n++;
-        if(!a.subDer(r).arbolVacio()) n++;
-        return n;
-    }
+    else
+        return hijos(a, a.subIzq(r)) + hijos(a, a.subDer(r)) + 1;
 }
 
 
