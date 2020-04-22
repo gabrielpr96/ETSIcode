@@ -8,3 +8,6 @@ pr32: pr32.c
 
 pr33: pr33.c
 	cc -o pr33 pr33.c
+
+clean:
+	rm pr31 pr32 pr33 prac3.dat
