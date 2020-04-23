@@ -12,7 +12,7 @@ int main(){
 
 	vpid = fork();
 	if(vpid == 0)
-		execl("B", "B", 0);
+		execl("B", "B", (char*)0);
 
 	printf("Soy A y el pid de B es: %d\n", vpid);
 
@@ -20,7 +20,7 @@ int main(){
 	if(vpid == 0){
 		close(1);
 		creat("infoc", 0600);
-		execl("C", "C", 0);
+		execl("C", "C", (char*)0);
 	}
 
 	printf("Soy A y el pid de C es: %d\n", vpid);

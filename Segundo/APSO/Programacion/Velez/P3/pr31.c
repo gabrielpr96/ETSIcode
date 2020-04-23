@@ -10,7 +10,7 @@ int main(){
 	int vpid = fork();
 	if(vpid == 0){
 		sleep(1);
-		execl("pr32", "pr32", 0);
+		execl("pr32", "pr32", (char*)0);
 	}
 
 	vpid = fork();

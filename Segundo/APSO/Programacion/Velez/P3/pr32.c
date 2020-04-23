@@ -9,7 +9,7 @@ int main(){
 
 	int vpid = fork();
 	if(vpid == 0){
-		execl("pr33", "pr33", 0);
+		execl("pr33", "pr33", (char*)0);
 	}
 
 	int pid = getpid();

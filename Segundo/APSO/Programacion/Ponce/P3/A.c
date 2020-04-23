@@ -15,7 +15,7 @@ int main(){
 		creat("pb-error.out", 0600);
 		char  buff[4];
 		snprintf(buff, sizeof(buff), "%d", getpid());
-		execl("B", "B", buff, 0);
+		execl("B", "B", buff, (char*)0);
 		printf("Error al crear el proceso B\n");
 		return 1;
 	}
@@ -25,7 +25,7 @@ int main(){
 	if(vpid == 0){
 		close(1);
 		creat("pc.out", 0600);
-		int res = execl("C", "C", 0);
+		int res = execl("C", "C", (char*)0);
 		printf("Error al crear el proceso C\n");
 		return 1;
 	}
