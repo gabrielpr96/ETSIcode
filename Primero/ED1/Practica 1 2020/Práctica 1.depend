@@ -1,0 +1,118 @@
+# depslib dependency file v1.0
+1586351222 source:d:\práctica 1\main.cpp
+	<iostream>
+	<conio.h>
+	"Autobuses.h"
+	"Itinerarios.h"
+	<stdlib.h>
+
+1586350728 d:\práctica 1\include\autobuses.h
+	<iostream>
+	<fstream>
+
+1586351492 d:\práctica 1\include\itinerarios.h
+	<iostream>
+	<fstream>
+
+1586351414 source:d:\práctica 1\src\autobuses.cpp
+	"Autobuses.h"
+	<string.h>
+
+1586350544 source:d:\práctica 1\src\itinerarios.cpp
+	"Itinerarios.h"
+
+1586535575 source:c:\users\tomas\desktop\práctica 1\main.cpp
+	<iostream>
+	<conio.h>
+	"Autobuses.h"
+	"Itinerarios.h"
+	<stdlib.h>
+
+1586535139 c:\users\tomas\desktop\práctica 1\include\autobuses.h
+	<iostream>
+	<fstream>
+
+1586535840 c:\users\tomas\desktop\práctica 1\include\itinerarios.h
+	<iostream>
+	<fstream>
+
+1586535779 source:c:\users\tomas\desktop\práctica 1\src\autobuses.cpp
+	"Autobuses.h"
+	<string.h>
+
+1586536058 source:c:\users\tomas\desktop\práctica 1\src\itinerarios.cpp
+	"Itinerarios.h"
+	<string.h>
+
+1587843804 source:c:\users\tomas\desktop\universidad\2º cuatrimestre\1º\ed1\19-20\prácticas\p1\práctica 1\main.cpp
+	<iostream>
+	<conio.h>
+	"Autobuses.h"
+	"Itinerarios.h"
+	<stdlib.h>
+	<string.h>
+
+1587237803 c:\users\tomas\desktop\universidad\2º cuatrimestre\1º\ed1\19-20\prácticas\p1\práctica 1\include\autobuses.h
+	<iostream>
+	<fstream>
+
+1587746198 c:\users\tomas\desktop\universidad\2º cuatrimestre\1º\ed1\19-20\prácticas\p1\práctica 1\include\itinerarios.h
+	<iostream>
+	<fstream>
+
+1587842468 source:c:\users\tomas\desktop\universidad\2º cuatrimestre\1º\ed1\19-20\prácticas\p1\práctica 1\src\autobuses.cpp
+	"Autobuses.h"
+	<string.h>
+
+1587838867 source:c:\users\tomas\desktop\universidad\2º cuatrimestre\1º\ed1\19-20\prácticas\p1\práctica 1\src\itinerarios.cpp
+	"Itinerarios.h"
+	<string.h>
+
+1587906227 source:f:\práctica 1\main.cpp
+	<iostream>
+	<conio.h>
+	"Autobuses.h"
+	"Itinerarios.h"
+	<stdlib.h>
+	<string.h>
+
+1587237803 f:\práctica 1\include\autobuses.h
+	<iostream>
+	<fstream>
+
+1587746198 f:\práctica 1\include\itinerarios.h
+	<iostream>
+	<fstream>
+
+1587906040 source:f:\práctica 1\src\autobuses.cpp
+	"Autobuses.h"
+	<string.h>
+
+1587905104 source:f:\práctica 1\src\itinerarios.cpp
+	"Itinerarios.h"
+	<string.h>
+
+1588020714 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\src\autobuses.cpp
+	"Autobuses.h"
+	<string.h>
+
+1588021240 c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\include\autobuses.h
+	<iostream>
+	<fstream>
+
+1588030398 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\main.cpp
+	<iostream>
+	<conio.h>
+	"Autobuses.h"
+	"Itinerarios.h"
+	<stdlib.h>
+	<string.h>
+
+1588020660 c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\include\itinerarios.h
+	<iostream>
+	<fstream>
+
+1588021268 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\src\itinerarios.cpp
+	"Itinerarios.h"
+	<string.h>
+
