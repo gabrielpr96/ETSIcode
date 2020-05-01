@@ -13,16 +13,12 @@ void finTiempo(){
 void continuar(){}
 
 int main(){
-	int f, secreto, tmp, intentos = 10;
+	int secreto, tmp, intentos = 10;
 	tiempo = 1;
 	signal(14, finTiempo);
-	signal(11, continuar);
 
-	pause();
-
-	f = open("secreto", O_RDONLY);
-	read(f, (char *) &secreto, sizeof(int));
-	close(f);
+	read(2, (char *) &secreto, sizeof(int));
+	close(2);
 
 	alarm(60);
 
@@ -35,7 +31,7 @@ int main(){
 		else if(tmp < secreto)
 			printf("El secreto es mayor. Te quedan %d intentos.\n", intentos);
 	}
-	
+
 	exit(tmp==secreto?1:0);
 
 	return 0;

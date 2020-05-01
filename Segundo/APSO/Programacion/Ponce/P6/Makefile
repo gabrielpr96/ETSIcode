@@ -13,4 +13,4 @@ adivina: adivina.c
 	cc -o adivina adivina.c
 
 clean:
-	rm principal contador calculador adivina secreto
+	rm principal contador calculador adivina
