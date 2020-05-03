@@ -92,15 +92,16 @@
 	"Itinerarios.h"
 	<string.h>
 
-1588020714 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\src\autobuses.cpp
+1588496740 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\src\autobuses.cpp
 	"Autobuses.h"
 	<string.h>
+	<stdlib.h>
 
-1588021240 c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\include\autobuses.h
+1588439433 c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\include\autobuses.h
 	<iostream>
 	<fstream>
 
-1588030398 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\main.cpp
+1588496600 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\main.cpp
 	<iostream>
 	<conio.h>
 	"Autobuses.h"
@@ -108,11 +109,11 @@
 	<stdlib.h>
 	<string.h>
 
-1588020660 c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\include\itinerarios.h
+1588496465 c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\include\itinerarios.h
 	<iostream>
 	<fstream>
 
-1588021268 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\src\itinerarios.cpp
+1588496772 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 1 2020\src\itinerarios.cpp
 	"Itinerarios.h"
 	<string.h>
 

@@ -29,6 +29,9 @@ class Autobuses{
     int n; //número de autobuses
     bool cargado; //indica si el fichero está cargado en memoria
 
+    void mostrarBus(autobus bus, int pos);
+    void controlarArray();
+
     public:
     Autobuses();//constructor de la clase. Inicializa las variables de la clase.
                 //En particular destacar que se “enlaza” ya con el fichero

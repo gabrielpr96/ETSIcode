@@ -29,6 +29,9 @@ class Itinerarios{
     int n; //número de itinerarios
     bool cargado; //indica si el fichero está cargado en memoria
 
+    void mostrarIti(int pos);
+    void controlarArray();
+
     public:
         Itinerarios(); //constructor de la clase
         ~Itinerarios(); //Destructor
@@ -47,7 +50,7 @@ class Itinerarios{
             //“itinerarios.dat”. Devuelve true si correcto, false si error.
         bool Guardar(); //Vuelca el contenido de la tabla dinámica(si ésta existe) al
             //fichero“itinerarios.dat”
-        void Itinerariosenintervalo(Hora horaini, Hora horafin);
+        void Itinerariosenintervalo(Hora hIni, Hora hFin);
 };
 
 #endif // ITINERARIOS_H

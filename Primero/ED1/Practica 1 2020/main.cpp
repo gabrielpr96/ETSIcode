@@ -16,6 +16,7 @@ char menuIti();
 
 int menuMain() {
     int opc;
+    system("CLS");
 
     do {
         cout<< "----- Menu principal -----" << endl
@@ -27,10 +28,12 @@ int menuMain() {
         cin >> opc;
     } while(opc < 1 || opc > 4);
 
+    system("CLS");
     return opc;
 }
 char menuBus() {
     char opc1;
+    system("CLS");
 
     cout<<"----- Menu Gestion de Autobuses -----\n"
         << "a) Insertar" << endl
@@ -44,10 +47,12 @@ char menuBus() {
         << "Elija una opcion: ";
     cin>>opc1;
 
+    system("CLS");
     return opc1;
 }
 char menuIti() {
     char opc2;
+    system("CLS");
 
     cout<<"----- Menu Gestion de Itinerarios -----\n"
         << "a) Insertar" << endl
@@ -61,6 +66,7 @@ char menuIti() {
         << "Elija una opcion: ";
     cin>>opc2;
 
+    system("CLS");
     return opc2;
 }
 
@@ -134,40 +140,38 @@ void pedirMatOpos(cadena &mat, int &pos, const char *accion, const char *element
     char c;
 
     do {
-        cout << "Desea " << accion << " por matricula o por posicion (m/p): " << endl;
+        cout << "Desea " << accion << " por matricula o por posicion (m/p): ";
         cin >> c;
     } while(c != 'm' && c != 'p');
 
     if(c == 'm') {
-        cout << "Introduzca la matricula del " << elemento << " que desea eliminar: " << endl;
+        cout << "Introduzca la matricula del " << elemento << " que desea " << accion << ": ";
         cin >> mat;
         pos = -1;
     } else if(c == 'p') {
-        cout << "Introduzca la posicion del " << elemento << " que desea eliminar: " << endl;
+        cout << "Introduzca la posicion del " << elemento << " que desea " << accion << ": ";
         cin >> pos;
+        pos--;
     }
 }
-void pedirMatOposOnom(cadena &mat, cadena &nom, int &pos, const char *accion, const char *elemento){
+void pedirMatNomOpos(cadena &nom, cadena &mat, int &pos, const char *accion, const char *elemento){
     char c;
 
     do {
-        cout << "Desea " << accion << " por matricula, por nombre o por posicion (m/n/p): " << endl;
+        cout << "Desea " << accion << " por matricula, por nombre o por posicion (m/p): ";
         cin >> c;
-    } while(c != 'm' && c != 'n' && c != 'p');
+    } while(c != 'm' && c != 'p');
 
     if(c == 'm') {
-        cout << "Introduzca la matricula del " << elemento << " que desea eliminar: " << endl;
+        cout << "Introduzca el nombre del " << elemento << " que desea " << accion << ": ";
+        cin >> nom;
+        cout << "Introduzca la matricula del " << elemento << " que desea " << accion << ": ";
         cin >> mat;
         pos = -1;
-        nom[0] = 0;
-    } else if(c == 'n') {
-        cout << "Introduzca el nombre del " << elemento << " que desea eliminar: " << endl;
-        cin >> nom;
-        pos = -2;
-        mat[0] = 0;
     } else if(c == 'p') {
-        cout << "Introduzca la posicion del " << elemento << " que desea eliminar: " << endl;
+        cout << "Introduzca la posicion del " << elemento << " que desea " << accion << ": ";
         cin >> pos;
+        pos--;
     }
 }
 
@@ -179,7 +183,7 @@ int main() {
     cadena mat, nom;
     int pos, menu = 1;
     char opt;
-    Hora hi, hf;
+    Hora hIni, hFin;
     autobus bus;
     itinerario iti;
 
@@ -187,8 +191,49 @@ int main() {
         switch(menu){
         case 1:
             opt = menuMain();
+            switch(opt) {
+            case 1:
+                menu = 2;
+            break;
+            case 2:
+                menu = 3;
+                break;
+            case 3:
+                char c;
 
-
+                cout << "Introduzca la hora de inicio: ";
+                cin >> hIni.h;
+                cout<<"Introduzca los minutos de inicio: ";
+                cin >> hIni.m;
+                do {
+                    cout << "La hora es previa o posterior al medio dia (a/p): ";
+                    cin >> c;
+                } while(c != 'a' && c != 'p');
+                hIni.am = c=='a';
+                cout << "Introduzca la hora de fin: ";
+                cin >> hFin.h;
+                cout << "Introduzca los minutos de fin: ";
+                cin >> hFin.m;
+                do {
+                    cout << "La hora es previa o posterior al medio dia (a/p): ";
+                    cin >> c;
+                } while(c != 'a' && c != 'p');
+                hFin.am = c=='a';
+                i.Itinerariosenintervalo(hIni, hFin);
+            break;
+            case 4:
+                cout << "Guardado preventivo" << endl;
+                a.Guardar();
+                i.Guardar();
+            break;
+            default:
+                cout<<"Inserte una opcion valida";
+            }
+            if(opt == 3)
+                system("PAUSE");
+            break;
+        case 2:
+            opt = menuBus();
             switch(opt) { //MENU DE AUTOBUSES
                 case 'a':   //Insertar un autobus
                     pedirDatosAutobus(bus);
@@ -203,131 +248,69 @@ int main() {
                     pedirDatosAutobus(bus);
                     a.Modificar(bus, mat, pos);
                 break;
-                case 'd':   //Mostrar autobus por matricula
+                case 'd':   //Mostrar un solo autobus
                     pedirMatOpos(mat, pos, "buscar", "autobus");
-
-                    if(pos < 0)
-                        pos = a.Buscar(mat);
-                    if(pos){
-                        cout << "El autobus se encuentra en la posicion " << pos << endl;
-                        a.Mostrar(mat, pos);
-                    }else
-                        cout << "Esa matricula no corresponde a ningún autobus." << endl;
+                    a.Mostrar(mat, pos);
                 break;
-                case 'e':
+                case 'e':   //Listar todos los autobuses
                     a.Listar();
                 break;
-                case 'f':
-                    a.Cargar();
+                case 'f':   //Cargar de fichero
+                    cout << (a.Cargar()?"Carga realizada con exito.":"Fallo al cargar.") << endl;
                 break;
-                case 'g':
-                    a.Guardar();
+                case 'g':   //Guardar en fichero
+                    cout << (a.Guardar()?"Guardado con exito.":"Fallo al guardar.") << endl;
                 break;
-                case 'v':
+                case 'v':   //Regresar al menu principal
                     menu = 1;
                 break;
                 default:
-                    cout<<"Inserte una opcion valida";
+                    cout << "Inserte una opcion valida" << endl;
+                break;
             }
+            if(opt != 'v')
+                system("PAUSE");
             break;
-        case 2:
-            opt = menuBus();
+        case 3:
+            opt = menuIti();
             switch(opt) { //MENU DE ITINERARIOS
                 case 'a':   //Crear itinerario
                     pedirDatosItinerario(iti);
                     i.Insertar(iti);
                 break;
                 case 'b':   //Borrar itinerari
-                    pedirMatOposOnom(mat, nom, pos, "borrar", "itinerario");
+                    pedirMatNomOpos(nom, mat, pos, "borrar", "itinerario");
                     i.Borrar(nom, mat, pos);
                 break;
                 case 'c':   //Modificar itinerario
-                    pedirMatOposOnom(mat, nom, pos, "modificar", "itinerario");
+                    pedirMatNomOpos(nom, mat, pos, "modificar", "itinerario");
                     pedirDatosItinerario(iti);
                     i.Modificar(iti, nom, mat, pos);
                 break;
-                case 'd':
+                case 'd':   //Listar todos los itinerarios
                     i.Listar();
                 break;
-                case 'e':
-                    pedirMatOposOnom(nom, mat, pos, "buscar", "itinerario");
-
-                    if(pos < 0)
-                        pos = i.Buscar(nom, mat);
-                    if(pos){
-                        cout << "El itinerario se encuentra en la posicion " << pos << endl;
-                        i.Mostrar(nom, mat, pos);
-                    }else
-                        cout << "Esa matricula no corresponde a ningun itinerario." << endl;
+                case 'e':   //Mostrar un unico itinerario
+                    pedirMatNomOpos(nom, mat, pos, "buscar", "itinerario");
+                    i.Mostrar(nom, mat, pos);
                 break;
-                case 'f':
-                    i.Cargar();
+                case 'f':   //Cargar itinerarios
+                    cout << (i.Cargar()?"Datos cargados correctamente.":"Error al cargar los datos") << endl;
                 break;
-                case 'g':
-                    i.Guardar();
+                case 'g':   //Guardar itinerarios
+                    cout << (i.Guardar()?"Datos guardados correctamente.":"Error al guardar los datos") << endl;
                 break;
-                case 'v':
+                case 'v':   //Regresar al menu principal
                     menu = 1;
                 break;
                 default:
                     cout<<"Inserte una opcion valida";
             }
-            break;
-        case 3:
-            opt = menuIti();
+            if(opt != 'v')
+                system("PAUSE");
             break;
         }
-        system("CLS");
-        system("PAUSE");
-    }while(opt != 4);
-return 0;
-/*
-    do {
-        opt = menuMain();
+    }while(!(menu == 1 && opt == 4));
 
-            system("pause");
-        break;
-        case 2:
-
-            system("pause");
-            break;
-        case 3:
-            char s1,s2;
-
-            cout<<"Introduzca la hora de inicio: "<<endl;
-            cin>>hi.h;
-            cout<<"Introduzca los minutos de inicio: "<<endl;
-            cin>>hi.m;
-            do {
-                cout<<"La hora es previa o posterior al medio dia (a/p): "<<endl;
-                cin>>s1;
-            } while(s1 != 'a' && s1 != 'p');
-            if(s1=='a')
-                hi.am=true;
-            else
-                hi.am=false;
-            cout<<"Introduzca la hora de fin: "<<endl;
-            cin>>hf.h;
-            cout<<"Introduzca los minutos de fin: "<<endl;
-            cin>>hf.m;
-            do {
-                cout<<"La hora es previa o posterior al medio dia (a/p): "<<endl;
-                cin>>s2;
-            } while(s2 != 'a' && s2 != 'p');
-            if(s2=='a')
-                hf.am=true;
-            else
-                hf.am=false;
-            i.Itinerariosenintervalo(hi,hf);
-            system("pause");
-        break;
-        case 4:
-            //a.Guardar();
-            //i.Guardar();
-        break;
-        default:
-            cout<<"Inserte una opcion valida";
-        }
-    } while(opt != 4);
-*/
+    return 0;
 }

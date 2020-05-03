@@ -2,62 +2,61 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\Autobuses.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include\Autobuses.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7625" topLine="5" />
-		</Cursor>
-		<Folding>
-			<Collapse line="3" />
-			<Collapse line="14" />
-			<Collapse line="19" />
-			<Collapse line="38" />
-			<Collapse line="74" />
-			<Collapse line="93" />
-			<Collapse line="120" />
-			<Collapse line="161" />
-			<Collapse line="197" />
-			<Collapse line="218" />
-		</Folding>
-	</File>
-	<File name="src\Itinerarios.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4627" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="3" />
-			<Collapse line="15" />
-			<Collapse line="20" />
-			<Collapse line="31" />
-			<Collapse line="46" />
-			<Collapse line="57" />
-			<Collapse line="74" />
-			<Collapse line="97" />
-			<Collapse line="116" />
-			<Collapse line="138" />
-			<Collapse line="160" />
-		</Folding>
-	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4881" topLine="48" />
-		</Cursor>
-		<Folding>
-			<Collapse line="31" />
-			<Collapse line="48" />
-			<Collapse line="66" />
-			<Collapse line="93" />
-			<Collapse line="132" />
-			<Collapse line="149" />
-		</Folding>
-	</File>
-	<File name="include\Autobuses.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1340" topLine="20" />
+			<Cursor1 position="793" topLine="11" />
 		</Cursor>
 	</File>
 	<File name="include\Itinerarios.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="910" topLine="26" />
+			<Cursor1 position="1900" topLine="29" />
 		</Cursor>
+	</File>
+	<File name="src\Autobuses.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4161" topLine="15" />
+		</Cursor>
+		<Folding>
+			<Collapse line="25" />
+			<Collapse line="44" />
+			<Collapse line="71" />
+			<Collapse line="88" />
+			<Collapse line="107" />
+			<Collapse line="126" />
+			<Collapse line="146" />
+			<Collapse line="164" />
+			<Collapse line="188" />
+			<Collapse line="197" />
+		</Folding>
+	</File>
+	<File name="src\Itinerarios.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2540" topLine="13" />
+		</Cursor>
+		<Folding>
+			<Collapse line="3" />
+			<Collapse line="8" />
+			<Collapse line="14" />
+			<Collapse line="28" />
+			<Collapse line="42" />
+			<Collapse line="53" />
+			<Collapse line="65" />
+			<Collapse line="148" />
+		</Folding>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6073" topLine="94" />
+		</Cursor>
+		<Folding>
+			<Collapse line="16" />
+			<Collapse line="33" />
+			<Collapse line="52" />
+			<Collapse line="72" />
+			<Collapse line="99" />
+			<Collapse line="138" />
+			<Collapse line="156" />
+			<Collapse line="236" />
+		</Folding>
 	</File>
 </CodeBlocks_layout_file>

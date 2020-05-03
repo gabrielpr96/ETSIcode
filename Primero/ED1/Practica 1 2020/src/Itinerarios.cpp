@@ -2,181 +2,163 @@
 #include <string.h>
 
 Itinerarios::Itinerarios(){
-    itinerario iti;
-    fichero.clear();
-    fichero.open("Itinerarios.dat", ios::binary|ios::in|ios::out);
     cargado=false;
-    tam=0;
-    fichero.seekg(0, ios::end);
-    n=fichero.tellg()/sizeof(itinerario);
-
-    elementos=new itinerario[tam];
+    elementos = NULL;
 }
 
 Itinerarios::~Itinerarios(){
     fichero.close();
-    delete [] elementos;
+    if(elementos != NULL)
+        delete [] elementos;
 }
 
 void Itinerarios::Insertar(itinerario i){
     if(cargado){
-        if(Buscar(i.nombre, i.matricula)==-1){
-            if(n==tam)
-                tam=tam+SALTO;
-            elementos[n]=i;
+        int pos = Buscar(i.nombre, i.matricula);
+        if(pos == -1){
+            elementos[n] = i;
             n++;
-        }else cout<<"El itinerario ya existe"<<endl;
-    }
+            controlarArray();
+            cout << "Itinerario insertado con exito." << endl;
+        }else cout << "El itinerario ya existe." << endl;
+    }else cout << "No se han cargado datos." << endl;
 }
 
+//Si pos == -1 -> se borra por mat y nom
+//Si pos <> -1 -> se borra por pos
 void Itinerarios::Borrar(cadena nombrei, cadena mat, int pos){
     if(cargado){
-        if(pos==-1){
-            pos=Buscar(nombrei, mat);
-            if(pos<0 || pos>n)
-                cout<<"La posicion del itinerario no es valida"<<endl;
-        }
-        else{
-            for(int i=pos-1;i<n;i++)
-                elementos[i]=elementos[i+1];
+        if(pos == -1)
+            pos = Buscar(nombrei, mat);
+        if(pos > 0 && pos < n){
             n--;
-        }
-    }
+            for(int i = pos; i < n; i++)
+                elementos[i] = elementos[i+1];
+            controlarArray();
+            cout << "Itinerario borrado correctamente." << endl;
+        }else cout << "No se ha encontrado el itinerario." << endl;
+    }else cout << "No se han cargado datos." << endl;
 }
 
 void Itinerarios::Modificar(itinerario i, cadena nombrei, cadena mat, int pos){
     if(cargado){
-        if(pos==-1){
-            pos=Buscar(nombrei, mat);
-            if(pos<0 || pos>n)
-                cout<<"No se encuentra ningun itinerario en esa posicion"<<endl;
-            //else elementos[pos]=i;
-        }else elementos[pos]=i;
-    }
+        if(pos == -1)
+            pos = Buscar(nombrei, mat);
+        if(pos > 0 && pos < n){
+            elementos[pos] = elementos[pos+1];
+            cout << "Itinerario modificado correctamente." << endl;
+        }else cout << "No se ha encontrado el itinerario." << endl;
+    }else cout << "No se han cargado datos." << endl;
 }
 
 int Itinerarios::Buscar(cadena nombrei, cadena mat){
-    itinerario aux;
-    int pos=-1;
-    bool encontrado=false;
-    int i=0;
-
     if(cargado){
-        while(!encontrado && i<n){
-            if(strcmp(elementos[i].matricula, mat)==0 && strcmp(elementos[i].nombre, nombrei)==0){
-                encontrado=true;
-                pos=i;
-            }else i++;
-        }
-    }
-    return pos;
+        int i = 0;
+        while(i < n && !(strcmp(elementos[i].nombre, nombrei) == 0 && strcmp(elementos[i].matricula, mat) == 0))
+            i++;
+        if(i < n)
+            return i;
+        else
+            return -1;
+    }else return -1;
 }
 
 void Itinerarios::Mostrar(cadena nombrei, cadena mat, int pos){
-    itinerario iti;
-
     if(cargado){
-        if(pos==-1){
-            pos=Buscar(nombrei, mat);
-            if(pos<0 || pos>n)
-                cout<<"No existe esa posicion"<<endl;
-        }
-        else{
-            cout<<"ITINERARIO "<<pos+1<<"\n"<<"Nombre: "<<elementos[pos].nombre<<"\n"
-            <<"Origen: "<<elementos[pos].origen<<"\n"<<"Destino: "<<elementos[pos].destino<<"\n"
-            <<"Hora de inicio: "<<elementos[pos].inicio.h<<":"<<elementos[pos].inicio.m<<" ";
-            if(elementos[pos].inicio.am==true) cout<<"AM"<<endl;
-            else cout<<"PM"<<endl;
-            cout<<"Hora de llegada: "<<elementos[pos].fin.h<<":"<<elementos[pos].fin.m<<" ";
-            if(elementos[pos].fin.am==true) cout<<"AM"<<endl;
-            else cout<<"PM"<<endl;
-            cout<<"Matricula: "<<elementos[pos].matricula<<endl<<endl;
-        }
-    }
+        if(pos == -1)
+            pos = Buscar(nombrei, mat);
+        if(pos >= 0 && pos < n){
+            mostrarIti(pos);
+        }else cout<<"No ha encontrado el autobus a mostrar."<<endl;
+    }else cout << "No se han cargado datos." << endl;
 }
 
 void Itinerarios::Listar(){
-    itinerario it;
-
     if(cargado){
-        cout<<"-------------------Listado de Itinerarios-------------------\n";
-        for(int i=0;i<n;i++){
-            cout<<"ITINERARIO "<<i+1<<"\n"<<"Nombre: "<<elementos[i].nombre<<"\n"
-            <<"Origen: "<<elementos[i].origen<<"\n"<<"Destino: "<<elementos[i].destino<<"\n"
-            <<"Hora de inicio: "<<elementos[i].inicio.h<<":"<<elementos[i].inicio.m<<" ";
-            if(elementos[i].inicio.am==true) cout<<"AM"<<endl;
-            else cout<<"PM"<<endl;
-            cout<<"Hora de llegada: "<<elementos[i].fin.h<<":"<<elementos[i].fin.m<<" ";
-            if(elementos[i].fin.am==true) cout<<"AM"<<endl;
-            else cout<<"PM"<<endl;
-            cout<<"Matricula: "<<elementos[i].matricula<<endl<<endl;
-        }
-    }
+        cout << "-------------------Listado de Itinerarios-------------------" << endl;
+        for(int i = 0; i < n; i++)
+            mostrarIti(i);
+    }else cout << "No se han cargado datos." << endl;
 }
 
 bool Itinerarios::Cargar(){
-    bool retorno=false;
-    itinerario aux;
+    fichero.open("Itinerarios.dat",ios::binary | ios::in | ios::out);
+    if(fichero.fail()){
+        n = 0;
+    }else{
+        fichero.seekg(0, ios::end);
+        n = fichero.tellg() / sizeof(itinerario);
+        tam = n+1;
+        elementos = new itinerario[tam];
 
-    if(elementos!=NULL)
-        delete []elementos;
-    if(tam<n)
-        tam=tam+SALTO;
-    fichero.seekg(0, ios::beg);
-
-    for(int i=0;i<n;i++){
-        fichero.read((char*)&aux,sizeof(itinerario));
-        elementos[i]=aux;
-    }
-    if(!fichero.fail()){
-            retorno=true;
-            cargado=true;
+        fichero.seekg(0, ios::beg);
+        for(int i = 0; i < n; i++){
+            fichero.read((char*)&elementos[i], sizeof(itinerario));
+        }
     }
 
-    return retorno;
+    bool res = !fichero.fail();
+    cargado = res;
+    fichero.close();
+    return res;
 }
 
 bool Itinerarios::Guardar(){
-    bool retorno=false;
-    itinerario aux;
-    //MODIFICAR
-    for(int i=0; i<n;i++){
-        for(int j=n; j>i;j--){
-            if(strcmp(elementos[i].matricula, elementos[j].matricula)<0){
-                aux=elementos[i];
-                elementos[i]=elementos[j];
-                elementos[j]=aux;
-            }
-        }
-    }
-    if(cargado==true){
-        fichero.seekp(sizeof(int), ios::beg);
-        for(int i=1; i<=n; i++)
+    if(cargado){
+        fichero.open("Itinerarios.dat", ios::binary | ios::out);
+        fichero.seekp(0, ios::beg);
+        for(int i = 0; i < n; i++)
             fichero.write((char*)&elementos[i], sizeof(itinerario));
-        retorno=true;
+        bool res = !fichero.fail();
+        fichero.close();
+        return res;
+    }else{
+        cout << "No se puede guardar sin nada cargado." << endl;
+        return false;
     }
-    return retorno;
 }
 
-void Itinerarios::Itinerariosenintervalo(Hora horaini, Hora horafin){
-    int hmin, hmax;
-    int minp, maxp;
+int h2m(Hora hora){
+    int m = hora.h*60 + hora.m;
+    if(!hora.am)
+        m += 12*60;
+    return m;
+}
+void Itinerarios::Itinerariosenintervalo(Hora hIni, Hora hFin){
+    if(cargado){
+        cout << endl << "-------------------Listado de Itinerarios-------------------" << endl;
+        int ini = h2m(hIni), fin = h2m(hFin);
+        for(int i = 0; i < n; i++)
+            if(h2m(elementos[i].inicio) >= ini && h2m(elementos[i].fin) <= fin)
+                mostrarIti(i);
+    }else cout << "No se han cargado datos." << endl;
+}
 
-    if(horaini.am==true)
-        hmin=(horaini.h*60)+horaini.m;
-    else hmin=(horaini.h*60)+horaini.m+(12*60);
-    if(horafin.am==true)
-        hmax=(horafin.h*60)+horafin.m;
-    else hmax=(horafin.h*60)+horafin.m+(12*60);
 
-    for(int i=0; i<n; i++){
-        if(elementos[i].inicio.am=true)
-            minp=(elementos[i].inicio.h*60)+elementos[i].inicio.m;
-        else minp=(elementos[i].inicio.h*60)+elementos[i].inicio.m+(12*60);
-        if(elementos[i].fin.am=true)
-            maxp=(elementos[i].fin.h*60)+elementos[i].fin.m;
-        else maxp=(elementos[i].fin.h*60)+elementos[i].fin.m+(12*60);
-        if(minp>hmin && maxp<hmax)
-            Mostrar(elementos[i].nombre, elementos[i].matricula, -1);
+
+void Itinerarios::mostrarIti(int pos){
+    itinerario iti = elementos[pos];
+    cout<< "Itinerario " << (pos+1) << endl
+        << "Nombre: " << iti.nombre << endl
+        << "Origen: " << iti.origen << endl
+        << "Destino: " << iti.destino << endl
+        << "Hora de inicio: " << iti.inicio.h << ":" << iti.inicio.m << " " << (iti.inicio.am?"AM":"PM") << endl
+        << "Hora de llegada: " << iti.fin.h << ":" << iti.fin.m << " " << (iti.fin.am?"AM":"PM") << endl
+        <<"Matricula: " << iti.matricula << endl;
+}
+void Itinerarios::controlarArray(){
+    int nTam = tam;
+    if(n == tam)
+        nTam += SALTO;
+    else if(n == tam-SALTO-1)
+        nTam -= SALTO;
+
+    if(nTam != tam){
+        tam = nTam;
+        itinerario *tmp = new itinerario[tam];
+        for(int i = 0; i < n; i++)
+            tmp[i] = elementos[i];
+        delete [] elementos;
+        elementos = tmp;
     }
 }
