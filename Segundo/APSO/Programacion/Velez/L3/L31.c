@@ -35,6 +35,8 @@ int main(){
 		dup(tub3[1]);
 		execl("L33", "L33", NULL);
 	}
+	close(tub3[0]);
+	close(tub3[1]);
 
 	pause();
 	wait(NULL);

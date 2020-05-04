@@ -14,6 +14,7 @@ int main(){
 	pid34 = fork();
 	if(pid34 == 0)
 		execl("L34", "L34", NULL);
+	close(2);
 
 	sleep(1);
 

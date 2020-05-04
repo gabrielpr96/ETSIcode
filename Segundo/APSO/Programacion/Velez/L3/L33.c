@@ -25,12 +25,14 @@ int main(){
 	write(fifo, (char*)&pid33, sizeof(int));
 
 	pause();
-	printf("Ahora escribo en la fifo\n");
+
 	write(2, (char*)&pid33, sizeof(int));
 
 	pause();
 
 	kill(getppid(), 12);
+
+	close(2);
 
 	return 0;
 }

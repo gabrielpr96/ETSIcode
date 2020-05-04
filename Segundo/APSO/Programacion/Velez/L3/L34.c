@@ -29,5 +29,7 @@ int main(){
 
 	kill(pid33, 10);
 
+	close(2);
+
 	return 0;
 }
