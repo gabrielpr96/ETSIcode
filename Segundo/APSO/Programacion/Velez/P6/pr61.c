@@ -5,7 +5,6 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <unistd.h>
-#include <errno.h>
 
 struct Mensaje1{
 	long id;
