@@ -20,7 +20,7 @@ int main(){
 	sleep(3);
 
 	read(2, (char*)&pid33, sizeof(char));
-
+	printf("He leido: %d\n", pid33);
 	printf("L34 con pid %d. Mensaje 4\n", getpid());
 
 	alarm((rand()%6)+5);
