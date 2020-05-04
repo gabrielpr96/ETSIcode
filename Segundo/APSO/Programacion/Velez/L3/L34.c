@@ -7,10 +7,12 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <time.h>
 
 void continuar(){}
 
 int main(){
+	srand(time(0));
 	int pid33;
 
 	signal(14, continuar);
@@ -22,6 +24,8 @@ int main(){
 	printf("L34 con pid %d. Mensaje 4\n", getpid());
 
 	alarm((rand()%6)+5);
+
+	pause();
 
 	kill(pid33, 10);
 
