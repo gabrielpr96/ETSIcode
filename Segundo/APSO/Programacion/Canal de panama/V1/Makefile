@@ -1,8 +1,16 @@
-all: servidor_ncurses prueba
+all: servidor_ncurses canalpanama barcoeste borcooeste
 
 servidor_ncurses: servidor_ncurses.c definiciones.h comun.h
-	cc servidor_ncurses.c -o servidor_ncurses -lncurses
+	cc -o servidor_ncurses servidor_ncurses.c -lncurses
 
-prueba: prueba.c comun.h
-	cc prueba.c -o prueba
+canalpanama: canalpanama.c
+	cc -o canalpanama canalpanama.c
 
+barcoeste: barcoeste.c comunbarcos.h comunbarcos.c comun.h
+	cc -o barcoeste barcoeste.c comunbarcos.c
+
+borcooeste: barcooeste.c comunbarcos.h comunbarcos.c comun.h
+	cc -o barcooeste barcooeste.c comunbarcos.c
+
+clean:
+	rm servidor_ncurses canalpanama barcoeste barcooeste

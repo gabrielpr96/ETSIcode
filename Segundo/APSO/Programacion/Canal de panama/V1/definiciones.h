@@ -9,7 +9,6 @@
 #define MAXVLAGOO 8
 #define MAXVHORNOS 36
 
-
 #define COLOR_MAR 1
 #define COLOR_MAR2 2
 #define COLOR_FONDO 3
@@ -19,8 +18,6 @@
 
 //informacion que se almacena de cada cliente
 struct cliente{
- int elpid;
- int cualidad;
-}; 
-
-
+	int elpid;
+	int cualidad;
+};

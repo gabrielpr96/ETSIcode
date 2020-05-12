@@ -16,11 +16,9 @@
 
 // informacion que se lee de peticiones de escritura
 struct tipo_elemento{
- long tipo; //obligatorio para la cola de mensajes
- int pid;
- int donde;
- int que;
- int cualidad;
+	long tipo; //obligatorio para la cola de mensajes
+	int pid;
+	int donde;
+	int que;
+	int cualidad;
 };
- 
-
