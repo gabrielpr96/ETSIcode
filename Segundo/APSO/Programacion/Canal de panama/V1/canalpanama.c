@@ -9,30 +9,27 @@
 #include <time.h>
 
 const int MAXBARCOS = 10;
-int llega10, llega12;
+int llega10;
 
 void R10(){llega10 = 1;}
-void R12(){llega12 = 1;}
+void R12(){
+	printf("No es posible arrancar el servidor grafico\n");
+	exit(-1);
+}
 
 int creaproceso(const char nombre[]);
 
 int main(){
 	srand(time(0));
 	llega10 = 0;
-	llega12 = 0;
 	int pidServidor;
 
 	signal(10,R10);
     signal(12,R12);
 
 	pidServidor = creaproceso("servidor_ncurses");
-	if(!(llega10 || llega12)) pause();
-	if(llega12){
-		printf("Error al iniciar el servidor\n");
-		exit(-1);
-	}
+	if(!llega10) pause();
 	llega10 = 0;
-	llega12 = 0;
 
 	for(int i = 0; i < MAXBARCOS; i++){
 		if(rand()%2 == 0)
@@ -47,6 +44,7 @@ int main(){
 
 	kill(pidServidor, 10);
 
+	system("reset");
 	return 0;
 }
 

@@ -19,7 +19,7 @@ int main(){
     cola = crea_cola(clave);
 
 	visualiza(cola, VOESTEIN, PINTAR, TIPOOESTE);
-	sleep(2);
+	sleep(3);
 	visualiza(cola, VOESTEIN, BORRAR, TIPOOESTE);
 
 
