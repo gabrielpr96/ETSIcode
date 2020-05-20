@@ -41,13 +41,13 @@ int main(){
 
 	pipe(tubo);
 
-	mkfifo("lago", 0600);
-	mkfifo("esclusae", 0600);
-	mkfifo("esclusao", 0600);
+	mkfifo("/home/apso/lago", 0600);
+	mkfifo("/home/apso/esclusae", 0600);
+	mkfifo("/home/apso/esclusao", 0600);
 
-	lago = open("lago", O_RDWR);
-	esclusae = open("esclusae", O_RDWR);
-	esclusao = open("esclusao", O_RDWR);
+	lago = open("/home/apso/lago", O_RDWR);
+	esclusae = open("/home/apso/esclusae", O_RDWR);
+	esclusao = open("/home/apso/esclusao", O_RDWR);
 
 	leeparametros(&param, &maxbarcos, &creamin, &creamax, &caplago);
 
@@ -79,9 +79,9 @@ int main(){
 	close(lago);
 	close(esclusae);
 	close(esclusao);
-	unlink("lago");
-	unlink("esclusae");
-	unlink("esclusao");
+	unlink("/home/apso/lago");
+	unlink("/home/apso/esclusae");
+	unlink("/home/apso/esclusao");
 
 	system("reset");
 	return 0;

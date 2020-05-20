@@ -20,9 +20,9 @@ int main(){
 	signal(10,R10);
 	signal(12,R12);
 
-	lago = open("lago", O_RDWR);
-	esclusae = open("esclusae", O_RDWR);
-	esclusao = open("esclusao", O_RDWR);
+	lago = open("/home/apso/lago", O_RDWR);
+	esclusae = open("/home/apso/esclusae", O_RDWR);
+	esclusao = open("/home/apso/esclusao", O_RDWR);
 
 	clave = ftok ("./fichcola.txt", 18);
     cola = crea_cola(clave);

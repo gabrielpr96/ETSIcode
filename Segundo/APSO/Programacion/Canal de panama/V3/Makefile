@@ -12,10 +12,7 @@ barcoeste: barcoeste.c comunbarcos.h comunbarcos.c comun.h
 borcooeste: barcooeste.c comunbarcos.h comunbarcos.c comun.h
 	cc -o barcooeste barcooeste.c comunbarcos.c
 
-repair:
-	touch esclusae esclusao lago
-
 clean:
 	rm servidor_ncurses canalpanama barcoeste barcooeste
 
-remake: clean all repair
+remake: clean all
