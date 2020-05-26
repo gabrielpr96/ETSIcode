@@ -2,9 +2,10 @@
 
 int llega10 = 0;
 
-void R10(){llega10=1;}
+void R10(){llega10 = 1;}
 void R12(){printf("Error al pintar, R12\n");exit(-1);}
-void R16(){llega16=1;}
+void R14(){llega14 = 1;}
+void R16(){llega16 = 1;}
 
 int crea_cola(key_t clave){
 	int identificador;

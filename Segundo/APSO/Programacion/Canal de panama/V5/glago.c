@@ -10,8 +10,7 @@
 #include <signal.h>
 #include <time.h>
 
-int lago, colalago, pid;
-int llega10 = 0;
+int lago, colalago;
 
 void R10(){
 	close(lago);
@@ -22,6 +21,7 @@ void R10(){
 
 
 int main(){
+	int pid;
 	char uno;
 
 	signal(10, R10);
@@ -29,7 +29,7 @@ int main(){
 	lago = open("/home/apso/lago", O_RDWR);
 	colalago = open("/home/apso/colalago", O_RDWR);
 
-	while(llega10 == 0){
+	while(1){
 		read(colalago, (char*)&pid, sizeof(int));
 		read(lago, &uno, 1);
 		kill(pid, 16);

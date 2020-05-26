@@ -14,10 +14,11 @@ struct Parametros{
 	int mevoymax;
 };
 
-int llega16;
+int llega14, llega16;
 
 void R10();
 void R12();
+void R14();
 void R16();
 
 int crea_cola(key_t clave);

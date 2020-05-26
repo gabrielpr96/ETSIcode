@@ -10,8 +10,7 @@
 #include <signal.h>
 #include <time.h>
 
-int esclusao, colaesclusao, pid;
-int llega10 = 0;
+int esclusao, colaesclusao;
 
 void R10(){
 	close(esclusao);
@@ -22,7 +21,7 @@ void R10(){
 
 
 int main(){
-	int cola, lago, esclusae, esclusao, colalago, colaesclusae, colaesclusao, pid;
+	int pid;
 	char uno;
 
 	signal(10, R10);
@@ -30,7 +29,7 @@ int main(){
 	esclusao = open("/home/apso/esclusao", O_RDWR);
 	colaesclusao = open("/home/apso/colaesclusao", O_RDWR);
 
-	while(llega10 == 0){
+	while(1){
 		read(colaesclusao, (char*)&pid, sizeof(int));
 		read(esclusao, &uno, 1);
 		kill(pid, 16);

@@ -1,0 +1,60 @@
+# depslib dependency file v1.0
+1590476759 source:c:\users\usuario\desktop\etsicode\segundo\edii\ejercicios\main.cpp
+	<iostream>
+	<queue>
+	<sstream>
+	<map>
+	<queue>
+	<cmath>
+	"grafo.h"
+	"conjunto.h"
+	"arbin.h"
+	"abb.h"
+
+1367496006 c:\users\usuario\desktop\etsicode\segundo\edii\practica 4\grafo\grafo.h
+	"vertice.h"
+	"arista.h"
+	"conjunto.h"
+	"excep_grafo.h"
+	<map>
+
+1367229138 c:\users\usuario\desktop\etsicode\segundo\edii\practica 4\grafo\vertice.h
+
+1367495998 c:\users\usuario\desktop\etsicode\segundo\edii\practica 4\grafo\arista.h
+	"vertice.h"
+
+1367317150 c:\users\usuario\desktop\etsicode\segundo\edii\practica 4\grafo\conjunto.h
+	"excep_conjunto.h"
+
+1367310762 c:\users\usuario\desktop\etsicode\segundo\edii\practica 4\grafo\excep_conjunto.h
+	"excepcion.h"
+
+1331037254 c:\users\usuario\desktop\etsicode\segundo\edii\practica 4\grafo\excepcion.h
+	<string>
+	<stdexcept>
+
+1367489298 c:\users\usuario\desktop\etsicode\segundo\edii\practica 4\grafo\excep_grafo.h
+	"excepcion.h"
+
+1363091698 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\arbin.h
+	"nodoB.h"
+	"excep_arbin.h"
+
+1144354256 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\nodob.h
+	<stdlib.h>
+
+1331892184 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excep_arbin.h
+	"excepcion.h"
+
+1587318366 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excepcion.h
+	<string>
+	<stdexcept>
+
+1331888804 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\abb.h
+	"nodoB.h"
+	"excep_abb.h"
+	"arbin.h"
+
+1331892184 c:\users\usuario\desktop\etsicode\segundo\edii\practica 2\arbin\excep_abb.h
+	"excepcion.h"
+
