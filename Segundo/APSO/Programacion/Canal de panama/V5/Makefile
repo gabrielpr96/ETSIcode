@@ -25,7 +25,7 @@ clean:
 	rm servidor_ncurses canalpanama barcoeste barcooeste glago gesclusae gesclusao
 
 repair: remake
-	rm /home/apso/lago /home/apso/esclusao /home/apso/esclusae /home/apso/colalago /home/apso/colaesclusao /home/apso/colaesclusae
 	ipcrm --all=msg
+	rm /home/apso/lago /home/apso/esclusao /home/apso/esclusae /home/apso/colalago /home/apso/colaesclusao /home/apso/colaesclusae
 
 remake: clean all

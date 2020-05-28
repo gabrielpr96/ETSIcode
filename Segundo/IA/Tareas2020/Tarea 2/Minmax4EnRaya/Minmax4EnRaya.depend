@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1588318696 source:c:\users\usuario\desktop\ia\tareas\tarea 2\minmax4enraya\main.cpp
+	<iostream>
+	<cstdlib>
+	<cmath>
+	<chrono>
+	<unistd.h>
+

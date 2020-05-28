@@ -1,0 +1,42 @@
+[Miguel explica el formato de instrucción, tipo de instrucción y modos de direccionamiento de las instrucciones CALL, DIV y BNC]
+
+[Borja explica el formato de instrucción, tipo de instrucción y modos de direccionamiento de las instrucciones LD, CLS y RET]
+LD es una instrucción de Transferencia de datos que carga un dato de MP a registro. En este ejemplo la dirección de memoria se indica con un direccionamiento indirecto relativo a registro base. El registro base se especifica en el campo Segundo Registro de la instrucción y el desplazamiento en su campo desplazamiento.  El registro destino se está en el primer campo Primer registro.
+El modo de direccionamiento relativo se calcula sumando el valor del registro base con el desplazamiento obtenido de manera inmediata; como a de más es un direccionamiento indirecto, el resultado de la suma no es la dirección del dato, sino la dirección de la dirección del dato.
+CLS es una instrucción de Control de flags, establece el valor de uno de los biestables que componen el registro de estado del computador. CLS pone a 0 el biestable de Signo (S). El modo de direccionamiento es implícito porque el biestable que tiene que reiniciar se indica en el código de operación.
+RET es una instrucción de Control de flujo, debe ser llamada una vez termina la subrutina para restaurar PC desde la pila. El modo de direccionamiento es implícito, no hay que indicar la dirección dónde esta guardado el PC porque sabemos que es el último dato de la pila.
+
+[Miguel explica la secuencia de operaciones elementales de las instrucciones CALL, DIV y BNC]
+
+[Borja explica la secuencia de operaciones elementales de las instrucciones LD, CLS y RET]
+LD .3 [(.3) 20]: Copiar el dato que se encuentra en la dirección de memoria apuntada por la dirección de memoria que se obtiene de sumar el contendido del registro R3 con el desplazamiento 20, al registro R3.
+Dedica un ciclo completo a la decodificación, para continuar necesita el dato de memoria. Comienza por calcular el desplazamiento y almacenarlo en D para seguidamente leer de memoria una dirección que movemos a D para volver a leer de esa dirección y, esta vez sí, se trata del dato que podemos llevar al registro R3 directamente. Cando termina la lectura de memoria movemos PC a D y solicitamos la lectura de la siguiente instrucción que almacenamos en RI. En el último ciclo de la instrucción incrementamos PC y ponemos RF a 0.
+CLS: Poner a 0 el biestable S.
+Desdés de la decodificación, usa las señales de control para poner a 0 el biestable S. En el mismo ciclo puede llevar PC a D y así leer la siguiente instrucción en un ciclo después. La nueva instrucción se guarda en RI, incrementa PC en una unidad y pone RF a 0.
+RET: Restaura el valor del contador de programa con el último dato de la pila.
+Realiza la decodificación en el primer ciclo. Luego accede a la posición de la pila que le indica el puntero de pila, y lleva el dato a PC y a D. Como SP apunta al siguiente elemento, el circuito dedicado que controla la pila deberá incrementarla o decrementarla para que apunte al último elemento antes de la lectura. Con PC restaurado y su valor copiado en D, puede leer la siguiente instrucción, guardarla en RI, incrementar PC y poner RF a 0.
+
+[Miguel explica las señales de control necesarias para realizar las operaciones elementales que componen las instrucciones CALL, DIV y BNC]
+
+[Borja explica las señales de control necesarias para realizar las operaciones elementales que componen las instrucciones LD, CLS y RET]
+
+LD .3 [(.3) 20]: D <- R4 + RI.DESP: Requiere abrir la puerta TI para conectar RI a DBUS. Seleccionamos el registro 4 del banco de registros con DA. Encaminamos el dato que vine de RI por DBUS a la ALU con la entrada YY 1 del multiplexor Y. En el multiplexor X seleccionamos el registro con su entrada XX 2. La operación de la ALU es OP X+Y. TD conecta la salida de la ALU con ABUS. Finalmente, la señal de planco FD carga el valor de ABUS en D.
+LD .3 [(.3) 20]: D <- M(D): CM en el primer ciclo de lectura, activa MP, L solicita una lectura a MP durante los 3 ciclos que dura la lectura. TM conecta la salida del a memoria a DBUS. TBD conecta DBUS a ABUS. FD carga el dato que viene por ABUS en D.
+LD .3 [(.3) 20]: R3 <- M(D): CM y L se activan igual que en los ciclos anteriores para traer un dato de memoria. Esta vez también se activa TM para llevar el dato por DBUS, pero como queremos guardar su valor en el banco de registros, no necesitamos que pase por ABUS. DA selecciona el registro 3 del banco y la señal de flanco E carga en el registro seleccionado.
+LD .3 [(.3) 20]: D <- PC: En este mismo ciclo, ya que ABUS está libre, podemos mover PC al registro D. Para ello conectamos la salida de PC a ABUS con TP y mandamos una señal de flanco FD para cargar en D.
+LD .3 [(.3) 20]: RI <- M(D): CM y L se activan para traer de memoria la siguiente instrucción que nos traemos por DBUS con TM y cargamos en RI con la señal de flanco FI.
+LD .3 [(.3) 20]: PC <- PC+1: Incrementar PC consiste seleccionar la entrada YY 3 del multiplexor Y. La ALU realiza OP Y+1. EL resultado se lleva a ABUS conectando la salida de la ALU a ABUS con TD y activando la señal de flanco FP para cargar en PC.
+LD .3 [(.3) 20]: RF <- 0: Para terminar la instrucción, reiniciamos EF.
+
+CLS: S <- 0: Pone a 0 S.
+CLS: D <- PC: Para copiar PC a D conectamos la salida de PC a ABUS con TP y mandamos una señal de flanco FD para cargar en D.
+CLS: RI <- M(D): CM y L se activan para traer de memoria la siguiente instrucción que nos traemos por DBUS con TM y cargamos en RI con la señal de flanco FI.
+CLS: PC <- PC+1: Incrementar PC consiste seleccionar la entrada YY 3 del multiplexor Y. La ALU realiza OP Y+1. EL resultado se lleva a ABUS conectando la salida de la ALU a ABUS con TD y activando la señal de flanco FP para cargar en PC.
+CLS: RF <- 0: Para terminar la instrucción, reiniciamos EF.
+
+RET: PC, D <- S(IP): FMP activa la pila para que la señal de lectura L tome efecto en ella en lugar de en MP. La señal IP actualiza el puntero de pila de forma interna. Para guardar el dato en D se activa la señal de flanco FD y para guardarlo en PC, FP.
+RET: RI <- M(D): CM y L se activan para traer de memoria la siguiente instrucción que nos traemos por DBUS con TM y cargamos en RI con la señal de flanco FI.
+RET: PC <- PC+1: Incrementar PC consiste seleccionar la entrada YY 3 del multiplexor Y. La ALU realiza OP Y+1. EL resultado se lleva a ABUS conectando la salida de la ALU a ABUS con TD y activando la señal de flanco FP para cargar en PC.
+RET: RF <- 0: Para terminar la instrucción, reiniciamos EF.
+
+

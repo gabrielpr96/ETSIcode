@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1588774843 source:c:\users\usuario\desktop\ia\tareas\tarea 4\clasificador\main.cpp
+	<algorithm>
+	<iostream>
+	<string>
+	<vector>
+	<cmath>
+	<map>
+

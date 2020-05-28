@@ -1,0 +1,57 @@
+
+Código INT
+El siguiente código realiza la suma de los 10 elementos de un vector A y los almacena en la variable B. Hace uso de 2 índices, el índice contador para saber cuentos elementos nos quedan por recorrer y el índice posición, que apunta al elemento actual del vector. En Xtop se guarda el valor inicial del contador, 10. En Xinc el incremento del índice posición, 4 por las 4 posiciones que ocupa cada palabra en memoria, y en k el decremento del contador, 1.
+El código comienza cargando variables en registros de propósito general, GPR. En R1 se almacena el decremento del contador. R2 es el índice contador, R3 es el incremento de la posición. R5 y R6 se inicializan a 0, porque R0 siempre contiene 0. R5 es el registro índice posición y R6 es el registro temporal dónde iremos sumando los elementos.
+En el bucle, cargamos el elemento de A que nos indica el desplazamiento R5 en R7. R7 será el registro que contiene el elemento temporalmente. En la siguiente instrucción le sumamos R7 a R6. Seguidamente actualizamos los índices, incrementamos la posición y decrementamos el contador. La condición de salto es, si R2, el índice contador, no es 0 bifurca al principio de bucle. Cuando llega a 0, continua la secuencia de instrucciones. El NOP es para asegurarnos que el computador no ejecuta instrucciones importantes mientras realiza el salto.
+En la penúltima instrucción almacenamos el valor de R6 en B y así guardamos el resultado de la suma en memoria. La última instrucción es un trap 6 que se utiliza para finalizar el programa.
+Análisis INT sin adelantamiento
+Ahora vamos a estudiar las detenciones que se producen al ejecutar el código anterior sin adelantamiento generalizado. La cantidad de ciclos es tan grande que los hemos dividido en fragmentos. 
+La inicialización de fragmentos se realiza solo una vez y no requiere detecciones porque las instrucciones no comparten operandos.
+En la primera iteración del bucle se producen tres detenciones diferentes. La primera ocurre por ser la primera vez que entramos en el bucle, aun no le ha dado tiempo a R5 a tomar el valor 0 cuando ya estamos intentando usarlo como desplazamiento en la instrucción de carga. Este riesgo por dependencia de datos de tipo RAW se soluciona con una detención que retrase la etapa ID del LW hasta la etapa WB del ADD
+Luego se produce una detención doble por un riesgo de tipo RAW sobre el registro R7. El load aún no lo ha guardado en el registro y la siguiente instrucción de suma lo necesita como fuente. Insertar una detención de dos ciclos retrasa la etapa ID del ADD hasta el WB del LW.
+El último riesgo que se produce en la primera iteración es uno de tipo RAW por R2. La instrucción Branch lo necesita para la decodificación, pero el SUB aún no lo ha escrito. Se soluciona con otros dos ciclos de detención que retrasan el ID del BNEZ hasta el WB del SUB.
+En las siguientes iteraciones del bucle solo se producen la dos últimos riesgos que ocurrían en la primera iteración, ya que ahora hay más instrucciones entre la modificación de R5 y se lectura en el load.
+Al final del código, una vez salimos del bucle, no hay más detenciones. No se producen detenciones.
+
+Estadística INT sin adelantamiento
+Las estadísticas de esta ejecución arrojan un total de 112 ciclos para ejecutar 58 instrucciones, lo que supone unos CPI de 1.931. Cabe mencionar que se han producido 10 saltos, de los cuales 9 efectivos y uno, el último, no efectivo. Se han producido 13 cargas escalares, las 3 primeras para cargar los índices e incrementos y las 10 siguientes para los elementos del vector A. Se ha producido 1 trap, el del final para terminar le programa. Han ocurrido 41 detenciones por riegos de tipo RAW. El tamaño del código es de 14 instrucciones, a 4 bytes cada una, 56 bytes. Y se han usado 4 variables, pero una de ellas con 10 elementos, un total de 13 palabras de memoria que son 52 bytes.
+Análisis INT con adelantamiento
+A continuación, analizaremos las detenciones y adelantamientos que se producen al ejecutar el mismo código, pero con adelantamiento generalizado.
+Seguimos sin riesgos en la primera parte de inicialización de registros.
+El riesgo por dependencia de datos de tipo RAW que se producía en la primera iteración se ha resuelto con un adelantamiento de tipo ALU-ALU, llevamos a la ALU para el calculo del direccionamiento relativo al resultado de haber puesto a 0 el registro R5 antes siguiera de actualizar el candado de ALUoutput y el propio registro R5. Así evitamos una detención de un ciclo.
+El siguiente riesgo RAW no se puede solucionar únicamente con un adelanto, tenemos que esperar a que el futuro valor de R7 salga de memoria, para adelantarlo a la ALU y realizar la suma. Es un adelantamiento de tipo MEM-ALU, ahorra un ciclo de detención. Aunque la detención se produce después de ejecutar la etapa ID, realmente se realizaría en ese ciclo que se produce el adelantamiento, si el computador ejecuta ID antes, no lo haría con un valor de R7 erróneo, sino que sería remplazado por el adelantamiento del ciclo siguiente.
+Por último en el bucle se produce un riesgo RAW por R2 que se soluciona adelantando R2 de la etapa EX del SUB a la etapa ID del Branch. Es un adelantamiento de tipo ALU-ALU que evita una detención de dos ciclos.
+Al igual que antes, en las progresivas iteraciones del bucle solo se producen los dos últimos riesgos.
+El final sigue sin modificaciones, no tiene riesgos.
+Estadística INT con adelantamiento
+Las estadísticas han mejorado, pasamos de 112 ciclos a 91 ciclos para las mismas 58 instrucciones, eso baja de casi 2 CPI a 1.569 CPI. Las detenciones por riesgos RAW han caído de 41 a 20. El resto se mantiene igual.
+Código INT_OPT
+Esta es una modificación del código original en el que hemos aplicado una optimización del con idea de reducir las detenciones. Principalmente, hemos movido las operaciones con los índices antes de la suma del elemento para darle tiempo y que el Branch disponga de R2 y el LW de R5 sin tener que esperar. Esto también separa la suma del elemento del load, evitando el riesgo por dependencia de datos RAW que se producía antes. Adicionalmente hemos realizado la puesta a 0 de R5 y R6 antes de la carga para dar tiempo a guardar el resultado en R5 y que el LW no produzca un riesgo.
+
+Estadística INT_OPT
+Con esta modificación hemos pasado de 41 detenciones sin adelantamiento y 20 con adelantamiento a 0 tanto con como sin adelantamiento. No se produce ningún riesgo por dependencia de datos en el código optimizado.
+Así hemos pasado de 112 o 91 ciclos a solo 71 para las mismas 58 instrucciones, bajando el CPI a 1.224.
+Código INT_OPT_DES
+Si sobre el código con el bucle optimizado, agregamos un desenrollado del bucle, su tamaño pasa de 52 bytes a 100 bytes, pero el número de ejecuciones de la instrucción Branch se reduce de 10 a 2. La modificación he hemos hecha ha sido repetir el código del bucle teniendo en cuenta que el contador solo se tiene que actualizar una vez por iteración y ahora avanza de 5 en 5, motivo por el que ahora k vale 5. Adicionalmente hemos invertido de nuevo el orden la iniciación de registro, puesto que podemos anteponer el sub y para eso nos interesa distanciarlo de las cargas iniciales. Hay muchas combinaciones poro esta es la que mejores resultados ha dado.
+Estadística INT_OPT_DES
+La estadística es muy favorable. El número de instrucciones ha bajado de 58 a 42, esas 16 instrucciones de menos son los 8 BNEZ y 8 SUB que hemos ahorrado desenrollando el bucle. Así hemos bajado los ciclos a 57 sin adelanto y 47 con adelanto generalizado. Sin adelantamiento se producen 10 detenciones por riesgos RAW que en el código sin desenrollado no se producían porque los SUBs distanciaban los suficiente. Aún con esa pega, los ciclos se han reducido notoriamente y si contamos con adelantamiento, llegamos a prácticamente 1 ciclo por instrucción. 
+Código FP
+En esta versión el vector A contiene números en simple precisión, en lugar de enteros. A parte de haber tenido que introducir el equivalente decimal a la representación en simple precisión de los números 0, 1, 2… en la declaración de la variable; ahora usamos F1 como registro resultado y F2 como registro temporal en lugar de R6 y R7. La puesta a cero de F1 se realiza con un ADDF, la carga de los elementos de A con LF y la suma del elemento con el resultado también con ADDF. El resto del código sigue utilizando enteros.
+Análisis FP sin adelantamiento
+Prácticamente los riesgos que ocurren son los mismos que en la versión con números enteros sin adelantamiento. El que antes era causado por R6, ahora lo cusa F2, se mantiene el de R2. Excepto un riesgo de tipo estructural que aparece en todas las iteraciones, causado por la instrucción multiciclo ADDF. En la configuración actual tiene una latencia de 1 ciclo. Eso hace que la etapa de ejecución de la instrucción ADDF que se realiza en la unidad funcional de Suma/Resta FP termine al mismo tiempo que la de la instrucción ADD. Esto causa un riesgo estructural porque dos instrucciones no pueden pasar a la etapa MEM al mismo tiempo.
+
+Estadística FP sin adelantamiento
+Como era de esperar, el resultado del código que trabaja en coma flotante requiere más ciclos que el que trabaja con enteros. Concretamente son 10 ciclos más, debidos a los 10 riesgos estructurales que requerían una detención. Siguen ocurriendo los mismos 41 riesgos por dependencia de datos RAW del primer código.
+Análisis FP con adelantamiento
+Esta es una comparación del código del bucle ejecutándose sin adelantos, arriba, y con adelantos, abajo.  En la estadística aparece un riesgo estructural más, si se ejecuta con adelantamientos que sin ellos, este es el motivo. En la primera ejecución del bucle al realizar la carga sin adelantamiento, tendríamos que meter una detención para prevenir el riesgo de dependencia de datos por R5, de esta forma la etapa de ejecución de ADDF y LF termina de forma escalonada. Pero sin esta detención, al poder realizar el adelanto, nos vemos forzados a esperar un ciclo para que le finalización sea escalonada y no se produzcan riesgos estructurales. De cualquier forma, intercambiamos una detención RAW por una estructural.
+Las siguientes ejecuciones del bucle tienen todas un riego estructural como la ejecución sin alelamiento y los mismos riegos por dependencia de datos que la versión con enteros.
+Estadística FP con adelantamiento
+Los ciclos se reducen gracias a las detenciones ahorradas al realizar adelantos, y ahí aparecen los 11 riesgos estructurales por el motivo anteriormente explicado.
+Código FP_OPT
+La optimización por planificación del bucle consiste en los mismos intercambios en el orden de las instrucciones que en la versión con números enteros.
+Estadística FP_OPT
+Independientemente de los buenos resultados conseguidos mediante la planificación del bucle. Observamos que con el código reorganizado, las 11 detenciones por dependencia de datos que se producen cuando no contamos con adelanto, se transforman en 11 detenciones por riesgos estructurales.
+Código FP_OPT_DES
+El código con optimización de bucle y bucle desenrollado requiere las mismas modificaciones con enteros que con coma flotante.
+Estadística FP_OPT_DES
+Al igual que con enteros, el desdoble del bucle en este código tiende a generar más riesgos por dependencia de datos, debido a la instrucción SUB que ya no está espaciando entre medias. Aún así el número de ciclos se reduce considerablemente teniendo en cuenta que las operaciones con simple precisión son más costosas.

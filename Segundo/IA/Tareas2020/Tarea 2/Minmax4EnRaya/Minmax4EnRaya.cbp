@@ -2,32 +2,22 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Ejercicios" />
+		<Option title="Minmax4EnRaya" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Ejercicios" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/Minmax4EnRaya" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add directory="../Practica 4/grafo" />
-					<Add directory="../Practica 2/arbin" />
 				</Compiler>
-				<Linker>
-					<Add library="../Practica 4/grafo/arista.o" />
-					<Add library="../Practica 4/grafo/conjunto.o" />
-					<Add library="../Practica 4/grafo/grafo.o" />
-					<Add library="../Practica 4/grafo/vertice.o" />
-					<Add library="../Practica 2/arbin/abb.o" />
-					<Add library="../Practica 2/arbin/arbin.o" />
-					<Add library="../Practica 2/arbin/nodoB.o" />
-				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/Ejercicios" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/Minmax4EnRaya" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />

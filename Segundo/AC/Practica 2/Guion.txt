@@ -1,0 +1,21 @@
+La configuración por la que hemos optado consiste en: palabras de 8 bits, bloques de 258 palabras. Una MP de 4K bloques o 1MB y una cache de 16 bloques o 4KB.
+Antes de comenzar con las trazas, hemos definido el formato de dirección en base a los datos anteriores.
+Con la F. C. directa, los 8 primeros bits son para la palabra dentro del bloque porque 2^8 256. Los 12 restantes indican el bloque de MP porque 2^12 = 4096. De esos 12b, los 4 primeros definen el bloque de cache en el que se va a ubicar ese bloque de MP, porque 2^4 = 16. Los 8 siguientes son la etiqueta que tendrán en cache.
+En el caso de la F. C. asociativa por conjuntos la dirección solo tiene una palabra de 8 bits y un bloque de memoria principal de 12 bits que se usa como etiqueta en la cache. 
+La configuración del sistema está escogida especialmente para que las direcciones en hexadecimal sean fáciles de leer, por eso todos los campos de las direcciones tiene un número de bits múltiplo de 4.
+
+Para la primera traza se nos pide que la F. C. directa de un resultado mejor que la totalmente asociativa con algoritmo de remplazo LRU.
+En las condiciones realistas que simulaban las trazas de los apartados anteriores las F. C. con asociatividad superaban notoriamente a la directa, es por esto por lo que debemos tener en cuenta los bloques que remplazará cada función y referenciar justo los que ha perdido para causar más fallos en la función que queremos perjudicar.
+Primero llenamos la cache con los 16 primeros bloques de MP. Si llegarán bloques nuevos la F. C. totalmente asociativa aplicaría LRU y remplazaría los bloques de menor a mayor, mientras que en la directa depende del bloque de MP.
+Si referenciamos los bloques 18 a 1F la F. C. totalmente asociativa remplaza b0 a b7, porque son los que llevan más tiempo sin referenciarse, pero la directa remplazará b8 a b15 ya que está forzada a ello.
+Al final referenciamos los primeros 8 bloques, la F. C. directa aún los tiene porque remplazó los bloques superiores pero la asociativa por conjuntos los acaba de remplazar. De esta forma conseguimos más fallos en la asociativa por conjuntos.
+Esta lista de referencias se repite y logramos una tasa de fallos 25% más alta. (En realidad ese 25% es una medida absoluta, pero parece que las estamos comparando de forma relativa)
+
+ En la segunda traza hemos elegido LRU y FIFO, porque son antagónicos. El reto es lograr que LRU cause más fallos que FIFO, cosa que en condiciones normales no ocurre. El principio es el mismo, conocemos como funcionan los dos y sabemos qué bloques va a remplazar cada uno.
+Igualmente, llenos la cache con los 16 primeros bloques. Ahora mismo el orden de entrada es el mismo que el orden de referencia. Por eso hacemos una referencia de esos 16 bloques en el orden contrario para invertir el orden en el que LRU remplazará los bloques.
+Referenciamos ocho bloques nuevos, LRU los pondrá al final de b4 a b7 y de b12 a b15, pero FIFO los pondrá de b0 a b3 y de b8 a b11. Ahora referenciamos esos bloques que estaban en los bloques altos de cada conjunto B7-B15 (b4 a b7 y de b12 a b15) para causar fallos en LRU.
+Al repetir, logramos una tasa de fallos 1,54% mayor. Es una diferencia muy sutil porque al principio de cada repetición FIFO siempre tiene que remplazar los 16 bloques, mientras que LRU solo tiene que remplazar 8. Para conseguir una mayor diferencia se tendría que seguir la traza y aplicar la misma estrategia.
+
+Para la última traza es justo lo contrario, lograr que FIFO tenga más fallos que LRU. Con simular una traza real sería suficiente, pero vamos a reutilizar parte de la secuencia anterior.
+La única modificación son los bloques que se referencian al final, si en lugar de referenciar los bloques altos de cada conjunto B8-B15 (de b4 a b7 y de b12 a b15), referenciamos los bajos B0-B7 (b0 a b3 y de b8 a b11), será FIFO el que falle y LRU el que acierte.
+Ahora la diferencia en la tasa de fallos es mucho mayor. Porque LRU pasa de 8 intencionales y 8 fallos al reiniciar, a solo 8 fallos al reiniciar. Mientras que FIFO ahora tiene 8 fallos intencionales y 8 fallos al reiniciar. La diferencia es de 18,46%.

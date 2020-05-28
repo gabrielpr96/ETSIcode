@@ -217,42 +217,187 @@ bool mismaForma(const Arbin<T>& a, const typename Arbin<T>::Iterador& ra, const 
 
 ///Arboles binarios de busqueda ABB
 //Tema 3 - 1. Comprobar si es un arbol binario de busqueda
-template <typename T>
-bool esABB(const Arbin<T>& a) {
+int buscarMayor(const Arbin<int>& a, const typename Arbin<int>::Iterador& r){
+    if(a.subDer(r).arbolVacio())
+        return r.observar();
+    else
+        return buscarMayor(a, a.subDer(r));
+}
+int buscarMenor(const Arbin<int>& a, const typename Arbin<int>::Iterador& r){
+    if(a.subIzq(r).arbolVacio())
+        return r.observar();
+    else
+        return buscarMenor(a, a.subIzq(r));
+}
+bool esABB(const Arbin<int>& a, const typename Arbin<int>::Iterador& r) {
+    if(r.arbolVacio())
+        return true;
+    else if((a.subIzq(r).arbolVacio() || buscarMenor(a, a.subIzq(r)) < r.observar()) && (a.subDer(r).arbolVacio() || buscarMayor(a, a.subDer(r)) > r.observar()))
+        return esABB(a, a.subIzq(r)) && esABB(a, a.subDer(r));
+    else
+        return false;
+
+}
+bool esABB(const Arbin<int>& a) {
     return esABB(a, a.getRaiz());
 }
-template <typename T>
-bool esABB(const Arbin<T>& a, const typename Arbin<T>::Iterador& ra) {
-    if(ra.arbolVacio() && rb.arbolVacio())
-        return true;
-    else if((ra.arbolVacio() && !rb.arbolVacio()) || (!ra.arbolVacio() && rb.arbolVacio()))
-        return false;
-    else
-        return esABB(a, a.subIzq(ra), b, b.subIzq(rb)) && esABB(a, a.subDer(ra), b, b.subDer(rb));
 
+//Tema 3 - 1. Comprobar si es un arbol binario de busqueda ALTERNATIVA
+void aplanarABB(const Arbin<int>& a, const typename Arbin<int>::Iterador& r, vector<int>& lista) {
+    if(!r.arbolVacio()){
+        aplanarABB(a, a.subDer(r), lista);
+        lista.push_back(r.observar());
+        aplanarABB(a, a.subIzq(r), lista);
+    }
+}
+bool esABBalt(const Arbin<int>& a) {
+    vector<int> lista;
+    aplanarABB(a, a.getRaiz(), lista);
+
+    bool bueno = true;
+    int i = 0;
+
+    while(i < (int)(lista.size())-1 && bueno)
+        bueno = lista[i] > lista[++i];
+
+    return bueno;
 }
 
-//Tema 3 - 2. Recorrer en orden descendente (inorden izq->der)
-/*int siguienteMayor(const ABB<int>& a, const typename Arbin<int>::Iterador& r, int x){
+//Tema 3 - 2. Recorrer en orden descendente (inorden izq<-der)
+int mayorMenorABB(const ABB<int>& a, const typename Arbin<int>::Iterador& r){
+    if(!r.arbolVacio()){
+        mayorMenorABB(a, a.subDer(r));
+        cout << r.observar() << " ";
+        mayorMenorABB(a, a.subIzq(r));
+    }
+}
+int mayorMenorABB(const ABB<int>& a) {
+    return mayorMenorABB(a, a.getRaiz());
+}
+
+//Tema 3 - 3. Antecesores de un elemento
+bool antecesoresDe(const ABB<int>& a, const typename Arbin<int>::Iterador& r, int x){
     if(r.arbolVacio())
-        throw NoHaySiguienteMayor("No hay ningun valor mayor en este arbol");
-    else{
-        if(r.observar() <= x){
-            return siguienteMayor(a, a.subDer(r), x);
-        }else{
-            try{
-                return siguienteMayor(a, a.subIzq(r), x);
-            }catch(NoHaySiguienteMayor e){
-                return r.observar();
-            }
+        return false;
+    else if(r.observar() == x)
+        return true;
+    else if(antecesoresDe(a, a.subDer(r), x) || antecesoresDe(a, a.subIzq(r), x)){
+        cout << r.observar() << " ";
+        return true;
+    }else
+        return false;
+}
+void antecesoresDe(const ABB<int>& a, int x) {
+    antecesoresDe(a, a.getRaiz(), x);
+}
+
+//Tema 3 - 3. Antecesores de un elemento ALTERNATIVA
+void antecesoresDeAlt(const ABB<int>& a, const typename Arbin<int>::Iterador& r, int x){
+    if(!r.arbolVacio()){
+        if(r.observar() < x){
+            antecesoresDeAlt(a, a.subDer(r), x);
+            cout << r.observar() << " ";
+        }else if(r.observar() > x){
+            antecesoresDeAlt(a, a.subIzq(r), x);
+            cout << r.observar() << " ";
         }
     }
 }
-int siguienteMayor(const ABB<int>& a, int x) {
-    return siguienteMayor(a, a.getRaiz(), x);
-}*/
+void antecesoresDeAlt(const ABB<int>& a, int x) {
+    antecesoresDeAlt(a, a.getRaiz(), x);
+}
+
+//Tema 3 - 4. Devolver el elemento anterior
+void anteriorInorden(const ABB<int>& a, const typename ABB<int>::Iterador& r, int x, int& actual, int& anterior) {
+    if (!r.arbolVacio()) {
+        anteriorInorden(a, a.subIzq(r), x, actual, anterior);
+        if(r.observar() == x)
+            anterior = actual;
+        actual = r.observar();
+        anteriorInorden(a, a.subDer(r), x, actual, anterior);
+    }
+}
+int anteriorInorden(const ABB<int>& a, int x) {
+    int actual = -1, anterior = -1;
+    anteriorInorden(a, a.getRaiz(), x, actual, anterior);
+    return anterior;
+}
 ///Final de los arboles binarios de busqueda
 
+
+///Arboles binarios de busqueda equilibrados AVL
+//Tema 3 - 3. Antecesores de un elemento ALTERNATIVA
+template <typename T>
+int contarNodos(const Arbin<T>& a, const typename Arbin<T>::Iterador& r) {
+    if(r.arbolVacio())
+        return 0;
+    else
+        return 1 + contarNodos(a, a.subIzq(r)) + contarNodos(a, a.subDer(r));
+
+}
+bool esAVL(const ABB<int>& a, const typename Arbin<int>::Iterador& r){
+    if(r.arbolVacio())
+        return true;
+    else
+        if(abs(contarNodos(a, a.subIzq(r))-contarNodos(a, a.subDer(r))) > 1)
+            return false;
+        else
+            return esAVL(a, a.subIzq(r)) && esAVL(a, a.subDer(r));
+}
+bool esAVL(const ABB<int>& a) {
+    return esAVL(a, a.getRaiz());
+}
+
+///Final de Arboles binarios de busqueda equilibrados
+
+///Grafos
+
+//Tema 5 - 1. Todos sus vertices tienen el mismo numero de vertices adyacentes
+template <typename T, typename U>
+bool regular(const Grafo<T, U>& G){
+    map<T, int> adyacentes;
+
+    Conjunto<Vertice<T> > vertices = G.vertices();
+    while(!vertices.esVacio())
+        adyacentes[vertices.quitar().getObj()] = 0;
+
+    Conjunto<Arista<T, U> > aristas = G.aristas();
+    while(!aristas.esVacio())
+        adyacentes[aristas.quitar().getDestino()] ++;
+
+    bool regular = true;
+    typename map<T, int>::iterator it = adyacentes.begin();
+    typename map<T, int>::iterator ultimo = adyacentes.end();
+    ultimo--;
+    while(it != ultimo && regular){
+        regular = it->second == (++it)->second;
+    }
+
+    return regular;
+}
+
+//Tema 5 - 3. Comprobar si existe un camino entre dos vertices
+template <typename T, typename U>
+bool existeCamino(const Grafo<T, U>& G, T origen, T destino){
+    Conjunto<T> visitados;
+    return existeCamino(G, origen, destino, visitados);
+}
+template <typename T, typename U>
+bool existeCamino(const Grafo<T, U>& G, T actual, T destino, Conjunto<T> visitados){
+    visitados.anadir(actual);
+    if(actual == destino) return true;
+
+    bool encontrado = false;
+    Conjunto< Vertice<T> > adyacentes = G.adyacentes(actual);
+    while(!adyacentes.esVacio() && !encontrado){
+        T elemento = adyacentes.quitar().getObj();
+        if(!visitados.pertenece(elemento))
+            encontrado = existeCamino(G, elemento, destino, visitados);
+    }
+    return encontrado;
+}
+
+///Fin de Grafos
 
 
 int main(){
@@ -320,10 +465,78 @@ int main(){
                                         Arbin<char>()));
 
     cout << "A tiene la misma forma que G: " << (mismaForma(A, G)?"Si":"No") << endl;
-    cout << "A tiene la misma forma que E: " << (mismaForma(A, E)?"Si":"No") << endl;
+    cout << "A tiene la misma forma que E: " << (mismaForma(A, E)?"Si":"No") << endl << endl;
 
 
+    Arbin<int> H(2, Arbin<int>(7, Arbin<int>(2, Arbin<int>(), Arbin<int>()),
+                                  Arbin<int>(6, Arbin<int>(5, Arbin<int>(), Arbin<int>()),
+                                                Arbin<int>(11, Arbin<int>(), Arbin<int>()))),
+                    Arbin<int>(5, Arbin<int>(),
+                                  Arbin<int>(9, Arbin<int>(),
+                                                  Arbin<int>(4, Arbin<int>(), Arbin<int>()))));
 
+    Arbin<int> I(5, Arbin<int>(3, Arbin<int>(2, Arbin<int>(1, Arbin<int>(), Arbin<int>()), Arbin<int>()),
+                                  Arbin<int>(4, Arbin<int>(), Arbin<int>())),
+                    Arbin<int>(7, Arbin<int>(6, Arbin<int>(), Arbin<int>()),
+                                  Arbin<int>(8, Arbin<int>(),
+                                                  Arbin<int>(9, Arbin<int>(), Arbin<int>()))));
+
+    cout << "H es un ABB: " << (esABB(H)?"Si":"No") << "    y el metodo alternativo dice: " << (esABBalt(H)?"Si":"No") << endl;
+    cout << "I es un ABB: " << (esABB(I)?"Si":"No") << "    y el metodo alternativo dice: " << (esABBalt(I)?"Si":"No") << endl << endl;
+
+    ABB<int> J, K;
+    J.insertar(8); J.insertar(3); J.insertar(10); J.insertar(1); J.insertar(6);
+    J.insertar(14); J.insertar(4); J.insertar(7); J.insertar(13);
+    K.insertar(5); K.insertar(1); K.insertar(3); K.insertar(8); K.insertar(6);
+
+    cout << "ABB J en orden descendente: ";
+    mayorMenorABB(J); cout << endl;
+    cout << "ABB K en orden descendente: ";
+    mayorMenorABB(K); cout << endl << endl;
+
+    cout << "Antecesores de 13 en J: ";
+    antecesoresDe(J, 13); cout << "\t Forma alternativa: ";
+    antecesoresDeAlt(J, 13); cout << endl;
+    cout << "Antecesores de 6 en J: ";
+    antecesoresDe(J, 6); cout << "\t Forma alternativa: ";
+    antecesoresDeAlt(J, 6); cout << endl << endl;
+
+    cout << "Anterior en inorden de 6 en J " << anteriorInorden(J, 6) << endl;
+    cout << "Anterior en inorden de 4 en J " << anteriorInorden(J, 4) << endl;
+    cout << "Anterior en inorden de 13 en J " << anteriorInorden(J, 13) << endl << endl;
+
+    ABB<int> L;
+    L.insertar(10); J.insertar(9); J.insertar(11); J.insertar(8);
+
+    cout << "J es un AVL: " << (esAVL(J)?"Si":"No") << endl;
+    cout << "K es un AVL: " << (esAVL(K)?"Si":"No") << endl;
+    cout << "L es un AVL: " << (esAVL(L)?"Si":"No") << endl << endl;
+
+    Grafo<int, float> N(7);
+    for (int i = 1; i <= 7; i++) N.insertarVertice(i);
+    N.insertarArista(2, 1, 4);
+    N.insertarArista(1, 3, 3);
+    N.insertarArista(1, 4, 2);
+    N.insertarArista(1, 6, 1);
+    N.insertarArista(6, 4, 5);
+    N.insertarArista(4, 7, 3);
+    N.insertarArista(5, 1, 6);
+
+    Grafo<int, float> O(7);
+    for (int i = 1; i <= 7; i++) O.insertarVertice(i);
+    O.insertarArista(2, 1, 4);
+    O.insertarArista(1, 3, 3);
+    O.insertarArista(1, 4, 2);
+    O.insertarArista(6, 5, 5);
+    O.insertarArista(4, 6, 7);
+    O.insertarArista(4, 7, 3);
+    O.insertarArista(3, 2, 1);
+
+    cout << "El grafo N es regular: " << (regular(N)?"Si":"No") << endl;
+    cout << "El grafo O es regular: " << (regular(O)?"Si":"No") << endl << endl;
+
+    cout << "En N existe un camino entre 1 y 7: " << (existeCamino(N, 1, 7)?"Si":"No") << endl;
+    cout << "En N existe un camino entre 5 y 2: " << (existeCamino(N, 5, 2)?"Si":"No") << endl << endl;
 
     return 0;
 }

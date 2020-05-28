@@ -103,3 +103,20 @@ bool mismaEstructura(const ArbolGeneral<T>& a, const typename ArbolGeneral<T>::I
 		return bueno;
 	}
 }
+
+
+//Tema 5 - 2. Adyacentes implementados con una matriz de adyacencia
+template <typename U>
+Conjunto<int> adyacentesMatriz(const U[][] matriz, int nVertices, int vertice){
+    Conjunto<int> adyacentes;
+    for(int i = 0; i < nVertices; i++)
+		if(matriz[i][vertice] > 0)
+			adyacentes.anadir(i);
+	return adyacentes;
+}
+
+
+
+
+
+

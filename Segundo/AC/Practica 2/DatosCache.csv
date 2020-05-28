@@ -1,0 +1,14 @@
+﻿;Directa;;Totalmente asociativa;;Asociativa por conjuntos;;;;Totalmente asociativa;Asociativa por conjuntos
+2KB (4B);15,66;14,5;6,27;5,98;8,99;6,9;;;;
+8KB (16B);9,25;4,8;1,58;2,48;1,7;2,64;;Aleatorio;3,73;4,99
+32KB (64B);2,07;2,43;0,7;2,1;0,7;2,1;;LRU;2,73;3,65
+1MB (2048);0,7;2,1;0,7;2,1;0,7;2,1;;FIFO;3,49;4,6
+;EAR.prq;NASA7.prq;EAR.prq;NASA7.prq;EAR.prq;NASA7.prq;;LFU;3,62;4,07
+;;;;;;;;;EAR.prq;EAR.prq
+;;;;;;;;;;
+;;;;;;;;;;
+;;;;;;;;;;
+fichero1;;;fichero2;;;fichero3;;;;
+Directa;Totalmente Asociativa;;FIFO;LRU;;FIFO;LRU;;;
+;;;;;;;;;;
+51,56;76,56;;60;61,54;;60;41,54;;;
