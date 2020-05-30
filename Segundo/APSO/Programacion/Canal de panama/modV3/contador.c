@@ -38,7 +38,6 @@ int main(){
 				 tiempoO += mensaje.tiempo;
 			 }
 		 }
-		 sleep(1);
 	}
 	sleep(1);
 

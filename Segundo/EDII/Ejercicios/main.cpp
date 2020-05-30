@@ -2,6 +2,7 @@
 #include <queue>
 #include <sstream>
 #include <map>
+#include <list>
 #include <queue>
 #include <cmath>
 #include "grafo.h"
@@ -193,7 +194,7 @@ bool existeCamino(const Arbin<T>& a, const typename Arbin<T>::Iterador& r, const
             pos++;
             return camino.size() == pos || existeCamino(a, a.subIzq(r), camino, pos) || existeCamino(a, a.subDer(r), camino, pos);
         }else return false;
-    }
+    }else return false;
 }
 
 //Tema 2 - 8. Determinar si tienen la misma forma
@@ -264,15 +265,15 @@ bool esABBalt(const Arbin<int>& a) {
 }
 
 //Tema 3 - 2. Recorrer en orden descendente (inorden izq<-der)
-int mayorMenorABB(const ABB<int>& a, const typename Arbin<int>::Iterador& r){
+void mayorMenorABB(const ABB<int>& a, const typename Arbin<int>::Iterador& r){
     if(!r.arbolVacio()){
         mayorMenorABB(a, a.subDer(r));
         cout << r.observar() << " ";
         mayorMenorABB(a, a.subIzq(r));
     }
 }
-int mayorMenorABB(const ABB<int>& a) {
-    return mayorMenorABB(a, a.getRaiz());
+void mayorMenorABB(const ABB<int>& a) {
+    mayorMenorABB(a, a.getRaiz());
 }
 
 //Tema 3 - 3. Antecesores de un elemento
@@ -395,6 +396,197 @@ bool existeCamino(const Grafo<T, U>& G, T actual, T destino, Conjunto<T> visitad
             encontrado = existeCamino(G, elemento, destino, visitados);
     }
     return encontrado;
+}
+
+//Tema 5 - 4. Mostrar los ciclos simples de un grafo
+template <typename T>
+void mostrarCiclo(list<T> ciclo){
+
+    typename list<T>::iterator it;
+    for (it = ciclo.begin(); it != ciclo.end(); it++){
+        cout << (*it) << " ";
+    }
+    cout << endl;
+
+}
+template <typename T, typename U>
+void ciclosSimples(const Grafo<T, U>& G){
+    map<T, bool> visitados;
+    Conjunto<Vertice<T> > vertices = G.vertices();
+    while(!vertices.esVacio())
+        visitados[vertices.quitar().getObj()] = false;
+
+    list<T> ciclo;
+    vertices = G.vertices();
+    while(!vertices.esVacio())
+        ciclosSimples(G, vertices.quitar().getObj(), visitados, ciclo);
+}
+template <typename T, typename U>
+void ciclosSimples(const Grafo<T, U>& G, T actual, map<T , bool> visitados, list<T> ciclo){
+    visitados[actual] = true;
+    ciclo.push_back(actual);
+
+    Conjunto<Vertice<T> > adyacentes = G.adyacentes(actual);
+    while(!adyacentes.esVacio()){
+        T v = adyacentes.quitar().getObj();
+        if(v == ciclo.front()){
+            ciclo.push_back(v);
+            mostrarCiclo(ciclo);
+        }else{
+            if(!visitados[v]){
+                ciclosSimples(G, v, visitados, ciclo);
+            }
+        }
+    }
+}
+
+//Tema 5 - 8. Un grafo es par si n/2 vertices tienen grado de salida par
+template <typename T, typename U>
+bool grafoPar(const Grafo<T, U>& G){
+    map<T, int> salidas;
+    Conjunto<Vertice<T> > vertices = G.vertices();
+    while(!vertices.esVacio())
+        salidas[vertices.quitar().getObj()] = 0;
+
+    Conjunto<Arista<T, U> > aristas = G.aristas();
+    while(!aristas.esVacio())
+        salidas[aristas.quitar().getOrigen()]++;
+
+    int par = 0;
+    vertices = G.vertices();
+    while(!vertices.esVacio()){
+        T v = vertices.quitar().getObj();
+        if(salidas[v] != 0 && salidas[v]%2 == 0)
+            par++;
+    }
+
+    return par == G.vertices().cardinalidad()/2;
+}
+
+//Tema 5 - 9. Existe un camino entre vertices ITERATIVO
+template <typename T, typename U>
+bool existeCaminoITER(const Grafo<T, U>& G, T origen, T destino){
+    bool encontrado = false;
+
+    Conjunto<T> visitados, pendientes;
+    pendientes.anadir(origen);
+    while(!pendientes.esVacio() && !encontrado){
+        T actual = pendientes.quitar();
+        visitados.anadir(actual);
+        if(actual == destino){
+            encontrado = true;
+        }else{
+            Conjunto<Vertice<T> > adyacentes = G.adyacentes(actual);
+            while(!adyacentes.esVacio()){
+                T v = adyacentes.quitar().getObj();
+                if(!visitados.pertenece(v) && ! pendientes.pertenece(v)){
+                    pendientes.anadir(v);
+                }
+            }
+        }
+    }
+
+    return encontrado;
+}
+
+//Tema 5 - 10. Existe un camino entre vertices RECURSIVO
+template <typename T, typename U>
+bool existeCaminoREC(const Grafo<T, U>& G, T origen, T destino){
+    Conjunto<T> visitados;
+    return existeCamino(G, origen, destino, visitados);
+}
+template <typename T, typename U>
+bool existeCaminoREC(const Grafo<T, U>& G, T origen, T destino, Conjunto<T> visitados){
+    if(origen == destino) return true;
+
+    bool encontrado = false;
+
+    visitados.anadir(origen);
+
+    Conjunto<Vertice<T> > adyacentes = G.adyacentes(origen);
+    while(!adyacentes.esVacio() && ! encontrado){
+        encontrado = existeCamino(G, adyacentes.eliminar().getObj(), destino, visitados);
+    }
+
+    return encontrado;
+}
+
+//Tema 5 - 11. Algoritmo Dijkstrap con tablas de adyacencia
+void dijkstraMatriz(int **matriz, int nVertices, int origen, int destino){
+    bool pendientes[nVertices];
+    int A[nVertices], D[nVertices];
+    for(int i = 0; i < nVertices; i++){
+        pendientes[i] = true;
+        A[i] = -1;
+        D[i] = 0;
+    }
+
+    cout << "Actual  ";
+    for(int i = 0; i < nVertices; i++)
+        cout << "D[" << (i+1) << "]    ";
+    for(int i = 0; i < nVertices; i++)
+        cout << "A[" << (i+1) << "]    ";
+    cout << "Pendientes" << endl;
+
+    int actual = origen-1;
+    do{
+        for(int i = 0; i < nVertices; i++){
+            if(matriz[actual][i] > 0 && (D[i] == 0 || D[i] > D[actual]+matriz[actual][i])){
+                D[i] = D[actual]+matriz[actual][i];
+                A[i] = actual;
+            }
+        }
+
+        cout << (actual+1) << "\t  ";
+        for(int i = 0; i < nVertices; i++)
+            cout << D[i] << "\t";
+        for(int i = 0; i < nVertices; i++)
+            cout << (A[i]+1) << "\t";
+        for(int i = 0; i < nVertices; i++)
+            if(pendientes[i])
+                cout << (i+1) << " ";
+        cout << endl;
+
+        pendientes[actual] = false;
+        actual = -1;
+        for(int i = 0; i < nVertices; i++)
+            if(pendientes[i] && D[i] > 0 && (actual == -1 || D[i] < D[actual]))
+                actual = i;
+    }while(actual != -1);
+
+    cout << endl;
+    actual = destino-1;
+    do{
+        cout << "V" << (actual+1) << " <- ";
+        actual = A[actual];
+    }while(actual != -1);
+}
+
+//Tema 5 - Vertices demasiado lejanos
+template <typename T, typename U>
+Conjunto<T> verticesDemasiadoLejanos(const Grafo<T, U>& G, T origen, int d){
+    Conjunto<T> visitados, lejanos;
+
+    verticesDemasiadoLejanos(G, origen, d, visitados);
+
+    Conjunto<Vertice<T> > vertices = G.vertices();
+    while(!vertices.esVacio()){
+        T v = vertices.quitar().getObj();
+        if(!visitados.pertenece(v))
+            lejanos.anadir(v);
+    }
+    return lejanos;
+}
+template <typename T, typename U>
+void verticesDemasiadoLejanos(const Grafo<T, U>& G, T origen, int d, Conjunto<T> &visitados){
+    visitados.anadir(origen);
+
+    if(d > 0){
+        d--;
+        Conjunto<Vertice<T> > adyacentes = G.adyacentes(origen);
+        while(!adyacentes.esVacio())
+            verticesDemasiadoLejanos(G, adyacentes.quitar().getObj(), d, visitados);
+    }
 }
 
 ///Fin de Grafos
@@ -537,6 +729,68 @@ int main(){
 
     cout << "En N existe un camino entre 1 y 7: " << (existeCamino(N, 1, 7)?"Si":"No") << endl;
     cout << "En N existe un camino entre 5 y 2: " << (existeCamino(N, 5, 2)?"Si":"No") << endl << endl;
+
+    Grafo<int, float> P(3);
+    for (int i = 1; i <= 3; i++) P.insertarVertice(i);
+    P.insertarArista(1, 2, 1);
+    P.insertarArista(2, 1, 1);
+    P.insertarArista(2, 3, 1);
+    P.insertarArista(3, 1, 1);
+
+    cout << "Ciclos simples en P:" << endl;
+    ciclosSimples(P); cout << endl;
+
+    Grafo<int, float> Q(4);
+    for (int i = 1; i <= 4; i++) Q.insertarVertice(i);
+    Q.insertarArista(1, 2, 1);
+    Q.insertarArista(1, 3, 1);
+    Q.insertarArista(2, 1, 1);
+    Q.insertarArista(2, 4, 1);
+
+    cout << "El grafo N es par: " << (grafoPar(N)?"Si":"No") << endl;
+    cout << "El grafo O es par: " << (grafoPar(O)?"Si":"No") << endl;
+    cout << "El grafo Q es par: " << (grafoPar(Q)?"Si":"No") << endl;
+    cout << "El grafo P es par: " << (grafoPar(P)?"Si":"No") << endl << endl;
+
+    cout << "El grafo Q 4 es accesible desde 1: " << (existeCaminoITER(Q, 1, 4)?"Si":"No") << " la version recursiva dice: " << (existeCaminoREC(Q, 1, 4)?"Si":"No") << endl;
+    cout << "El grafo Q 4 es accesible desde 3: " << (existeCaminoITER(Q, 3, 4)?"Si":"No") << " la version recursiva dice: " << (existeCaminoREC(Q, 3, 4)?"Si":"No") << endl << endl;
+
+    int **R = new int*[6];
+    for(int i = 0; i < 6; i++)
+        R[i] = new int[6];
+    for(int i = 0; i < 6; i++)
+        for(int j = 0; j < 6; j++)
+            R[i][j] = 0;
+    R[0][1] = 20;
+    R[0][2] = 75;
+    R[0][3] = 60;
+    R[1][2] = 2;
+    R[1][3] = 30;
+    R[1][4] = 25;
+    R[2][1] = 100;
+    R[2][4] = 200;
+    R[3][5] = 20;
+    R[4][2] = 40;
+    R[4][3] = 3;
+    R[4][5] = 25;
+
+    dijkstraMatriz(R, 6, 1, 6);
+    cout << endl << endl;
+
+    Grafo<int, float> S(7);
+    for (int i = 1; i <= 7; i++) S.insertarVertice(i);
+    S.insertarArista(3, 2, 1);
+    S.insertarArista(3, 4, 1);
+    S.insertarArista(2, 1, 1);
+    S.insertarArista(4, 5, 1);
+    S.insertarArista(2, 6, 1);
+    S.insertarArista(3, 7, 1);
+
+    cout << "Vertices lejanos a 3 en S con d = 1: ";
+    Conjunto<int> lejanos = verticesDemasiadoLejanos(S, 3, 1);
+    while(!lejanos.esVacio())
+        cout << lejanos.quitar() << " ";
+    cout << endl;
 
     return 0;
 }

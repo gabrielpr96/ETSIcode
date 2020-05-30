@@ -16,7 +16,7 @@ contador: contador.c comun.h
 	cc contador.c -o contador
 
 clean:
-	rm servidor_ncurses canalpanama barcoeste barcooeste
+	rm servidor_ncurses canalpanama barcoeste barcooeste contador
 
 repair: remake
 	ipcrm --all=msg

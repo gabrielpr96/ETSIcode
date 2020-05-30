@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1590831668 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listac.cpp
+	"listaC.h"
+	<iostream>
+
+1590830864 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listac.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590832115 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\main.cpp
+	<iostream>
+	"listaCD.h"
+	"listaC.h"
+	"listaD.h"
+
+1590831242 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listacd.cpp
+	"listaCD.h"
+	<iostream>
+
+1590830853 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listacd.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590830579 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.h
+
+1590832172 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listad.cpp
+	"listaD.h"
+	<iostream>
+
+1590832054 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listad.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590832047 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.cpp
+	"paciente.h"
+
