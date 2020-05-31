@@ -8,8 +8,9 @@
 	<cstring>
 	"paciente.h"
 
-1590832115 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\main.cpp
+1590933064 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\main.cpp
 	<iostream>
+	<conio.h>
 	"listaCD.h"
 	"listaC.h"
 	"listaD.h"

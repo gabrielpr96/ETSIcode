@@ -17,7 +17,7 @@ TNodo_ListaC* listaC::buscarNodo(int i){
     if(n == 0) return NULL;
     TNodo_ListaC *tmp = elementos;
 
-    while(tmp != NULL && --i >= 0)
+    while(--i >= 0)
         tmp = tmp->Sig;
 
     return tmp;
@@ -25,13 +25,11 @@ TNodo_ListaC* listaC::buscarNodo(int i){
 void listaC::vaciar(){
     TNodo_ListaC *tmp;
 
-    while(elementos != NULL){
+    for(;n > 0; n--){
         tmp = elementos;
         elementos = elementos->Sig;
         delete tmp;
     }
-
-    n = 0;
 }
 bool listaC::esvacia(){
     return n == 0;
@@ -49,13 +47,15 @@ void listaC::insertar(int i, Paciente &e){
     if(i == 1){
         nuevoNodo->Sig = elementos;
         elementos = nuevoNodo;
+        n++;
+        TNodo_ListaC *ultimo = buscarNodo(n-1);
+        ultimo->Sig = nuevoNodo;
     }else{
         TNodo_ListaC *anterior = buscarNodo(i-2);
         nuevoNodo->Sig = anterior->Sig;
         anterior->Sig = nuevoNodo;
+        n++;
     }
-
-    n++;
 }
 void listaC::eliminar(int i){
     TNodo_ListaC *tmp;

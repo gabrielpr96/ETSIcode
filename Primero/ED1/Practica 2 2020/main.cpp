@@ -7,7 +7,7 @@
 using namespace std;
 
 //Para probar las liestas
-void mostrar(listaD &lista){
+void mostrar(listaC &lista){
     for(int i = 0; i < lista.longitud(); i++)
         cout << lista.observar(i+1).n << "  ";
     cout << endl;
@@ -52,7 +52,7 @@ int main(){
     }while(opt != '7');
 
     //Prueba de las liestas
-    listaD lista;
+    listaC lista;
     Paciente e;
     e.n = 1;lista.insertar(1, e);
     e.n = 2;lista.insertar(1, e);
