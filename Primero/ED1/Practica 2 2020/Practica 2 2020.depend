@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1590831668 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listac.cpp
+1590933424 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listac.cpp
 	"listaC.h"
 	<iostream>
 
@@ -8,9 +8,12 @@
 	<cstring>
 	"paciente.h"
 
-1590933064 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\main.cpp
+1590953127 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\main.cpp
 	<iostream>
 	<conio.h>
+	<stdlib.h>
+	<time.h>
+	"TADColaPri.h"
 	"listaCD.h"
 	"listaC.h"
 	"listaD.h"
@@ -24,7 +27,7 @@
 	<cstring>
 	"paciente.h"
 
-1590830579 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.h
+1590944904 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.h
 
 1590832172 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listad.cpp
 	"listaD.h"
@@ -35,6 +38,25 @@
 	<cstring>
 	"paciente.h"
 
-1590832047 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.cpp
+1590944943 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.cpp
+	<string.h>
 	"paciente.h"
+
+1590952529 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\cola.cpp
+	<cstdlib>
+	<cstring>
+	<iostream>
+	"cola.h"
+
+1590949210 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\cola.h
+	"paciente.h"
+
+1590952829 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\tadcolapri.cpp
+	<iostream>
+	<fstream>
+	"paciente.h"
+	"TADColaPri.h"
+
+1590949007 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\tadcolapri.h
+	"cola.h"
 

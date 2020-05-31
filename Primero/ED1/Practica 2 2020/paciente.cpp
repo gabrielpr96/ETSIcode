@@ -1,11 +1,17 @@
+#include <string.h>
 #include "paciente.h"
 
 void copiarPaciente(Paciente &destino,Paciente &origen){
-    ///TODO: modificar este copiar paciente
-    destino.n = origen.n;
+    destino.id = origen.id;
+    strcpy(destino.nombre, origen.nombre);
+    strcpy(destino.apellidos, origen.apellidos);
+    destino.edad = origen.edad;
 }
 
 bool compararPaciente(Paciente &p1,Paciente &p2){
-    ///TODO: Comparar paciente
-    return p1.n == p2.n;
+    return p1.id == p2.id;
+}
+
+int prioridadPaciente(Paciente &p){
+    return p.edad/10 + 1;
 }
