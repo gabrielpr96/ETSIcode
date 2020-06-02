@@ -16,7 +16,6 @@ int main()
 
  int colagrafica, colaContador, lapipe;
  struct Parametros param;
-
  int fesclusao, fesclusae, flago, testigo=1;
 
  srand(getpid());
