@@ -31,6 +31,7 @@ int main(){
 		 sleep((rand()%5)+8);
 		 //sleep(1);
 		 kill(pid, 18);
+		 kill(getppid(), 16);
 	}
 
 	return 0;

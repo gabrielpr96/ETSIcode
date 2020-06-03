@@ -80,13 +80,11 @@ int main()
 		if(!llega18) pause();
 		visualiza(colagrafica, VHORNOS, BORRAR, BARCODOCUO);
 		visualiza(colagrafica, VESTEOUT, PINTAR, BARCODOCUO);
-		kill(getppid(), 16);
 	}else{
 		//No pide documentación
 		visualiza(colagrafica, VHORNOS, PINTAR, TIPOOESTE);
 		if(!llega16) pause();
 		write(flago,&testigo,sizeof(testigo));
-		kill(getppid(), 16);
 	}
  }
  else

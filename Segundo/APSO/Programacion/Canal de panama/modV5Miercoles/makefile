@@ -30,6 +30,6 @@ clean:
 
 repair: remake
 	ipcrm --all=msg
-	rm colalago colaeste colaoeste esclusae lago esclusao coladocu
+	rm colalago colaeste colaoeste esclusae lago esclusao coladocu glago gesclusae gesclusao
 
 remake: clean all
