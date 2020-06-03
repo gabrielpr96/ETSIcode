@@ -161,6 +161,34 @@ void recorrido_profundidad(const Grafo<T, U>& G, const T& v, Conjunto<T> visitad
 }
 
 
+//Ejercicio extra de examen
+template <typename T, typename U>
+void caminoaVertice(const Grafo<T, U>& G, const T destino){
+    Conjunto<T> visitados;
+    Conjunto<Vertice<T> > vertices = G.vertices();
+
+    while(!vertices.esVacio())
+        caminoaVertice(G, vertices.quitar().getObj(), destino, visitados);
+}
+
+template <typename T, typename U>
+void caminoaVertice(const Grafo<T, U>& G, const T origen, const T destino, Conjunto<T> visitados){
+    visitados.anadir(origen);
+    if(origen == destino){
+        while(!visitados.esVacio())
+            cout << visitados.quitar() << " ";
+        cout << endl;
+    }else{
+        Conjunto<Vertice<T> > adyacentes = G.adyacentes(origen);
+        while(!adyacentes.esVacio()){
+            T v = adyacentes.quitar().getObj();
+            if(!visitados.pertenece(v))
+                caminoaVertice(G, v, destino, visitados);
+        }
+
+    }
+}
+
 //********************************************************************//
 int main(){
     Grafo<int, float> G(7);
@@ -209,6 +237,11 @@ int main(){
     cout << endl << endl << " Recorrido en profundidad de H desde el vertice Huelva:  ";
     recorrido_profundidad(H, string("Huelva"));
     cout << endl << endl;
+
+
+    cout << "Caminos que llegan Mazagon:" << endl;
+    caminoaVertice(H, string("Mazagon"));
+    cout << endl;
 
 
     system("PAUSE");
