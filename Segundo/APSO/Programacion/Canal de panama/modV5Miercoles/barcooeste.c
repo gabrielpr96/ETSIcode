@@ -65,9 +65,6 @@ int main()
  if(llega14) //me he aburrido de esperar
  {
 	visualiza(colagrafica, VOESTEIN, BORRAR, TIPOOESTE);
-	// como estoy en la cola del lago, cuando me den el sitio lo devuelvo
-	if(!llega16) pause();
-	write(flago,&testigo,sizeof(testigo));
 
 	if(rand()%10 < 6){
 		//Pide documentación
