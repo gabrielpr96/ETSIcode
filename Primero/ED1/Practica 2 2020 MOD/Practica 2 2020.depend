@@ -1,0 +1,123 @@
+# depslib dependency file v1.0
+1590933424 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listac.cpp
+	"listaC.h"
+	<iostream>
+
+1590830864 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listac.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590953127 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\main.cpp
+	<iostream>
+	<conio.h>
+	<stdlib.h>
+	<time.h>
+	"TADColaPri.h"
+	"listaCD.h"
+	"listaC.h"
+	"listaD.h"
+
+1590831242 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listacd.cpp
+	"listaCD.h"
+	<iostream>
+
+1590830853 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listacd.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590944904 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.h
+
+1590832172 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listad.cpp
+	"listaD.h"
+	<iostream>
+
+1590832054 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\listad.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590944943 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\paciente.cpp
+	<string.h>
+	"paciente.h"
+
+1590952529 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\cola.cpp
+	<cstdlib>
+	<cstring>
+	<iostream>
+	"cola.h"
+
+1590949210 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\cola.h
+	"paciente.h"
+
+1590952829 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\tadcolapri.cpp
+	<iostream>
+	<fstream>
+	"paciente.h"
+	"TADColaPri.h"
+
+1590949007 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020\tadcolapri.h
+	"cola.h"
+
+1590952529 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\cola.cpp
+	<cstdlib>
+	<cstring>
+	<iostream>
+	"cola.h"
+
+1590949210 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\cola.h
+	"paciente.h"
+
+1590944904 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\paciente.h
+
+1590933424 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\listac.cpp
+	"listaC.h"
+	<iostream>
+
+1590830864 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\listac.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590831242 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\listacd.cpp
+	"listaCD.h"
+	<iostream>
+
+1590830853 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\listacd.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1591450990 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\listad.cpp
+	"listaD.h"
+	<iostream>
+
+1591450403 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\listad.h
+	<cstdlib>
+	<cstring>
+	"paciente.h"
+
+1590944943 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\paciente.cpp
+	<string.h>
+	"paciente.h"
+
+1590953165 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\tadcolapri.cpp
+	<iostream>
+	<fstream>
+	"paciente.h"
+	"TADColaPri.h"
+
+1590949007 c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\tadcolapri.h
+	"cola.h"
+
+1591450809 source:c:\users\usuario\desktop\etsicode\primero\ed1\practica 2 2020 mod\main.cpp
+	<iostream>
+	<conio.h>
+	<stdlib.h>
+	<time.h>
+	"TADColaPri.h"
+	"listaCD.h"
+	"listaC.h"
+	"listaD.h"
+
