@@ -1,8 +1,8 @@
-Practicas de APSO		PRACTICA 2 
+Practicas de APSO		PRACTICA 2
 
 
 
-	ALUMNO:______________________________________________________
+	ALUMNO: Borja Lopez Pineda
 
 
 NOTAS:
@@ -35,29 +35,29 @@ tu directorio personal con rutas relativas.
 
 2. Muevete al directorio "prac2". Copia los ficheros "f1.txt" y
 "f2.txt" que se encuentran en "/home/so/velez/MI" en el directorio "prac2"
-usando rutas absolutas para indicar la ruta a los ficheros y ruta relativa 
+usando rutas absolutas para indicar la ruta a los ficheros y ruta relativa
 para indicar el directorio de destino.
 
 	cd prac2
 	cp /home/so/velez/MI/f[12].txt .
 
-3. Usando la adicion y sustraccion de permisos deja al directorio "prac2" sin 
-permiso de lectura y escritura, tanto para el grupo del propietario como para 
+3. Usando la adicion y sustraccion de permisos deja al directorio "prac2" sin
+permiso de lectura y escritura, tanto para el grupo del propietario como para
 los que no son del grupo del propietario. El propietario debe quedarse con los
 permisos que ya tenia.
 
 	chmod go-rw .
 
-4. Usando el metodo de colocacion de permisos global, haz que los ficheros 
+4. Usando el metodo de colocacion de permisos global, haz que los ficheros
 "f1.txt" y "f2.txt" tengan todos los permisos para el propietario, permiso de
 lectura para los usuarios del grupo del propietario y ningun permiso para los
 usuarios que no son del grupo del propietario.
 
 	chmod 740 f[12].txt
 
-5. Muevete al directorio "prac21" mediante rutas absolutas. Mediante rutas 
-relativas haz una copia de los fichero "f1.txt" y "f2.txt" en el directorio 
-"tmp1". Renombra el fichero f1.txt del directorio "tmp1" a "f21.txt" con rutas 
+5. Muevete al directorio "prac21" mediante rutas absolutas. Mediante rutas
+relativas haz una copia de los fichero "f1.txt" y "f2.txt" en el directorio
+"tmp1". Renombra el fichero f1.txt del directorio "tmp1" a "f21.txt" con rutas
 relativas
 
 	cd /home/borja.lopez248/prac2/prac21/
@@ -65,42 +65,42 @@ relativas
 	mv tmp1/f1.txt tmp1/f21.txt
 
 6. Mueve y renombra el fichero "f2.txt" del directorio "tmp1" al directorio "tmp2"
-con el nombre "f23.txt" usando rutas relativas y en un solo comando. 
+con el nombre "f23.txt" usando rutas relativas y en un solo comando.
 
 	mv tmp1/f2.txt ../prac23/tmp2/f23.txt
 
 7. Muevete con un solo comando al directorio "tmp2" sin usar rutas absolutas.
 Busca con el comando "find" los directorios que cuelgan de tu directorio
 personal cuyo segundo caracter sea una "r" o una "t"(tanto en mayusculas como
-en minusculas), su penultimo caracter no sea un numero y su ultimo caracter 
+en minusculas), su penultimo caracter no sea un numero y su ultimo caracter
 sea un numero.
 
 	cd ../prac23/tmp2/
 	find ~ -name "?[rRtT]*[!0-9][0-9]"
 
-8. Busca los ficheros que no sean directorios (pueden ser de cualquier otro tipo) 
-y que cuelgan de tu directorio personal, que sean mas nuevos que el fichero 
-"solp1.txt" que se encuentra en vuestro directorio "prac1" y que hayan sido 
+8. Busca los ficheros que no sean directorios (pueden ser de cualquier otro tipo)
+y que cuelgan de tu directorio personal, que sean mas nuevos que el fichero
+"solp1.txt" que se encuentra en vuestro directorio "prac1" y que hayan sido
 modificados hace menos de 3 dias. Usa rutas absolutas en todo momento.
 
-	find ~ ! -type d -anewer ../../../prac1/solp1.txt
+	find ~ ! -type d -anewer /home/borja.lopez248/prac1/solp1.txt -ctime -3
 
 9. Consulta con el "grep" donde aparecen en los ficheros "f1.txt" y
-"f2.txt" del directorio "prac2" los caracteres "llama", sea en mayuscula 
-o en minuscula (con un solo comando). Debe aparecer 5 veces en "f1.txt" y 
-6 veces en "f2.txt" para estar correcto 
+"f2.txt" del directorio "prac2" los caracteres "llama", sea en mayuscula
+o en minuscula (con un solo comando). Debe aparecer 5 veces en "f1.txt" y
+6 veces en "f2.txt" para estar correcto
 
 	grep "llama" -c --ignore-case ../../f[12].txt
 
-10. ¿Cuantos bytes ocupa el fichero "f21.txt"? Indica dos comandos 
+10. ¿Cuantos bytes ocupa el fichero "f21.txt"? Indica dos comandos
 distintos con los que puedes averiguar el tamanyo en bytes de un fichero.
 
 	//Ocupa 8457 bytes
-	ls -l f23.txt
-	wc -c f23.txt
+	ls -l ../../prac21/tmp1/f21.txt
+	wc -c ../../prac21/tmp1/f21.txt
 
-11. Consulte en que dia de la semana se fundo la Universidad de Huelva (1 de 
-Julio de 1993) con el comando "cal". (Nota: consulte solo el mes y averigue 
+11. Consulte en que dia de la semana se fundo la Universidad de Huelva (1 de
+Julio de 1993) con el comando "cal". (Nota: consulte solo el mes y averigue
 el dia de la semana que es).
 
 	//Fue un jueves
@@ -108,34 +108,34 @@ el dia de la semana que es).
 
 12. Mostrar la hora y fecha con el siguiente formato:
    "Bienvenido. Son las <hora> horas y <minuto> minutos del <dia de la semana en
-    letras> <dia del mes> de <mes en letras>. Ha sido un placer" 
+    letras> <dia del mes> de <mes en letras>. Ha sido un placer"
 
-	date "+Bienvenido. Son las %H horas y %M minutos del %A %d de %B. Ha sido un placer"	
+	date "+Bienvenido. Son las %H horas y %M minutos del %A %d de %B. Ha sido un placer"
 
-13. Muevete a tu directorio personal. Ordena el fichero "usuarios04-05.txt" que 
-se encuentra en el directorio "/home/so/velez/MI" de menor a mayor y guarda el 
-fichero resultante en el directorio "prac22" con el nombre "usu.orden.pabajo". 
-Haz lo mismo pero ordenando de mayor a menor y guarda el resultado en el 
+13. Muevete a tu directorio personal. Ordena el fichero "usuarios04-05.txt" que
+se encuentra en el directorio "/home/so/velez/MI" de menor a mayor y guarda el
+fichero resultante en el directorio "prac22" con el nombre "usu.orden.pabajo".
+Haz lo mismo pero ordenando de mayor a menor y guarda el resultado en el
 directorio "prac22" con el nombre "usu.orden.parriba"
 
 	cd
 	sort /home/so/velez/MI/usuarios04-05.txt -o prac2/prac22/usu.orden.pabajo
-	sort -r /home/so/velez/MI/usuarios04-05.txt -o prac2/prac22/usu.orden.parriba	
+	sort -r /home/so/velez/MI/usuarios04-05.txt -o prac2/prac22/usu.orden.parriba
 
-14. Visualiza el fichero "f1.txt". Visualiza las 2 ultimas lineas del fichero 
+14. Visualiza el fichero "f1.txt". Visualiza las 2 ultimas lineas del fichero
 "solf1.txt" que se encuentra en el directorio "/home/so/velez/MI" para ver la
 solucion al enigma
 
 	cat prac2/f1.txt
 	tail -2 /home/so/velez/MI/solf1.txt
 
-15. Muevete al directorio prac2. Visualiza el numero de caracteres del fichero 
+15. Muevete al directorio prac2. Visualiza el numero de caracteres del fichero
 "f23.txt" del directorio "tmp2"
 
-	cd prac2
+	cd ../..
 	wc -m prac23/tmp2/f23.txt
 
-16. Crea un enlace (hard link) llamado "solucionprac1" en el directorio "prac2" 
+16. Crea un enlace (hard link) llamado "solucionprac1" en el directorio "prac2"
 que se corresponda con el fichero "solp1.txt" del directorio "prac1"
 
 	ln ~/prac1/solp1.txt solucionprac1
@@ -145,7 +145,7 @@ que se corresponda con el fichero "solp1.txt" del directorio "prac1"
 
 	ln -s ~/prac2/prac23/tmp2  temporal
 
-18. Usando el comando "file" averigua de que tipo son los ficheros 
+18. Usando el comando "file" averigua de que tipo son los ficheros
 "solucionprac1" y "temporal"
 
 	file solucionprac1
@@ -156,30 +156,31 @@ que se corresponda con el fichero "solp1.txt" del directorio "prac1"
 	file -L temporal
 	//Sigue la redirecion y dice que es un directorio
 
-19. Usando el "who". Visualiza solo los nombres de todas las sesiones que hay 
-actualmente abiertas en el sistema, y el numero de sesiones abiertas. Se 
+19. Usando el "who". Visualiza solo los nombres de todas las sesiones que hay
+actualmente abiertas en el sistema, y el numero de sesiones abiertas. Se
 necesita una opcion.
 
-	who -q	
+	who -q
 
 20. Abre una nueva sesion. Edita con el "joe" un fichero con el nombre
-"inservible". Averigua con el "ps" el identificador del proceso "joe". Mata al 
+"inservible". Averigua con el "ps" el identificador del proceso "joe". Mata al
 proceso "joe" con el comando "kill".
- 
+
 	cd prac2
  	joe inservible
 	who
 	ps t4
+	//ps -u borja.lopez248
 	kill 13351
 
-21. Escribe un mensaje con el "write" al usuario "velez" que tiene la sesion 
+21. Escribe un mensaje con el "write" al usuario "velez" que tiene la sesion
 abierta a una hora mas temprana
 
 	who | grep velez
 	write velez pts/42
 
-22. Deja todos los permisos menos el de ejecucion al fichero "solp2.txt" y 
-quita el resto de los permisos para todos los que no son de nuestro grupo 
+22. Deja todos los permisos menos el de ejecucion al fichero "solp2.txt" y
+quita el resto de los permisos para todos los que no son de nuestro grupo
 sobre ese fichero.
 
 	//Agregacion eliminacion
@@ -187,5 +188,3 @@ sobre ese fichero.
 	chmod go-rwx solp2.txt
 	//Global
 	chmod 600 solp2.txt
-
-	

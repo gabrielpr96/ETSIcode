@@ -49,6 +49,26 @@ void inaccesibles(const Grafo<T, U>& G){
     }
 }
 
+//Ejercicio 2 alternativa
+template <typename T, typename U>
+void inaccesiblesAlternativa(const Grafo<T, U>& G){
+    map<T, int> gradoEntrada;
+
+    Conjunto<Vertice<T> > vertices = G.vertices();
+    while(!vertices.esVacio())
+        gradoEntrada[vertices.quitar().getObj()] = 0;
+
+    Conjunto<Arista<T, U> > aristas = G.aristas();
+    while(!aristas.esVacio())
+        gradoEntrada[aristas.quitar().getDestino()]++;
+
+    vertices = G.vertices();
+    while(!vertices.esVacio()){
+        T v = vertices.quitar().getObj();
+        if(gradoEntrada[v] == 0)
+            cout << v << " ";
+    }
+}
 
 // Ejercicio 3
 template <typename T, typename U>

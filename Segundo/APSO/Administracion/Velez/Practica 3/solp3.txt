@@ -1,4 +1,5 @@
-SISTEMAS OPERATIVOS		PRACTICA 3 
+
+SISTEMAS OPERATIVOS		PRACTICA 3
 
 
 
@@ -31,47 +32,47 @@ tu directorio personal
 	mkdir -p prac3/prac31/tmp1 prac3/prac32/tmp2 prac3/prac33/tmp3
 
 
-2. Quita todo tipo de privilegios para el grupo y el resto de los grupos 
+2. Quita todo tipo de privilegios para el grupo y el resto de los grupos
 a los directorios "prac3", "prac31", "prac32" y "prac33" usando rutas
-relativas. El propietario debera tener todos los permisos sobre esos 
-directorios. 
+relativas. El propietario debera tener todos los permisos sobre esos
+directorios.
 
 
-	chmod go-rwx prac3 prac3/prac31 prac3/prac32 prac3/prac33	
+	chmod go-rwx prac3 prac3/prac3[1-3]
 
 
-3. Visualiza todos los ficheros y directorios de tu directorio personal 
-(incluso los ocultos), con los permisos establecidos sobre cada uno de 
+3. Visualiza todos los ficheros y directorios de tu directorio personal
+(incluso los ocultos), con los permisos establecidos sobre cada uno de
 ellos.
 
 
 	ls -la ~
 
 
-4. Con el comando "find", el "wc" y las tuberias contar cuantos directorios 
-teneis a partir de vuestro directorio personal que tengan una "m" o un 
+4. Con el comando "find", el "wc" y las tuberias contar cuantos directorios
+teneis a partir de vuestro directorio personal que tengan una "m" o un
 numero en su nombre
 
 
 	find ~ -type d -name "*[m0-9]*" | wc -l
 
 
-5. Buscar, a partir del directorio "/bin", todos los ficheros (no 
-directorios) que comiencen por vocal y se hayan modificado hace 
-mas de 1 dia. La salida de ese comando la debemos enviar a un fichero 
-llamado "comandos" que se guardara en el directorio "tmp1" de "prac31". 
-No deben aparecer los errores por pantalla. Hacerlo con solo una linea de 
+5. Buscar, a partir del directorio "/bin", todos los ficheros (no
+directorios) que comiencen por vocal y se hayan modificado hace
+mas de 1 dia. La salida de ese comando la debemos enviar a un fichero
+llamado "comandos" que se guardara en el directorio "tmp1" de "prac31".
+No deben aparecer los errores por pantalla. Hacerlo con solo una linea de
 comando.
 
-	
+
 	find /bin ! -type d -name "[aeiou]*" -mtime +1 >prac3/prac31/tmp1/comandos 2>/dev/null
 
 
-6. Encontrar todos los ficheros del sistema (del tipo que sean: normales, 
-directorios, enlaces, de dispositivo, etc....) cuyo primer caracter sea 
-una vocal o un numero, la segunda no sea un numero, termine en ".c" o 
-".p" y su nombre tenga solo 6 caracteres (contando el punto y la 
-extension). La salida debe ser visualizada pagina a pagina y los errores 
+6. Encontrar todos los ficheros del sistema (del tipo que sean: normales,
+directorios, enlaces, de dispositivo, etc....) cuyo primer caracter sea
+una vocal o un numero, la segunda no sea un numero, termine en ".c" o
+".p" y su nombre tenga solo 6 caracteres (contando el punto y la
+extension). La salida debe ser visualizada pagina a pagina y los errores
 no deben mostrarse por pantalla.
 
 
@@ -79,18 +80,18 @@ no deben mostrarse por pantalla.
 
 
 7. Copia todos los ficheros que teneis a partir de vuestro directorio
-personal que empicen con el texto "sol" y tengan una "p" en su nombre 
-en el directorio "tmp2" del directorio "prac32". Usa para ello 
+personal que empicen con el texto "sol" y tengan una "p" en su nombre
+en el directorio "tmp2" del directorio "prac32". Usa para ello
 sustitucion de comandos.
 
 
 	cp $(find ~ -name "sol*p*") prac3/prac32/tmp2
 
 
-8. Muevete al directorio "prac33". Mueve todos los ficheros que a partir de 
-tu directorio personal terminan en "~" al diretorio "tmp3". Borra del 
+8. Muevete al directorio "prac33". Mueve todos los ficheros que a partir de
+tu directorio personal terminan en "~" al diretorio "tmp3". Borra del
 directorio "tmp3" todos los ficheros que terminan en "~".(Asegurate antes
-que solo tienes ficheros que terminan en ese caracter - Alt+126). 
+que solo tienes ficheros que terminan en ese caracter - Alt+126).
 
 
 	cd prac3/prac33
@@ -98,8 +99,8 @@ que solo tienes ficheros que terminan en ese caracter - Alt+126).
 	rm tmp3/*~
 
 
-9. Muevete al directorio "prac3" con rutas relativas. Crea con el comando "cal", y 
-tras ejecutarlo 4 veces, un fichero llamado "2_cuatrimestre" en el directorio 
+9. Muevete al directorio "prac3" con rutas relativas. Crea con el comando "cal", y
+tras ejecutarlo 4 veces, un fichero llamado "2_cuatrimestre" en el directorio
 "prac32" con el calendario de los meses de marzo, abril, mayo y junio de este
 anyo
 
@@ -112,7 +113,7 @@ anyo
 
 
 10. Introduce la siguiente lista por teclado mediante el comando "sort" de forma que
-al final obtengamos un fichero llamado "ciudades" en el directorio "prac32" con la 
+al final obtengamos un fichero llamado "ciudades" en el directorio "prac32" con la
 lista ordenada (en orden descendente) de lo introducido por teclado:
 
 cordoba
@@ -128,26 +129,26 @@ granada
 	sort > prac32/ciudades
 
 
-11. Crea un fichero llamado "usuarios" en el directorio "prac32" con la lista de todos 
-los directorios personales de los usuarios del sistema, ordenada alfabeticamente en 
+11. Crea un fichero llamado "usuarios" en el directorio "prac32" con la lista de todos
+los directorios personales de los usuarios del sistema, ordenada alfabeticamente en
 orden ascendente y con una sola linea de comando (Para ello usa el "find" con
-las opciones oportunas, el "sort", tuberias y redireccion)(Hay que suponer que cada 
+las opciones oportunas, el "sort", tuberias y redireccion)(Hay que suponer que cada
 directorio del directorio "/home" es de un usuario del sistema)(Deben salir
-solo los directorios y solo su nombre - no la ruta - (se consigue con la opcion 
+solo los directorios y solo su nombre - no la ruta - (se consigue con la opcion
 -printf))(Cada directorio estara en una linea del fichero) (No hay que adentrarse en
 las carpetas de cada usuario (opcion -maxdepth))
 
 
-	find /home -maxdepth 1 -printf "%f\n" | sort >prac32/usuarios
+	find /home -maxdepth 1 -mindepth 1 -printf "%f\n" | sort -o prac32/usuarios
 
 
-12. Crea en el directorio "prac32" un fichero llamado "personal" que contenga 4 lineas 
-con la siguiente informacion: nombre de usuario, identificador de usuario, nombre de 
-grupo, identificador de grupo. No esta permitido usar ningun editor de textos para crear 
+12. Crea en el directorio "prac32" un fichero llamado "personal" que contenga 4 lineas
+con la siguiente informacion: nombre de usuario, identificador de usuario, nombre de
+grupo, identificador de grupo. No esta permitido usar ningun editor de textos para crear
 este fichero. (Hay que ejecutar 4 veces el comando "id").
 
 
-	echo $(id -un) > prac32/personal
-	echo $(id -u) >> prac32/personal
-	echo $(id -gn) >> prac32/personal
-	echo $(id -g) >> prac32/personal
+	id -un > prac32/personal
+	id -u >> prac32/personal
+	id -gn >> prac32/personal
+	id -g >> prac32/personal
