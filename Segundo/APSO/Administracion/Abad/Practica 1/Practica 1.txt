@@ -1,54 +1,54 @@
 1.
 	pwd
 
-2. 
+2.
 	ls -l
-	
+
 3.
 	mkdir ModuloI
 
 4.
 	mkdir /home/borja.lopez248/ModuloI/Practica1
-	
+
 5.
 	cd ModuloI/Practica1/
-	
-6. 
-	mkdir -p Datos/Temporal Datos/basura
-	
+
+6.
+	mkdir -p /home/borja.lopez248/ModuloI/Practica1/Datos/Temporal /home/borja.lopez248/ModuloI/Practica1/Datos/basura
+
 7.
 	ls -l /home/borja.lopez248/ModuloI/Practica1
-	
+
 8.
-	ls -l
-	
+	ls -l .
+
 9.
 	cp ../../../so/ficheros/soneto ../../../so/ficheros/cancion .
-	
+
 10.
 	cd ..
 
 11.
 	cp Practica1/soneto Practica1/Datos/Temporal/estrofa
-	
+
 12.
-	cp Practica1/cancion Practica1/Datos
-	
+	mv Practica1/cancion Practica1/Datos
+
 13.
 	cat Practica1/Datos/Temporal/estrofa
-	
+
 14.
 	mv Practica1/soneto Practica1/verso
-	
+
 15.
 	cp /home/so/ficheros/f* Practica1/Datos/
-	
+
 16.
 	rm Practica1/Datos/??
-	
+
 17.
 	cp Practica1/Datos/*[0-9] Practica1/Datos/Temporal/
-	
+
 18.
 	more Practica1/Datos/fichcancion
 
@@ -58,9 +58,9 @@
 20.
 	man rm
 	//Elimina el directorio y su contenido de forma recursiva
-	
+
 21.
 	rm -r Practica1/Datos/Temporal/
-	
+
 22.
 	echo Práctica 1 Finalizada

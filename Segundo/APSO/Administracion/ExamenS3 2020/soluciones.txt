@@ -1,0 +1,103 @@
+1.
+	passwd
+	<Contraseña actual>
+	<Nueva contraseña>
+	<Nueva contraseña>
+
+2.
+	mkdir -p pruebaL3 pruebaL3/guion/temp pruebaL3/varios/basura
+
+3.
+	chmod 711 pruebaL3
+	chmod go-rw pruebaL3/varios/ pruebaL3/guion/
+
+4.
+	cp /home/so/ficheros/??[0-9]* $HOME/pruebaL3/varios/
+
+5.
+	cd pruebaL3
+	mv varios/*bak varios/basura/
+
+6.
+	rm -r varios/basura/
+
+7.
+	joe $HOME/.profile
+	<Insertar linea>
+		PATH=$PATH:.:$HOME/pruebaL3/guion
+	^KX
+	. $HOME/.profile
+
+8.
+	joe $HOME/.profile
+	<Insertar linea>
+		GUION="$HOME/pruebaL3/guion"
+		alias cdvarios="cd \"$HOME/pruebaL3/varios\""
+	^KX
+	. $HOME/.profile
+
+9.
+	find /home -name "[a-Z]e*[0-9]*" ! -type d -printf "%f\n" 2>guion/temp/errores9 |sort -o varios/nodir
+
+10.
+	date "+Hola. Son las %T. Esta en $HOSTNAME. Es %A, %d de %B de %Y" >>varios/nodir
+
+11.
+	ln -s $HOME/pruebaL3/guion/temp/errores9 varios/enlace
+
+12.
+	ls $HOME -la | sort -r >varios/listadoL3.tx
+
+13.
+	cp $(find /home/so/ficheros ! -type d -name "?[0-9]*" -mmin +120) guion/temp/
+
+14.
+	systemctl status ssh
+
+15.
+	sudo adduser --uid 1100 us1
+	sudo adduser --uid 1101 us2
+
+16.
+	sudo groupadd -g 1005 junio20
+
+17.
+	sudo more /etc/passwd /etc/shadow
+
+18.
+	cd guion/
+	joe guardar
+	<Escribir codigo>
+		#!/bin/bash
+		if([ $# -eq 1 ]) then
+			read -p "Introduzca un numero: " N
+			if([ $N -ge 1 -a $N -le 10 ]) then
+				I=$N
+				while([ $I -ne 0 ]) do
+					echo "$N" >> $HOME/pruebaL3/varios/$1
+					I=$(($I-1))
+				done
+			else
+				echo "El numero debe estar comprendido entre 1 y 10, inclusive"
+			fi
+		else
+			echo "Se necesita un parametro"
+		fi
+	^KX
+	chmod u+x guardar
+
+19.
+	./guardar fichp
+
+20.
+	cd guion/
+	joe ejecut
+	<Escribir codigo>
+		#!/bin/bash
+		if([ $# -eq 2 -a -d $1 ]) then
+			find $HOME -type f -amin -120 2>/dev/null | sort -r -o $1/$2
+		else
+			echo "Se necesitan dos parametros y que el primero sea un directorio"
+		fi
+	^KX
+	chmod u+x ejecut

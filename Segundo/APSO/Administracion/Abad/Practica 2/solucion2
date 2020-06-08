@@ -1,6 +1,6 @@
 1.
 	cd ~/ModuloI/Practica1
-	
+
 2.
 	mkdir ../Practica2
 
@@ -9,7 +9,7 @@
 
 4.
 	cd ModuloI/Practica2
-	joe solucion2	
+	joe solucion2
 
 5.
 	cd /home/borja.lopez248/ModuloI/Practica2
@@ -56,7 +56,7 @@
 	cal -m 1 2010
 
 19.
-	date "+%A %d del  %g"
+	date "+%A %d del %y"
 
 20.
 	who | grep borja.lopez248

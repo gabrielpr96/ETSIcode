@@ -1,0 +1,112 @@
+1.
+	passwd
+	<Contraseña actual>
+	<Nueva contraseña>
+	<Nueva contraseña>
+
+2.
+	mkdir -p pruebaL1 pruebaL1/ficheros/trash pruebaL1/guiones/temporal
+
+3.
+	chmod go-rwx pruebaL1
+	chmod 754 pruebaL1/ficheros
+
+4.
+	cp /home/so/ficheros/??[0-9]* pruebaL1/ficheros
+
+5.
+	mv pruebaL1/ficheros/*bak pruebaL1/ficheros/trash
+
+6.
+	rm -r pruebaL1/ficheros/trash
+
+7.
+	joe .profile
+	<Insertar linea>
+		PATH=$PATH:.
+	^KX
+	. ./.profile
+
+8.
+	joe .profile
+	<Insertar linea>
+		GUIONES="$HOME/pruebaL1/guiones"
+	^KX
+	. ./.profile
+
+9.
+	find /usr -name "*head*" -mtime +10 -size +30w -printf "Fichero: %p\n" >pruebaL1/ficheros/elfind 2>pruebaL1/ficheros/errorfind
+
+10.
+	date >>pruebaL1/ficheros/elfind
+
+11.
+	ln -s $HOME/pruebaL1/ficheros/errorfind pruebaL1/guiones/temporal/noacces
+
+12.
+	who | grep va | sort -r -o pruebaL1/ficheros/p12.txt
+
+13.
+	rm $(find $HOME -name "*0")
+
+14.
+	grep "/bin/bash" /etc/adduser.conf >pruebaL1/ficheros/elgrub.txt
+	//DSHELL
+
+15.
+	apt-cache search sgb >pruebaL1/ficheros/paquetes.txt
+
+16.
+	quota >pruebaL1/ficheros/ocupacion.txt
+
+17.
+	systemctl status webmin.service
+
+18.
+	cd pruebaL1/guiones
+	joe g1
+	<Escribir codigo>
+		#!/bin/bash
+		read -p "Introduzca su nombre: " DIR
+		mkdir $1/$DIR
+		alias minombre="echo \"$USER\"  >\"$1/$DIR/$2\""
+	^KX
+	chmod u+x g1
+
+19.
+	. ./g1 $HOME/pruebaL1/ficheros estudiante.txt
+	<Introducir nombre>
+	minombre
+
+20.
+	joe g2
+	<Escribir codigo>
+		#!/bin/bash
+		if([ $# -eq 2 ]) then
+			if([ -d $1 ]) then
+				TOTAL=0
+				for I in $(find $1 -maxdepth 1 -mindepth 1 -printf "%f " ! -type d); do
+					case $I in
+						*$2*)
+							cat "$1/$I"
+						;;
+						*f??*)
+							TOTAL=$((TOTAL+1))
+						;;
+						*[0-9])
+							TOTAL=$((TOTAL+1))
+						;;
+						*)
+							TOTAL=$((TOTAL-1))
+						;;
+						esac
+					done
+				echo "Total: $TOTAL"
+			else
+				echo "El primer parametro debe ser un directorio"
+			fi
+		else
+			echo "Se necesitan dos parametros"
+		fi
+	^KX
+	chmod u+x g2
