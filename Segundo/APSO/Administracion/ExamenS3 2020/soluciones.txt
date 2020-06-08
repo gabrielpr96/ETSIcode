@@ -55,8 +55,8 @@
 	systemctl status ssh
 
 15.
-	sudo useradd --uid 1100 us1
-	sudo useradd --uid 1101 us2
+	sudo useradd -u 1100 us1
+	sudo useradd -u 1101 us2
 
 16.
 	sudo groupadd -g 1005 junio20
@@ -95,7 +95,9 @@
 	<Escribir codigo>
 		#!/bin/bash
 		if([ $# -eq 2 -a -d $1 ]) then
-			find $HOME -type f -amin -120 2>/dev/null | sort -r -o $1/$2
+			for I in find $HOME -type f -amin -120 | sort -r ; do
+				echo $I >$1/$2
+			done
 		else
 			echo "Se necesitan dos parametros y que el primero sea un directorio"
 		fi
