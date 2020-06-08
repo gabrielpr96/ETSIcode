@@ -30,30 +30,30 @@ tu directorio personal mediante rutas absolutas:
 	mkdir -p $HOME/prac5/prac51 $HOME/prac5/prac52 $HOME/prac5/guiones
 
 
-2. Anyade en el fichero ".profile" a la variable PATH una nueva ruta, 
-la ruta hasta el directorio "guiones" que hemos creado en el apartado 1. 
-Esta nueva linea no tendra efecto hasta que no ejecutemos el fichero 
-".profile". Ejecuta el fichero ".profile" de la forma adecuada 
-para que el nuevo PATH tome efecto. Visuliza de nuevo la variable PATH 
-para asegurarte que tiene lo que tenia en la practica 4 mas la nueva ruta 
+2. Anyade en el fichero ".profile" a la variable PATH una nueva ruta,
+la ruta hasta el directorio "guiones" que hemos creado en el apartado 1.
+Esta nueva linea no tendra efecto hasta que no ejecutemos el fichero
+".profile". Ejecuta el fichero ".profile" de la forma adecuada
+para que el nuevo PATH tome efecto. Visuliza de nuevo la variable PATH
+para asegurarte que tiene lo que tenia en la practica 4 mas la nueva ruta
 que hemos anyadido en este apartado.
 
-IMPORTANTE!!! No continues adelante si no has conseguido anyadir esa nueva 
+IMPORTANTE!!! No continues adelante si no has conseguido anyadir esa nueva
 ruta a la variable PATH. Si continuas con el resto de apartados sin hacer los
 anteriores no podras realizarlos correctamente.
 
 
 	joe .profile
-	PATH=$PATH:/home/borja.lopez248/prac5/guiones
+	PATH=$PATH:$HOME/prac5/guiones
 	. .profile
 	echo $PATH
 
 
 3. Muevete al directorio "guiones". Crea un guion llamado "busca" en este
-directorio que reciba como parametros un directorio y un numero. El guion 
+directorio que reciba como parametros un directorio y un numero. El guion
 debe buscar los ficheros (no directorios) a partir del directorio especificado
-que hayan sido modificados hace menos de n dias, siendo n el numero de dias 
-especificado. Muevete de nuevo a tu directorio personal. Ejecuta desde aqui 
+que hayan sido modificados hace menos de n dias, siendo n el numero de dias
+especificado. Muevete de nuevo a tu directorio personal. Ejecuta desde aqui
 el guion pasando como parametros tu directorio personal y el numero 10.
 
 
@@ -65,13 +65,13 @@ el guion pasando como parametros tu directorio personal y el numero 10.
 	prac5/guiones/busca . 10
 
 
-4. Crea tres nuevos alias en el fichero ".profile". 
+4. Crea tres nuevos alias en el fichero ".profile".
 
-Uno se llamara "listaf" y visualizara la lista de todos los ficheros y 
-directorios a partir de nuestro directorio personal (incluso los que empiezan 
+Uno se llamara "listaf" y visualizara la lista de todos los ficheros y
+directorios a partir de nuestro directorio personal (incluso los que empiezan
 por punto) asi como sus permisos (opcion -l).
 
-Otro se llamara "gente" y contara los usuarios que actualmente se 
+Otro se llamara "gente" y contara los usuarios que actualmente se
 encuentran en el sistema (Se supone que cada fila del comando "who" es un
 usuario.
 
@@ -84,23 +84,23 @@ HACED QUE TOMEN EFECTO
 
 
 	joe .profile
-	alias listaf=ls -la
-	alias gente=who | wc -l
-	alias saludo=date +"Hola. So las %H y %M minutos del dia %A %d del %B de %Y.
+	alias listaf='ls $HOME -la'
+	alias gente='who | wc -l'
+	alias saludo='date +"Hola. So las %H y %M minutos del dia %A %d del %B de %Y."'
 	Chao"
 	. .profile
 
 
-5. Crea desde aqui, en el directorio "guiones", un guion llamado "fnuevos" que 
-pasandole como parametro el nombre de un fichero y un directorio indica 
-cuantos ficheros hay a partir del directorio indicado que son mas nuevos que 
+5. Crea desde aqui, en el directorio "guiones", un guion llamado "fnuevos" que
+pasandole como parametro el nombre de un fichero y un directorio indica
+cuantos ficheros hay a partir del directorio indicado que son mas nuevos que
 el fichero especificado (debe salir un numero). Crea otro guion llamdo "fviejos"
-que pasando los mismo parametros indica cuantos son mas viejos que el fichero 
+que pasando los mismo parametros indica cuantos son mas viejos que el fichero
 especificado.
 
 
 	joe prac5/guiones/fnuevos
-		find $2 -newer $1
+		echo "Hay $(find $2 | wc -l) ficheros en $2, de los cueales $(find $2 -newer $1 | wc -l) son mas antiguos que $1"
 	chmod u+x prac5/guiones/fnuevos
 	joe prac5/guiones/fviejos
 		find $2 ! -newer $1 | wc -l
@@ -108,9 +108,9 @@ especificado.
 
 
 6. Ve al directorio "prac51". Crea un guion llamado "trataf" en este directorio que
-para cada fichero que encuentre a partir del directorio pasado como parametro que 
-termine en ".txt" lo visualice por pantalla pagina a pagina. Los errores no deben 
-salir por pantalla. Muevete al directorio personal. Comprueba desde aqui su 
+para cada fichero que encuentre a partir del directorio pasado como parametro que
+termine en ".txt" lo visualice por pantalla pagina a pagina. Los errores no deben
+salir por pantalla. Muevete al directorio personal. Comprueba desde aqui su
 ejecucion pasando como parametro el directorio "/home/so/velez/MI"
 
 
@@ -119,23 +119,23 @@ ejecucion pasando como parametro el directorio "/home/so/velez/MI"
 		more $(find $1 -name "*.txt" 2>/dev/null)
 	chmod u+x trataf
 	cd
-	./prac5/prac51/trataf /home/so/velez/MI	
+	./prac5/prac51/trataf /home/so/velez/MI
 
 
 7. Introduce en el fichero ".profile" la modificacion realizada a la
-variable PS1 (en la practica 4), para que el prompt sea nuestro nombre de usuario, 
+variable PS1 (en la practica 4), para que el prompt sea nuestro nombre de usuario,
 seguido de la ruta y del simbolo ">". Haced que tome efecto.
 
 
 	joe .profile
-	PS2='> '
+	PS1="$USER: $PWD> "
 	. .profile
 
 
-8. Usando el comando "cat" crea un guion en el directorio "guiones" llamado 
+8. Usando el comando "cat" crea un guion en el directorio "guiones" llamado
 "copiar" que le pasen como parametro dos nombres de ficheros y la ruta
-absoluta a un directorio y copie el fichero especificado en primer lugar en 
-el directorio especificado, con el nombre del fichero especificado en 
+absoluta a un directorio y copie el fichero especificado en primer lugar en
+el directorio especificado, con el nombre del fichero especificado en
 segundo lugar.
 
 
@@ -144,9 +144,9 @@ segundo lugar.
 	chmod u+x prac5/guiones/copiar
 
 
-9. Muevete al directorio "guiones". Crea un guion llamado "vertodo" en este 
+9. Muevete al directorio "guiones". Crea un guion llamado "vertodo" en este
 directorio que visualice pagina a pagina el contenido de todos los ficheros
-(no directorios) que a partir del directorio en el que nos encontremos en ese 
+(no directorios) que a partir del directorio en el que nos encontremos en ese
 momento empiecen por "s" y terminen en ".c" o ".p" y sean mas nuevos que un
 fichero pasado como parametro. Los posibles errores no deben salir por
 pantalla y los ficheros deben ser visualizados por orden alfabetico.
@@ -171,9 +171,7 @@ siguiente informacion:
 	joe infor
 		id -un
 		id -gn
-		echo $SSH_TTY
+		tty
 		date
 		cal -m 3
 	chmod u+x infor
-
-

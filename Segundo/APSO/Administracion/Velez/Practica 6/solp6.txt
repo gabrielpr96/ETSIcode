@@ -31,13 +31,13 @@ tu directorio personal
                 tmp1             tmp2
 
 
-	
+
 	mkdir -p prac6/prac6 prac6/fuentes/tmp1 prac6/fuentes/tmp2 prac6/guiones
 
 
 2. Incluye dentro del fichero ".profile" la variable "GUION" con la
 ruta al directorio "guiones" creado anteriormente. Haz que tome efecto
-esta varible. Copia todos los ficheros que a partir de tu directorio 
+esta varible. Copia todos los ficheros que a partir de tu directorio
 personal terminen en ".txt" en el directorio "tmp1"
 
 
@@ -46,37 +46,37 @@ personal terminen en ".txt" en el directorio "tmp1"
 	. .profile
 	cp $(find $HOME -name "*.txt") prac6/fuentes/tmp1
 
- 
+
 3. Muevete al directorio "guiones". Crea un guion en el directorio "guiones"
 llamado "tratafichero". Este guion debe recoger un unico parametro. Si el
 parametro es un fichero ordinario debe visualizar su contenido con el
 comando "more". Si se trata de un directorio, debemos ver el contenido del
 mismo con el comando "ls -la". Si no es ni un fichero ni un directorio debe
 hacerse un "echo" del parametro. (Se necesita usar el comando test y la
-estructura "if"). 
+estructura "if").
 
 
 	cd prac6/guiones
 	joe tratafichero
-		if (test -f $1) then
-        		more $1
-		elif (test -d $1) then
-        		ls -la $1
+		if ([ -f $1 ]) then
+			more $1
+		elif ([ -d $1 ]) then
+			ls -la $1
 		else
-        		echo $1
+			echo $1
 		fi
 	chmod u+x tratafichero
 
 
-4. Muevete al directorio "prac6" que esta dentro de "prac6". Ejecuta desde aqui el 
-guion anterior dos veces. La primera vez le pasamos como parametro 
-"$HOME/prac2/f1.txt". La segunda le pasamos como parametro la variable "GUION" 
+4. Muevete al directorio "prac6" que esta dentro de "prac6". Ejecuta desde aqui el
+guion anterior dos veces. La primera vez le pasamos como parametro
+"$HOME/prac2/f1.txt". La segunda le pasamos como parametro la variable "GUION"
 creada en el apartado 2.
- 
 
-	 cd ../prac6
-	./../guiones/tratafichero $HOME/prac2/f1.txt
-	./../guiones/tratafichero $GUION
+
+	cd ../prac6
+	$GUION/tratafichero $HOME/prac2/f1.txt
+	$GUION/tratafichero $GUION
 
 
 5. Muevete al directorio "guiones". Crea un guion llamado "fpfinal" que haga
@@ -89,38 +89,35 @@ al menos 3 parametros"
 directorios. Si no lo son, visualiza el mensaje: "El primer y tercer
 parametro han de ser directorios"
 
-- Copia todos los nombres (solo el nombre, no la ruta) de enlaces simbolicos 
-(ficheros soft link) encontrados a partir del primer directorio especificado, 
-cuyo nombre coincida con el segundo parametro, en el directorio especificado 
-en tercer lugar con el nombre "enlaces.txt". Los errores no deben salir por 
+- Copia todos los nombres (solo el nombre, no la ruta) de enlaces simbolicos
+(ficheros soft link) encontrados a partir del primer directorio especificado,
+cuyo nombre coincida con el segundo parametro, en el directorio especificado
+en tercer lugar con el nombre "enlaces.txt". Los errores no deben salir por
 pantalla.
 
 
 Ejecuta este guion con los parametros siguientes:
 
-- primer parametro: "/home" 
+- primer parametro: "/home"
 - segundo parametro: ficheros que empiecen por una letra mayuscula
 - tercer parametro: directorio "fuentes" creado en el apartado 1
 
 
-	cd ../guiones
+	cd $GUION
 	joe fpfinal
-		if (test $# -ge 3) then
-        		if (test -d $1 && test -d $3) then
-                		find $1 -type l -name "$2" -printf "%f\n" 2>/dev/null >$3/enlaces.txt
-       			else
-                		echo "El primer y tercer parametro han de ser directorios"
-       	 		fi
+		if ([ $# -lt 3 ]) then
+			echo "Se mecesitan al menos 3 parametros"
+		elif ([ -d $1 ] && [ -d $3 ]) then
+			find $1 -name "$2" -printf "%f\n" >$3/enlaces.txt 2>/dev/null
 		else
-        		echo "Se necesitan al menos 3 parametros"
-		fi 		
+			echo "El primer y tercer parametros han de ser directorios"
 	chmod u+x fpfinal
 	./fpfinal /home "[A-Z]*" ../fuentes
 
 
 6. Crea un guion llamado "mtam" que muestre, para cada fichero encontrado a
 partir del directorio pasado como primer parametro cuyo nombre coincide con
-el segundo parametro, su tamaño. Comprueba que el numero de parametros es el
+el segundo parametro, su tamaÃ±o. Comprueba que el numero de parametros es el
 correcto y que el primero es un directorio. Si hay algun error debe
 comunicarse por pantalla. (Usa el for en el guion)
 
@@ -128,7 +125,7 @@ Ejecutalo con los parametros siguientes:
 
 - Primer parametro: directorio "fuentes" creado anteriormente
 - Segundo parametro: ficheros que empiecen por "s" y tengan un punto en su
-                     nombre  
+                     nombre
 
 
 	joe mtam
@@ -143,7 +140,7 @@ Ejecutalo con los parametros siguientes:
 	./mtam ../fuentes "s*.*"
 
 
-7. Crea un guion llamado "anida", al que se le pasara un parametro y debera 
+7. Crea un guion llamado "anida", al que se le pasara un parametro y debera
 hacer lo siguiente:
 
         * Pedira que se introduzca un numero por el teclado
@@ -152,16 +149,16 @@ hacer lo siguiente:
 	  directorio en el que nos encontramos
 
 Ejemplo: Se ejecuta "anida p1"  y el numero que se lee es 3. Esto creara
-un directorio p1, que tiene dentro un directorio p1, que a su vez tiene 
+un directorio p1, que tiene dentro un directorio p1, que a su vez tiene
 dentro un directorio p1, a partir del directorio en el que estamos.
 
 
 NOTA: Se monta un bucle 'while', que itera tantas veces como indique el
-contador, y dentro se va creando la ruta de los subdirectorios sobre una 
+contador, y dentro se va creando la ruta de los subdirectorios sobre una
 variable, que es la usada para crear los subdirectorios.
 
 Muevete al directorio "tmp2". Ejecuta desde aqui el guion anterior de la
-siguiente forma: "anida p6" y se teclea el numero 2 por teclado cuando lo 
+siguiente forma: "anida p6" y se teclea el numero 2 por teclado cuando lo
 solicite.
 
 
@@ -189,7 +186,7 @@ palabra al final de un fichero llamado "numero", en un fichero llamado "vocal"
 si empieza por vocal y en un fichero llamado "otro" para cualquier otro
 caso. Usa el "case" para decidir a que fichero va la palabra. Debe estar
 haciendo siempre lo mismo hasta que se pulse un punto, pero no debe parar si
-se introduce un punto seguido de cualquier otro conjunto de caracteres. 
+se introduce un punto seguido de cualquier otro conjunto de caracteres.
 
 
 	cd ../../guiones
@@ -212,20 +209,18 @@ se introduce un punto seguido de cualquier otro conjunto de caracteres.
                 		;;
         		esac
 		done
-        chmod u+x opcion		
+        chmod u+x opcion
 
 
-9. Modifica los permisos de los directorios "tmp1" y "tmp2" para que el 
-propietario tenga todos los permisos menos el de ejecucion, el grupo solo el 
+9. Modifica los permisos de los directorios "tmp1" y "tmp2" para que el
+propietario tenga todos los permisos menos el de ejecucion, el grupo solo el
 de lectura y los otros solo el de ejecucion.
 
 
 	chmod 641 $HOME/prac6/
 
 
-10. Consulta el numero de procesos total que tienes activos en este preciso 
+10. Consulta el numero de procesos total que tienes activos en este preciso
 momento (contando los de todas las ventanas abiertas). (Se usa ps y wc)
 
-	ps -uh | wc -l
-
-
+	ps -u $USER | wc -l

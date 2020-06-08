@@ -8,7 +8,7 @@
 		GRUB_DISABLE_RECOVERY="true"
 		GRUB_GFXMODE=800x600
 		GRUB_INIT_TUNE="480 440 1"
-	sudo chmod -x /etc/grub.d/20_memtest86+
+	sudo chmod a-x /etc/grub.d/20_memtest86+
 	sudo update-grub
 
 3.
@@ -18,7 +18,6 @@
 	sudo mkdir /boot/kernels
 	sudo mv /boot/vmlinuz-5.3.0-28-generic /boot/kernels/
 	sudo mv /boot/initrd.img-5.3.0-28-generic /boot/kernels/
-	sudo mv /boot/initrd.img-5.3.0-28-generic /boot/kernels/
 	sudo update-grub
 	sudo reboot now
 
@@ -26,7 +25,7 @@
 	dmesg | grep EXT4
 
 6.
-	systemctl --type=service --state=active
+	systemctl list-units --type=service --state=active
 
 7.
 	journalctl -u NetworkManager | grep Error
@@ -67,8 +66,7 @@
 	sudo service ssh start
 
 18.
-	sudo systemctl enable ssh
-	//TODO: comprobar que se inicia al reiniciar
+	sudo systemctl reenable ssh
 
 19.
 	pstree -g
@@ -76,7 +74,6 @@
 20.
 	sudo joe /etc/cron.hourly/repetidor
 		#!/bin/sh
-		#Agrega una linea
 		echo "Ejecutado cron a las $(date)" >>/home/apso/cadahora
 	sudo chmod a+x /etc/cron.hourly/repetidor
 

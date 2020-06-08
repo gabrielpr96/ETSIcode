@@ -1,4 +1,4 @@
-SISTEMAS OPERATIVOS		PRACTICA 4 
+SISTEMAS OPERATIVOS		PRACTICA 4
 
 
 
@@ -30,11 +30,11 @@ tu directorio personal
                   |                |
                 tmp1             tmp2
 
-	
+
 	mkdir -p prac4/prac41 prac4/prac42/tmp1 prac4/prac42/tmp2 prac4/prac43
 
 
-2. Muevete al directorio "prac43". Quita todo tipo de permisos para el 
+2. Muevete al directorio "prac43". Quita todo tipo de permisos para el
 grupo y el resto de los grupos al directorio "prac4", "prac42", "tmp1" y
 "tmp2" con un solo comando y usando rutas relativas
 
@@ -43,10 +43,10 @@ grupo y el resto de los grupos al directorio "prac4", "prac42", "tmp1" y
 	chmod go-rwx ../. ../prac42 ../prac42/tmp[12]
 
 
-3. Muevete al directorio "prac42". Crea con el "cat" un fichero en el 
-directorio "tmp1" que se llame "prueba" y contenga la frase "Este es un 
-fichero de prueba". Anyade con el comando "cat" una nueva frase al 
-fichero sin borrar la anterior que diga "Esta frase se ha anyadido 
+3. Muevete al directorio "prac42". Crea con el "cat" un fichero en el
+directorio "tmp1" que se llame "prueba" y contenga la frase "Este es un
+fichero de prueba". Anyade con el comando "cat" una nueva frase al
+fichero sin borrar la anterior que diga "Esta frase se ha anyadido
 despues"
 
 
@@ -55,23 +55,22 @@ despues"
 	cat >>tmp1/prueba
 
 
-4. Visualiza el contenido de las primeras 52 variables del sistema. 
+4. Visualiza el contenido de las primeras 52 variables del sistema.
 Muestra por pantalla el contenido de la variable PATH (solo esa variable).
 
 
 	set | head -52
-	set | head -52 | grep PATH
 	echo $PATH
 
 
-5. Crea una variable llamada "ORIGEN" que contenga la ruta absoluta al 
+5. Crea una variable llamada "ORIGEN" que contenga la ruta absoluta al
 directorio "/home/so/velez/MI". Crea dos variables llamadas "DESTINO1" y
 "DESTINO2" con la ruta absoluta al directorio "tmp1" y "tmp2"
-respectivamente del directorio "prac42". Visualiza el contenido de estas 
-dos variables (solo de estas dos). Usa las variables "ORIGEN" y "DESTINO1" 
-para copiar todos los ficheros del directorio "/home/so/velez/MI" que 
-contienen una "p" en su nombre y terminan en ".txt" al directorio "tmp1" 
-de "prac42". 
+respectivamente del directorio "prac42". Visualiza el contenido de estas
+dos variables (solo de estas dos). Usa las variables "ORIGEN" y "DESTINO1"
+para copiar todos los ficheros del directorio "/home/so/velez/MI" que
+contienen una "p" en su nombre y terminan en ".txt" al directorio "tmp1"
+de "prac42".
 
 
 	ORIGEN="/home/so/velez/MI"
@@ -82,21 +81,20 @@ de "prac42".
 	cp $ORIGEN/*p*.txt $DESTINO1
 
 
-6. Muevete al directorio "prac43" con rutas relativas. Crea un alias llamado 
-"fnuevos" que busque los ficheros (no directorios) a partir de tu directorio 
-personal a los que se haya accedido hace menos de 3 horas, empiecen por 
+6. Muevete al directorio "prac43" con rutas relativas. Crea un alias llamado
+"fnuevos" que busque los ficheros (no directorios) a partir de tu directorio
+personal a los que se haya accedido hace menos de 3 horas, empiecen por
 punto y terminen en "e", "y" o "c" y visualice su contenido uno a uno.
 
 
 	cd ../prac43
-	alias fnuevos='find $HOME ! -type d -amin -180 -name ".*[eyc]"'
-	more $(fnuevos)
+	alias fnuevos='more $(find $HOME ! -type d -amin -180 -name ".*[eyc]")'
 
 
 7. Visualiza todos los alias del sistema. Crea cinco nuevos alias:
 
 Uno se llamara "dir" y visualizara pagina a pagina todos los ficheros
-del directorio en el que estamos (incluso los que empiezan por punto), 
+del directorio en el que estamos (incluso los que empiezan por punto),
 con todos los permisos en orden alfabetico. "dirinverso" hara lo mismo pero
 saldran ordenados en orden inverso.
 
@@ -122,12 +120,12 @@ blanco entre el "cd" y los dos puntos) no produzca error.
 de todas las sesiones que hay abiertas en este instante ordenadas
 alfabeticamente. Usa rutas relativas.
 
-	
-	who | sort -o tmp2/usuarios	
+
+	who | sort -o tmp2/usuarios
 
 
-9. Muevete al directorio "prac4". Ejecuta el interprete de comandos "ksh". 
-Visualiza las variables activas en este interprete de comandos. Modifica 
+9. Muevete al directorio "prac4". Ejecuta el interprete de comandos "ksh".
+Visualiza las variables activas en este interprete de comandos. Modifica
 el prompt para que visualice la frase "Comando::>"
 
 
@@ -137,33 +135,33 @@ el prompt para que visualice la frase "Comando::>"
 	PS1='Comando::> '
 
 
-10. Sal del interprete de comandos "ksh" y vuelve al "bash". Cuenta con 
+10. Sal del interprete de comandos "ksh" y vuelve al "bash". Cuenta con
 la ayuda del "who" y del "wc" el numero de sesiones que hay abiertas (debe
 salir un numero).
 
 	exit
 	who | wc -l
 
-11. Modifica el prompt principal para que visualice vuestro nombre de 
-usuario en vez del nombre de la maquina. A continuacion el directorio 
-donde estamos mediante ruta absoluta y al final debe aparecer el 
-simbolo "> " (Ejemplo:   Para el usuario velez actualmente sale 
+11. Modifica el prompt principal para que visualice vuestro nombre de
+usuario en vez del nombre de la maquina. A continuacion el directorio
+donde estamos mediante ruta absoluta y al final debe aparecer el
+simbolo "> " (Ejemplo:   Para el usuario velez actualmente sale
 "velez@Polifemo:~/prac4$". Despues de modificar el prompt debe salir
-"velez: /home/velez/prac4> ") 
+"velez: /home/velez/prac4> ")
 
 
 	PS1='$USER: $PWD> '
 
 
-12. Modifica el prompt secundario para que emita el siguiente mensaje 
+12. Modifica el prompt secundario para que emita el siguiente mensaje
 "cierra las comillas, por favor".
 
 
 	PS2='cierra las comillas, por favor> '
 
 
-13. Edita con el "joe" el fichero ".profile". Modifica la variable 
-PATH para que siempre se ejecuten los ficheros que se encuentran en el 
+13. Edita con el "joe" el fichero ".profile". Modifica la variable
+PATH para que siempre se ejecuten los ficheros que se encuentran en el
 directorio actual. Anyade la variable ORIGEN creada en el apartado 5 para
 que se pueda usar siempre que entremos en una nueva sesion.
 
@@ -173,15 +171,13 @@ que se pueda usar siempre que entremos en una nueva sesion.
 	ORIGEN="/home/so/velez/MI"
 
 
-14. Cierra la sesion. Vuelve a entrar. Anyade los alias "hora" y "fecha" 
-al ".profile" para que siempre se puedan ejecutar. Haz lo necesario 
+14. Cierra la sesion. Vuelve a entrar. Anyade los alias "hora" y "fecha"
+al ".profile" para que siempre se puedan ejecutar. Haz lo necesario
 para que los alias introducidos en el ".profile" se vuelvan activos
 y puedan ser usados.
 
 
 	joe $HOME/.profile
-	alias fecha='date +"Hoy es %A, %d del %B de %Y. Chao"'
+		alias fecha='date +"Hoy es %A, %d del %B de %Y. Chao"'
         alias hora='date +"Son las %H horas y %M minutos. Chao"'
 	. $HOME/.profile
-	
-

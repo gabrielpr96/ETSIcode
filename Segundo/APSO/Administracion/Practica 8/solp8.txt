@@ -46,8 +46,8 @@
 	//EXTRA_GROUPS si ADD_EXTRA_GROUPS esta activo el usuario se agregará adicionalmente a estos grupos
 
 4.
-	sudo adduser usuariosistema
-	grep "^usuariosistema" </etc/passwd
+	sudo adduser --system usuariosistema
+	grep "^usuariosistema" /etc/passwd
 
 5.
 	sudo addgroup practica8
@@ -66,7 +66,7 @@
 7.
 	sudo adduser user1
 	sudo adduser user2
-	grep "^user[12]" </etc/passwd	
+	grep "^user[12]" </etc/passwd
 
 8.
 	sudo adduser user1 users
@@ -85,7 +85,7 @@
 	exit
 
 11.
-	sudo deluser --remove-all-files --backup-to /home user1
+	sudo deluser --remove-all-files --backup --backup-to /home user1
 
 12.
 	sudo adduser --uid 1005 user3
@@ -99,7 +99,7 @@
 14.
 	sudo cat /etc/shadow | grep "^apso" | cut -d ":" -f 8
 	//sudo chage -l apso
-	
+
 
 15.
 	sudo usermod -e 2019-6-1 user2
@@ -119,14 +119,14 @@
 	sudo joe /etc/fstab
 
 20.
-	quotacheck -augmv
+	quotacheck -umvf
 
 21.
 	ls /aquota.user
 	//Sí existe
 
 22.
-	sudo quotaon -ugv /
+	sudo quotaon -uv /
 
 23.
 	sudo adduser user4
@@ -141,7 +141,7 @@
 	sudo edquota -t
 
 27.
-	su user4	
+	su user4
 
 28.
 	quota
