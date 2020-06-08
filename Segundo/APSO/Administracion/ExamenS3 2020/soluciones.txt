@@ -55,8 +55,8 @@
 	systemctl status ssh
 
 15.
-	sudo adduser --uid 1100 us1
-	sudo adduser --uid 1101 us2
+	sudo useradd --uid 1100 us1
+	sudo useradd --uid 1101 us2
 
 16.
 	sudo groupadd -g 1005 junio20
