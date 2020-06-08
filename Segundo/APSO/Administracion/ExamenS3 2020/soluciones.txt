@@ -95,9 +95,9 @@
 	<Escribir codigo>
 		#!/bin/bash
 		if([ $# -eq 2 -a -d $1 ]) then
-			for I in find $HOME -type f -amin -120 | sort -r ; do
-				echo $I >$1/$2
-			done
+		for I in $(find $HOME -type f -amin -120 2>/dev/null | sort -r); do
+			echo "$I" >>$1/$2
+		done
 		else
 			echo "Se necesitan dos parametros y que el primero sea un directorio"
 		fi
