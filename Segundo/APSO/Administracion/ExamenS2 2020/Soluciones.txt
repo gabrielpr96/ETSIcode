@@ -1,0 +1,118 @@
+1.
+	passwd
+	<Contraseña actual>
+	<Nueva contraseña>
+	<Nueva contraseña>
+
+2.
+	mkdir -p pruebaL2/gion pruebaL2/varios/temp/basura
+
+3.
+	chmod 700 pruebaL2/
+	chmod go-rwx pruebaL2/varios/ pruebaL2/gion/
+
+4.
+	cp ../so/ficheros/[aeiouAEIOU]*[0-9]* pruebaL2/varios/
+
+5.
+	cd pruebaL2/varios/temp/
+	mv ../*bak basura/
+
+6.
+	rm -r basura/
+
+7.
+	//Voy al directorio pruebaL2 por comodidad
+	cd ../..
+	joe ../.profile
+	<Insertar linea>
+		PATH=$PATH:$HOME/pruebaL2/gion:.
+	^KX
+	. ./../.profile
+
+8.
+	joe ../.profile
+	<Insertar lineas>
+		GUION="$HOME/pruebaL2/gion"
+		alias cdvarios="cd $HOME/pruebaL2/varios"
+	^KX
+	. ./../.profile
+
+9.
+	find /etc -name "[!a-Z][ae]*[0-9]*" ! -type d -printf "%f\n" 2>varios/temp/errores9 | sort >varios/ficheros
+
+10.
+	date "+Buenos dias. Esta usted en $HOSTNAME. Es %A, %d de %B de %Y. Son las %T" >>varios/ficheros
+
+11.
+	ln -s $HOME/pruebaL2/varios/temp/errores9 gion/enlace
+
+12.
+	//Se podría agregar -m1 al grep para asegurarnos de que grep solo saca la primera ocurrencia, por si "muchos" apareciera más de una vez en un fichero
+	grep "muchos" /home/so/ficheros/[fa]* | wc -l >varios/listadoL2.txt
+
+13.
+	more $(find /usr -name "m?.?" ! -cnewer $HOME/.profile ! -type d 2>/dev/null)
+
+14.
+	sudo groupadd -g 500 admin20
+
+15.
+	sudo joe /etc/adduser.conf
+	<Modificar lineas>
+		USERGROUPS=no
+		USERS_GID=500
+	^KX
+
+16.
+	apt-cache search jedit
+
+17.
+	sudo more /etc/passwd /etc/shadow
+
+18.
+	//Voy al directorio guion por comodidad
+	cd gion/
+	joe guardanota
+	<Insertar lineas>
+		#!/bin/bash
+		if([ $1 -lt 1 ]) then
+			echo "Error. El parametro es menor que 1"
+		else
+			if([ -f "$HOME/pruebaL2/varios/notas" ]) then
+					rm "$HOME/pruebaL2/varios/notas"
+			fi
+			I=$1
+			while([ $I -ne 0 ]) do
+					read -p "Introduzca una nota: " NOTA
+					if([ $NOTA -lt 0 -o $NOTA -gt 10 ]) then
+							MSG="Error, la nota no esta entre 0 y 10"
+					elif([ $NOTA -ge 5 ]) then
+							MSG="aprobado"
+					else
+							MSG="suspenso"
+					fi
+					echo $MSG >>$HOME/pruebaL2/varios/notas
+					I=$(($I-1))
+			done
+		fi
+	chmod u+x guardanota
+
+19.
+	guardanota 3
+	<Introduje 8>
+	<Introduje -2>
+	<Introduje 0>
+
+20.
+	joe ejecut
+	<Insertar lineas>
+		#!/bin/bash
+		if([ $# -eq 2 -a -d $1 ]) then
+		        for I in $(find $HOME -atime -3 -type f | sort -r); do
+		                echo "$(wc -c $I)" >>"$1/$2"
+		        done
+		else
+		        echo "Se necesitan dos parametros, el primero de ellos un directorio"
+		fi
+	chmod u+x ejecut
