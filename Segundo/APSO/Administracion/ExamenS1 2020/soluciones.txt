@@ -35,7 +35,7 @@
 	. ./.profile
 
 9.
-	find /usr -name "*head*" -mtime +10 -size +30w -printf "Fichero: %p\n" >pruebaL1/ficheros/elfind 2>pruebaL1/ficheros/errorfind
+	find /usr -type l -name "*head*" -mtime +10 -size +30w -printf "Fichero: %p\n" >pruebaL1/ficheros/elfind 2>pruebaL1/ficheros/errorfind
 
 10.
 	date >>pruebaL1/ficheros/elfind
