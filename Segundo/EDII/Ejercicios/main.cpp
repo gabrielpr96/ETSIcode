@@ -777,6 +777,29 @@ int main(){
     dijkstraMatriz(R, 6, 1, 6);
     cout << endl << endl;
 
+    int **T = new int*[8];
+    for(int i = 0; i < 8; i++)
+        T[i] = new int[8];
+    for(int i = 0; i < 8; i++)
+        for(int j = 0; j < 6; j++)
+            T[i][j] = 0;
+    T[0][1] = 2;
+    T[0][6] = 3;
+    T[1][2] = 5;
+    T[1][7] = 3;
+    T[2][3] = 4;
+    T[2][4] = 1;
+    T[4][3] = 1;
+    T[4][5] = 2;
+    T[6][7] = 1;
+    T[6][4] = 3;
+    T[6][5] = 7;
+    T[7][2] = 1;
+    T[7][4] = 2;
+
+    dijkstraMatriz(T, 8, 1, 4);
+    cout << endl << endl;
+
     Grafo<int, float> S(7);
     for (int i = 1; i <= 7; i++) S.insertarVertice(i);
     S.insertarArista(3, 2, 1);
