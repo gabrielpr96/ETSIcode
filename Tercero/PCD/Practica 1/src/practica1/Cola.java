@@ -6,6 +6,10 @@ public class Cola implements ICola {
     private final int capacidad;
     private final Object[] datos;
 
+    /**
+     * Crea una estrucura de tipo de tipo cola
+     * @param capacidad Número de elementos máximos que puede contener la cola
+     */
     public Cola(int capacidad) {
         this.capacidad = capacidad;
         this.datos = new Object[capacidad];
@@ -48,20 +52,33 @@ public class Cola implements ICola {
         return datos[head];
     }
 
+    /**
+     * Comprueba si la cola está vacía
+     * @return True si la cola está vacía, False en caso contrario
+     */
     public boolean colavacia() {
         return numelementos == 0;
     }
 
+    /**
+     * Comprueba si la cola está llena
+     * @return True si al cola está vacía, False en caso contrario
+     */
     public boolean colallena() {
         return numelementos == capacidad;
     }
     
+    /**
+     * La representación en cadena de la cola consiste en una lista de elementos separados por espacios, comenzando por el primer elemento insertado
+     * @return Un String conteniendo la representación serializada de la cola
+     */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < numelementos; i++) {
             sb.append(datos[(head+i)%capacidad]).append(" ");
         }
+        sb.setLength(sb.length()-1);
         return sb.toString();
     }
 
