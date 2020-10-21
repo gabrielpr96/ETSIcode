@@ -1,4 +1,4 @@
-package practica.pkg1;
+package practica;
 
 import java.util.ArrayList;
 
@@ -14,28 +14,34 @@ public class Triangulo {
         this.perimetro = null;
     }
     
-    public static double area(Triangulo t){
-        return area(t.p1, t.p2, t.p3);
-    }
-    public static double area(Punto p1, Punto p2, Punto p3){
-        return Math.abs((p1.getX()) * (p2.getY() - p3.getY()) + p2.getX() * (p3.getY() - p1.getY()) + p3.getX() * (p1.getY() - p2.getY())) / 2d;
-    }
-    public static double perimetro(Triangulo t){
-        return perimetro(t.p1, t.p2, t.p3);
-    }
-    public static double perimetro(Punto p1, Punto p2, Punto p3){
-        return p1.distancia(p2)+p2.distancia(p3)+p3.distancia(p1);
-    }
-    
     public double area(){
         if(this.area == null)
-            this.area = Triangulo.area(this);
+            this.area = Math.abs((p1.getX()) * (p2.getY() - p3.getY()) + p2.getX() * (p3.getY() - p1.getY()) + p3.getX() * (p1.getY() - p2.getY())) / 2d;
         return area;
     }
     public double perimetro(){
         if(this.perimetro == null)
-            this.perimetro = Triangulo.perimetro(this);
+            this.perimetro = p1.distancia(p2)+p2.distancia(p3)+p3.distancia(p1);
         return perimetro;
+    }
+    
+    public Punto getP1(){
+        return p1;
+    }
+    public Punto getP2(){
+        return p2;
+    }
+    public Punto getP3(){
+        return p3;
+    }
+    
+    /**
+     * Compara un triangulo con sigo mismo.
+     * @param t
+     * @return Verdadero si su perimetro es menor al del pasado por parámetro. A igual perímetro, compara si su area es mayor.
+     */
+    public boolean comparar(Triangulo t){
+        return perimetro() < t.perimetro() || (perimetro() == t.perimetro() && area() > t.area());
     }
     
     @Override

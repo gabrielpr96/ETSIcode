@@ -1,4 +1,4 @@
-package practica.pkg1;
+package practica;
 
 public class Linea {
     private final Punto p1, p2;
@@ -10,14 +10,26 @@ public class Linea {
         this.longitud = null;
     }
     
-    public static double longitud(Linea l){
-        return Punto.distancia(l.p1, l.p2);
-    }
-    
     public double longitud(){
         if(this.longitud == null)
-            this.longitud = Linea.longitud(this);
+            this.longitud = p1.distancia(p2);
         return longitud;
+    }
+    
+    public Punto getP1(){
+        return p1;
+    }
+    public Punto getP2(){
+        return p2;
+    }
+    
+    /**
+     * Compara la longitud de una linea consigo misma
+     * @param l
+     * @return Verdadero si su longitud es menor.
+     */
+    public boolean comparar(Linea l){
+        return longitud() < l.longitud();
     }
     
     @Override
@@ -26,7 +38,7 @@ public class Linea {
             return false;
         }else{
             Linea lObj = (Linea)obj;
-            return (p1 == lObj.p1 && p2 == lObj.p2) || (p1 == lObj.p2 && p2 == lObj.p1);
+            return (p1.equals(lObj.p1) && p2.equals(lObj.p2)) || (p1.equals(lObj.p2) && p2.equals(lObj.p1));
         }
     }
     

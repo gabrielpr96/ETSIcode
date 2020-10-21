@@ -1,4 +1,4 @@
-package practica.pkg1;
+package practica;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
