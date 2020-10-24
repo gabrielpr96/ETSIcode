@@ -5,7 +5,8 @@
 using namespace std;
 
 int main(){
-	double a, b, c, solucion1, solucion2;
+	int a, b, c;
+	double solucion1, solucion2;
 
 	cout << "Introduzca el valor de a: ";
 	cin >> a;
