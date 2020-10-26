@@ -1,6 +1,6 @@
-package practica1;
+package practica2;
 
-public class Cola implements ICola {
+public class ColaLenta implements ICola {
 
     private int head, tail, numelementos;
     private final int capacidad;
@@ -10,7 +10,7 @@ public class Cola implements ICola {
      * Crea una estrucura de tipo de tipo cola
      * @param capacidad Número de elementos máximos que puede contener la cola
      */
-    public Cola(int capacidad) {
+    public ColaLenta(int capacidad) {
         this.capacidad = capacidad;
         this.datos = new Object[capacidad];
         this.numelementos = this.head = this.tail = 0;
@@ -23,23 +23,27 @@ public class Cola implements ICola {
     }
 
     @Override
-    public void Acola(Object elemento) throws Exception {
+    public /*synchronized*/ void Acola(Object elemento) throws Exception {
         if (colallena()) {
             throw new Exception("No hay espacio en la cola para insertar el elemento");
         }
         datos[tail] = elemento;
+        Thread.sleep(100);
         tail = (tail + 1) % capacidad;
+        Thread.sleep(100);
         numelementos++;
     }
 
     @Override
-    public Object Desacola() throws Exception {
+    public /*synchronized*/ Object Desacola() throws Exception {
         if (colavacia()) {
             throw new Exception("No hay elementos en la cola");
         }
         Object elemento = datos[head];
-        datos[head] = null;
+        //datos[head] = null;
+        Thread.sleep(100);
         head = (head + 1) % capacidad;
+        Thread.sleep(100);
         numelementos--;
         return elemento;
     }
@@ -74,13 +78,10 @@ public class Cola implements ICola {
      */
     @Override
     public String toString(){
-        if(numelementos == 0)
-            return "";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < numelementos; i++) {
             sb.append(datos[(head+i)%capacidad]).append(" ");
         }
-        sb.setLength(sb.length()-1);
         return sb.toString();
     }
 
