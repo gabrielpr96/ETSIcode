@@ -15,8 +15,8 @@ public class Lienzo extends Canvas {
     private static final int GROSOR = 6, PADDING = 10;
     
     private final ArrayList<Punto> puntos;
-    private Linea linea;
-    private Triangulo triangulo;
+    private Linea linea, lineaMejor;
+    private Triangulo triangulo, trianguloMejor;
     private boolean mejor, especial;
     private int lado;
     private double resNegX, resPosX, resNegY, resPosY;
@@ -28,6 +28,8 @@ public class Lienzo extends Canvas {
         puntos = new ArrayList<>();
         linea = null;
         triangulo = null;
+        lineaMejor = null;
+        trianguloMejor = null;
         mejor = especial = false;
     }
     
@@ -57,6 +59,8 @@ public class Lienzo extends Canvas {
         resNegY = -resNegY;
         linea = null;
         triangulo = null;
+        lineaMejor = null;
+        trianguloMejor = null;
         mejor = false;
         mejor = especial = false;
         repaint();
@@ -77,6 +81,24 @@ public class Lienzo extends Canvas {
      */
     public void drawTriangulo(Triangulo triangulo){
         this.triangulo = triangulo;
+        repaint();
+    }
+    /**
+     * Establece la linea.
+     * Manda a repintar.
+     * @param linea 
+     */
+    public void drawMejorLinea(Linea linea){
+        this.lineaMejor = linea;
+        repaint();
+    }
+    /**
+     * Establece el triangulo.
+     * Manda a repintar.
+     * @param triangulo 
+     */
+    public void drawMejorTriangulo(Triangulo triangulo){
+        this.trianguloMejor = triangulo;
         repaint();
     }
     /**
@@ -112,16 +134,30 @@ public class Lienzo extends Canvas {
         for(Punto punto : puntos){
             g.fillOval(cordX2pix(punto.getX())-GROSOR/2, cordY2pix(punto.getY())-GROSOR/2, GROSOR, GROSOR);
         }
+        
         ((Graphics2D)g).setStroke(new BasicStroke(GROSOR/2));
+        
         g.setColor(mejor?Color.red:especial?Color.green:Color.blue);
-        if(linea != null){
-            g.drawLine(cordX2pix(linea.getP1().getX()), cordY2pix(linea.getP1().getY()), cordX2pix(linea.getP2().getX()), cordY2pix(linea.getP2().getY()));
-        }
-        if(triangulo != null){
-            g.drawLine(cordX2pix(triangulo.getP1().getX()), cordY2pix(triangulo.getP1().getY()), cordX2pix(triangulo.getP2().getX()), cordY2pix(triangulo.getP2().getY()));
-            g.drawLine(cordX2pix(triangulo.getP2().getX()), cordY2pix(triangulo.getP2().getY()), cordX2pix(triangulo.getP3().getX()), cordY2pix(triangulo.getP3().getY()));
-            g.drawLine(cordX2pix(triangulo.getP3().getX()), cordY2pix(triangulo.getP3().getY()), cordX2pix(triangulo.getP1().getX()), cordY2pix(triangulo.getP1().getY()));
-        }
+        if(linea != null)
+            gLinea(g, linea);
+        if(triangulo != null)
+            gTriangulo(g, triangulo);
+        
+        g.setColor(Color.magenta);
+        if(lineaMejor != null)
+            gLinea(g, lineaMejor);
+        if(trianguloMejor != null)
+            gTriangulo(g, trianguloMejor);
+    }
+    
+    private void gLinea(Graphics g, Linea l){
+        g.drawLine(cordX2pix(l.getP1().getX()), cordY2pix(l.getP1().getY()), cordX2pix(l.getP2().getX()), cordY2pix(l.getP2().getY()));
+    }
+    
+    private void gTriangulo(Graphics g, Triangulo t){
+            g.drawLine(cordX2pix(t.getP1().getX()), cordY2pix(t.getP1().getY()), cordX2pix(t.getP2().getX()), cordY2pix(t.getP2().getY()));
+            g.drawLine(cordX2pix(t.getP2().getX()), cordY2pix(t.getP2().getY()), cordX2pix(t.getP3().getX()), cordY2pix(t.getP3().getY()));
+            g.drawLine(cordX2pix(t.getP3().getX()), cordY2pix(t.getP3().getY()), cordX2pix(t.getP1().getX()), cordY2pix(t.getP1().getY()));
     }
     
     private int cordX2pix(double cord){

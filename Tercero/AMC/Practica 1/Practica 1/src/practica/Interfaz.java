@@ -7,11 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Double;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,9 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayer;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
@@ -255,6 +249,8 @@ public class Interfaz extends JPanel {
         btnAleatorio.addActionListener((ActionEvent e) -> {
             puntos = randomMap(Integer.parseInt(txtTaya.getText()), -100, 100, -100, 100);
             lienzo.drawMap(puntos);
+            detenerAlgoritmo();
+            
         });
         btnCargar.addActionListener((ActionEvent e) -> {
             FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
@@ -264,6 +260,7 @@ public class Interfaz extends JPanel {
             if(file != null){
                 puntos = TSPparser.parse(dialog.getDirectory() + dialog.getFile());
                 lienzo.drawMap(puntos);
+                detenerAlgoritmo();
             }
         });
         btnComenzar.addActionListener((ActionEvent e) -> {
@@ -271,10 +268,7 @@ public class Interfaz extends JPanel {
             iniciarAlgoritmo();
         });
         btnDetener.addActionListener((ActionEvent e) -> {
-            if(sliEspera.getValue() == 1000)
-                Algoritmos.setEsperaDraw(1);
-            trabajador.interrupt();
-            trabajador = null;
+            detenerAlgoritmo();
         });
         sliEspera.addChangeListener((ChangeEvent e) -> {
             Algoritmos.setEsperaDraw(1000-sliEspera.getValue());
@@ -282,8 +276,7 @@ public class Interfaz extends JPanel {
     }
     
     /**
-     * Detiene el trabajdor actual si lo hubiera y comienza uno nuevo con el algoritmo seleccionado y los puntos cargados
-     * @param puntos 
+     * Detiene el trabajdor actual si lo hubiera, esperando a que termine, y comienza uno nuevo con el algoritmo seleccionado y los puntos cargados
      */
     private void iniciarAlgoritmo(){
         if(trabajador != null){
@@ -318,6 +311,19 @@ public class Interfaz extends JPanel {
         trabajador.start();
         btnDetener.setEnabled(true);
     }
+    
+    /**
+     * Detiene el trabajdor actual si lo hubiera, no espera a que termine.
+     */
+    private void detenerAlgoritmo(){
+        if(trabajador != null && trabajador.isAlive()){
+            if(sliEspera.getValue() == 1000)
+                Algoritmos.setEsperaDraw(1);
+            trabajador.interrupt();
+            trabajador = null;
+        }
+    }
+    
     
     /**
      * Establece el tamaño del panel

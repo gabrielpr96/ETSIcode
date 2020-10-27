@@ -256,6 +256,7 @@ public class Algoritmos {
                     tmp = new Triangulo(puntos[i], puntos[j], puntos[k]);
                     if (tmp.comparar(mejor)) {
                         mejor = tmp;
+                        lienzo.drawMejorTriangulo(tmp);
                     }
                     lienzo.setTipo(false, false);
                     lienzo.drawTriangulo(tmp);
@@ -342,6 +343,7 @@ public class Algoritmos {
                 }
             }
         }
+        lienzo.drawMejorTriangulo(min);
         return min;
     }
 
@@ -362,6 +364,7 @@ public class Algoritmos {
                 tmp = new Linea(puntos[i], puntos[j]);
                 if (tmp.comparar(mejor)) {
                     mejor = tmp;
+                    lienzo.drawMejorLinea(tmp);
                 }
                 lienzo.setTipo(false, false);
                 lienzo.drawLinea(tmp);
@@ -445,6 +448,7 @@ public class Algoritmos {
                 }
             }
         }
+        lienzo.drawMejorLinea(min);
         return min;
     }
 
