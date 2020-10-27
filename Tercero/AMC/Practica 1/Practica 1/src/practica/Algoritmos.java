@@ -1,10 +1,7 @@
 package practica;
 
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class Algoritmos {
 
@@ -220,17 +217,17 @@ public class Algoritmos {
         }
     }
 
-    private static Random r = new Random();
+    private static final Random R = new Random();
 
     static {
-        r.setSeed(System.nanoTime());
-        r.setSeed(0);
+        R.setSeed(System.nanoTime());
+        R.setSeed(0);
     }
 
     public static Punto[] randomMap(int n, double resMinX, double resMaxX, double resMinY, double resMaxY) {
         Punto[] puntos = new Punto[n];
         for (int i = 0; i < n; i++) {
-            puntos[i] = new Punto(resMinX + (resMaxX - resMinX) * r.nextDouble(), resMinY + (resMaxY - resMinY) * r.nextDouble());
+            puntos[i] = new Punto(resMinX + (resMaxX - resMinX) * R.nextDouble(), resMinY + (resMaxY - resMinY) * R.nextDouble());
         }
         return puntos;
     }

@@ -42,7 +42,7 @@ public class Punto {
             return false;
         }else{
             Punto pObj = (Punto)obj;
-            return Math.abs(x-pObj.x) <= MINIMO_COMPARACION && Math.abs(y-pObj.y) <= 0.000001;
+            return Math.abs(x-pObj.x) <= MINIMO_COMPARACION && Math.abs(y-pObj.y) <= MINIMO_COMPARACION;
         }
     }
 }
