@@ -7,8 +7,7 @@ public class Consumidor implements Runnable{
         this.c = c;
     }
     
-    @Override
-    public void run(){
+    private void consumir(){
         for (int i = 0; i < 10; i++) {
             try {
              System.out.println("Hilo "+Thread.currentThread().getId()+" Extraigo: "+c.Desacola());
@@ -16,5 +15,10 @@ public class Consumidor implements Runnable{
                 System.out.println("Hilo "+Thread.currentThread().getId()+" Error al extraer"+ex.getMessage());
             }
         }
+    }
+    
+    @Override
+    public void run(){
+        consumir();
     }
 }

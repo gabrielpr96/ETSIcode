@@ -12,8 +12,7 @@ public class Productor extends Thread{
         this.c = c;
     }
     
-    @Override
-    public void run(){
+    private void producir(){
         Random r = new Random();
         r.setSeed(System.nanoTime());
         for (int i = 0; i < 10; i++) {
@@ -25,5 +24,10 @@ public class Productor extends Thread{
                 System.out.println("Hilo "+getId()+" Error al insertar: "+ex.getMessage());
             }
         }
+    }
+    
+    @Override
+    public void run(){
+        producir();
     }
 }
