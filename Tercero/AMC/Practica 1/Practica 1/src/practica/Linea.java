@@ -1,6 +1,6 @@
 package practica;
 
-public class Linea {
+public class Linea{
     private final Punto p1, p2;
     private Double longitud;
     
@@ -25,7 +25,7 @@ public class Linea {
     
     /**
      * Compara la longitud de una linea consigo misma
-     * @param l
+     * @param l Linea a comparar
      * @return Verdadero si su longitud es menor.
      */
     public boolean comparar(Linea l){

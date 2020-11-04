@@ -2,7 +2,7 @@ package practica;
 
 import java.util.ArrayList;
 
-public class Triangulo {
+public class Triangulo{
     private final Punto p1, p2, p3;
     private Double area, perimetro;
     
@@ -37,7 +37,7 @@ public class Triangulo {
     
     /**
      * Compara un triangulo con sigo mismo.
-     * @param t
+     * @param t triangulo a comparar
      * @return Verdadero si su perimetro es menor al del pasado por parámetro. A igual perímetro, compara si su area es mayor.
      */
     public boolean comparar(Triangulo t){

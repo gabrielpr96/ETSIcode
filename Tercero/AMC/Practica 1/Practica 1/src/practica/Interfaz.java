@@ -1,5 +1,6 @@
 package practica;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Frame;
@@ -8,10 +9,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,7 +29,7 @@ import static practica.Algoritmos.randomMap;
 
 public class Interfaz extends JPanel {
 
-    private static final String[] ALGORITMOS = {"Exaustivo lineas", "DyV lineas", "Exaustivo triangulos", "DyV triangulos"};
+    private static final String[] ALGORITMOS = {"Exaustivo lineas", "DyV lineas", "Exaustivo triangulos", "DyV triangulos", "Kruskal", "Prim", "Kruskal Simplificado", "Prim Simplificado"};
     
     private static int ancho, alto;
     private final Lienzo lienzo;
@@ -253,12 +257,13 @@ public class Interfaz extends JPanel {
             
         });
         btnCargar.addActionListener((ActionEvent e) -> {
-            FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+            FileDialog dialog = new FileDialog((Frame)null, "Selecciona un archivo para abrir");
+            dialog.setFile("*.tsp");
             dialog.setMode(FileDialog.LOAD);
             dialog.setVisible(true);
             String file = dialog.getFile();
             if(file != null){
-                puntos = TSPparser.parse(dialog.getDirectory() + dialog.getFile());
+                puntos = TSPlib.parse(dialog.getDirectory() + dialog.getFile());
                 lienzo.drawMap(puntos);
                 detenerAlgoritmo();
             }
@@ -304,6 +309,18 @@ public class Interfaz extends JPanel {
                         break;
                     case 3:
                         Algoritmos.DrawDyV(puntos, lienzo, txtMensaje);
+                        break;
+                    case 4:
+                        Algoritmos.DrawKruskal(puntos, lienzo, txtMensaje);
+                        break;
+                    case 5:
+                        Algoritmos.DrawPrim(puntos, lienzo, txtMensaje);
+                        break;
+                    case 6:
+                        Algoritmos.DrawKruskalSimp(puntos, lienzo, txtMensaje);
+                        break;
+                    case 7:
+                        Algoritmos.DrawPrimSimp(puntos, lienzo, txtMensaje);
                         break;
                 }
             }

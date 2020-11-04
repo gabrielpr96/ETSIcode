@@ -1,10 +1,16 @@
 package practica;
 
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import javax.swing.JTextArea;
+import jdk.nashorn.internal.objects.Global;
 
 public class Algoritmos {
 
+    //Algoritmos de busqueda de triangulos
     public static Triangulo exaustivo(Punto[] puntos) {
         return exaustivo(puntos, 0, puntos.length - 1);
     }
@@ -81,6 +87,7 @@ public class Algoritmos {
         return min;
     }
 
+    //Algoritmos de busqueda de lineas
     public static Linea exaustivoLinea(Punto[] puntos) {
         return exaustivoLinea(puntos, 0, puntos.length - 1);
     }
@@ -153,12 +160,188 @@ public class Algoritmos {
         return min;
     }
 
-    public static void ordenaQuick(Punto[] puntos, boolean sortX) {
+    //Algoritmos de busqueda del camino mínimo
+    public static Arista[] generarAristas(Punto[] puntos) {
+        Arista[] aristas = new Arista[puntos.length * (puntos.length - 1) / 2];
+        int k = 0;
+        for (int i = 0; i < puntos.length; i++) {
+            for (int j = i + 1; j < puntos.length; j++) {
+                aristas[k++] = new Arista(puntos[i], puntos[j]);
+            }
+        }
+        return aristas;
+    }
+
+    public static double[][] generarMatrizAdyacencia(Punto[] puntos) {
+        double[][] matriz = new double[puntos.length][puntos.length];
+        for (int i = 0; i < puntos.length; i++) {
+            matriz[i][i] = Double.POSITIVE_INFINITY;
+            for (int j = i + 1; j < puntos.length; j++) {
+                matriz[i][j] = matriz[j][i] = puntos[i].distancia(puntos[j]);
+            }
+        }
+        return matriz;
+    }
+
+    public static double costeCamino(Arista[] aristas) {
+        double coste = 0;
+        for (Arista arista : aristas) {
+            coste += arista.coste();
+        }
+        return coste;
+    }
+
+    public static Arista[] kruskal(Arista[] aristas, Punto[] vertices) throws Exception {
+        Arista[] solucion = new Arista[vertices.length - 1];
+        ordenaQuick(aristas, true);
+        Map<Punto, Integer> conjuntos = new HashMap<>();
+        for (int i = 0; i < vertices.length; i++) {
+            conjuntos.put(vertices[i], i);
+        }
+        int iAristas = 0, iSolucion = 0;
+        while (iSolucion < solucion.length) {
+            if (iAristas >= aristas.length) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+            Arista arista = aristas[iAristas++];
+            int c1 = conjuntos.get(arista.getVertice1()), c2 = conjuntos.get(arista.getVertice2());
+            if (c1 != c2) {
+                solucion[iSolucion++] = arista;
+                //conjuntos.replaceAll((v, c) -> c==c2?c1:c);
+                for (Map.Entry<Punto, Integer> vertice : conjuntos.entrySet()) {
+                    if (vertice.getValue() == c2) {
+                        vertice.setValue(c1);
+                    }
+                }
+            }
+        }
+        return solucion;
+    }
+
+    public static Arista[] prim(Arista[] aristas, Punto[] vertices) throws Exception {
+        Arista[] solucion = new Arista[vertices.length - 1];
+        Map<Punto, Map<Punto, Arista>> costes = new HashMap<>();
+        for (Punto vertice : vertices) {
+            costes.put(vertice, null);
+        }
+        Punto vActual = vertices[0];
+        int iSolucion = 0;
+        while (iSolucion < solucion.length) {
+            Map<Punto, Arista> costesActual = costes.get(vActual);
+            if (costesActual == null) {
+                costesActual = new HashMap<>();
+                for (Punto vertice : vertices) {
+                    costesActual.put(vertice, null);
+                }
+                for (Arista arista : aristas) {
+                    if (arista.getVertice1() == vActual) {
+                        if (costesActual.get(arista.getVertice2()) == null || arista.comparar(costesActual.get(arista.getVertice2()), true)) {
+                            costesActual.put(arista.getVertice2(), arista);
+                        }
+                    } else if (arista.getVertice2() == vActual) {
+                        if (costesActual.get(arista.getVertice1()) == null || arista.comparar(costesActual.get(arista.getVertice1()), true)) {
+                            costesActual.put(arista.getVertice1(), arista);
+                        }
+                    }
+                }
+                costes.put(vActual, costesActual);
+            }
+
+            Arista mejor = null;
+            Punto siguenteVactual = null;
+            for (Map.Entry<Punto, Map<Punto, Arista>> costesVertice : costes.entrySet()) {
+                if (costesVertice.getValue() != null) {
+                    for (Map.Entry<Punto, Arista> arista : costesVertice.getValue().entrySet()) {
+                        if (arista.getValue() != null && costes.get(arista.getKey()) == null && (mejor == null || arista.getValue().comparar(mejor, true))) {
+                            mejor = arista.getValue();
+                            siguenteVactual = arista.getKey();
+                        }
+                    }
+                }
+            }
+            if (mejor == null) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+
+            costes.get(vActual).put(siguenteVactual, null);
+            vActual = siguenteVactual;
+
+            solucion[iSolucion++] = mejor;
+        }
+        return solucion;
+    }
+
+    public static Arista[] kruskal(double[][] aristas, Punto[] vertices) throws Exception {
+        int[] conjuntos = new int[vertices.length];
+        for (int i = 0; i < vertices.length; i++) {
+            conjuntos[i] = i;
+        }
+        int iSolucion = 0;
+        Arista[] solucion = new Arista[vertices.length - 1];
+        while (iSolucion < vertices.length - 1) {
+            double min = Double.POSITIVE_INFINITY;
+            int minI = -1, minJ = -1;
+            for (int i = 0; i < vertices.length; i++) {
+                for (int j = i + 1; j < vertices.length; j++) {
+                    if (conjuntos[i] != conjuntos[j] && aristas[i][j] < min) {
+                        min = aristas[i][j];
+                        minI = i;
+                        minJ = j;
+                    }
+                }
+            }
+            if (minI == -1) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+            int conjuntoI = conjuntos[minI], conjuntoJ = conjuntos[minJ];
+            for (int i = 0; i < vertices.length; i++) {
+                if (conjuntos[i] == conjuntoJ) {
+                    conjuntos[i] = conjuntoI;
+                }
+            }
+            solucion[iSolucion++] = new Arista(vertices[minI], vertices[minJ]);
+        }
+        return solucion;
+    }
+
+    public static Arista[] prim(double[][] aristas, Punto[] vertices) throws Exception {
+        int iSolucion = 0;
+        Arista[] solucion = new Arista[vertices.length - 1];
+        boolean conexos[] = new boolean[vertices.length];
+        for (int i = 1; i < vertices.length; i++) {
+            conexos[i] = false;
+        }
+        conexos[0] = true;
+        while (iSolucion < vertices.length - 1) {
+            double min = Double.POSITIVE_INFINITY;
+            int minI = -1, minJ = -1;
+            for (int i = 0; i < vertices.length; i++) {
+                if (conexos[i]) {
+                    for (int j = 0; j < vertices.length; j++) {
+                        if (!conexos[j] && aristas[i][j] < min) {
+                            min = aristas[i][j];
+                            minI = i;
+                            minJ = j;
+                        }
+                    }
+                }
+            }
+            if (minI == -1) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+            conexos[minJ] = true;
+            solucion[iSolucion++] = new Arista(vertices[minI], vertices[minJ]);
+        }
+        return solucion;
+    }
+
+    //Algoritmos de ordenación
+    public static void ordenaQuick(Comparable[] puntos, boolean sortX) {
         ordenaQuick(puntos, 0, puntos.length - 1, sortX);
     }
 
-    private static int ordenaQuickPart(Punto puntos[], int izq, int der, boolean sortX) {
-        Punto med = puntos[der];
+    private static int ordenaQuickPart(Comparable puntos[], int izq, int der, boolean sortX) {
+        Comparable med = puntos[der];
         int i = (izq - 1);
         for (int j = izq; j < der; j++) {
             if (puntos[j].comparar(med, sortX)) {
@@ -171,7 +354,7 @@ public class Algoritmos {
         return i + 1;
     }
 
-    private static void ordenaQuick(Punto[] puntos, int izq, int der, boolean sortX) {
+    private static void ordenaQuick(Comparable[] puntos, int izq, int der, boolean sortX) {
         if (izq < der) {
             int med = ordenaQuickPart(puntos, izq, der, sortX);
             ordenaQuick(puntos, izq, med - 1, sortX);
@@ -179,13 +362,13 @@ public class Algoritmos {
         }
     }
 
-    private static void ordenaSwap(Punto[] puntos, int a, int b) {
-        Punto temp = puntos[a];
-        puntos[a] = puntos[b];
-        puntos[b] = temp;
+    private static void ordenaSwap(Object[] elementos, int a, int b) {
+        Object tmp = elementos[a];
+        elementos[a] = elementos[b];
+        elementos[b] = tmp;
     }
 
-    public static void ordenaHeap(Punto[] puntos, boolean sortX) {
+    public static void ordenaHeap(Comparable[] puntos, boolean sortX) {
         int n = puntos.length;
 
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -198,7 +381,7 @@ public class Algoritmos {
         }
     }
 
-    private static void ordenaHeapHundir(Punto[] puntos, int raiz, int n, boolean sortX) {
+    private static void ordenaHeapHundir(Comparable[] puntos, int raiz, int n, boolean sortX) {
         int mayor = raiz;
         int izq = 2 * raiz + 1;
         int der = 2 * raiz + 2;
@@ -217,6 +400,7 @@ public class Algoritmos {
         }
     }
 
+    //Algoritmos adaptados al dibujado
     private static final Random R = new Random();
 
     static {
@@ -418,7 +602,7 @@ public class Algoritmos {
         //Obtener la linea menor de cada mitad
         Linea minIzq = DrawDyVlinea(puntosX, puntosYizq, izq, mid, lienzo), minDer = DrawDyVlinea(puntosX, puntosYder, mid + 1, der, lienzo);
         //Sacar la linea menor de las dos mitades
-        Linea min = minIzq.comparar(minDer)? minIzq : minDer;
+        Linea min = minIzq.comparar(minDer) ? minIzq : minDer;
         //Extraer la zona crossover ordenada por Y
         Punto[] crossover = new Punto[n];
         int nCrossover = 0;
@@ -450,6 +634,321 @@ public class Algoritmos {
         }
         lienzo.drawMejorLinea(min);
         return min;
+    }
+
+    public static void DrawKruskal(Punto[] puntos, Lienzo lienzo, JTextArea mensaje) {
+        lienzo.drawMap(puntos);
+        mensaje.setText("Generando aristas");
+        Arista[] aristas = generarAristas(puntos);
+        mensaje.setText("Ejecutando algoritmo");
+        try {
+            TablaKruskal tabla = null;
+            if (puntos.length <= 20) {
+                tabla = new TablaKruskal(puntos);
+            }
+            Arista[] resultado = DrawKruskal(aristas, puntos, lienzo, tabla);
+            mensaje.setText("Resultado obtenido: " + costeCamino(resultado));
+            FileDialog dialog = new FileDialog((Frame) null, "Guardar el resultado de la ejecucion");
+            dialog.setMode(FileDialog.SAVE);
+            dialog.setVisible(true);
+            String file = dialog.getFile();
+            if (file != null) {
+                if (!file.endsWith(".tour")) {
+                    file += ".tour";
+                }
+                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+            }
+        } catch (Exception e) {
+            mensaje.setText("Error al ejecutar el algoritmo");
+            e.printStackTrace();
+        }
+    }
+
+    public static Arista[] DrawKruskal(Arista[] aristas, Punto[] vertices, Lienzo lienzo, TablaKruskal tabla) throws Exception {
+        Arista[] solucion = new Arista[vertices.length - 1];
+        ordenaQuick(aristas, true);
+        Map<Punto, Integer> conjuntos = new HashMap<>();
+        for (int i = 0; i < vertices.length; i++) {
+            conjuntos.put(vertices[i], i);
+        }
+        if (tabla != null) {
+            tabla.addPaso(null, conjuntos, true);
+        }
+        int iAristas = 0, iSolucion = 0;
+        while (iSolucion < solucion.length) {
+            if (iAristas >= aristas.length) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+            Arista arista = aristas[iAristas++];
+            lienzo.drawLinea(arista.getLinea());
+            try {
+                Thread.sleep(esperaDraw);
+            } catch (InterruptedException ex) {
+                return null;
+            }
+            int c1 = conjuntos.get(arista.getVertice1()), c2 = conjuntos.get(arista.getVertice2());
+            if (c1 != c2) {
+                solucion[iSolucion++] = arista;
+                lienzo.addDrawLinea(arista.getLinea());
+                try {
+                    Thread.sleep(esperaDraw);
+                } catch (InterruptedException ex) {
+                    return null;
+                }
+                //conjuntos.replaceAll((v, c) -> c==c2?c1:c);
+                for (Map.Entry<Punto, Integer> vertice : conjuntos.entrySet()) {
+                    if (vertice.getValue() == c2) {
+                        vertice.setValue(c1);
+                    }
+                }
+                if (tabla != null) {
+                    tabla.addPaso(arista, conjuntos, true);
+                }
+            } else {
+                if (tabla != null) {
+                    tabla.addPaso(arista, conjuntos, false);
+                }
+            }
+        }
+        return solucion;
+    }
+
+    public static void DrawPrim(Punto[] puntos, Lienzo lienzo, JTextArea mensaje) {
+        lienzo.drawMap(puntos);
+        mensaje.setText("Generando aristas");
+        Arista[] aristas = generarAristas(puntos);
+        mensaje.setText("Ejecutando algoritmo");
+        try {
+            TablaPrim tabla = null;
+            if (puntos.length <= 20) {
+                tabla = new TablaPrim(puntos);
+            }
+            Arista[] resultado = DrawPrim(aristas, puntos, lienzo, tabla);
+            mensaje.setText("Resultado obtenido: " + costeCamino(resultado));
+            FileDialog dialog = new FileDialog((Frame) null, "Guardar el resultado de la ejecucion");
+            dialog.setMode(FileDialog.SAVE);
+            dialog.setVisible(true);
+            String file = dialog.getFile();
+            if (file != null) {
+                if (!file.endsWith(".tour")) {
+                    file += ".tour";
+                }
+                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+            }
+        } catch (Exception e) {
+            mensaje.setText("Error al ejecutar el algoritmo");
+            e.printStackTrace();
+        }
+    }
+
+    public static Arista[] DrawPrim(Arista[] aristas, Punto[] vertices, Lienzo lienzo, TablaPrim tabla) throws Exception {
+        Arista[] solucion = new Arista[vertices.length - 1];
+        Map<Punto, Map<Punto, Arista>> costes = new HashMap<>();
+        for (Punto vertice : vertices) {
+            costes.put(vertice, null);
+        }
+        Punto vActual = vertices[0];
+        int iSolucion = 0;
+        while (iSolucion < solucion.length) {
+            Map<Punto, Arista> costesActual = costes.get(vActual);
+            if (costesActual == null) {
+                costesActual = new HashMap<>();
+                for (Punto vertice : vertices) {
+                    costesActual.put(vertice, null);
+                }
+                for (Arista arista : aristas) {
+                    if (arista.getVertice1() == vActual) {
+                        if (costesActual.get(arista.getVertice2()) == null || arista.comparar(costesActual.get(arista.getVertice2()), true)) {
+                            costesActual.put(arista.getVertice2(), arista);
+                        }
+                    } else if (arista.getVertice2() == vActual) {
+                        if (costesActual.get(arista.getVertice1()) == null || arista.comparar(costesActual.get(arista.getVertice1()), true)) {
+                            costesActual.put(arista.getVertice1(), arista);
+                        }
+                    }
+                }
+                costes.put(vActual, costesActual);
+                if (tabla != null) {
+                    tabla.updateMatrix(vActual, costesActual);
+                }
+            }
+
+            Arista mejor = null;
+            Punto siguenteVactual = null;
+            for (Map.Entry<Punto, Map<Punto, Arista>> costesVertice : costes.entrySet()) {
+                if (costesVertice.getValue() != null) {
+                    for (Map.Entry<Punto, Arista> arista : costesVertice.getValue().entrySet()) {
+                        if (arista.getValue() != null && costes.get(arista.getKey()) == null && (mejor == null || arista.getValue().comparar(mejor, true))) {
+                            mejor = arista.getValue();
+                            siguenteVactual = arista.getKey();
+                            lienzo.drawLinea(arista.getValue().getLinea());
+                            try {
+                                Thread.sleep(esperaDraw);
+                            } catch (InterruptedException ex) {
+                                return null;
+                            }
+                        }
+                    }
+                }
+            }
+            if (mejor == null) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+
+            costes.get(vActual).put(siguenteVactual, null);
+            vActual = siguenteVactual;
+
+            solucion[iSolucion++] = mejor;
+            lienzo.addDrawLinea(mejor.getLinea());
+            if (tabla != null) {
+                tabla.addPaso(mejor, solucion);
+            }
+
+            try {
+                Thread.sleep(esperaDraw);
+            } catch (InterruptedException ex) {
+                return null;
+            }
+        }
+        return solucion;
+    }
+
+    public static void DrawKruskalSimp(Punto[] puntos, Lienzo lienzo, JTextArea mensaje) {
+        lienzo.drawMap(puntos);
+        mensaje.setText("Generando aristas");
+        double[][] aristas = generarMatrizAdyacencia(puntos);
+        mensaje.setText("Ejecutando algoritmo");
+        try {
+            Arista[] resultado = DrawKruskal(aristas, puntos, lienzo);
+            mensaje.setText("Resultado obtenido: " + costeCamino(resultado));
+            FileDialog dialog = new FileDialog((Frame) null, "Guardar el resultado de la ejecucion");
+            dialog.setMode(FileDialog.SAVE);
+            dialog.setVisible(true);
+            String file = dialog.getFile();
+            if (file != null) {
+                if (!file.endsWith(".tour")) {
+                    file += ".tour";
+                }
+                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+            }
+        } catch (Exception e) {
+            mensaje.setText("Error al ejecutar el algoritmo");
+            e.printStackTrace();
+        }
+    }
+
+    public static Arista[] DrawKruskal(double[][] aristas, Punto[] vertices, Lienzo lienzo) throws Exception {
+        int[] conjuntos = new int[vertices.length];
+        for (int i = 0; i < vertices.length; i++) {
+            conjuntos[i] = i;
+        }
+        int iSolucion = 0;
+        Arista[] solucion = new Arista[vertices.length - 1];
+        while (iSolucion < vertices.length - 1) {
+            double min = Double.POSITIVE_INFINITY;
+            int minI = -1, minJ = -1;
+            for (int i = 0; i < vertices.length; i++) {
+                for (int j = i + 1; j < vertices.length; j++) {
+                    if (conjuntos[i] != conjuntos[j] && aristas[i][j] < min) {
+                        min = aristas[i][j];
+                        minI = i;
+                        minJ = j;
+                    }
+                    lienzo.drawLinea(new Linea(vertices[i], vertices[j]));
+                    try {
+                        Thread.sleep(esperaDraw);
+                    } catch (InterruptedException ex) {
+                        return null;
+                    }
+                }
+            }
+            if (minI == -1) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+            int conjuntoI = conjuntos[minI], conjuntoJ = conjuntos[minJ];
+            for (int i = 0; i < vertices.length; i++) {
+                if (conjuntos[i] == conjuntoJ) {
+                    conjuntos[i] = conjuntoI;
+                }
+            }
+            solucion[iSolucion] = new Arista(vertices[minI], vertices[minJ]);
+            lienzo.addDrawLinea(solucion[iSolucion].getLinea());
+            try {
+                Thread.sleep(esperaDraw);
+            } catch (InterruptedException ex) {
+                return null;
+            }
+            iSolucion++;
+        }
+        return solucion;
+    }
+
+    public static void DrawPrimSimp(Punto[] puntos, Lienzo lienzo, JTextArea mensaje) {
+        lienzo.drawMap(puntos);
+        mensaje.setText("Generando aristas");
+        double[][] aristas = generarMatrizAdyacencia(puntos);
+        mensaje.setText("Ejecutando algoritmo");
+        try {
+            Arista[] resultado = DrawPrim(aristas, puntos, lienzo);
+            mensaje.setText("Resultado obtenido: " + costeCamino(resultado));
+            FileDialog dialog = new FileDialog((Frame) null, "Guardar el resultado de la ejecucion");
+            dialog.setMode(FileDialog.SAVE);
+            dialog.setVisible(true);
+            String file = dialog.getFile();
+            if (file != null) {
+                if (!file.endsWith(".tour")) {
+                    file += ".tour";
+                }
+                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+            }
+        } catch (Exception e) {
+            mensaje.setText("Error al ejecutar el algoritmo");
+            e.printStackTrace();
+        }
+    }
+
+    public static Arista[] DrawPrim(double[][] aristas, Punto[] vertices, Lienzo lienzo) throws Exception {
+        int iSolucion = 0;
+        Arista[] solucion = new Arista[vertices.length - 1];
+        boolean conexos[] = new boolean[vertices.length];
+        for (int i = 1; i < vertices.length; i++) {
+            conexos[i] = false;
+        }
+        conexos[0] = true;
+        while (iSolucion < vertices.length - 1) {
+            double min = Double.POSITIVE_INFINITY;
+            int minI = -1, minJ = -1;
+            for (int i = 0; i < vertices.length; i++) {
+                if (conexos[i]) {
+                    for (int j = 0; j < vertices.length; j++) {
+                        if (!conexos[j] && aristas[i][j] < min) {
+                            min = aristas[i][j];
+                            minI = i;
+                            minJ = j;
+                        }
+                        lienzo.drawLinea(new Linea(vertices[i], vertices[j]));
+                        try {
+                            Thread.sleep(esperaDraw);
+                        } catch (InterruptedException ex) {
+                            return null;
+                        }
+                    }
+                }
+            }
+            if (minI == -1) {
+                throw new Exception("No se puede conectar el grafo");
+            }
+            conexos[minJ] = true;
+            solucion[iSolucion] = new Arista(vertices[minI], vertices[minJ]);
+            lienzo.addDrawLinea(solucion[iSolucion].getLinea());
+            try {
+                Thread.sleep(esperaDraw);
+            } catch (InterruptedException ex) {
+                return null;
+            }
+            iSolucion++;
+        }
+        return solucion;
     }
 
 }

@@ -126,9 +126,40 @@ public class Practica1 {
         }
         
         System.out.println("\nPrueba de parseo");
-        Punto[] puntos1 = TSPparser.parse(DATSET_DIR+"berlin52.tsp");
+        Punto[] puntos1 = TSPlib.parse(DATSET_DIR+"berlin52.tsp");
         for(Punto punto: puntos1)
             System.out.println(punto.toString());
+        
+        puntos = new Punto[5];
+        puntos[0] = new Punto(0, 0);
+        puntos[1] = new Punto(0, 1);
+        puntos[2] = new Punto(0, 2);
+        puntos[3] = new Punto(1, 1);
+        puntos[4] = new Punto(2, 2);
+        System.out.println("\nPrueba de Kruskal");
+        Arista[] aristasK = null;
+        try {
+            aristasK = kruskal(generarAristas(puntos), puntos);
+            System.out.println("Coste: "+costeCamino(aristasK));
+            for(Arista arista : aristasK)
+                System.out.println(arista);
+        } catch (Exception ex) {
+            Logger.getLogger(Practica1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println("\nPrueba de Prim");
+        Arista[] aristasP = null;
+        try {
+            aristasP = prim(generarAristas(puntos), puntos);
+            System.out.println("Coste: "+costeCamino(aristasP));
+            for(Arista arista : aristasP)
+                System.out.println(arista);
+        } catch (Exception ex) {
+            Logger.getLogger(Practica1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(!(aristasK == null || aristasP == null))
+            System.out.println(costeCamino(aristasP) == costeCamino(aristasK)?"\nPrim y Kruskal devuelven lo mismo":"\nPrim y Kruskal no coinciden");
     }
     private static void profile(){
         //TODO: Hacer pruebas desde n=10 hasta todo lo que de el exaustivo y sacar los datos en csv
@@ -148,7 +179,7 @@ public class Practica1 {
                 accExaustivo = 0;
                 accDyV = 0;
                 for(int repeticion = 0; repeticion < repeticiones; repeticion++){
-                    puntos = puntos = randomMap(taya, -100, 100, -100, 100);
+                    puntos = randomMap(taya, -100, 100, -100, 100);
 
                     comienzo = System.nanoTime();
                     tExaustivo = exaustivo(puntos);
@@ -173,25 +204,90 @@ public class Practica1 {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        
+        try {
+            FileWriter ficheroPrim = new FileWriter(DATSET_DIR+"prim.csv");
+            FileWriter ficheroKruskal = new FileWriter(DATSET_DIR+"kruskal.csv");
+            ficheroPrim.write("Taya,Tiempo(ns)\n");
+            ficheroKruskal.write("Taya,Tiempo(ns)\n");
+            
+            Punto[] puntos;
+            double[][] aristas;
+            Arista[] rPrim, rKruskal;
+            long comienzo, accPrim, accKruskal;
+            int repeticiones = 10;
+            for(int taya = 10; taya <= 1000; taya += 10){
+                System.out.println(taya);
+                accPrim = 0;
+                accKruskal = 0;
+                for(int repeticion = 0; repeticion < repeticiones; repeticion++){
+                    puntos = randomMap(taya, -100, 100, -100, 100);
+                    aristas = generarMatrizAdyacencia(puntos);
+
+                    comienzo = System.nanoTime();
+                    rPrim = prim(aristas, puntos);
+                    accPrim += System.nanoTime()-comienzo;
+
+                    comienzo = System.nanoTime();
+                    rKruskal = kruskal(aristas, puntos);
+                    accKruskal += System.nanoTime()-comienzo;
+                    
+                    if(Math.abs(costeCamino(rPrim)-costeCamino(rKruskal)) > Punto.MINIMO_COMPARACION){
+                        System.err.println("ERROR CRITICO: Prim y Kruskal no han devuelto un grafo con la misma longitud");
+                        System.err.println("Prim: "+costeCamino(rPrim));
+                        for (Arista arista : rPrim) {
+                            System.err.println(arista);
+                        }
+                        System.err.println("Kruskal: "+costeCamino(rKruskal));
+                        for (Arista arista : rKruskal) {
+                            System.err.println(arista);
+                        }
+                        break;
+                    }
+                }
+                ficheroPrim.write(taya+","+(accPrim/repeticiones)+"\n");
+                ficheroKruskal.write(taya+","+(accKruskal/repeticiones)+"\n");
+            }
+            ficheroPrim.close();
+            ficheroKruskal.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     private static void resolverDataset(){
         Punto[] puntos;
         try {
-            puntos = TSPparser.parse(DATSET_DIR+"berlin52.tsp");
+            puntos = TSPlib.parse(DATSET_DIR+"berlin52.tsp");
             System.out.println("berlin52 Exaustivo: "+exaustivo(puntos));
             System.out.println("berlin52 DyV      : "+DyV(puntos));
-            puntos = TSPparser.parse(DATSET_DIR+"ch130.tsp");
+            puntos = TSPlib.parse(DATSET_DIR+"ch130.tsp");
             System.out.println("ch130 Exaustivo: "+exaustivo(puntos));
             System.out.println("ch130 DyV      : "+DyV(puntos));
-            puntos = TSPparser.parse(DATSET_DIR+"ch150.tsp");
+            puntos = TSPlib.parse(DATSET_DIR+"ch150.tsp");
             System.out.println("ch150 Exaustivo: "+exaustivo(puntos));
             System.out.println("ch150 DyV      : "+DyV(puntos));
-            puntos = TSPparser.parse(DATSET_DIR+"d493.tsp");
+            puntos = TSPlib.parse(DATSET_DIR+"d493.tsp");
             System.out.println("d493 Exaustivo: "+exaustivo(puntos));
             System.out.println("d493 DyV      : "+DyV(puntos));
-            puntos = TSPparser.parse(DATSET_DIR+"d657.tsp");
+            puntos = TSPlib.parse(DATSET_DIR+"d657.tsp");
             System.out.println("d657 Exaustivo: "+exaustivo(puntos));
             System.out.println("d657 DyV      : "+DyV(puntos));
+            
+            puntos = TSPlib.parse(DATSET_DIR+"berlin52.tsp");
+            System.out.println("berlin52 Kruskal: "+costeCamino(kruskal(generarAristas(puntos), puntos)));
+            System.out.println("berlin52 Prim   : "+costeCamino(prim(generarAristas(puntos), puntos)));
+            puntos = TSPlib.parse(DATSET_DIR+"ch130.tsp");
+            System.out.println("ch130 Kruskal: "+costeCamino(kruskal(generarAristas(puntos), puntos)));
+            System.out.println("ch130 Prim   : "+costeCamino(prim(generarAristas(puntos), puntos)));
+            puntos = TSPlib.parse(DATSET_DIR+"ch150.tsp");
+            System.out.println("ch150 Kruskal: "+costeCamino(kruskal(generarAristas(puntos), puntos)));
+            System.out.println("ch150 Prim   : "+costeCamino(prim(generarAristas(puntos), puntos)));
+            puntos = TSPlib.parse(DATSET_DIR+"d493.tsp");
+            System.out.println("d493 Kruskal: "+costeCamino(kruskal(generarAristas(puntos), puntos)));
+            System.out.println("d493 Prim   : "+costeCamino(prim(generarAristas(puntos), puntos)));
+            puntos = TSPlib.parse(DATSET_DIR+"d657.tsp");
+            System.out.println("d657 Kruskal: "+costeCamino(kruskal(generarAristas(puntos), puntos)));
+            System.out.println("d657 Prim   : "+costeCamino(prim(generarAristas(puntos), puntos)));
         } catch (Exception ex) {
             System.out.println("Error al calcular solucion");
             ex.printStackTrace();

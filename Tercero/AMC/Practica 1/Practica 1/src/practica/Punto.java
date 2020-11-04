@@ -1,7 +1,7 @@
 package practica;
 
-public class Punto {
-    private static final double MINIMO_COMPARACION = 0.000001;
+public class Punto implements Comparable{
+    public static final double MINIMO_COMPARACION = 0.000001;
     
     private final double x, y;
     
@@ -23,11 +23,15 @@ public class Punto {
     
     /**
      * Comparar un punto con sigo mismo.
-     * @param p El punto con el que se compara
+     * @param o El punto con el que se compara
      * @param sortX Si es verdadero, compara en el eje x. Si es falso, compara en el eje y.
      * @return Verdadero si es menor que el punto pasado por parametro.
      */
-    public boolean comparar(Punto p, boolean sortX){
+    @Override
+    public boolean comparar(Object o, boolean sortX){
+        if(o == null || o.getClass() != Punto.class)
+            return false;
+        Punto p = (Punto)o;
         return (sortX && (x < p.x || (x == p.x && y <= p.y))) || (!sortX && (y < p.y || (y == p.y && x <= p.x)));
     }
     
