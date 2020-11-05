@@ -33,6 +33,7 @@ public class manejaExperto {
         ResultSet rs = ps.executeQuery();
         while(rs.next())
             lista.add(new experto(rs.getString("CODEXPERTO"), rs.getString("NOMBRE"), rs.getString("PAIS"), rs.getString("SEXO"), rs.getString("ESPECIALIDAD")));
+        ps.close();
         return lista;
     }    
     
@@ -42,14 +43,12 @@ public class manejaExperto {
     * @throws SQLException si ocurre alguna anomalía
      */
     public boolean existeExperto(String codExperto) throws SQLException {
-        ps = conexion.getConexionOracle().prepareStatement("SELECT COUNT(*) as N FROM EXPERTO WHERE CODEXPERTO=?");
+        ps = conexion.getConexionOracle().prepareStatement("SELECT CODEXPERTO FROM EXPERTO WHERE CODEXPERTO=?");
         ps.setString(1, codExperto);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("N") == 1;
-        } else {
-            return false;
-        }
+        boolean existe = rs.next();
+        ps.close();
+        return existe;
     }
     
     /**
@@ -65,5 +64,6 @@ public class manejaExperto {
         ps.setString(4, exp.getSexo());
         ps.setString(5, exp.getEspecialidad());
         ps.executeUpdate();
+        ps.close();
     }
 }

@@ -1,6 +1,8 @@
 package Persistencia;
 
 import java.sql.*;
+import oracle.jdbc.OracleDriver;
+import oracle.sql.CharacterSet;
 
 public class conexionOracle {
 

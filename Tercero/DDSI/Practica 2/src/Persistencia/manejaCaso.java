@@ -30,14 +30,12 @@ public class manejaCaso {
      * @throws SQLException si ocurre alguna anomalía
      */
     public boolean existeCaso(String codCaso) throws SQLException {
-        ps = conexion.getConexionOracle().prepareStatement("SELECT COUNT(*) as N FROM CASO_POLICIAL WHERE CODCASO=?");
+        ps = conexion.getConexionOracle().prepareStatement("SELECT CODCASO FROM CASO_POLICIAL WHERE CODCASO=?");
         ps.setString(1, codCaso);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("N") == 1;
-        } else {
-            return false;
-        }
+        boolean existe = rs.next();
+        ps.close();
+        return existe;
     }
 
     /**
@@ -53,5 +51,6 @@ public class manejaCaso {
         ps.setString(3, cs.getFechaInicio());
         ps.setString(4, cs.getFechaFin());
         ps.executeUpdate();
+        ps.close();
     }
 }

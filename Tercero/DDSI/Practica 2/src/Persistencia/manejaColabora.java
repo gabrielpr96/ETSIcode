@@ -30,15 +30,13 @@ public class manejaColabora {
      * @throws SQLException si ocurre alguna anomalía
      */
     public boolean existeColaboracion(String codExperto, String codCaso) throws SQLException {
-        ps = conexion.getConexionOracle().prepareStatement("SELECT COUNT(*) as N FROM COLABORA WHERE CODEXPERTO=? CODCASO=?");
+        ps = conexion.getConexionOracle().prepareStatement("SELECT CODEXPERTO, CODCASO FROM COLABORA WHERE CODEXPERTO=? CODCASO=?");
         ps.setString(1, codExperto);
         ps.setString(2, codCaso);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("N") == 1;
-        } else {
-            return false;
-        }
+        boolean existe = rs.next();
+        ps.close();
+        return existe;
     }
 
     /**
@@ -54,6 +52,6 @@ public class manejaColabora {
         ps.setString(3, col.getFecha());
         ps.setString(4, col.getDescripcionColaboracion());
         ps.executeUpdate();
-
+        ps.close();
     }
 }
