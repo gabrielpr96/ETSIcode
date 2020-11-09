@@ -9,6 +9,7 @@ public class UsaCola {
     /**
      * Método que crea una cola de 4 elementos y aleatoriamente introduce números del 0 al 9 o los saca.
      * @param args No se utilizan
+     * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
         ColaLenta c = new ColaLenta(10);
