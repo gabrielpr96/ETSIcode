@@ -14,7 +14,7 @@ public class Practica1 {
 
     public static void main(String[] args) {
         //unitTest();
-        //profile();
+        profile();
         //resolverDataset();
         interfaz = new Interfaz();
         JFrame ventana = new JFrame();
@@ -212,20 +212,22 @@ public class Practica1 {
             ficheroKruskal.write("Taya,Tiempo(ns)\n");
             
             Punto[] puntos;
-            double[][] aristas;
+            double[][] matriz;
+            AristaSimple[] aristas;
             Arista[] rPrim, rKruskal;
             long comienzo, accPrim, accKruskal;
             int repeticiones = 10;
-            for(int taya = 10; taya <= 1000; taya += 10){
+            for(int taya = 10; taya <= 100; taya += 10){
                 System.out.println(taya);
                 accPrim = 0;
                 accKruskal = 0;
                 for(int repeticion = 0; repeticion < repeticiones; repeticion++){
                     puntos = randomMap(taya, -100, 100, -100, 100);
-                    aristas = generarMatrizAdyacencia(puntos);
+                    matriz = generarMatrizAdyacencia(puntos);
+                    aristas = generarAristasSimples(puntos);
 
                     comienzo = System.nanoTime();
-                    rPrim = prim(aristas, puntos);
+                    rPrim = prim(matriz, puntos);
                     accPrim += System.nanoTime()-comienzo;
 
                     comienzo = System.nanoTime();

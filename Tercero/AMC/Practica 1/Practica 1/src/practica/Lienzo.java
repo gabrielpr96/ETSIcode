@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +21,7 @@ public class Lienzo extends Canvas {
     private Triangulo triangulo, trianguloMejor;
     private boolean mejor, especial;
     private int lado;
-    private double resNegX, resPosX, resNegY, resPosY;
+    private double escala, resNegX, resPosX, resNegY, resPosY;
 
     /**
      * Crea el lienzo
@@ -63,6 +64,11 @@ public class Lienzo extends Canvas {
         }
         resNegX = -resNegX;
         resNegY = -resNegY;
+        if(resNegX + resPosX > resNegY + resPosY){
+            escala = resNegX + resPosX;
+        }else{
+            escala = resNegY + resPosY;
+        }
         linea = null;
         triangulo = null;
         lineaMejor = null;
@@ -150,7 +156,11 @@ public class Lienzo extends Canvas {
      * @param g
      */
     @Override
-    public void paint(Graphics g) {
+    public void paint(Graphics rg) {
+        Image oi = createImage(getWidth(), getHeight());
+        Graphics g = oi.getGraphics();
+        
+        
         g.setColor(Color.white);
         g.fillRect(0, 0, lado + PADDING * 2, lado + PADDING * 2);
         g.setColor(Color.black);
@@ -178,6 +188,13 @@ public class Lienzo extends Canvas {
         for (Linea l : lineas) {
             gLinea(g, l);
         }
+        
+        rg.drawImage(oi, 0, 0, null);
+    }
+    
+    @Override
+    public void update(Graphics g){
+        paint(g);
     }
 
     private void gLinea(Graphics g, Linea l) {
@@ -191,10 +208,10 @@ public class Lienzo extends Canvas {
     }
 
     private int cordX2pix(double cord) {
-        return (int) (((resNegX + cord) * lado) / (resNegX + resPosX)) + PADDING;
+        return (int) (((resNegX + cord) * lado) / (escala)) + PADDING;
     }
 
     private int cordY2pix(double cord) {
-        return (int) (((resNegY + cord) * lado) / (resNegY + resPosY)) + PADDING;
+        return (int) (((resNegY + cord) * lado) / (escala)) + PADDING;
     }
 }

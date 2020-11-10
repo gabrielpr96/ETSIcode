@@ -1,0 +1,20 @@
+NAME: berlin52
+TYPE: TSP
+COMMENT: 12 puntos con la misma cordenada x
+DIMENSION: 12
+EDGE_WEIGHT_TYPE: EUC_2D
+NODE_COORD_SECTION
+1 2.0 0.0
+2 3.0 0.0
+3 2.5 1.0
+4 -2.0 0.0
+5 -3.0 0.0
+6 -2.5 1.0
+7 7.0 0.0
+8 8.0 0.0
+9 7.5 1.0
+10 -7.0 0.0
+11 -8.0 0.0
+12 -7.5 1.0
+EOF
+

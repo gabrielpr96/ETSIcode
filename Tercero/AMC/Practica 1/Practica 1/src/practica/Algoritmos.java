@@ -172,6 +172,17 @@ public class Algoritmos {
         return aristas;
     }
 
+    public static AristaSimple[] generarAristasSimples(Punto[] puntos) {
+        AristaSimple[] aristas = new AristaSimple[puntos.length * (puntos.length - 1) / 2];
+        int k = 0;
+        for (int i = 0; i < puntos.length; i++) {
+            for (int j = i + 1; j < puntos.length; j++) {
+                aristas[k++] = new AristaSimple(i, j, puntos[i].distancia(puntos[j]));
+            }
+        }
+        return aristas;
+    }
+
     public static double[][] generarMatrizAdyacencia(Punto[] puntos) {
         double[][] matriz = new double[puntos.length][puntos.length];
         for (int i = 0; i < puntos.length; i++) {
@@ -271,35 +282,29 @@ public class Algoritmos {
         return solucion;
     }
 
-    public static Arista[] kruskal(double[][] aristas, Punto[] vertices) throws Exception {
+    public static Arista[] kruskal(AristaSimple[] aristas, Punto[] vertices) throws Exception {
+        ordenaQuick(aristas, true);
         int[] conjuntos = new int[vertices.length];
         for (int i = 0; i < vertices.length; i++) {
             conjuntos[i] = i;
         }
-        int iSolucion = 0;
+        int iSolucion = 0, iArista = 0;
         Arista[] solucion = new Arista[vertices.length - 1];
         while (iSolucion < vertices.length - 1) {
-            double min = Double.POSITIVE_INFINITY;
-            int minI = -1, minJ = -1;
-            for (int i = 0; i < vertices.length; i++) {
-                for (int j = i + 1; j < vertices.length; j++) {
-                    if (conjuntos[i] != conjuntos[j] && aristas[i][j] < min) {
-                        min = aristas[i][j];
-                        minI = i;
-                        minJ = j;
-                    }
-                }
-            }
-            if (minI == -1) {
+            if (iArista >= aristas.length) {
                 throw new Exception("No se puede conectar el grafo");
             }
-            int conjuntoI = conjuntos[minI], conjuntoJ = conjuntos[minJ];
-            for (int i = 0; i < vertices.length; i++) {
-                if (conjuntos[i] == conjuntoJ) {
-                    conjuntos[i] = conjuntoI;
+            AristaSimple arista = aristas[iArista];
+            int rangoI = conjuntos[arista.v1], rangoJ = conjuntos[arista.v2];
+            if (rangoI != rangoJ) {
+                for (int i = 0; i < conjuntos.length; i++) {
+                    if (conjuntos[i] == rangoJ) {
+                        conjuntos[i] = rangoI;
+                    }
                 }
+                solucion[iSolucion++] = new Arista(vertices[arista.v1], vertices[arista.v2]);
             }
-            solucion[iSolucion++] = new Arista(vertices[minI], vertices[minJ]);
+            iArista++;
         }
         return solucion;
     }
@@ -816,7 +821,7 @@ public class Algoritmos {
     public static void DrawKruskalSimp(Punto[] puntos, Lienzo lienzo, JTextArea mensaje) {
         lienzo.drawMap(puntos);
         mensaje.setText("Generando aristas");
-        double[][] aristas = generarMatrizAdyacencia(puntos);
+        AristaSimple[] aristas = generarAristasSimples(puntos);
         mensaje.setText("Ejecutando algoritmo");
         try {
             Arista[] resultado = DrawKruskal(aristas, puntos, lienzo);
@@ -837,48 +842,42 @@ public class Algoritmos {
         }
     }
 
-    public static Arista[] DrawKruskal(double[][] aristas, Punto[] vertices, Lienzo lienzo) throws Exception {
+    public static Arista[] DrawKruskal(AristaSimple[] aristas, Punto[] vertices, Lienzo lienzo) throws Exception {
+        ordenaQuick(aristas, true);
         int[] conjuntos = new int[vertices.length];
         for (int i = 0; i < vertices.length; i++) {
             conjuntos[i] = i;
         }
-        int iSolucion = 0;
+        int iSolucion = 0, iArista = 0;
         Arista[] solucion = new Arista[vertices.length - 1];
         while (iSolucion < vertices.length - 1) {
-            double min = Double.POSITIVE_INFINITY;
-            int minI = -1, minJ = -1;
-            for (int i = 0; i < vertices.length; i++) {
-                for (int j = i + 1; j < vertices.length; j++) {
-                    if (conjuntos[i] != conjuntos[j] && aristas[i][j] < min) {
-                        min = aristas[i][j];
-                        minI = i;
-                        minJ = j;
-                    }
-                    lienzo.drawLinea(new Linea(vertices[i], vertices[j]));
-                    try {
-                        Thread.sleep(esperaDraw);
-                    } catch (InterruptedException ex) {
-                        return null;
-                    }
-                }
-            }
-            if (minI == -1) {
+            if (iArista >= aristas.length) {
                 throw new Exception("No se puede conectar el grafo");
             }
-            int conjuntoI = conjuntos[minI], conjuntoJ = conjuntos[minJ];
-            for (int i = 0; i < vertices.length; i++) {
-                if (conjuntos[i] == conjuntoJ) {
-                    conjuntos[i] = conjuntoI;
+            AristaSimple arista = aristas[iArista];
+            int rangoI = conjuntos[arista.v1], rangoJ = conjuntos[arista.v2];
+            if (rangoI != rangoJ) {
+                for (int i = 0; i < conjuntos.length; i++) {
+                    if (conjuntos[i] == rangoJ) {
+                        conjuntos[i] = rangoI;
+                    }
+                }
+                lienzo.drawLinea(new Linea(vertices[arista.v1], vertices[arista.v2]));
+                try {
+                    Thread.sleep(esperaDraw);
+                } catch (InterruptedException ex) {
+                    return null;
+                }
+                solucion[iSolucion] = new Arista(vertices[arista.v1], vertices[arista.v2]);
+                lienzo.addDrawLinea(solucion[iSolucion].getLinea());
+                iSolucion++;
+                try {
+                    Thread.sleep(esperaDraw);
+                } catch (InterruptedException ex) {
+                    return null;
                 }
             }
-            solucion[iSolucion] = new Arista(vertices[minI], vertices[minJ]);
-            lienzo.addDrawLinea(solucion[iSolucion].getLinea());
-            try {
-                Thread.sleep(esperaDraw);
-            } catch (InterruptedException ex) {
-                return null;
-            }
-            iSolucion++;
+            iArista++;
         }
         return solucion;
     }
@@ -907,6 +906,7 @@ public class Algoritmos {
         }
     }
 
+    //Revisar este algoritmo Prim Simplificado Draw
     public static Arista[] DrawPrim(double[][] aristas, Punto[] vertices, Lienzo lienzo) throws Exception {
         int iSolucion = 0;
         Arista[] solucion = new Arista[vertices.length - 1];
@@ -925,12 +925,13 @@ public class Algoritmos {
                             min = aristas[i][j];
                             minI = i;
                             minJ = j;
-                        }
-                        lienzo.drawLinea(new Linea(vertices[i], vertices[j]));
-                        try {
-                            Thread.sleep(esperaDraw);
-                        } catch (InterruptedException ex) {
-                            return null;
+
+                            lienzo.drawLinea(new Linea(vertices[i], vertices[j]));
+                            try {
+                                Thread.sleep(esperaDraw);
+                            } catch (InterruptedException ex) {
+                                return null;
+                            }
                         }
                     }
                 }
