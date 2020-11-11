@@ -1,10 +1,12 @@
 package practica;
 
-public interface Comparable {
+public interface Comparable2 {
+
     /**
-     * Comparar un objeto con sigo mismo.
-     * A.comparar(B) = A less than B
-     * La respuesta por defecto es false, en caso de fallo en la comparacion. EJ: o es null
+     * Comparar un objeto con sigo mismo. A.comparar(B) = A less than B La
+     * respuesta por defecto es false, en caso de fallo en la comparacion. EJ: o
+     * es null
+     *
      * @param o El objeto con el que se compara
      * @param sortType Parametro que indica al algoritmo como decidir.
      * @return Verdadero si es menor que el objeto pasado por parametro.

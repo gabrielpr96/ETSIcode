@@ -10,8 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TSPlib {
 
@@ -61,7 +59,7 @@ public class TSPlib {
                 posicion.put(vertices[i], i + 1);
             }
             for (Arista arista : aristas) {
-                out.write(posicion.get(arista.getVertice1()) + ", " + posicion.get(arista.getVertice2())+"\n");
+                out.write(posicion.get(arista.getVertice1()) + ", " + posicion.get(arista.getVertice2()) + "\n");
             }
             out.write("-1\nEOF\n");
             out.close();

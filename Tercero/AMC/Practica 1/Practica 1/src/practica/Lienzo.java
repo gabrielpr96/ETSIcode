@@ -3,6 +3,8 @@ package practica;
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -14,14 +16,16 @@ import java.util.ArrayList;
 public class Lienzo extends Canvas {
 
     private static final int GROSOR = 6, PADDING = 10;
+    private static final Font fNumeracion = new Font("Consolas", Font.BOLD, 20);
+    private final FontMetrics fmNumeracion = getFontMetrics(fNumeracion);
 
     private final ArrayList<Punto> puntos;
     private final ArrayList<Linea> lineas;
     private Linea linea, lineaMejor;
     private Triangulo triangulo, trianguloMejor;
-    private boolean mejor, especial;
+    private boolean mejor, especial, numerado;
     private int lado;
-    private double escala, resNegX, resPosX, resNegY, resPosY;
+    private double escala, resNegX, resNegY;
 
     /**
      * Crea el lienzo
@@ -37,18 +41,30 @@ public class Lienzo extends Canvas {
     }
 
     /**
-     * Agrega los puntos y calcula el rango que debe tener el lienzo. Restablece
-     * la linea y el triangulo. Manda a repintar.
+     * Agrega los puntos y calcula el rango que debe tener el lienzo.Restablece
+     * la linea y el triangulo. Manda a repintar. Por defecto no pinta la
+     * numeración en los puntos.
      *
      * @param puntos
      */
     public void drawMap(Punto[] puntos) {
+        drawMap(puntos, false);
+    }
+
+    /**
+     * Agrega los puntos y calcula el rango que debe tener el lienzo.Restablece
+     * la linea y el triangulo. Manda a repintar.
+     *
+     * @param puntos Los puntos arepresentar
+     * @param numerado Si es verdaero se dibujará la numeración
+     */
+    public void drawMap(Punto[] puntos, boolean numerado) {
+        this.numerado = numerado;
         this.puntos.clear();
         this.lineas.clear();
+        double resPosX = 0, resPosY = 0;
         resNegX = 0;
-        resPosX = 0;
         resNegY = 0;
-        resPosY = 0;
         for (Punto punto : puntos) {
             if (punto.getX() < resNegX) {
                 resNegX = punto.getX();
@@ -64,9 +80,9 @@ public class Lienzo extends Canvas {
         }
         resNegX = -resNegX;
         resNegY = -resNegY;
-        if(resNegX + resPosX > resNegY + resPosY){
+        if (resNegX + resPosX > resNegY + resPosY) {
             escala = resNegX + resPosX;
-        }else{
+        } else {
             escala = resNegY + resPosY;
         }
         linea = null;
@@ -128,6 +144,16 @@ public class Lienzo extends Canvas {
         repaint();
     }
 
+    public void eliminarLineasPorPuntos(Punto p) {
+        ArrayList<Linea> lista = new ArrayList<>();
+        for (Linea linea : lineas) {
+            if (p.equals(linea.getP1()) || p.equals(linea.getP2())) {
+                lista.add(linea);
+            }
+        }
+        lineas.removeAll(lista);
+    }
+
     /**
      * Establece si el triangulo o linea es especial o mejor. Mejor tiene
      * prioridad sobre especial. No manda a repintar.
@@ -159,13 +185,15 @@ public class Lienzo extends Canvas {
     public void paint(Graphics rg) {
         Image oi = createImage(getWidth(), getHeight());
         Graphics g = oi.getGraphics();
-        
-        
+
         g.setColor(Color.white);
         g.fillRect(0, 0, lado + PADDING * 2, lado + PADDING * 2);
         g.setColor(Color.black);
-        for (Punto punto : puntos) {
-            g.fillOval(cordX2pix(punto.getX()) - GROSOR / 2, cordY2pix(punto.getY()) - GROSOR / 2, GROSOR, GROSOR);
+
+        if (!numerado) {
+            for (Punto punto : puntos) {
+                g.fillOval(cordX2pix(punto.getX()) - GROSOR / 2, cordY2pix(punto.getY()) - GROSOR / 2, GROSOR, GROSOR);
+            }
         }
 
         ((Graphics2D) g).setStroke(new BasicStroke(GROSOR / 2));
@@ -188,12 +216,28 @@ public class Lienzo extends Canvas {
         for (Linea l : lineas) {
             gLinea(g, l);
         }
-        
+
+        if (numerado) {
+            g.setFont(fNumeracion);
+            for (int i = 1; i <= puntos.size(); i++) {
+                Punto punto = puntos.get(i - 1);
+                String n = Integer.toString(i);
+                int cordX = cordX2pix(punto.getX()) - (fmNumeracion.stringWidth(Integer.toString(i)) / 2), cordY = cordY2pix(punto.getY()) + (fmNumeracion.getHeight() / 4);
+                g.setColor(Color.black);
+                g.drawString(n, cordX + 1, cordY + 1);
+                g.drawString(n, cordX + 1, cordY - 1);
+                g.drawString(n, cordX - 1, cordY + 1);
+                g.drawString(n, cordX - 1, cordY - 1);
+                g.setColor(Color.white);
+                g.drawString(n, cordX, cordY);
+            }
+        }
+
         rg.drawImage(oi, 0, 0, null);
     }
-    
+
     @Override
-    public void update(Graphics g){
+    public void update(Graphics g) {
         paint(g);
     }
 

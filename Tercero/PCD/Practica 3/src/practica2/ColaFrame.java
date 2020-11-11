@@ -38,6 +38,7 @@ public class ColaFrame extends java.awt.Frame {
         f.add(canvas);
         f.setTitle("Practica 3: Borja López");
         f.setResizable(false);
+        f.setLocationRelativeTo(null);
         f.setVisible(true);
 
         ColaLenta c = new ColaLenta(CAPACIDAD, canvas);

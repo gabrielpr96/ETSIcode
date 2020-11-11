@@ -1,6 +1,7 @@
 package practica;
 
-public class AristaSimple implements Comparable{
+public class AristaSimple implements Comparable2, Comparable<AristaSimple> {
+
     public int v1, v2;
     public double coste;
 
@@ -12,11 +13,16 @@ public class AristaSimple implements Comparable{
 
     @Override
     public boolean comparar(Object o, boolean sortType) {
-        if(o == null || o.getClass() != AristaSimple.class)
+        if (o == null || o.getClass() != AristaSimple.class) {
             return false;
-        else{
-            AristaSimple obj = (AristaSimple)o;
+        } else {
+            AristaSimple obj = (AristaSimple) o;
             return coste < obj.coste;
         }
+    }
+
+    @Override
+    public int compareTo(AristaSimple a) {
+        return coste < a.coste ? -1 : 1;
     }
 }

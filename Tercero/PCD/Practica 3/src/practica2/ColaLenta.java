@@ -66,7 +66,7 @@ public class ColaLenta implements ICola {
      * Comprueba si la cola está vacía
      * @return True si la cola está vacía, False en caso contrario
      */
-    public boolean colavacia() {
+    private boolean colavacia() {
         return numelementos == 0;
     }
 
@@ -74,7 +74,7 @@ public class ColaLenta implements ICola {
      * Comprueba si la cola está llena
      * @return True si al cola está vacía, False en caso contrario
      */
-    public boolean colallena() {
+    private boolean colallena() {
         return numelementos == capacidad;
     }
     
