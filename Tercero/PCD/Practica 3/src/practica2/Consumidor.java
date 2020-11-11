@@ -10,12 +10,15 @@ public class Consumidor implements Runnable {
         this.c = c;
     }
 
+    /**
+     * Extrae un elemento de la cola
+     */
     private void consumir() {
         Random r = new Random();
         r.setSeed(System.nanoTime());
         for (int i = 0; i < 50; i++) {
             try {
-                Thread.sleep(2000 + Math.abs(r.nextInt()) % 2000);
+                Thread.sleep(Math.abs(r.nextInt()) % 2000);
                 System.out.println("Hilo " + Thread.currentThread().getId() + " Extraigo: " + c.Desacola());
             } catch (Exception ex) {
                 System.out.println("Hilo " + Thread.currentThread().getId() + " Error al extraer: " + ex.getMessage());

@@ -15,6 +15,9 @@ public class Productor extends Thread {
         this.c = c;
     }
 
+    /**
+     * Introduce un elemento aleatorio en la cola
+     */
     private void producir() {
         Random r = new Random();
         r.setSeed(System.nanoTime());
@@ -22,7 +25,7 @@ public class Productor extends Thread {
             //float n = r.nextFloat() * 100;
             int n = r.nextInt() % 100;
             try {
-                Thread.sleep(1000 + Math.abs(r.nextInt()) % 1000);
+                Thread.sleep(Math.abs(r.nextInt()) % 2000);
                 c.Acola(n);
                 System.out.println("Hilo " + getId() + " Inserto: " + n);
             } catch (Exception ex) {
