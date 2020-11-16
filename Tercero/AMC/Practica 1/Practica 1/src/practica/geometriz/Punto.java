@@ -1,6 +1,8 @@
-package practica;
+package practica.geometriz;
 
-public class Punto implements Comparable2 {
+import practica.ComparableParametro;
+
+public class Punto implements ComparableParametro {
 
     public static final double MINIMO_COMPARACION = 0.000001;
 

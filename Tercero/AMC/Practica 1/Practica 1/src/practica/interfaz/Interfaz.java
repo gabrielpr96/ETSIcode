@@ -1,5 +1,6 @@
-package practica;
+package practica.interfaz;
 
+import practica.geometriz.Punto;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Frame;
@@ -21,6 +22,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
+import practica.Algoritmos;
+import practica.TSPlib;
 import static practica.Algoritmos.randomMap;
 
 public class Interfaz extends JPanel {

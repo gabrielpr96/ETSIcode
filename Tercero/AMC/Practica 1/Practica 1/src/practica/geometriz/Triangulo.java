@@ -1,4 +1,4 @@
-package practica;
+package practica.geometriz;
 
 import java.util.ArrayList;
 

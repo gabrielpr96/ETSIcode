@@ -1,6 +1,8 @@
-package practica;
+package practica.geometriz;
 
-public class Arista implements Comparable2 {
+import practica.ComparableParametro;
+
+public class Arista implements ComparableParametro {
 
     private final Punto vertice1, vertice2;
     private final Linea linea;

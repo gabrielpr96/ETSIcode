@@ -1,6 +1,8 @@
-package practica;
+package practica.geometriz;
 
-public class AristaSimple implements Comparable2, Comparable<AristaSimple> {
+import practica.ComparableParametro;
+
+public class AristaSimple implements ComparableParametro, Comparable<AristaSimple> {
 
     public int v1, v2;
     public double coste;

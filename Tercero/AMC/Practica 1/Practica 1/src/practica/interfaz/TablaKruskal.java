@@ -1,5 +1,7 @@
-package practica;
+package practica.interfaz;
 
+import practica.geometriz.Punto;
+import practica.geometriz.Arista;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import practica.Conjunto;
 
 public class TablaKruskal {
 

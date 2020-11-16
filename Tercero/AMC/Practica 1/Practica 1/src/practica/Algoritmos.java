@@ -1,5 +1,14 @@
 package practica;
 
+import practica.interfaz.TablaKruskal;
+import practica.interfaz.Lienzo;
+import practica.interfaz.TablaPrimSimp;
+import practica.interfaz.TablaPrim;
+import practica.geometriz.Punto;
+import practica.geometriz.Triangulo;
+import practica.geometriz.Linea;
+import practica.geometriz.Arista;
+import practica.geometriz.AristaSimple;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.util.HashMap;
@@ -349,12 +358,12 @@ public class Algoritmos {
     }
 
     //Algoritmos de ordenación
-    public static void ordenaQuick(Comparable2[] puntos, boolean sortX) {
+    public static void ordenaQuick(ComparableParametro[] puntos, boolean sortX) {
         ordenaQuick(puntos, 0, puntos.length - 1, sortX);
     }
 
-    private static int ordenaQuickPart(Comparable2 puntos[], int izq, int der, boolean sortX) {
-        Comparable2 med = puntos[der];
+    private static int ordenaQuickPart(ComparableParametro puntos[], int izq, int der, boolean sortX) {
+        ComparableParametro med = puntos[der];
         int i = (izq - 1);
         for (int j = izq; j < der; j++) {
             if (puntos[j].comparar(med, sortX)) {
@@ -367,7 +376,7 @@ public class Algoritmos {
         return i + 1;
     }
 
-    private static void ordenaQuick(Comparable2[] puntos, int izq, int der, boolean sortX) {
+    private static void ordenaQuick(ComparableParametro[] puntos, int izq, int der, boolean sortX) {
         if (izq < der) {
             int med = ordenaQuickPart(puntos, izq, der, sortX);
             ordenaQuick(puntos, izq, med - 1, sortX);
@@ -381,7 +390,7 @@ public class Algoritmos {
         elementos[b] = tmp;
     }
 
-    public static void ordenaHeap(Comparable2[] puntos, boolean sortX) {
+    public static void ordenaHeap(ComparableParametro[] puntos, boolean sortX) {
         int n = puntos.length;
 
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -394,7 +403,7 @@ public class Algoritmos {
         }
     }
 
-    private static void ordenaHeapHundir(Comparable2[] puntos, int raiz, int n, boolean sortX) {
+    private static void ordenaHeapHundir(ComparableParametro[] puntos, int raiz, int n, boolean sortX) {
         int mayor = raiz;
         int izq = 2 * raiz + 1;
         int der = 2 * raiz + 2;

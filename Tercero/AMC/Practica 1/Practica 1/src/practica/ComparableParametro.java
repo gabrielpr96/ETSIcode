@@ -1,6 +1,6 @@
 package practica;
 
-public interface Comparable2 {
+public interface ComparableParametro {
 
     /**
      * Comparar un objeto con sigo mismo. A.comparar(B) = A less than B La
