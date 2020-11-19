@@ -28,7 +28,7 @@ import static practica.Algoritmos.randomMap;
 
 public class Interfaz extends JPanel {
 
-    private static final String[] ALGORITMOS = {"Exaustivo lineas", "DyV lineas", "Exaustivo triangulos", "DyV triangulos", "Kruskal", "Prim", "Kruskal Simplificado", "Prim Simplificado"};
+    private static final String[] ALGORITMOS = {"Exhaustivo lineas", "DyV lineas", "Exhaustivo triangulos", "DyV triangulos", "Kruskal", "Prim", "Kruskal Simplificado", "Prim Simplificado"};
 
     private static int ancho, alto;
     private final Lienzo lienzo;
@@ -121,7 +121,7 @@ public class Interfaz extends JPanel {
         gbc.gridheight = 1;
         gbc.weighty = 0;
         gbc.weightx = 0;
-        taya.add(new JLabel("Taya:  "), gbc);
+        taya.add(new JLabel("Talla:  "), gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 1;

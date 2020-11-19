@@ -2,7 +2,7 @@ package practica2;
 
 public class ColaLenta implements ICola {
 
-    private int head, tail, numelementos;
+    private volatile int head, tail, numelementos;
     private final int capacidad;
     private final Object[] datos;
     private final CanvasCola canvas;

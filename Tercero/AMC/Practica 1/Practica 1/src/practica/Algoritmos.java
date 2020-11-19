@@ -991,7 +991,9 @@ public class Algoritmos {
         for (int i = 1; i < vertices.length; i++) {
             solucion[i - 1] = new Arista(vertices[i], vertices[padre[i]]);
         }
-        tabla.addPaso(-1, -1, 0, conexo);
+        if (tabla != null) {
+            tabla.addPaso(-1, -1, 0, conexo);
+        }
 
         return solucion;
     }
