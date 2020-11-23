@@ -1,7 +1,7 @@
 package practica.interfaz;
 
-import practica.geometriz.Punto;
-import practica.geometriz.Arista;
+import practica.geometria.Punto;
+import practica.geometria.Arista;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

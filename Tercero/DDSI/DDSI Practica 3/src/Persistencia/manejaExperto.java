@@ -4,57 +4,63 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class manejaExperto {
+
     // Se crea un objeto de tipo "conexionOracle"
     conexionOracle conexion = null;
-    
+
     // Se crea el PreparedStatement como atributo de la clase manejaExperto para
     // utilizarlo en los diferentes métodos
     PreparedStatement ps = null;
-    
 
     /**
-    * Implementa operaciones sobre la tabla EXPERTO
-    * @param c conexión con Oracle
-    */    
+     * Implementa operaciones sobre la tabla EXPERTO
+     *
+     * @param c conexión con Oracle
+     */
     public manejaExperto(conexionOracle c) {
-      conexion = c;
+        conexion = c;
     }
-    
+
     /**
-    * Devuelve una lista con todos los expertos cuyo país se pase por parámetro
-    * @param pais
-    * @throws SQLException si ocurre alguna anomalía
-    * @return ArrayList<experto>
-    */
+     * Devuelve una lista con todos los expertos cuyo país se pase por parámetro
+     *
+     * @param pais
+     * @throws SQLException si ocurre alguna anomalía
+     * @return ArrayList<experto>
+     */
     public ArrayList<experto> listaExpertosPorPais(String pais) throws SQLException {
         ArrayList<experto> lista = new ArrayList<>();
         ps = conexion.getConexionOracle().prepareStatement("SELECT * FROM EXPERTO WHERE PAIS=?");
         ps.setString(1, pais);
         ResultSet rs = ps.executeQuery();
-        while(rs.next())
+        while (rs.next()) {
             lista.add(new experto(rs.getString("CODEXPERTO"), rs.getString("NOMBRE"), rs.getString("PAIS"), rs.getString("SEXO"), rs.getString("ESPECIALIDAD")));
+        }
         ps.close();
         return lista;
     }
-    
-     /**
-    * Devuelve una lista con todos los expertos cuyo país se pase por parámetro
-    * @param pais
-    * @throws SQLException si ocurre alguna anomalía
-    * @return ArrayList<experto>
-    */
+
+    /**
+     * Devuelve una lista con todos los expertos cuyo país se pase por parámetro
+     *
+     * @param pais
+     * @throws SQLException si ocurre alguna anomalía
+     * @return ArrayList<experto>
+     */
     public ArrayList<experto> listaExpertos() throws SQLException {
         ArrayList<experto> lista = new ArrayList<>();
         ResultSet rs = conexion.getConexionOracle().createStatement().executeQuery("SELECT * FROM EXPERTO");
-        while(rs.next())
+        while (rs.next()) {
             lista.add(new experto(rs.getString("CODEXPERTO"), rs.getString("NOMBRE"), rs.getString("PAIS"), rs.getString("SEXO"), rs.getString("ESPECIALIDAD")));
+        }
         return lista;
     }
-    
+
     /**
-    * Comprueba si existe un experto
-    * @param codExperto
-    * @throws SQLException si ocurre alguna anomalía
+     * Comprueba si existe un experto
+     *
+     * @param codExperto
+     * @throws SQLException si ocurre alguna anomalía
      */
     public boolean existeExperto(String codExperto) throws SQLException {
         ps = conexion.getConexionOracle().prepareStatement("SELECT CODEXPERTO FROM EXPERTO WHERE CODEXPERTO=?");
@@ -64,11 +70,12 @@ public class manejaExperto {
         ps.close();
         return existe;
     }
-    
+
     /**
-    * inserta un experto
-    * @param exp
-    * @throws SQLException si ocurre alguna anomalía
+     * inserta un experto
+     *
+     * @param exp
+     * @throws SQLException si ocurre alguna anomalía
      */
     public void insertaExperto(experto exp) throws SQLException {
         ps = conexion.getConexionOracle().prepareStatement("INSERT INTO EXPERTO (CODEXPERTO, NOMBRE, PAIS, SEXO, ESPECIALIDAD) VALUES (?,?,?,?,?)");

@@ -1,6 +1,6 @@
 package practica.interfaz;
 
-import practica.geometriz.Punto;
+import practica.geometria.Punto;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Frame;

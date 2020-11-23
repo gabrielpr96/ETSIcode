@@ -1,8 +1,8 @@
 package practica.interfaz;
 
-import practica.geometriz.Punto;
-import practica.geometriz.Triangulo;
-import practica.geometriz.Linea;
+import practica.geometria.Punto;
+import practica.geometria.Triangulo;
+import practica.geometria.Linea;
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;

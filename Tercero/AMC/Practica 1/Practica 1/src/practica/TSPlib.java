@@ -1,7 +1,7 @@
 package practica;
 
-import practica.geometriz.Punto;
-import practica.geometriz.Arista;
+import practica.geometria.Punto;
+import practica.geometria.Arista;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;

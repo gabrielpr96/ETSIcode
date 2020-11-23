@@ -1,11 +1,11 @@
 package practica;
 
 import practica.interfaz.Interfaz;
-import practica.geometriz.Punto;
-import practica.geometriz.Triangulo;
-import practica.geometriz.Linea;
-import practica.geometriz.Arista;
-import practica.geometriz.AristaSimple;
+import practica.geometria.Punto;
+import practica.geometria.Triangulo;
+import practica.geometria.Linea;
+import practica.geometria.Arista;
+import practica.geometria.AristaSimple;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ public class Practica1 {
 
     public static void main(String[] args) {
         //unitTest();
-        //profile(true, false);
+        //profile(false, true);
         //resolverDataset();
         interfaz = new Interfaz();
         JFrame ventana = new JFrame();
@@ -188,7 +188,7 @@ public class Practica1 {
                 Punto[] puntos;
                 long comienzo, accExaustivo, accDyV;
                 int repeticiones = 100;
-                for (int taya = 50000000; taya <= 50000000; taya += 100) {
+                for (int taya = 100; taya <= 1000; taya += 100) {
                     System.out.println(taya);
                     accExaustivo = 0;
                     accDyV = 0;
@@ -196,7 +196,7 @@ public class Practica1 {
                         puntos = randomMap(taya, -100, 100, -100, 100);
 
                         comienzo = System.nanoTime();
-                        //tExaustivo = exaustivo(puntos);
+                        tExaustivo = exaustivo(puntos);
                         accExaustivo += System.nanoTime() - comienzo;
 
                         comienzo = System.nanoTime();
@@ -205,7 +205,6 @@ public class Practica1 {
                         System.out.println(accDyV/1E9);
                         System.exit(0);
 
-                        tExaustivo = tDyV;
                         if (!tExaustivo.equals(tDyV)) {
                             System.err.println("ERROR CRITICO: Exaustivo y DyV no han devuelto el mismo triangulo");
                             System.out.println("Exaustivo: " + tExaustivo);

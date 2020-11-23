@@ -37,7 +37,7 @@ public class ColaFrame extends java.awt.Frame {
         canvas.setBackground(new Color(205, 250, 212));
         f.setSize(ANCHO, ALTO);
         f.add(canvas);
-        f.setTitle("Practica 3: Borja López");
+        f.setTitle("Practica 4: Borja López");
         f.setResizable(false);
         f.setLocationRelativeTo(null);
         f.setVisible(true);

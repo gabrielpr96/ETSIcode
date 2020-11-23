@@ -1,4 +1,4 @@
-package practica.geometriz;
+package practica.geometria;
 
 public class Linea {
 

@@ -26,17 +26,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         setTitle("DDSI Practica 3 Borja López Pineda");
         setLocationRelativeTo(null);
-        (new Thread() {
+        new Thread() {
             @Override
             public void run() {
                 try {
                     conexion = new conexionOracle();
+                    jLabelConectando.setVisible(false);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                     System.exit(0);
                 }
             }
-        }).start();
+        }.start();
     }
 
     /**
@@ -48,6 +49,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabelConectando = new javax.swing.JLabel();
         jMenuPrincipal = new javax.swing.JMenuBar();
         jMenuConexion = new javax.swing.JMenu();
         jMenuConexionSalir = new javax.swing.JMenuItem();
@@ -65,6 +67,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
+
+        jLabelConectando.setText("Conectando");
 
         jMenuConexion.setText("Conexión");
 
@@ -102,11 +106,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(165, 165, 165)
+                .addComponent(jLabelConectando)
+                .addContainerGap(177, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(jLabelConectando)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pack();
@@ -164,17 +174,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void cerrarConexion(){
+
+    private void cerrarConexion() {
         try {
-            if(conexion != null)
+            if (conexion != null) {
                 conexion.desconexion();
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelConectando;
     private javax.swing.JMenu jMenuCasos;
     private javax.swing.JMenu jMenuColaboraciones;
     private javax.swing.JMenu jMenuConexion;
