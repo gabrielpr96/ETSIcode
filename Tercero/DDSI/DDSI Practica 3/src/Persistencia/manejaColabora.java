@@ -3,6 +3,7 @@ package Persistencia;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class manejaColabora {
 
@@ -22,6 +23,18 @@ public class manejaColabora {
         conexion = c;
     }
 
+    public ArrayList<colabora> listaColaboraPorExperto(String codExperto) throws SQLException{
+        ArrayList<colabora> lista = new ArrayList<>();
+        ps = conexion.getConexionOracle().prepareStatement("SELECT * FROM COLABORA WHERE CODEXPERTO=?");
+        ps.setString(1, codExperto);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            lista.add(new colabora(rs.getString("CODEXPERTO"), rs.getString("CODCASO"), rs.getString("FECHA"), rs.getString("DESCRIPCION_COLABORACION")));
+        }
+        ps.close();
+        return lista;
+    }
+    
     /**
      * Comprueba si existe una colaboración en la tabla de COLABORA dado su
      * código

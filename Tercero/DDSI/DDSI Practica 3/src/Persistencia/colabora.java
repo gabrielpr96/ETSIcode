@@ -63,4 +63,9 @@ public class colabora {
     public void setDescripcionColaboracion(String dc) {
         descripcionColaboracion = dc;
     }
+    
+    @Override
+    public String toString(){
+        return descripcionColaboracion;
+    }
 }

@@ -75,4 +75,9 @@ public class experto {
     public void setEspecialidad(String e) {
         especialidad = e;
     }
+    
+    @Override
+    public String toString(){
+        return nombre;
+    }
 }

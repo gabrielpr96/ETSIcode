@@ -50,6 +50,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabelConectando = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuPrincipal = new javax.swing.JMenuBar();
         jMenuConexion = new javax.swing.JMenu();
         jMenuConexionSalir = new javax.swing.JMenuItem();
@@ -57,6 +58,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuExertosGestion = new javax.swing.JMenuItem();
         jMenuCasos = new javax.swing.JMenu();
         jMenuColaboraciones = new javax.swing.JMenu();
+        jMenuColaboracionesGestion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -69,6 +71,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         jLabelConectando.setText("Conectando");
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
 
         jMenuConexion.setText("Conexión");
 
@@ -98,6 +104,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuPrincipal.add(jMenuCasos);
 
         jMenuColaboraciones.setText("Colaboraciones");
+
+        jMenuColaboracionesGestion.setText("Gestión de colaboraciones");
+        jMenuColaboracionesGestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuColaboracionesGestionActionPerformed(evt);
+            }
+        });
+        jMenuColaboraciones.add(jMenuColaboracionesGestion);
+
         jMenuPrincipal.add(jMenuColaboraciones);
 
         setJMenuBar(jMenuPrincipal);
@@ -106,17 +121,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addGap(311, 311, 311)
                 .addComponent(jLabelConectando)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(jLabelConectando)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelConectando))
         );
 
         pack();
@@ -139,6 +155,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         cerrarConexion();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuColaboracionesGestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuColaboracionesGestionActionPerformed
+        ventanaColaboraciones vC = new ventanaColaboraciones(conexion);
+        vC.setVisible(true);
+    }//GEN-LAST:event_jMenuColaboracionesGestionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,9 +207,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelConectando;
     private javax.swing.JMenu jMenuCasos;
     private javax.swing.JMenu jMenuColaboraciones;
+    private javax.swing.JMenuItem jMenuColaboracionesGestion;
     private javax.swing.JMenu jMenuConexion;
     private javax.swing.JMenuItem jMenuConexionSalir;
     private javax.swing.JMenuItem jMenuExertosGestion;

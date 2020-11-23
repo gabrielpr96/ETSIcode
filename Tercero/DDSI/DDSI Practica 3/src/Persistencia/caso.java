@@ -64,5 +64,10 @@ public class caso {
     public void setFechaFin(String ff) {
         fechaFin = ff;
     }
+    
+    @Override
+    public String toString(){
+        return nombre;
+    }
 
 }
