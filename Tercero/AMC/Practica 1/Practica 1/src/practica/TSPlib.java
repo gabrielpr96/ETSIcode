@@ -47,7 +47,7 @@ public class TSPlib {
         return puntos;
     }
 
-    public static void formar(String archivo, Arista[] aristas, Punto[] vertices) {
+    public static void guardarTour(String archivo, Arista[] aristas, Punto[] vertices) {
         try {
             Path path = Paths.get(archivo);
             BufferedWriter out = new BufferedWriter(new FileWriter(path.toFile()));
@@ -64,6 +64,27 @@ public class TSPlib {
                 out.write(posicion.get(arista.getVertice1()) + ", " + posicion.get(arista.getVertice2()) + "\n");
             }
             out.write("-1\nEOF\n");
+            out.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void guardarPuntos(String archivo, Punto[] puntos) {
+        try {
+            Path path = Paths.get(archivo);
+            BufferedWriter out = new BufferedWriter(new FileWriter(path.toFile()));
+            out.write("NAME : " + path.getFileName() + "\n");
+            out.write("TYPE : TSP\n");
+            out.write("COMMENT : Puntos aleatorios\n");
+            out.write("DIMENSION : " + puntos.length + "\n");
+            out.write("EDGE_WEIGHT_TYPE : EUC_2D\n");
+            out.write("NODE_COORD_SECTION\n");
+            Map<Punto, Integer> posicion = new HashMap<>();
+            for (int i = 0; i < puntos.length; i++) {
+                out.write((i+1) + " " + puntos[i].getX() + " " + puntos[i].getY() + "\n");
+            }
+            out.write("EOF\n");
             out.close();
         } catch (IOException ex) {
             ex.printStackTrace();

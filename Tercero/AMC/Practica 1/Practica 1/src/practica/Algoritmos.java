@@ -678,7 +678,7 @@ public class Algoritmos {
                 if (!file.endsWith(".tour")) {
                     file += ".tour";
                 }
-                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+                TSPlib.guardarTour(dialog.getDirectory() + file, resultado, puntos);
             }
         } catch (Exception e) {
             mensaje.setText("Error al ejecutar el algoritmo");
@@ -755,7 +755,7 @@ public class Algoritmos {
                 if (!file.endsWith(".tour")) {
                     file += ".tour";
                 }
-                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+                TSPlib.guardarTour(dialog.getDirectory() + file, resultado, puntos);
             }
         } catch (Exception e) {
             mensaje.setText("Error al ejecutar el algoritmo");
@@ -855,7 +855,7 @@ public class Algoritmos {
                 if (!file.endsWith(".tour")) {
                     file += ".tour";
                 }
-                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+                TSPlib.guardarTour(dialog.getDirectory() + file, resultado, puntos);
             }
         } catch (Exception e) {
             mensaje.setText("Error al ejecutar el algoritmo");
@@ -931,7 +931,7 @@ public class Algoritmos {
                 if (!file.endsWith(".tour")) {
                     file += ".tour";
                 }
-                TSPlib.formar(dialog.getDirectory() + file, resultado, puntos);
+                TSPlib.guardarTour(dialog.getDirectory() + file, resultado, puntos);
             }
         } catch (Exception e) {
             mensaje.setText("Error al ejecutar el algoritmo");

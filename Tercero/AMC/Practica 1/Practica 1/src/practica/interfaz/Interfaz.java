@@ -33,7 +33,7 @@ public class Interfaz extends JPanel {
     private static int ancho, alto;
     private final Lienzo lienzo;
 
-    private final JButton btnAleatorio, btnCargar, btnComenzar, btnDetener;
+    private final JButton btnAleatorio, btnCargar, btnComenzar, btnDetener, btnGuardar;
     private final JSlider sliEspera;
     private final JComboBox cboAlgoritmo;
     private final JTextField txtTaya;
@@ -51,6 +51,7 @@ public class Interfaz extends JPanel {
         btnCargar = new JButton("Cargar archivo");
         btnComenzar = new JButton("COMENZAR");
         btnDetener = new JButton("DETENER");
+        btnGuardar = new JButton("Guardar");
         sliEspera = new JSlider();
         cboAlgoritmo = new JComboBox(ALGORITMOS);
         txtTaya = new JTextField();
@@ -215,9 +216,17 @@ public class Interfaz extends JPanel {
         gbc.weighty = 0;
         gbc.weightx = 0;
         resultado.add(txtMensaje, gbc);
-
+        
         gbc.gridx = 0;
         gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weighty = 0;
+        gbc.weightx = 0;
+        menu.add(btnGuardar, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
         gbc.weighty = 1;
@@ -274,6 +283,19 @@ public class Interfaz extends JPanel {
         });
         sliEspera.addChangeListener((ChangeEvent e) -> {
             Algoritmos.setEsperaDraw(1000 - sliEspera.getValue());
+        });
+        btnGuardar.addActionListener((ActionEvent e) -> {
+            FileDialog dialog = new FileDialog((Frame) null, "Guardar el archivo de coordenadas");
+            dialog.setMode(FileDialog.SAVE);
+            dialog.setVisible(true);
+            String file = dialog.getFile();
+            if (file != null) {
+                if (!file.endsWith(".tsp")) {
+                    file += ".tsp";
+                }
+                TSPlib.guardarPuntos(dialog.getDirectory() + file, puntos);
+            }
+            detenerAlgoritmo();
         });
     }
 
