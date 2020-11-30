@@ -3,9 +3,8 @@ package Aplicacion;
 import Persistencia.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class aplicacionCliente {
 
@@ -23,7 +22,8 @@ public class aplicacionCliente {
             System.out.println("3. Insertar una colaboración");
             System.out.println();
             System.out.print("¿Qué quieres hacer?  ");
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(System.in, "UTF-8");
+            sc.useLocale(new Locale("es", "ES"));
             String opcion = sc.nextLine();
             switch (opcion) {
                 case "1":
@@ -46,7 +46,8 @@ public class aplicacionCliente {
     }
 
     public static void ejercicio1() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in, "UTF-8");
+        sc.useLocale(new Locale("es", "ES"));
         manejaExperto me = new manejaExperto(co);
         System.out.print("Pais: ");
         String pais = sc.nextLine();
@@ -100,7 +101,8 @@ public class aplicacionCliente {
     }
 
     public static experto introducirExperto(String codigo) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in, "UTF-8");
+        sc.useLocale(new Locale("es", "ES"));
         experto e = new experto();
         if (codigo == null) {
             System.out.print("Codigo: ");
@@ -119,7 +121,8 @@ public class aplicacionCliente {
         return e;
     }
     public static caso introducirCaso(String codigo) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in, "UTF-8");
+        sc.useLocale(new Locale("es", "ES"));
         caso a = new caso();
         if (codigo == null) {
             System.out.print("Codigo: ");
@@ -136,7 +139,8 @@ public class aplicacionCliente {
         return a;
     }
     public static colabora introducirColabora() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in, "UTF-8");
+        sc.useLocale(new Locale("es", "ES"));
         colabora c = new colabora();
         System.out.print("Codigo experto: ");
         c.setCodExperto(sc.nextLine());

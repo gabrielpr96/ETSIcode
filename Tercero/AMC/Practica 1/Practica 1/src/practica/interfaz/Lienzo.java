@@ -192,7 +192,7 @@ public class Lienzo extends Canvas {
         g.setColor(Color.white);
         g.fillRect(0, 0, lado + PADDING * 2, lado + PADDING * 2);
         g.setColor(Color.black);
-
+        
         if (!numerado) {
             for (Punto punto : puntos) {
                 g.fillOval(cordX2pix(punto.getX()) - GROSOR / 2, cordY2pix(punto.getY()) - GROSOR / 2, GROSOR, GROSOR);

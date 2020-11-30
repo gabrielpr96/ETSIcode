@@ -150,8 +150,7 @@ public class ventanaExpetos extends java.awt.Frame {
         try {
             ArrayList<experto> expertos = me.listaExpertosPorPais(jTextFieldPais.getText());
             for (experto experto : expertos) {
-                String[] fila = {experto.getCodExperto(), experto.getNombre(), experto.getPais(), experto.getSexo(), experto.getEspecialidad()};
-                mExpertos.addRow(fila);
+                mExpertos.addRow(new String[]{experto.getCodExperto(), experto.getNombre(), experto.getPais(), experto.getSexo(), experto.getEspecialidad()});
             }
         } catch (SQLException ex) {
             Logger.getLogger(ventanaExpetos.class.getName()).log(Level.SEVERE, null, ex);
