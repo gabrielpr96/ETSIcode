@@ -34,7 +34,7 @@ public class ventanaColaboraciones extends java.awt.Frame {
     public ventanaColaboraciones(conexionOracle conexion) {
         initComponents();
         setLocationRelativeTo(getParent());
-        setTitle("Tabla de expertos");
+        setTitle("Tabla de colaboraciones");
 
         this.conexion = conexion;
 

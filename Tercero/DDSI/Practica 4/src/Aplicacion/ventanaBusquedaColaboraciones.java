@@ -10,6 +10,7 @@ import Persistencia.conexionOracle;
 import Persistencia.experto;
 import Persistencia.manejaColabora;
 import Persistencia.manejaExperto;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -21,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author borja
  */
-public class ventanaColaboraciones extends java.awt.Frame {
+public class ventanaBusquedaColaboraciones extends java.awt.Frame {
 
     private final conexionOracle conexion;
     private final DefaultTableModel mColaboraciones;
@@ -31,28 +32,22 @@ public class ventanaColaboraciones extends java.awt.Frame {
      *
      * @param conexion
      */
-    public ventanaColaboraciones(conexionOracle conexion) {
+    public ventanaBusquedaColaboraciones(conexionOracle conexion) {
         initComponents();
         setLocationRelativeTo(getParent());
-        setTitle("Tabla de expertos");
+        setTitle("Tabla de colaboraciones");
 
         this.conexion = conexion;
 
         mColaboraciones = new DefaultTableModel();
         jTableColaboraciones.setModel(mColaboraciones);
-        String[] nombreColumnas = {"Descripción de Colaboración"};
+        String[] nombreColumnas = {"Codigo", "Nombre", "Especialidad", "Colaboracion"};
         mColaboraciones.setColumnIdentifiers(nombreColumnas);
         jTableColaboraciones.getTableHeader().setResizingAllowed(false);
-        
-        manejaExperto me = new manejaExperto(conexion);
-        try {
-            ArrayList<experto> expertos = me.listaExpertos();
-            for (experto experto : expertos) {
-                jComboBoxExperto.addItem(experto);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ventanaColaboraciones.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        jTableColaboraciones.getColumnModel().getColumn(0).setPreferredWidth(98);
+        jTableColaboraciones.getColumnModel().getColumn(1).setPreferredWidth(194);
+        jTableColaboraciones.getColumnModel().getColumn(2).setPreferredWidth(194);
+        jTableColaboraciones.getColumnModel().getColumn(3).setPreferredWidth(194);
     }
 
     /**
@@ -66,8 +61,9 @@ public class ventanaColaboraciones extends java.awt.Frame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableColaboraciones = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jComboBoxExperto = new javax.swing.JComboBox<experto>();
         jLabel2 = new javax.swing.JLabel();
+        jButtonMostrar = new javax.swing.JButton();
+        jTextFieldCaso = new javax.swing.JTextField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -90,47 +86,49 @@ public class ventanaColaboraciones extends java.awt.Frame {
 
         jLabel1.setText("Colaboraciones");
 
-        jComboBoxExperto.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setText("Cógido del caso:");
+
+        jButtonMostrar.setText("Mostrar");
+        jButtonMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxExpertoActionPerformed(evt);
+                jButtonMostrarActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Experto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(291, 291, 291)
                 .addComponent(jLabel1)
-                .addGap(166, 166, 166))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jComboBoxExperto, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonMostrar)
+                .addGap(431, 431, 431))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(5, 5, 5)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jComboBoxExperto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jLabel2)
+                    .addComponent(jButtonMostrar)
+                    .addComponent(jTextFieldCaso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -143,24 +141,20 @@ public class ventanaColaboraciones extends java.awt.Frame {
         dispose();
     }//GEN-LAST:event_exitForm
 
-    private void jComboBoxExpertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxExpertoActionPerformed
+    private void jButtonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarActionPerformed
         limpiarTabla();
-        experto expertoSeleccionado = (experto)jComboBoxExperto.getSelectedItem();
         manejaColabora mc = new manejaColabora(conexion);
         try {
-            ArrayList<colabora> colaboraciones = mc.listaColaboraPorExperto(expertoSeleccionado.getCodExperto());
-            if(colaboraciones.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Este experto no tiene colaboraciones");
-            }else{
-                for (colabora colaboracion : colaboraciones) {
-                    String[] fila = {colaboracion.getDescripcionColaboracion()};
-                    mColaboraciones.addRow(fila);
-                }
+            ResultSet rs = mc.listaColaboradoresPorCaso(jTextFieldCaso.getText());
+            while (rs.next()) {
+                mColaboraciones.addRow(new String[] {rs.getString("CODEXPERTO"), rs.getString("NOMBRE_EXPERTO"), rs.getString("ESPECIALIDAD"), rs.getString("DESCRIPCION_COLABORACION")});
             }
+            rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+            Logger.getLogger(ventanaExpetos.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jComboBoxExpertoActionPerformed
+    }//GEN-LAST:event_jButtonMostrarActionPerformed
 
     private void limpiarTabla() {
         while (mColaboraciones.getRowCount() > 0) {
@@ -169,10 +163,11 @@ public class ventanaColaboraciones extends java.awt.Frame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<experto> jComboBoxExperto;
+    private javax.swing.JButton jButtonMostrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableColaboraciones;
+    private javax.swing.JTextField jTextFieldCaso;
     // End of variables declaration//GEN-END:variables
 }
