@@ -1,0 +1,21 @@
+#Automata Finito No Determinista Test 3
+ESTADOS: a b c d
+INICIAL: a
+FINALES: a c
+TRANSICIONES:
+	a '1' b
+	a '2' d
+	b '1' b
+	b '2' c
+	c '1' a
+	c '3' c
+	d '2' c
+FIN
+TRANSICIONES LAMBDA:
+	a b c
+	b d
+FIN
+#Cadena: 112 -> No reconocida
+#Cadena 1123 -> Reconocida
+#Cadena 112321 -> Error al ejecutar 11232
+

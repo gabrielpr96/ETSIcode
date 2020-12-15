@@ -1,0 +1,17 @@
+#Automata Finito Determinista Test 2
+ESTADOS: a b c d
+INICIAL: a
+FINALES: a c
+TRANSICIONES:
+	a '1' b
+	a '2' d
+	b '1' b
+	b '2' c
+	c '1' a
+	c '3' c
+	d '2' c
+FIN
+#Cadena: 112312211 -> No reconocida
+#Cadena 1123122 -> Reconocida
+#Cadena 122312 -> Error al ejecutar 122
+

@@ -83,10 +83,4 @@ public class Registro {
             l.unlock();
         }
     }
-    
-    public static void main(String[] args){
-        long id = Thread.currentThread().getId();
-        Cliente c = new Cliente(id, true);
-        System.out.println(c.equals(Thread.currentThread().getId())?"Si":"No");
-    }
 }
