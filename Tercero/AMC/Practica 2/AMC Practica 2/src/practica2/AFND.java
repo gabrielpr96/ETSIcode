@@ -1,4 +1,4 @@
-package amc.practica.pkg2;
+package practica2;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -16,15 +16,15 @@ public class AFND {
         automata.validar();
         Set<String> macroestado = new HashSet<>(automata.getEstadosIniciales());
         for (String simbolo : cadena) {
-            ejecutar(macroestado, simbolo);
+            lambdaClausura(macroestado, automata);
+            ejecutar(macroestado, simbolo, automata);
             if(macroestado.isEmpty())
                 throw new Exception("El macroestado se ha quedado vacio");
         }
         return automata.getEstadosFinales().containsAll(macroestado);
     }
     
-    public void ejecutar(Set<String> macroestado, String simbolo){
-        lambdaClausura(macroestado);
+    public static void ejecutar(Set<String> macroestado, String simbolo, AutomataNoDeterminista automata){
         Set<String> siguienteMacroestado = new HashSet<>();
         for (String estado : macroestado) {
             String[] siguientes = automata.getTransiciones().get(AutomataDeterminista.formarCondicion(estado, simbolo));
@@ -36,20 +36,20 @@ public class AFND {
         macroestado.addAll(siguienteMacroestado);
     }
     
-    public void lambdaClausura(Set<String> macroestado){
+    public static void lambdaClausura(Set<String> macroestado, AutomataNoDeterminista automata){
         Set<String> nuevos = new HashSet<>();
         for (String estado : macroestado) {
-            nuevos.addAll(lambdaClausura(estado));
+            nuevos.addAll(lambdaClausura(estado, automata));
         }
         macroestado.addAll(nuevos);
     }
-    public Set<String> lambdaClausura(String estado){
+    public static Set<String> lambdaClausura(String estado, AutomataNoDeterminista automata){
         Set<String> nuevos = new HashSet<>();
         String[] resultados = automata.getTransiciones().get(estado);
         if(resultados != null){
             for (String resultado : resultados) {
                 nuevos.add(resultado);
-                nuevos.addAll(lambdaClausura(resultado));
+                nuevos.addAll(lambdaClausura(resultado, automata));
             }
         }
         return nuevos;

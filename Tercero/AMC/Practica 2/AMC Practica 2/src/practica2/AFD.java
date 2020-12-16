@@ -1,4 +1,4 @@
-package amc.practica.pkg2;
+package practica2;
 
 public class AFD {
 
@@ -12,12 +12,12 @@ public class AFD {
         automata.validar();
         String estado = automata.getEstadoInicial();
         for (String simbolo : cadena) {
-            estado = ejecutar(estado, simbolo);
+            estado = ejecutar(estado, simbolo, automata);
         }
         return automata.getEstadosFinales().contains(estado);
     }
     
-    public String ejecutar(String estado, String simbolo) throws Exception{
+    public static String ejecutar(String estado, String simbolo, AutomataDeterminista automata) throws Exception{
         if (!automata.getSimbolos().contains(simbolo)) {
                 throw new Exception("Simbolo en cadena no reconocido");
             }

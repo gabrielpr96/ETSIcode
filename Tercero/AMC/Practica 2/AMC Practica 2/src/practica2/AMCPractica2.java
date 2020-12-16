@@ -1,4 +1,4 @@
-package amc.practica.pkg2;
+package practica2;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 public class AMCPractica2 {
 
     public static void main(String[] args) {
+        VentanaPrincipal frame = new VentanaPrincipal();
+        frame.setVisible(true);
         test();
     }
     

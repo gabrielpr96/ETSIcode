@@ -1,4 +1,4 @@
-package amc.practica.pkg2;
+package practica2;
 
 import java.io.BufferedReader;
 import java.io.File;

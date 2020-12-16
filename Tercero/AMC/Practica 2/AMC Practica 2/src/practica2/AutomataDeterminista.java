@@ -1,4 +1,4 @@
-package amc.practica.pkg2;
+package practica2;
 
 import java.util.Arrays;
 import java.util.HashMap;
