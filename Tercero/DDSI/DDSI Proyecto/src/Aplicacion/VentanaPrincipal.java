@@ -5,7 +5,8 @@
  */
 package Aplicacion;
 
-import Persistencia.conexionOracle;
+import Persistencia.ConexionOracle;
+import java.awt.event.WindowAdapter;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -15,23 +16,35 @@ import javax.swing.JOptionPane;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    private conexionOracle conexion;
+    private ConexionOracle conexion;
 
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        setTitle("DDSI Practica 4 Borja López Pineda");
+        setTitle("DDSI Proyecto Borja López Pineda");
         setLocationRelativeTo(null);
+        setResizable(false);
+        
+        jMenuGestionExertos.setEnabled(false);
+        jMenuBuscarColaboradores.setEnabled(false);
+        jMenuGestionColaboraciones.setEnabled(false);
+        jMenuGestionGlobalBD.setEnabled(false);
+        jMenuSalir.setEnabled(false);
         new Thread() {
             @Override
             public void run() {
                 try {
-                    conexion = new conexionOracle();
+                    conexion = new ConexionOracle();
                     jLabelConectando.setVisible(false);
+                    jMenuGestionExertos.setEnabled(true);
+                    jMenuBuscarColaboradores.setEnabled(true);
+                    jMenuGestionColaboraciones.setEnabled(true);
+                    jMenuGestionGlobalBD.setEnabled(true);
+                    jMenuSalir.setEnabled(true);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al realizar conexión", JOptionPane.ERROR_MESSAGE);
                     System.exit(0);
                 }
             }
@@ -51,13 +64,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuPrincipal = new javax.swing.JMenuBar();
         jMenuConexion = new javax.swing.JMenu();
-        jMenuConexionSalir = new javax.swing.JMenuItem();
+        jMenuSalir = new javax.swing.JMenuItem();
         jMenuExpertos = new javax.swing.JMenu();
-        jMenuExertosGestion = new javax.swing.JMenuItem();
+        jMenuGestionExertos = new javax.swing.JMenuItem();
         jMenuCasos = new javax.swing.JMenu();
         jMenuColaboraciones = new javax.swing.JMenu();
-        jMenuColaboracionesGestion = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuBuscarColaboradores = new javax.swing.JMenuItem();
+        jMenuGestionColaboraciones = new javax.swing.JMenuItem();
+        jMenuGestionCompleta = new javax.swing.JMenu();
+        jMenuGestionGlobalBD = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -77,25 +92,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuConexion.setText("Conexión");
 
-        jMenuConexionSalir.setText("Salir aplicación");
-        jMenuConexionSalir.addActionListener(new java.awt.event.ActionListener() {
+        jMenuSalir.setText("Salir aplicación");
+        jMenuSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuConexionSalirActionPerformed(evt);
+                jMenuSalirActionPerformed(evt);
             }
         });
-        jMenuConexion.add(jMenuConexionSalir);
+        jMenuConexion.add(jMenuSalir);
 
         jMenuPrincipal.add(jMenuConexion);
 
         jMenuExpertos.setText("Expertos");
 
-        jMenuExertosGestion.setText("Gestión de expertos");
-        jMenuExertosGestion.addActionListener(new java.awt.event.ActionListener() {
+        jMenuGestionExertos.setText("Gestión de expertos");
+        jMenuGestionExertos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuExertosGestionActionPerformed(evt);
+                jMenuGestionExertosActionPerformed(evt);
             }
         });
-        jMenuExpertos.add(jMenuExertosGestion);
+        jMenuExpertos.add(jMenuGestionExertos);
 
         jMenuPrincipal.add(jMenuExpertos);
 
@@ -104,23 +119,35 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuColaboraciones.setText("Colaboraciones");
 
-        jMenuColaboracionesGestion.setText("Gestión de colaboraciones");
-        jMenuColaboracionesGestion.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBuscarColaboradores.setText("Buscar Colaboradores");
+        jMenuBuscarColaboradores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuColaboracionesGestionActionPerformed(evt);
+                jMenuBuscarColaboradoresActionPerformed(evt);
             }
         });
-        jMenuColaboraciones.add(jMenuColaboracionesGestion);
+        jMenuColaboraciones.add(jMenuBuscarColaboradores);
 
-        jMenuItem1.setText("Buscar Colaboradores");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuGestionColaboraciones.setText("Gestión de Colaboraciones");
+        jMenuGestionColaboraciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuGestionColaboracionesActionPerformed(evt);
             }
         });
-        jMenuColaboraciones.add(jMenuItem1);
+        jMenuColaboraciones.add(jMenuGestionColaboraciones);
 
         jMenuPrincipal.add(jMenuColaboraciones);
+
+        jMenuGestionCompleta.setText("Gestión Completa");
+
+        jMenuGestionGlobalBD.setText("Gestión Global de la BD");
+        jMenuGestionGlobalBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuGestionGlobalBDActionPerformed(evt);
+            }
+        });
+        jMenuGestionCompleta.add(jMenuGestionGlobalBD);
+
+        jMenuPrincipal.add(jMenuGestionCompleta);
 
         setJMenuBar(jMenuPrincipal);
 
@@ -128,9 +155,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 775, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(311, 311, 311)
+                .addGap(349, 349, 349)
                 .addComponent(jLabelConectando)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -138,42 +165,101 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelConectando))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelConectando)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuConexionSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuConexionSalirActionPerformed
+    private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
         cerrarConexion();
         System.exit(0);
-    }//GEN-LAST:event_jMenuConexionSalirActionPerformed
+    }//GEN-LAST:event_jMenuSalirActionPerformed
 
-    private void jMenuExertosGestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuExertosGestionActionPerformed
-        ventanaExpetos vE = new ventanaExpetos(conexion);
+    /**
+     * Abre la venta de gestión de expertos
+     * Cierra la ventana principal, hasta que se cierre la secundaria
+     * @param evt 
+     */
+    private void jMenuGestionExertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGestionExertosActionPerformed
+        VentanaGestionExpertos vE = new VentanaGestionExpertos(conexion);
+        vE.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                setVisible(true);
+            }
+        });
+        setVisible(false);
         vE.setVisible(true);
-    }//GEN-LAST:event_jMenuExertosGestionActionPerformed
+    }//GEN-LAST:event_jMenuGestionExertosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
+    /**
+     * Siempre que se cierra la ventana principal, se debe terminar la conexión
+     * @param evt 
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         cerrarConexion();
     }//GEN-LAST:event_formWindowClosing
 
-    private void jMenuColaboracionesGestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuColaboracionesGestionActionPerformed
-        ventanaColaboraciones vC = new ventanaColaboraciones(conexion);
+    /**
+     * Abre la venta de gestión de colaboraciones
+     * Cierra la ventana principal, hasta que se cierre la secundaria
+     * @param evt 
+     */
+    private void jMenuGestionColaboracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGestionColaboracionesActionPerformed
+        VentanaGestionColaboraciones vC = new VentanaGestionColaboraciones(conexion);
+        vC.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                setVisible(true);
+            }
+        });
+        setVisible(false);
         vC.setVisible(true);
-    }//GEN-LAST:event_jMenuColaboracionesGestionActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        ventanaBusquedaColaboraciones vBC = new ventanaBusquedaColaboraciones(conexion);
-        vBC.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuGestionColaboracionesActionPerformed
 
     /**
+     * Abre la venta de busqueda de colaboraciones
+     * Cierra la ventana principal, hasta que se cierre la secundaria
+     * @param evt 
+     */
+    private void jMenuBuscarColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBuscarColaboradoresActionPerformed
+        VentanaBuscarColaboraciones vBC = new VentanaBuscarColaboraciones(conexion);
+        vBC.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                setVisible(true);
+            }
+        });
+        setVisible(false);
+        vBC.setVisible(true);
+    }//GEN-LAST:event_jMenuBuscarColaboradoresActionPerformed
+
+    /**
+     * Abre la venta de gestión global
+     * Cierra la ventana principal, hasta que se cierre la secundaria
+     * @param evt 
+     */
+    private void jMenuGestionGlobalBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGestionGlobalBDActionPerformed
+        VentanaGestionGlobal vGG = new VentanaGestionGlobal(conexion);
+        vGG.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                setVisible(true);
+            }
+        });
+        setVisible(false);
+        vGG.setVisible(true);
+    }//GEN-LAST:event_jMenuGestionGlobalBDActionPerformed
+
+    /**
+     * Crea la ventana principoal y la muestra
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -208,27 +294,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Intenta cerra la conexión
+     */
     private void cerrarConexion() {
         try {
             if (conexion != null) {
                 conexion.desconexion();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al cerrar conexión", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelConectando;
+    private javax.swing.JMenuItem jMenuBuscarColaboradores;
     private javax.swing.JMenu jMenuCasos;
     private javax.swing.JMenu jMenuColaboraciones;
-    private javax.swing.JMenuItem jMenuColaboracionesGestion;
     private javax.swing.JMenu jMenuConexion;
-    private javax.swing.JMenuItem jMenuConexionSalir;
-    private javax.swing.JMenuItem jMenuExertosGestion;
     private javax.swing.JMenu jMenuExpertos;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuGestionColaboraciones;
+    private javax.swing.JMenu jMenuGestionCompleta;
+    private javax.swing.JMenuItem jMenuGestionExertos;
+    private javax.swing.JMenuItem jMenuGestionGlobalBD;
     private javax.swing.JMenuBar jMenuPrincipal;
+    private javax.swing.JMenuItem jMenuSalir;
     // End of variables declaration//GEN-END:variables
 }
