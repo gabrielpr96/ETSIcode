@@ -1,4 +1,4 @@
-package pcd.practica.pkg8;
+package practica8;
 
 import java.awt.Canvas;
 import java.awt.Color;
