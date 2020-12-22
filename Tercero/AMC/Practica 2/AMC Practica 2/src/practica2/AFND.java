@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AFND {
+public class AFND implements Proceso, Cloneable {
 
     private final AutomataNoDeterminista automata;
 
@@ -12,46 +12,60 @@ public class AFND {
         this.automata = automata;
     }
 
-    public boolean reconocer(String[] cadena) throws Exception {
+    @Override
+    public boolean reconocer(String cadena) throws Exception {
+        char[] simbolos = cadena.toCharArray();
         automata.validar();
         Set<String> macroestado = new HashSet<>(automata.getEstadosIniciales());
-        for (String simbolo : cadena) {
-            lambdaClausura(macroestado, automata);
-            ejecutar(macroestado, simbolo, automata);
-            if(macroestado.isEmpty())
+        Set<String> nuevos = new HashSet<>();
+        for (char simbolo : simbolos) {
+            for (String estado : macroestado) {
+                nuevos.addAll(lambdaClausura(estado));
+            }
+            macroestado.addAll(nuevos);
+
+            nuevos.clear();
+            for (String estado : macroestado) {
+                String[] siguientes = automata.getTransiciones().get(AutomataDeterminista.formarCondicion(estado, simbolo));
+                if (siguientes != null) {
+                    nuevos.addAll(Arrays.asList(siguientes));
+                }
+            }
+            macroestado.clear();
+            macroestado.addAll(nuevos);
+            nuevos.clear();
+
+            if (macroestado.isEmpty()) {
                 throw new Exception("El macroestado se ha quedado vacio");
+            }
         }
         return automata.getEstadosFinales().containsAll(macroestado);
     }
-    
-    public static void ejecutar(Set<String> macroestado, String simbolo, AutomataNoDeterminista automata){
-        Set<String> siguienteMacroestado = new HashSet<>();
-        for (String estado : macroestado) {
-            String[] siguientes = automata.getTransiciones().get(AutomataDeterminista.formarCondicion(estado, simbolo));
-            if(siguientes != null){
-                siguienteMacroestado.addAll(Arrays.asList(siguientes));
-            }
-        }
-        macroestado.clear();
-        macroestado.addAll(siguienteMacroestado);
-    }
-    
-    public static void lambdaClausura(Set<String> macroestado, AutomataNoDeterminista automata){
-        Set<String> nuevos = new HashSet<>();
-        for (String estado : macroestado) {
-            nuevos.addAll(lambdaClausura(estado, automata));
-        }
-        macroestado.addAll(nuevos);
-    }
-    public static Set<String> lambdaClausura(String estado, AutomataNoDeterminista automata){
+
+    public Set<String> lambdaClausura(String estado) {
         Set<String> nuevos = new HashSet<>();
         String[] resultados = automata.getTransiciones().get(estado);
-        if(resultados != null){
+        if (resultados != null) {
             for (String resultado : resultados) {
                 nuevos.add(resultado);
-                nuevos.addAll(lambdaClausura(resultado, automata));
+                nuevos.addAll(lambdaClausura(resultado));
             }
         }
         return nuevos;
+    }
+
+    @Override
+    public boolean esFinal(String estado) {
+        return automata.getEstadosFinales().contains(estado);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return (AFND) super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return automata.toString();
     }
 }

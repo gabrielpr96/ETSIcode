@@ -1,16 +1,15 @@
 package practica2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class AutomataNoDeterminista {
 
-    private final Set<String> estados, estadosFinales, estadosIniciales, simbolos;
+    private final Set<String> estados, estadosFinales, estadosIniciales;
+    private final Set<Character> simbolos;
     private final Map<String, String[]> transiciones;
 
     public AutomataNoDeterminista() {
@@ -50,7 +49,9 @@ public class AutomataNoDeterminista {
                 if (!estados.contains(key[0])) {
                     throw new Exception("Estado de partida de transicción no está incluido en la lista de estados");
                 }
-                if (!simbolos.contains(key[1])) {
+                if (key[1].length() != 1) {
+                    throw new Exception("Simbolo no es un solo caracter");
+                } else if (!simbolos.contains(key[1].charAt(0))) {
                     throw new Exception("Simbolo de transicción no está incluido en la lista de simbolos");
                 }
             } else {
@@ -70,7 +71,7 @@ public class AutomataNoDeterminista {
         return estadosFinales;
     }
 
-    public Set<String> getSimbolos() {
+    public Set<Character> getSimbolos() {
         return simbolos;
     }
 
@@ -94,14 +95,36 @@ public class AutomataNoDeterminista {
         estadosFinales.addAll(Arrays.asList(estados));
     }
 
-    public void addTransicion(String partida, String simbolo, String[] resultado) {
+    public void addTransicion(String partida, Character simbolo, String[] resultado) {
         transiciones.put(formarCondicion(partida, simbolo), resultado);
         if (!simbolos.contains(simbolo)) {
             simbolos.add(simbolo);
         }
     }
 
-    public static String formarCondicion(String partida, String simbolo) {
+    public static String formarCondicion(String partida, Character simbolo) {
         return simbolo == null ? partida : new StringBuilder().append(partida).append('-').append(simbolo).toString();
+    }
+    
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("ESTADOS: ").append(estados.toString()).append("\n")
+                .append("INICIAL: ").append(estadosIniciales).append("\n")
+                .append("FINALES: ").append(estadosFinales).append("\n")
+                .append("TRANSICIONES: ").append("\n");
+        for (Map.Entry<String, String[]> transicion : transiciones.entrySet()) {
+            String[] value = transicion.getValue();
+            if(transicion.getKey().contains("-")){
+                String[] key = transicion.getKey().split("-");
+                sb.append("\t").append(key[0]).append(" '").append(key[1]).append("' ");
+            }else{
+                String key = transicion.getKey();
+                sb.append("\t").append(key).append(" -> ");
+            }
+            sb.append(Arrays.asList(value)).append("\n");
+        }
+        sb.append("FIN");
+        return sb.toString();
     }
 }

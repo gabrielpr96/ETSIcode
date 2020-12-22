@@ -15,7 +15,9 @@ import java.awt.Shape;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,15 +25,13 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.HighlightPainter;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
-import static practica2.AFND.ejecutar;
-import static practica2.AFND.lambdaClausura;
+import static practica2.AutomataDrawer.*;
 
 /**
  *
@@ -424,12 +424,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             paso();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
+            ex.printStackTrace();
             reiniciar();
         }
     }//GEN-LAST:event_botonPasoActionPerformed
 
     private void botonReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReiniciarActionPerformed
         reiniciar();
+        hideGraph();
     }//GEN-LAST:event_botonReiniciarActionPerformed
 
     private String estado;
@@ -437,6 +439,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private AutomataDeterminista afd;
     private AutomataNoDeterminista afnd;
     private boolean afndPaso;
+    private List<String[]> nuevoMacroestado;
+    private Set<String> antiguosEstados;
 
     private void iniciar() throws IOException, Exception {
         if (botonAFD.isSelected()) {
@@ -446,6 +450,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             textEstado.setText(estado);
             afnd = null;
             labelEstado.setText("Estado");
+            setGraph(createGraphAFD(afd, null, estado));
         } else {
             afnd = Parser.parseTextAFND(textPane.getText());
             afnd.validar();
@@ -454,49 +459,137 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             afd = null;
             labelEstado.setText("Macroestado");
             afndPaso = false;
+            setGraph(createGraphAFND(afnd, null, macroestado, null));
         }
+        nuevoMacroestado = new ArrayList<>();
+        showGraph();
         updateReconocido();
     }
 
     private void paso() throws Exception {
         String texto = textCadena.getText().trim();
-        if (!texto.isEmpty()) {
-            String[] simbolos = textCadena.getText().trim().split(" ");
-            String simbolo = simbolos[0];
-            textSimbolo.setText(simbolo);
+        if (!nuevoMacroestado.isEmpty()) {
+            String[] siguienteEstado = nuevoMacroestado.iterator().next();
+            nuevoMacroestado.remove(siguienteEstado);
+            if (siguienteEstado.length == 2) {
+                macroestado.add(siguienteEstado[1]);
+                setGraph(createGraphAFND(afnd, new String[]{siguienteEstado[0], null, siguienteEstado[1]}, macroestado, antiguosEstados));
+            } else {
+                macroestado.add(siguienteEstado[2]);
+                setGraph(createGraphAFND(afnd, new String[]{siguienteEstado[0], siguienteEstado[1], siguienteEstado[2]}, macroestado, antiguosEstados));
+            }
+            boolean esta = false;
+            int i = 0;
+            while (i < nuevoMacroestado.size() && !esta) {
+                if (nuevoMacroestado.get(i)[0].equals(siguienteEstado[0])) {
+                    esta = true;
+                } else {
+                    i++;
+                }
+            }
+            if (!esta) {
+                antiguosEstados.remove(siguienteEstado[0]);
+            }
+            textEstado.setText(macroestado.toString());
+            if (nuevoMacroestado.isEmpty()) {
+                afndPaso = !afndPaso;
+            }
+        } else if (!texto.isEmpty()) {
+            char[] simbolos = textCadena.getText().trim().toCharArray();
+            char simbolo = simbolos[0];
+            textSimbolo.setText(Character.toString(simbolo));
             boolean consumir = true;
             if (botonAFD.isSelected()) {
                 if (afd == null) {
                     iniciar();
                 } else {
-                    estado = AFD.ejecutar(estado, simbolo, afd);
+                    if (!afd.getSimbolos().contains(simbolo)) {
+                        throw new Exception("Simbolo en cadena no reconocido");
+                    }
+                    String preEstado = estado;
+                    String condicion = AutomataDeterminista.formarCondicion(estado, simbolo);
+                    estado = afd.getTransiciones().get(condicion);
+                    if (estado == null) {
+                        throw new Exception("Transicion no incluida en la lista de transiciones");
+                    }
+                    setGraph(createGraphAFD(afd, new String[]{preEstado, Character.toString(simbolo), estado}, estado));
                     textEstado.setText(estado);
                 }
             } else {
                 if (afnd == null) {
                     iniciar();
                 } else {
-                    if(afndPaso){
-                        AFND.ejecutar(macroestado, simbolo, afnd);
-                        textEstado.setText(macroestado.toString());
-                        if(macroestado.isEmpty())
+                    if (afndPaso) {
+                        for (String estado : macroestado) {
+                            String[] siguientes = afnd.getTransiciones().get(AutomataDeterminista.formarCondicion(estado, simbolo));
+                            if (siguientes != null) {
+                                for (String siguiente : siguientes) {
+                                    nuevoMacroestado.add(new String[]{estado, Character.toString(simbolo), siguiente});
+                                }
+                            }
+                        }
+                        antiguosEstados = new HashSet<>(macroestado);
+                        macroestado.clear();
+                        if (nuevoMacroestado.isEmpty()) {
                             throw new Exception("El macroestado se ha quedado vacio");
-                    }else{
-                        AFND.lambdaClausura(macroestado, afnd);
-                        textEstado.setText(macroestado.toString());
+                        }
+                        if (nuevoMacroestado.isEmpty()) {
+                            afndPaso = !afndPaso;
+                        } else {
+                            paso();
+                        }
+
+                    } else {
+                        for (String subestado : macroestado) {
+                            for (String[] tranz : lambdaClausura(subestado)) {
+                                /*
+                                boolean dentro = false;
+                                int i = 0;
+                                while (i < nuevoMacroestado.size() && !dentro) {
+                                    if (nuevoMacroestado.get(i)[0].equals(tranz[0]) && nuevoMacroestado.get(i)[1].equals(tranz[1])) {
+                                        dentro = true;
+                                    } else {
+                                        i++;
+                                    }
+                                }
+                                if (!dentro) {
+                                    nuevoMacroestado.add(tranz);
+                                }
+                                 */
+                                nuevoMacroestado.add(tranz);
+                            }
+                        }
+                        antiguosEstados = new HashSet<>(macroestado);
                         consumir = false;
+                        if (nuevoMacroestado.isEmpty()) {
+                            afndPaso = !afndPaso;
+                        } else {
+                            paso();
+                        }
                     }
-                    afndPaso = !afndPaso;
                 }
             }
-            if(consumir)
-                textCadena.setText(String.join(" ", Arrays.copyOfRange(simbolos, 1, simbolos.length)));
+            if (consumir) {
+                textCadena.setText(textCadena.getText().substring(1));
+            }
             updateReconocido();
         } else {
             labelReconocido.setText("No hay simbolos");
             labelReconocido.setForeground(Color.black);
             textSimbolo.setText("");
         }
+    }
+
+    public List<String[]> lambdaClausura(String estado) {
+        List<String[]> nuevos = new ArrayList<>();
+        String[] resultados = afnd.getTransiciones().get(estado);
+        if (resultados != null) {
+            for (String resultado : resultados) {
+                nuevos.add(new String[]{estado, resultado});
+                nuevos.addAll(lambdaClausura(resultado));
+            }
+        }
+        return nuevos;
     }
 
     private void updateReconocido() {
@@ -514,8 +607,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             labelReconocido.setForeground(Color.red);
         }
     }
-    
-    private void reiniciar(){
+
+    private void reiniciar() {
         afd = null;
         afnd = null;
         textCadena.setText("");

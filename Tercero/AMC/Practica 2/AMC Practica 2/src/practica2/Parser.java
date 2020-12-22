@@ -37,7 +37,7 @@ public class Parser {
                 modoTransiciones = false;
             }else if (modoTransiciones) {
                 String[] partes = line.trim().split("'");
-                automata.addTransicion(partes[0].trim(), partes[1], partes[2].trim());
+                automata.addTransicion(partes[0].trim(), partes[1].charAt(0), partes[2].trim());
             } else {
                 if (line.startsWith("ESTADOS:")) {
                     automata.addEstados(line.substring(8).trim().split(" "));
@@ -83,7 +83,7 @@ public class Parser {
                 modoTransicionesLambda = false;
             }else if (modoTransiciones) {
                 String[] partes = line.trim().split("'");
-                automata.addTransicion(partes[0].trim(), partes[1], partes[2].trim().split(" "));
+                automata.addTransicion(partes[0].trim(), partes[1].charAt(0), partes[2].trim().split(" "));
             } else if (modoTransicionesLambda) {
                 String[] partes = line.trim().split(" ");
                 automata.addTransicion(partes[0].trim(), null, Arrays.copyOfRange(partes, 1, partes.length));
