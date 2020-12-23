@@ -2,7 +2,7 @@ package practica2;
 
 public class AFD implements Proceso, Cloneable {
 
-    private final AutomataDeterminista automata;
+    private AutomataDeterminista automata;
 
     public AFD(AutomataDeterminista automata) {
         this.automata = automata;
@@ -32,7 +32,13 @@ public class AFD implements Proceso, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return (AFD) super.clone();
+        AFD obj = null;
+        try {
+            obj = (AFD) super.clone();
+            obj.automata = (AutomataDeterminista) automata.clone();
+        } catch (CloneNotSupportedException ex) {
+        }
+        return obj;
     }
 
     @Override

@@ -356,6 +356,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
             try {
                 textPane.setText(Files.readString(new File(dialog.getDirectory() + file).toPath()));
+                reiniciar();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
@@ -396,7 +397,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     + "FIN\n"
                     + "");
         } else {
-            textPane.setText("#Automata Finito Determinista\n"
+            textPane.setText("#Automata Finito No Determinista\n"
                     + "ESTADOS: \n"
                     + "INICIAL: \n"
                     + "FINALES: \n"
@@ -408,11 +409,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     + "FIN\n"
                     + "");
         }
+        AutomataDrawer.hideGraph();
     }//GEN-LAST:event_botonLimpiarActionPerformed
 
     private void botonEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEjecutarActionPerformed
         try {
             iniciar();
+            while (!nuevoMacroestado.isEmpty() || !textCadena.getText().trim().isEmpty()) {
+                paso();
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
             reiniciar();
@@ -541,23 +546,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
                     } else {
                         for (String subestado : macroestado) {
-                            for (String[] tranz : lambdaClausura(subestado)) {
-                                /*
-                                boolean dentro = false;
-                                int i = 0;
-                                while (i < nuevoMacroestado.size() && !dentro) {
-                                    if (nuevoMacroestado.get(i)[0].equals(tranz[0]) && nuevoMacroestado.get(i)[1].equals(tranz[1])) {
-                                        dentro = true;
-                                    } else {
-                                        i++;
-                                    }
-                                }
-                                if (!dentro) {
-                                    nuevoMacroestado.add(tranz);
-                                }
-                                 */
-                                nuevoMacroestado.add(tranz);
-                            }
+                            lambdaClausura(subestado, nuevoMacroestado);
                         }
                         antiguosEstados = new HashSet<>(macroestado);
                         consumir = false;
@@ -580,16 +569,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
 
-    public List<String[]> lambdaClausura(String estado) {
-        List<String[]> nuevos = new ArrayList<>();
+    public void lambdaClausura(String estado, List<String[]> nuevos) {
         String[] resultados = afnd.getTransiciones().get(estado);
         if (resultados != null) {
             for (String resultado : resultados) {
-                nuevos.add(new String[]{estado, resultado});
-                nuevos.addAll(lambdaClausura(resultado));
+                boolean dentro = false;
+                int i = 0;
+                while (i < nuevos.size() && !dentro) {
+                    if (nuevos.get(i)[0].equals(estado) && nuevos.get(i)[1].equals(resultado)) {
+                        dentro = true;
+                    } else {
+                        i++;
+                    }
+                }
+                if (!dentro) {
+                    nuevos.add(new String[]{estado, resultado});
+                    lambdaClausura(resultado, nuevos);
+                }
             }
         }
-        return nuevos;
     }
 
     private void updateReconocido() {

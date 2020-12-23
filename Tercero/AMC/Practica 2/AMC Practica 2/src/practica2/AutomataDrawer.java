@@ -86,7 +86,9 @@ public class AutomataDrawer {
     }
 
     public static void setGraph(MutableGraph g) {
+        if(g == null) return;
         graph = g;
+        g.graphAttrs().add(Color.rgb("E5D0F5").background());
         BufferedImage bi = Graphviz.fromGraph(g).height(principal.getHeight()).render(Format.PNG).toImage();
         secundaria.setVisible(false);
         canvas.setSize(bi.getWidth(secundaria), bi.getHeight(secundaria));

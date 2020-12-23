@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class AFND implements Proceso, Cloneable {
 
-    private final AutomataNoDeterminista automata;
+    private AutomataNoDeterminista automata;
 
     public AFND(AutomataNoDeterminista automata) {
         this.automata = automata;
@@ -20,7 +20,7 @@ public class AFND implements Proceso, Cloneable {
         Set<String> nuevos = new HashSet<>();
         for (char simbolo : simbolos) {
             for (String estado : macroestado) {
-                nuevos.addAll(lambdaClausura(estado));
+                lambdaClausura(estado, nuevos);
             }
             macroestado.addAll(nuevos);
 
@@ -42,16 +42,16 @@ public class AFND implements Proceso, Cloneable {
         return automata.getEstadosFinales().containsAll(macroestado);
     }
 
-    public Set<String> lambdaClausura(String estado) {
-        Set<String> nuevos = new HashSet<>();
+    public void lambdaClausura(String estado, Set<String> nuevos) {
         String[] resultados = automata.getTransiciones().get(estado);
         if (resultados != null) {
             for (String resultado : resultados) {
-                nuevos.add(resultado);
-                nuevos.addAll(lambdaClausura(resultado));
+                if(!nuevos.contains(resultado)){
+                    nuevos.add(resultado);
+                    lambdaClausura(resultado, nuevos);
+                }
             }
         }
-        return nuevos;
     }
 
     @Override
@@ -61,7 +61,13 @@ public class AFND implements Proceso, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return (AFND) super.clone();
+        AFND obj = null;
+        try {
+            obj = (AFND) super.clone();
+            obj.automata = (AutomataNoDeterminista) automata.clone();
+        } catch (CloneNotSupportedException ex) {
+        }
+        return obj;
     }
 
     @Override

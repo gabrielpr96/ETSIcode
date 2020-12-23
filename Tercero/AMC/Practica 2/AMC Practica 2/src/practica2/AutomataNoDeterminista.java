@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class AutomataNoDeterminista {
+public class AutomataNoDeterminista implements Cloneable{
 
-    private final Set<String> estados, estadosFinales, estadosIniciales;
-    private final Set<Character> simbolos;
-    private final Map<String, String[]> transiciones;
+    private Set<String> estados, estadosFinales, estadosIniciales;
+    private Set<Character> simbolos;
+    private Map<String, String[]> transiciones;
 
     public AutomataNoDeterminista() {
         estados = new HashSet<>();
@@ -104,6 +104,21 @@ public class AutomataNoDeterminista {
 
     public static String formarCondicion(String partida, Character simbolo) {
         return simbolo == null ? partida : new StringBuilder().append(partida).append('-').append(simbolo).toString();
+    }
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        AutomataNoDeterminista obj = null;
+        try {
+            obj = (AutomataNoDeterminista) super.clone();
+            obj.estados = new HashSet<>(estados);
+            obj.estadosFinales = new HashSet<>(estadosFinales);
+            obj.estadosIniciales = new HashSet<>(estadosIniciales);
+            obj.simbolos = new HashSet<>(simbolos);
+            obj.transiciones = new HashMap<>(transiciones);
+        } catch (CloneNotSupportedException ex) {
+        }
+        return obj;
     }
     
     @Override

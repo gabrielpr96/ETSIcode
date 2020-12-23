@@ -33,10 +33,11 @@ public class Parser {
         String line;
         boolean modoTransiciones = false;
         while ((line = file.readLine()) != null) {
-            if(line.trim().equals("FIN")){
+            line = line.trim().replaceAll("\t", " ").replaceAll(" +", " ");
+            if(line.equals("FIN")){
                 modoTransiciones = false;
             }else if (modoTransiciones) {
-                String[] partes = line.trim().split("'");
+                String[] partes = line.split("'");
                 automata.addTransicion(partes[0].trim(), partes[1].charAt(0), partes[2].trim());
             } else {
                 if (line.startsWith("ESTADOS:")) {
