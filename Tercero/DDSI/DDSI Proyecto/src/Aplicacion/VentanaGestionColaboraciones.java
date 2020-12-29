@@ -42,7 +42,7 @@ public class VentanaGestionColaboraciones extends java.awt.Frame {
         String[] nombreColumnas = {"Descripción de Colaboración"};
         mColaboraciones.setColumnIdentifiers(nombreColumnas);
         jTableColaboraciones.getTableHeader().setResizingAllowed(false);
-        
+
         ManejaExperto me = new ManejaExperto(conexion);
         try {
             ArrayList<Experto> expertos = me.listaExpertos();
@@ -144,17 +144,18 @@ public class VentanaGestionColaboraciones extends java.awt.Frame {
 
     /**
      * Muestra en la tabla las colaboraciones del experto seleccionado
-     * @param evt 
+     *
+     * @param evt
      */
     private void jComboBoxExpertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxExpertoActionPerformed
         limpiarTabla();
-        Experto expertoSeleccionado = (Experto)jComboBoxExperto.getSelectedItem();
+        Experto expertoSeleccionado = (Experto) jComboBoxExperto.getSelectedItem();
         ManejaColabora mc = new ManejaColabora(conexion);
         try {
             ArrayList<Colabora> colaboraciones = mc.listaColaboraPorExperto(expertoSeleccionado.getCodExperto());
-            if(colaboraciones.isEmpty()){
+            if (colaboraciones.isEmpty()) {
                 //JOptionPane.showMessageDialog(null, "Este experto no tiene colaboraciones", "Error al mostrar colaboracion", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 for (Colabora colaboracion : colaboraciones) {
                     String[] fila = {colaboracion.getDescripcionColaboracion()};
                     mColaboraciones.addRow(fila);

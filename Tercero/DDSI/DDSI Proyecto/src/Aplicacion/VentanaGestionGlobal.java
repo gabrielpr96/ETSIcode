@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -479,7 +483,8 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Eliminar un caso
-     * @param evt 
+     *
+     * @param evt
      */
     private void eliminarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCasoActionPerformed
         int sel = tablaCasos.getSelectedRow();
@@ -499,14 +504,19 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Inserta un caso
-     * @param evt 
+     *
+     * @param evt
      */
     private void insertarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarCasoActionPerformed
         if (((JTextField) casoFechaInicio.getDateEditor().getUiComponent()).getText().isEmpty() || ((JTextField) casoFechaFin.getDateEditor().getUiComponent()).getText().isEmpty())
             JOptionPane.showMessageDialog(this, "Las fechas no pueden estar vacías", "Error al insertar colaboracion", JOptionPane.ERROR_MESSAGE);
         else {
             try {
-                mca.insertaCaso(new Caso(casoCodigo.getText(), casoNombre.getText(), espFecha.format(casoFechaInicio.getDate()), espFecha.format(casoFechaFin.getDate())));
+                Date fInicio = eliminarHora(casoFechaInicio.getDate()), fFin = eliminarHora(casoFechaFin.getDate());
+                if (fInicio.compareTo(fFin) > 0) {
+                    throw new Exception("La fecha de inicio debe ser anterior a la fecha de fin ");
+                }
+                mca.insertaCaso(new Caso(casoCodigo.getText(), casoNombre.getText(), espFecha.format(fInicio), espFecha.format(fFin)));
                 casoCodigo.setText("");
                 casoNombre.setText("");
                 casoFechaInicio.setCalendar(null);
@@ -514,13 +524,16 @@ public class VentanaGestionGlobal extends java.awt.Frame {
                 listarCasos();
             } catch (SQLException | ParseException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al insertar caso", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al insertar caso", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_insertarCasoActionPerformed
 
     /**
      * Elimina una colaboracion
-     * @param evt 
+     *
+     * @param evt
      */
     private void eliminarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarColaboracionActionPerformed
         int sel = tablaColaboraciones.getSelectedRow();
@@ -556,14 +569,20 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Inserta una colaboracion
-     * @param evt 
+     *
+     * @param evt
      */
     private void insertarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarColaboracionActionPerformed
         if (((JTextField) colaboracionFecha.getDateEditor().getUiComponent()).getText().isEmpty() || ((JTextField) colaboracionFecha.getDateEditor().getUiComponent()).getText().isEmpty())
             JOptionPane.showMessageDialog(this, "Las fechas no pueden estar vacías", "Error al insertar colaboracion", JOptionPane.ERROR_MESSAGE);
         else {
             try {
-                mco.insertaColaboracion(new Colabora(colaboracionExperto.getText(), colaboracionCaso.getText(), espFecha.format(colaboracionFecha.getDate()), colaboracionDescripcion.getText()));
+                Date fColabora = eliminarHora(colaboracionFecha.getDate());
+                Caso caso = mca.obtenerCasoPorCodigo(colaboracionCaso.getText());
+                if (isoFecha.parse(caso.getFechaInicio()).compareTo(fColabora) > 0 || isoFecha.parse(caso.getFechaFin()).compareTo(fColabora) < 0) {
+                    throw new Exception("La fecha de la colaboracion debe estar comprendida entre la fecah de inicio y fin del caso ");
+                }
+                mco.insertaColaboracion(new Colabora(colaboracionExperto.getText(), colaboracionCaso.getText(), espFecha.format(fColabora), colaboracionDescripcion.getText()));
                 colaboracionExperto.setText("");
                 colaboracionCaso.setText("");
                 colaboracionFecha.setCalendar(null);
@@ -571,13 +590,16 @@ public class VentanaGestionGlobal extends java.awt.Frame {
                 listarColaboraciones();
             } catch (SQLException | ParseException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al insertar colaboracion", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al insertar colaboracion", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_insertarColaboracionActionPerformed
 
     /**
      * Elimina un experto
-     * @param evt 
+     *
+     * @param evt
      */
     private void eliminarExpertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarExpertoActionPerformed
         int sel = tablaExpertos.getSelectedRow();
@@ -597,7 +619,8 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Inserta un experto
-     * @param evt 
+     *
+     * @param evt
      */
     private void insertarExpertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarExpertoActionPerformed
         try {
@@ -615,7 +638,8 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Muestra todos los expertos, casos y colaboraciones en sus tablas
-     * @param evt 
+     *
+     * @param evt
      */
     private void listarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarTodoActionPerformed
         try {
@@ -629,7 +653,8 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Vacía todas las tablas y borra los cambios de texto
-     * @param evt 
+     *
+     * @param evt
      */
     private void limpiarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarTodoActionPerformed
         limpiarExpertos();
@@ -652,7 +677,8 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Muestra todos los expertos
-     * @throws SQLException 
+     *
+     * @throws SQLException
      */
     private void listarExpertos() throws SQLException {
         limpiarExpertos();
@@ -664,8 +690,9 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Muestra todos los casos
+     *
      * @throws SQLException
-     * @throws ParseException 
+     * @throws ParseException
      */
     private void listarCasos() throws SQLException, ParseException {
         limpiarCasos();
@@ -677,8 +704,9 @@ public class VentanaGestionGlobal extends java.awt.Frame {
 
     /**
      * Muestra todas las colaboraciones
+     *
      * @throws SQLException
-     * @throws ParseException 
+     * @throws ParseException
      */
     private void listarColaboraciones() throws SQLException, ParseException {
         limpiarColaboraciones();
@@ -713,6 +741,16 @@ public class VentanaGestionGlobal extends java.awt.Frame {
         while (modeloColaboraciones.getRowCount() > 0) {
             modeloColaboraciones.removeRow(0);
         }
+    }
+
+    private Date eliminarHora(Date fecha) {
+        Calendar cal = Calendar.getInstance(); // locale-specific
+        cal.setTime(fecha);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return new Date(cal.getTimeInMillis());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

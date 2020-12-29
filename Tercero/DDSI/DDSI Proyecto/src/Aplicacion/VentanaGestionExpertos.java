@@ -173,7 +173,8 @@ public class VentanaGestionExpertos extends java.awt.Frame {
 
     /**
      * Muestra en la tabla los expertos del pais introducido
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarActionPerformed
         //Filtrar por pais
@@ -191,7 +192,8 @@ public class VentanaGestionExpertos extends java.awt.Frame {
 
     /**
      * Muestra en la tabla todos los expertos sin filtrar
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTodosActionPerformed
         //Sin filtrado
@@ -200,7 +202,7 @@ public class VentanaGestionExpertos extends java.awt.Frame {
         try {
             ArrayList<Experto> expertos = me.listaExpertos();
             for (Experto experto : expertos) {
-                mExpertos.addRow(new String[] {experto.getCodExperto(), experto.getNombre(), experto.getPais(), experto.getSexo(), experto.getEspecialidad()});
+                mExpertos.addRow(new String[]{experto.getCodExperto(), experto.getNombre(), experto.getPais(), experto.getSexo(), experto.getEspecialidad()});
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al listar expertos", JOptionPane.ERROR_MESSAGE);
@@ -209,13 +211,14 @@ public class VentanaGestionExpertos extends java.awt.Frame {
 
     /**
      * Muestra cuentos especialistas hay del sexo introducido
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonContarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonContarActionPerformed
         ManejaExperto me = new ManejaExperto(conexion);
         try {
             String sexo = jTextFieldSexo.getText();
-            jLabelContado.setText("Hay "+me.sexoExperto(sexo)+" "+(sexo.equals("F")?"mujeres":"hombres")+" en la base de datos");
+            jLabelContado.setText("Hay " + me.sexoExperto(sexo) + " " + (sexo.equals("F") ? "mujeres" : "hombres") + " en la base de datos");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al contar expertos", JOptionPane.ERROR_MESSAGE);
         }

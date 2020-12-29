@@ -138,7 +138,8 @@ public class VentanaBuscarColaboraciones extends java.awt.Frame {
 
     /**
      * Muestra las colaboraciones del caso introducido
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarActionPerformed
         limpiarTabla();
@@ -146,7 +147,7 @@ public class VentanaBuscarColaboraciones extends java.awt.Frame {
         try {
             ResultSet rs = mc.listaColaboradoresPorCaso(jTextFieldCaso.getText());
             while (rs.next()) {
-                mColaboraciones.addRow(new String[] {rs.getString("CODEXPERTO"), rs.getString("NOMBRE_EXPERTO"), rs.getString("ESPECIALIDAD"), rs.getString("DESCRIPCION_COLABORACION")});
+                mColaboraciones.addRow(new String[]{rs.getString("CODEXPERTO"), rs.getString("NOMBRE_EXPERTO"), rs.getString("ESPECIALIDAD"), rs.getString("DESCRIPCION_COLABORACION")});
             }
             rs.close();
         } catch (SQLException ex) {

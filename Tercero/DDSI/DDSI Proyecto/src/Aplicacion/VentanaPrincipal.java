@@ -26,7 +26,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setTitle("DDSI Proyecto Borja López Pineda");
         setLocationRelativeTo(null);
         setResizable(false);
-        
+
         jMenuGestionExertos.setEnabled(false);
         jMenuBuscarColaboradores.setEnabled(false);
         jMenuGestionColaboraciones.setEnabled(false);
@@ -179,9 +179,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuSalirActionPerformed
 
     /**
-     * Abre la venta de gestión de expertos
-     * Cierra la ventana principal, hasta que se cierre la secundaria
-     * @param evt 
+     * Abre la venta de gestión de expertos Cierra la ventana principal, hasta
+     * que se cierre la secundaria
+     *
+     * @param evt
      */
     private void jMenuGestionExertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGestionExertosActionPerformed
         VentanaGestionExpertos vE = new VentanaGestionExpertos(conexion);
@@ -201,16 +202,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     /**
      * Siempre que se cierra la ventana principal, se debe terminar la conexión
-     * @param evt 
+     *
+     * @param evt
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         cerrarConexion();
     }//GEN-LAST:event_formWindowClosing
 
     /**
-     * Abre la venta de gestión de colaboraciones
-     * Cierra la ventana principal, hasta que se cierre la secundaria
-     * @param evt 
+     * Abre la venta de gestión de colaboraciones Cierra la ventana principal,
+     * hasta que se cierre la secundaria
+     *
+     * @param evt
      */
     private void jMenuGestionColaboracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGestionColaboracionesActionPerformed
         VentanaGestionColaboraciones vC = new VentanaGestionColaboraciones(conexion);
@@ -225,9 +228,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuGestionColaboracionesActionPerformed
 
     /**
-     * Abre la venta de busqueda de colaboraciones
-     * Cierra la ventana principal, hasta que se cierre la secundaria
-     * @param evt 
+     * Abre la venta de busqueda de colaboraciones Cierra la ventana principal,
+     * hasta que se cierre la secundaria
+     *
+     * @param evt
      */
     private void jMenuBuscarColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBuscarColaboradoresActionPerformed
         VentanaBuscarColaboraciones vBC = new VentanaBuscarColaboraciones(conexion);
@@ -242,9 +246,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuBuscarColaboradoresActionPerformed
 
     /**
-     * Abre la venta de gestión global
-     * Cierra la ventana principal, hasta que se cierre la secundaria
-     * @param evt 
+     * Abre la venta de gestión global Cierra la ventana principal, hasta que se
+     * cierre la secundaria
+     *
+     * @param evt
      */
     private void jMenuGestionGlobalBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuGestionGlobalBDActionPerformed
         VentanaGestionGlobal vGG = new VentanaGestionGlobal(conexion);
@@ -260,6 +265,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     /**
      * Crea la ventana principoal y la muestra
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
