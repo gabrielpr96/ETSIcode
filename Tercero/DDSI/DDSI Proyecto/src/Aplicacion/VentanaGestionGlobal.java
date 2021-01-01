@@ -78,23 +78,17 @@ public class VentanaGestionGlobal extends java.awt.Frame {
         tablaExpertos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (tablaExpertos.getSelectedRow() == -1) {
-                    colaboracionExperto.setText("");
-                } else {
-                    colaboracionExperto.setText((String) modeloExpertos.getValueAt(tablaExpertos.getSelectedRow(), 0));
-                }
+                colaboracionExperto.setText(tablaExpertos.getSelectedRow() == -1 ? "" : (String) modeloExpertos.getValueAt(tablaExpertos.getSelectedRow(), 0));
             }
         });
         tablaCasos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (tablaCasos.getSelectedRow() == -1) {
-                    colaboracionCaso.setText("");
-                } else {
-                    colaboracionCaso.setText((String) modeloCasos.getValueAt(tablaCasos.getSelectedRow(), 0));
-                }
+                colaboracionCaso.setText(tablaCasos.getSelectedRow() == -1 ? "" : (String) modeloCasos.getValueAt(tablaCasos.getSelectedRow(), 0));
             }
         });
+        
+        listarTodo.doClick();
     }
 
     /**

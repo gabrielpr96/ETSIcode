@@ -33,8 +33,8 @@ public class Calculador implements Callable<Integer>{
     @Override
     public Integer call() throws Exception {
         int i = inicio;
-        Integer resultado = null;
-        while(i <= fin && resultado == null && !Thread.interrupted()){
+        int resultado = -1;
+        while(i <= fin && resultado == -1 && !Thread.interrupted()){
             canvas.actualizarNumero(id, i);
             if(hashString(Integer.toString(i)).equals(hash))
                 resultado = i;

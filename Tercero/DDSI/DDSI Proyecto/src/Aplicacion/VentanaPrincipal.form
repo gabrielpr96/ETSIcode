@@ -9,6 +9,22 @@
             <Property name="text" type="java.lang.String" value="Conexi&#xf3;n"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuIniciar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuIniciarActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuCerrar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cerrar sesion"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuCerrarActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuSalir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir aplicaci&#xf3;n"/>
@@ -129,7 +145,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabelConectando">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Conectando"/>
+        <Property name="text" type="java.lang.String" value="Desconectado"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

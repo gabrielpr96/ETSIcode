@@ -48,16 +48,13 @@ public class Supervisor extends Thread {
         try {
             int i = 0;
             while(i < 10 && respuesta == -1) {
-                Integer resultado = (Integer) resultados[i].get();
-                if (resultado != null){
-                    respuesta = resultado;
-                    thp.shutdownNow();
-                }
+               respuesta = (int) resultados[i].get();
                 i++;
             }
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(Supervisor.class.getName()).log(Level.SEVERE, null, ex);
         }
+        thp.shutdownNow();
         canvas.colorearNumero(respuesta);
         callback.start();
     }

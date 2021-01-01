@@ -32,23 +32,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuGestionColaboraciones.setEnabled(false);
         jMenuGestionGlobalBD.setEnabled(false);
         jMenuSalir.setEnabled(false);
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    conexion = new ConexionOracle();
-                    jLabelConectando.setVisible(false);
-                    jMenuGestionExertos.setEnabled(true);
-                    jMenuBuscarColaboradores.setEnabled(true);
-                    jMenuGestionColaboraciones.setEnabled(true);
-                    jMenuGestionGlobalBD.setEnabled(true);
-                    jMenuSalir.setEnabled(true);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al realizar conexión", JOptionPane.ERROR_MESSAGE);
-                    System.exit(0);
-                }
-            }
-        }.start();
+        jMenuCerrar.setEnabled(false);
+    }
+
+    public void setConexion(ConexionOracle c) {
+        cerrarConexion();
+        conexion = c;
+        jLabelConectando.setVisible(false);
+        jMenuGestionExertos.setEnabled(true);
+        jMenuBuscarColaboradores.setEnabled(true);
+        jMenuGestionColaboraciones.setEnabled(true);
+        jMenuGestionGlobalBD.setEnabled(true);
+        jMenuSalir.setEnabled(true);
+        jMenuCerrar.setEnabled(true);
     }
 
     /**
@@ -64,6 +60,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuPrincipal = new javax.swing.JMenuBar();
         jMenuConexion = new javax.swing.JMenu();
+        jMenuIniciar = new javax.swing.JMenuItem();
+        jMenuCerrar = new javax.swing.JMenuItem();
         jMenuSalir = new javax.swing.JMenuItem();
         jMenuExpertos = new javax.swing.JMenu();
         jMenuGestionExertos = new javax.swing.JMenuItem();
@@ -84,13 +82,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabelConectando.setText("Conectando");
+        jLabelConectando.setText("Desconectado");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jMenuConexion.setText("Conexión");
+
+        jMenuIniciar.setText("Iniciar sesión");
+        jMenuIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuIniciarActionPerformed(evt);
+            }
+        });
+        jMenuConexion.add(jMenuIniciar);
+
+        jMenuCerrar.setText("Cerrar sesion");
+        jMenuCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCerrarActionPerformed(evt);
+            }
+        });
+        jMenuConexion.add(jMenuCerrar);
 
         jMenuSalir.setText("Salir aplicación");
         jMenuSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -263,6 +277,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         vGG.setVisible(true);
     }//GEN-LAST:event_jMenuGestionGlobalBDActionPerformed
 
+    private void jMenuIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuIniciarActionPerformed
+        VentanaInicioSesion vIS = new VentanaInicioSesion(this);
+        vIS.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                setVisible(true);
+            }
+        });
+        setVisible(false);
+        vIS.setVisible(true);
+    }//GEN-LAST:event_jMenuIniciarActionPerformed
+
+    private void jMenuCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCerrarActionPerformed
+        cerrarConexion();
+        jLabelConectando.setVisible(true);
+        jMenuGestionExertos.setEnabled(false);
+        jMenuBuscarColaboradores.setEnabled(false);
+        jMenuGestionColaboraciones.setEnabled(false);
+        jMenuGestionGlobalBD.setEnabled(false);
+        jMenuSalir.setEnabled(false);
+        jMenuCerrar.setEnabled(false);
+    }//GEN-LAST:event_jMenuCerrarActionPerformed
+
     /**
      * Crea la ventana principoal y la muestra
      *
@@ -318,6 +355,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelConectando;
     private javax.swing.JMenuItem jMenuBuscarColaboradores;
     private javax.swing.JMenu jMenuCasos;
+    private javax.swing.JMenuItem jMenuCerrar;
     private javax.swing.JMenu jMenuColaboraciones;
     private javax.swing.JMenu jMenuConexion;
     private javax.swing.JMenu jMenuExpertos;
@@ -325,6 +363,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuGestionCompleta;
     private javax.swing.JMenuItem jMenuGestionExertos;
     private javax.swing.JMenuItem jMenuGestionGlobalBD;
+    private javax.swing.JMenuItem jMenuIniciar;
     private javax.swing.JMenuBar jMenuPrincipal;
     private javax.swing.JMenuItem jMenuSalir;
     // End of variables declaration//GEN-END:variables
