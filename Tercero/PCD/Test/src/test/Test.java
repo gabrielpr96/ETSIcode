@@ -6,6 +6,12 @@
  */
 package test;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,22 +22,19 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-
 /**
  * Ejemplo de un JTextPane
  *
  * @author Chuidiang
  *
  */
-public class Test
-{
+public class Test {
+
     /**
      * Crea un nuevo objeto EjemploJTextPane.
      */
-    public Test()
-    {
-        try
-        {
+    public Test() {
+        try {
             // Creación de la ventana de ejemplo
             JFrame v = new JFrame("JTextPane");
             JTextPane editor = new JTextPane();
@@ -45,16 +48,16 @@ public class Test
             // En negrita
             StyleConstants.setBold(attrs, true);
             editor.getStyledDocument()
-                  .insertString(
-                editor.getStyledDocument().getLength(), "Negrita", attrs);
+                    .insertString(
+                            editor.getStyledDocument().getLength(), "Negrita", attrs);
             insertaNuevaLinea(editor);
 
             // En cursiva
             StyleConstants.setItalic(attrs, true);
             StyleConstants.setBold(attrs, false);
             editor.getStyledDocument()
-                  .insertString(
-                editor.getStyledDocument().getLength(), "cursiva", attrs);
+                    .insertString(
+                            editor.getStyledDocument().getLength(), "cursiva", attrs);
             insertaNuevaLinea(editor);
 
             // Ponemos el cursor al final del texto
@@ -75,9 +78,7 @@ public class Test
             // Visualizamos la ventana.
             v.pack();
             v.setVisible(true);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -87,8 +88,11 @@ public class Test
      *
      * @param args se ignoran
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws URISyntaxException, IOException {
+        URL resource = Test.class.getResource("/res/data");
+        File f = Paths.get(resource.toURI()).toFile();
+        String t = Files.readAllLines(f.toPath()).toString();
+        System.out.println(t);
         new Test();
     }
 
@@ -100,12 +104,11 @@ public class Test
      * @throws BadLocationException Si se intenta insertar fuera del texto.
      */
     private void insertaNuevaLinea(JTextPane editor)
-        throws BadLocationException
-    {
-      // Atributos null
+            throws BadLocationException {
+        // Atributos null
         editor.getStyledDocument()
-              .insertString(
-            editor.getStyledDocument().getLength(),
-            System.getProperty("line.separator"), null);
+                .insertString(
+                        editor.getStyledDocument().getLength(),
+                        System.getProperty("line.separator"), null);
     }
 }

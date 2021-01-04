@@ -39,7 +39,8 @@ public class AFND implements Proceso, Cloneable {
                 throw new Exception("El macroestado se ha quedado vacio");
             }
         }
-        return automata.getEstadosFinales().containsAll(macroestado);
+        macroestado.retainAll(automata.getEstadosFinales());
+        return !macroestado.isEmpty();
     }
 
     public void lambdaClausura(String estado, Set<String> nuevos) {

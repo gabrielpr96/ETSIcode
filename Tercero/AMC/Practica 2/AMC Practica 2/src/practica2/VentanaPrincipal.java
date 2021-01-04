@@ -472,42 +472,42 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     private void paso() throws Exception {
-        String texto = textCadena.getText().trim();
-        if (!nuevoMacroestado.isEmpty()) {
-            String[] siguienteEstado = nuevoMacroestado.iterator().next();
-            nuevoMacroestado.remove(siguienteEstado);
-            if (siguienteEstado.length == 2) {
-                macroestado.add(siguienteEstado[1]);
-                setGraph(createGraphAFND(afnd, new String[]{siguienteEstado[0], null, siguienteEstado[1]}, macroestado, antiguosEstados));
-            } else {
-                macroestado.add(siguienteEstado[2]);
-                setGraph(createGraphAFND(afnd, new String[]{siguienteEstado[0], siguienteEstado[1], siguienteEstado[2]}, macroestado, antiguosEstados));
-            }
-            boolean esta = false;
-            int i = 0;
-            while (i < nuevoMacroestado.size() && !esta) {
-                if (nuevoMacroestado.get(i)[0].equals(siguienteEstado[0])) {
-                    esta = true;
+        if ((botonAFD.isSelected() && afd == null) || (!botonAFD.isSelected() && afnd == null)) {
+            iniciar();
+        } else {
+            String texto = textCadena.getText().trim();
+            if (!nuevoMacroestado.isEmpty()) {
+                String[] siguienteEstado = nuevoMacroestado.iterator().next();
+                nuevoMacroestado.remove(siguienteEstado);
+                if (siguienteEstado.length == 2) {
+                    macroestado.add(siguienteEstado[1]);
+                    setGraph(createGraphAFND(afnd, new String[]{siguienteEstado[0], null, siguienteEstado[1]}, macroestado, antiguosEstados));
                 } else {
-                    i++;
+                    macroestado.add(siguienteEstado[2]);
+                    setGraph(createGraphAFND(afnd, new String[]{siguienteEstado[0], siguienteEstado[1], siguienteEstado[2]}, macroestado, antiguosEstados));
                 }
-            }
-            if (!esta) {
-                antiguosEstados.remove(siguienteEstado[0]);
-            }
-            textEstado.setText(macroestado.toString());
-            if (nuevoMacroestado.isEmpty()) {
-                afndPaso = !afndPaso;
-            }
-        } else if (!texto.isEmpty()) {
-            char[] simbolos = textCadena.getText().trim().toCharArray();
-            char simbolo = simbolos[0];
-            textSimbolo.setText(Character.toString(simbolo));
-            boolean consumir = true;
-            if (botonAFD.isSelected()) {
-                if (afd == null) {
-                    iniciar();
-                } else {
+                boolean esta = false;
+                int i = 0;
+                while (i < nuevoMacroestado.size() && !esta) {
+                    if (nuevoMacroestado.get(i)[0].equals(siguienteEstado[0])) {
+                        esta = true;
+                    } else {
+                        i++;
+                    }
+                }
+                if (!esta) {
+                    antiguosEstados.remove(siguienteEstado[0]);
+                }
+                textEstado.setText(macroestado.toString());
+                if (nuevoMacroestado.isEmpty()) {
+                    afndPaso = !afndPaso;
+                }
+            } else if (!texto.isEmpty()) {
+                char[] simbolos = textCadena.getText().trim().toCharArray();
+                char simbolo = simbolos[0];
+                textSimbolo.setText(Character.toString(simbolo));
+                boolean consumir = true;
+                if (botonAFD.isSelected()) {
                     if (!afd.getSimbolos().contains(simbolo)) {
                         throw new Exception("Simbolo en cadena no reconocido");
                     }
@@ -519,10 +519,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     }
                     setGraph(createGraphAFD(afd, new String[]{preEstado, Character.toString(simbolo), estado}, estado));
                     textEstado.setText(estado);
-                }
-            } else {
-                if (afnd == null) {
-                    iniciar();
                 } else {
                     if (afndPaso) {
                         for (String estado : macroestado) {
@@ -557,15 +553,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         }
                     }
                 }
+                if (consumir) {
+                    textCadena.setText(textCadena.getText().substring(1));
+                }
+                updateReconocido();
+            } else {
+                labelReconocido.setText("No hay simbolos");
+                labelReconocido.setForeground(Color.black);
+                textSimbolo.setText("");
             }
-            if (consumir) {
-                textCadena.setText(textCadena.getText().substring(1));
-            }
-            updateReconocido();
-        } else {
-            labelReconocido.setText("No hay simbolos");
-            labelReconocido.setForeground(Color.black);
-            textSimbolo.setText("");
         }
     }
 
@@ -595,7 +591,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if (botonAFD.isSelected()) {
             reconocido = afd.getEstadosFinales().contains(estado);
         } else {
-            reconocido = afnd.getEstadosFinales().containsAll(macroestado);
+            //reconocido = afnd.getEstadosFinales().containsAll(macroestado);
+            HashSet<String> tmp = new HashSet<>();
+            tmp.addAll(macroestado);
+            tmp.retainAll(afnd.getEstadosFinales());
+            reconocido = !tmp.isEmpty();
         }
         if (reconocido) {
             labelReconocido.setText("Reconocido");

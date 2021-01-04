@@ -53,10 +53,10 @@ public class AMCPractica2 {
         
         try {
             AutomataNoDeterminista automata = Parser.parseFileAFND(baseDir+"Test3.afnd");
-            System.out.println(automata);
+            //System.out.println(automata);
             AFND afnd = new AFND(automata);
             try {
-                System.out.println("Entrada 112 en automata 3: "+(afnd.reconocer("112")?"Valida":"No valida"));
+                System.out.println("Entrada 311 en automata 3: "+(afnd.reconocer("311")?"Valida":"No valida"));
             } catch (Exception e) {
                 System.out.println("Excepcion: "+e.getMessage());
             }
