@@ -19,11 +19,13 @@ public class AFND implements Proceso, Cloneable {
         Set<String> macroestado = new HashSet<>(automata.getEstadosIniciales());
         Set<String> nuevos = new HashSet<>();
         for (char simbolo : simbolos) {
+            //LambdaClausura
             for (String estado : macroestado) {
                 lambdaClausura(estado, nuevos);
             }
             macroestado.addAll(nuevos);
 
+            //Consumir símbolos
             nuevos.clear();
             for (String estado : macroestado) {
                 String[] siguientes = automata.getTransiciones().get(AutomataDeterminista.formarCondicion(estado, simbolo));
@@ -39,6 +41,14 @@ public class AFND implements Proceso, Cloneable {
                 throw new Exception("El macroestado se ha quedado vacio");
             }
         }
+
+        //LambdaClausura
+        for (String estado : macroestado) {
+            lambdaClausura(estado, nuevos);
+        }
+        macroestado.addAll(nuevos);
+
+        //Intersección del macroestado con los estados finales
         macroestado.retainAll(automata.getEstadosFinales());
         return !macroestado.isEmpty();
     }
@@ -47,7 +57,7 @@ public class AFND implements Proceso, Cloneable {
         String[] resultados = automata.getTransiciones().get(estado);
         if (resultados != null) {
             for (String resultado : resultados) {
-                if(!nuevos.contains(resultado)){
+                if (!nuevos.contains(resultado)) {
                     nuevos.add(resultado);
                     lambdaClausura(resultado, nuevos);
                 }

@@ -443,7 +443,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private Set<String> macroestado;
     private AutomataDeterminista afd;
     private AutomataNoDeterminista afnd;
-    private boolean afndPaso;
+    private boolean afndPaso, afndTerminado;
     private List<String[]> nuevoMacroestado;
     private Set<String> antiguosEstados;
 
@@ -464,6 +464,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             afd = null;
             labelEstado.setText("Macroestado");
             afndPaso = false;
+            afndTerminado = false;
             setGraph(createGraphAFND(afnd, null, macroestado, null));
         }
         nuevoMacroestado = new ArrayList<>();
@@ -502,6 +503,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 if (nuevoMacroestado.isEmpty()) {
                     afndPaso = !afndPaso;
                 }
+
+                if (textCadena.getText().isEmpty() && !afndTerminado) {
+                    afndTerminado = true;
+                    //La última lambdaclausura
+                    for (String subestado : macroestado) {
+                        lambdaClausura(subestado, nuevoMacroestado);
+                    }
+                }
             } else if (!texto.isEmpty()) {
                 char[] simbolos = textCadena.getText().trim().toCharArray();
                 char simbolo = simbolos[0];
@@ -539,7 +548,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         } else {
                             paso();
                         }
-
                     } else {
                         for (String subestado : macroestado) {
                             lambdaClausura(subestado, nuevoMacroestado);
@@ -556,12 +564,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 if (consumir) {
                     textCadena.setText(textCadena.getText().substring(1));
                 }
-                updateReconocido();
             } else {
-                labelReconocido.setText("No hay simbolos");
-                labelReconocido.setForeground(Color.black);
-                textSimbolo.setText("");
+                //No hay simbolos
+                if (!botonAFD.isSelected()) {
+                }
+
             }
+            updateReconocido();
         }
     }
 

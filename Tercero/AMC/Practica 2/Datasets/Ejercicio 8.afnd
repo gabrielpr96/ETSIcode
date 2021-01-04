@@ -1,0 +1,20 @@
+#Automata Finito No Determinista
+ESTADOS: p q r s t u v
+INICIAL: p
+FINALES: v
+TRANSICIONES: 
+	s 'a' t p
+	u 'a' q s
+	q 'b' r s
+	t 'b' v
+	s 'c' u
+	u 'c' v
+FIN
+TRANSICIONES LAMBDA: 
+	p q t
+	q r s
+	r q u
+	t q
+	u s
+	v r
+FIN
