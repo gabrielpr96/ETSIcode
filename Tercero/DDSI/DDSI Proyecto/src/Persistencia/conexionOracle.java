@@ -14,8 +14,8 @@ public class ConexionOracle {
      * @throws Exception si ocurre cualquier anormalidad
      */
     public ConexionOracle(String user, String pass) throws Exception {
-        //conn = DriverManager.getConnection("jdbc:oracle:thin:@172.17.20.75:1521:rabida", "DDSI_012", "DDSI_012");
-        conn = DriverManager.getConnection("jdbc:oracle:thin:@b0ve.com:1539:XE", user, pass);
+        conn = DriverManager.getConnection("jdbc:oracle:thin:@172.17.20.75:1521:rabida", user, pass);
+        //conn = DriverManager.getConnection("jdbc:oracle:thin:@b0ve.com:1539:XE", user, pass);
     }
 
     /**

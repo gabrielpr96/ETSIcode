@@ -19,5 +19,5 @@ TRANSICIONES LAMBDA:
 	1 3
 FIN
 #Cadena: aabbaba -> Reconocida
-#Cadena abbb -> No reconocida
+#Cadena a -> No reconocida
 

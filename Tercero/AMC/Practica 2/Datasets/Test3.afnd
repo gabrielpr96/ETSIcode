@@ -15,7 +15,7 @@ TRANSICIONES LAMBDA:
 	a b c
 	b d
 FIN
-#Cadena: 311 -> No reconocida
+#Cadena: 311 -> Reconocida
 #Cadena 1123 -> Reconocida
 #Cadena 112321 -> Error al ejecutar 11232
 

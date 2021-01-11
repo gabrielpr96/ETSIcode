@@ -115,6 +115,7 @@ public class AutomataDrawer {
             }
 
         }
+        g.add(mutNode(" ").add(Label.html(" "), Color.TRANSPARENT.font(), Color.TRANSPARENT).addLink(to(mutNode(automata.getEstadoInicial()))));
         for (Map.Entry<String, String> transicion : automata.getTransiciones().entrySet()) {
             String[] key = transicion.getKey().split("-");
             String value = transicion.getValue();
@@ -150,6 +151,9 @@ public class AutomataDrawer {
                     g.add(mutNode(estado).add(Shape.CIRCLE));
                 }
             }
+        }
+        for (String estado : automata.getEstadosIniciales()) {
+            g.add(mutNode(" ").add(Label.html(" "), Color.TRANSPARENT.font(), Color.TRANSPARENT).addLink(to(mutNode(estado))));
         }
         for (Map.Entry<String, String[]> transicion : automata.getTransiciones().entrySet()) {
             String[] key = transicion.getKey().split("-");

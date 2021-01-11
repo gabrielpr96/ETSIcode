@@ -90,7 +90,7 @@ public class Registro {
             } else {
                 //Solo hay empleados de un tipo libre
                 //Solo puede entrar un cliente nota, si no hay clientes registro esperasndo, porque esos tienen prioridad. Excepto si solo quedan oficiales, entonces sí
-                if (esperandoRegistro < 0 || !canvas.oficialesOcupados()) {
+                if (esperandoRegistro == 0 || !canvas.oficialesOcupados()) {
                     cNota.signal();
                 }
             }
