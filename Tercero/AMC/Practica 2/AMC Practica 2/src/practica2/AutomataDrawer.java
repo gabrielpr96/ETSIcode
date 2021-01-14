@@ -1,8 +1,9 @@
 package practica2;
 
 import guru.nidi.graphviz.attribute.Color;
-import guru.nidi.graphviz.attribute.Font;
 import guru.nidi.graphviz.attribute.Label;
+import guru.nidi.graphviz.attribute.Rank;
+import guru.nidi.graphviz.attribute.Rank.RankDir;
 import guru.nidi.graphviz.attribute.Shape;
 import guru.nidi.graphviz.attribute.Size;
 import guru.nidi.graphviz.engine.Format;
@@ -89,9 +90,10 @@ public class AutomataDrawer {
 
     public static void setGraph(MutableGraph g) {
         if(g == null) return;
+        g.graphAttrs().add(Rank.dir(RankDir.TOP_TO_BOTTOM));
         graph = g;
         g.graphAttrs().add(Color.rgb("E5D0F5").background());
-        BufferedImage bi = Graphviz.fromGraph(g).height(principal.getHeight()).render(Format.PNG).toImage();
+        BufferedImage bi = Graphviz.fromGraph(g).height(principal.getHeight()).width((int) (principal.getHeight()*(3.0/4.0))).render(Format.PNG).toImage();
         secundaria.setVisible(false);
         canvas.setSize(bi.getWidth(secundaria), bi.getHeight(secundaria));
         canvas.dibujar(bi);
@@ -154,7 +156,7 @@ public class AutomataDrawer {
             }
         }
         for (String estado : automata.getEstadosIniciales()) {
-            g.add(mutNode(Double.toHexString(Math.random())).add(Shape.NONE, Size.std().size(0, 0), Label.of("")).addLink(to(mutNode(estado))));
+            g.add(mutNode(Double.toHexString(Math.random())).add(Shape.NONE, Size.std().size(0.01, 0.02), Label.of("")).addLink(to(mutNode(estado))));
         }
         for (Map.Entry<String, String[]> transicion : automata.getTransiciones().entrySet()) {
             String[] key = transicion.getKey().split("-");

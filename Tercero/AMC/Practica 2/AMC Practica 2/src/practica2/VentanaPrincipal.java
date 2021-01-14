@@ -459,7 +459,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else {
             afnd = Parser.parseTextAFND(textPane.getText());
             afnd.validar();
-            macroestado = afnd.getEstadosIniciales();
+            macroestado = new HashSet<>();
+            macroestado.addAll(afnd.getEstadosIniciales());
             textEstado.setText(macroestado.toString());
             afd = null;
             labelEstado.setText("Macroestado");

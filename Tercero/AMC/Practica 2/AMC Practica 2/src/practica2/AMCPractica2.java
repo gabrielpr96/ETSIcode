@@ -11,7 +11,7 @@ public class AMCPractica2 {
         frame.setVisible(true);
         
         AutomataDrawer.setVentanaPrincipal(frame);
-        test();
+        //test();
     }
     
     private static void test(){

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
+import java.util.List;
 
 public class Parser {
 
@@ -34,9 +35,9 @@ public class Parser {
         boolean modoTransiciones = false;
         while ((line = file.readLine()) != null) {
             line = line.trim().replaceAll("\t", " ").replaceAll(" +", " ");
-            if(line.equals("FIN")){
+            if (line.equals("FIN")) {
                 modoTransiciones = false;
-            }else if (modoTransiciones) {
+            } else if (modoTransiciones) {
                 String[] partes = line.split("'");
                 automata.addTransicion(partes[0].trim(), partes[1].charAt(0), partes[2].trim());
             } else {
@@ -79,15 +80,35 @@ public class Parser {
         String line;
         boolean modoTransiciones = false, modoTransicionesLambda = false;
         while ((line = file.readLine()) != null) {
-            if(line.trim().equals("FIN")){
+            if (line.trim().equals("FIN")) {
                 modoTransiciones = false;
                 modoTransicionesLambda = false;
-            }else if (modoTransiciones) {
+            } else if (modoTransiciones) {
                 String[] partes = line.trim().split("'");
-                automata.addTransicion(partes[0].trim(), partes[1].charAt(0), partes[2].trim().split(" "));
+                String[] destino = automata.getTransiciones().get(AutomataNoDeterminista.formarCondicion(partes[0].trim(), partes[1].charAt(0)));
+                if (destino == null) {
+                    destino = partes[2].trim().split(" ");
+                } else {
+                    String[] nuevos = partes[2].trim().split(" ");
+                    String[] unido = new String[nuevos.length + destino.length];
+                    System.arraycopy(nuevos, 0, unido, 0, nuevos.length);
+                    System.arraycopy(destino, 0, unido, nuevos.length, destino.length);
+                    destino = unido;
+                }
+                automata.addTransicion(partes[0].trim(), partes[1].charAt(0), destino);
             } else if (modoTransicionesLambda) {
                 String[] partes = line.trim().split(" ");
-                automata.addTransicion(partes[0].trim(), null, Arrays.copyOfRange(partes, 1, partes.length));
+                String[] destino = automata.getTransiciones().get(AutomataNoDeterminista.formarCondicion(partes[0].trim(), null));
+                if (destino == null) {
+                    destino = Arrays.copyOfRange(partes, 1, partes.length);
+                } else {
+                    String[] nuevos = Arrays.copyOfRange(partes, 1, partes.length);
+                    String[] unido = new String[nuevos.length + destino.length];
+                    System.arraycopy(nuevos, 0, unido, 0, nuevos.length);
+                    System.arraycopy(destino, 0, unido, nuevos.length, destino.length);
+                    destino = unido;
+                }
+                automata.addTransicion(partes[0].trim(), null, destino);
             } else {
                 if (line.startsWith("ESTADOS:")) {
                     automata.addEstados(line.substring(8).trim().split(" "));
