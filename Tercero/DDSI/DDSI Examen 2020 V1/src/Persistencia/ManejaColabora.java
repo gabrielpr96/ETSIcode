@@ -79,6 +79,7 @@ public class ManejaColabora {
         ps.setString(4, col.getDescripcionColaboracion());
         ps.executeUpdate();
         ps.close();
+        conexion.crearLog("Inserta", "COLABORA");
     }
 
     /**
@@ -126,5 +127,6 @@ public class ManejaColabora {
         ps.setString(3, fecha);
         ps.executeUpdate();
         ps.close();
+        conexion.crearLog("Elimina", "COLABORA");
     }
 }

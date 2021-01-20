@@ -71,6 +71,7 @@ public class ManejaCaso {
         ps.setString(4, cs.getFechaFin());
         ps.executeUpdate();
         ps.close();
+        conexion.crearLog("Inserta", "CASO_POLICIAL");
     }
 
     /**
@@ -84,6 +85,7 @@ public class ManejaCaso {
         ps.setString(1, codCaso);
         ps.executeUpdate();
         ps.close();
+        conexion.crearLog("Elimina", "CASO_POLICIAL");
     }
 
     /**

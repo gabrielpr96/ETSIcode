@@ -87,6 +87,7 @@ public class ManejaExperto {
         ps.setString(5, exp.getEspecialidad());
         ps.executeUpdate();
         ps.close();
+        conexion.crearLog("Inserta", "EXPERTO");
     }
 
     /**
@@ -117,6 +118,7 @@ public class ManejaExperto {
         ps.setString(1, codExperto);
         ps.executeUpdate();
         ps.close();
+        conexion.crearLog("Elimina", "EXPERTO");
     }
 
     /**

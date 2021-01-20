@@ -6,8 +6,6 @@
 package Aplicacion;
 
 import Persistencia.ConexionOracle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,8 +44,6 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Usuario.setText("DDSI_012");
-
         Conectar.setText("Conectar");
         Conectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,8 +54,6 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
         jLabel1.setText("Usuario");
 
         jLabel2.setText("Contraseña");
-
-        contrasena.setText("DDSI_012");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

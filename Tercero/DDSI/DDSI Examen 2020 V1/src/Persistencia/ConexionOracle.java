@@ -1,7 +1,9 @@
 package Persistencia;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ConexionOracle {
 
@@ -17,6 +19,7 @@ public class ConexionOracle {
     public ConexionOracle(String user, String pass) throws Exception {
         conn = DriverManager.getConnection("jdbc:oracle:thin:@172.17.20.75:1521:rabida", user, pass);
         //conn = DriverManager.getConnection("jdbc:oracle:thin:@b0ve.com:1539:XE", user, pass);
+        crearLog("Conexion", null);
     }
 
     /**
@@ -25,6 +28,7 @@ public class ConexionOracle {
      * @throws SQLException si ocurre cualquier anormalidad
      */
     public void desconexion() throws SQLException {
+        crearLog("Desconexion", null);
         conn.close();
     }
 
@@ -66,14 +70,23 @@ public class ConexionOracle {
         conn.rollback();
         conn.setAutoCommit(true);
     }
-    
-    public void crearLog(String operacion, String tabla) throws SQLException{
+
+    public void crearLog(String operacion, String tabla) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("INSERT INTO LOG VALUES (?, ?, ?, ?)");
+        ps.setString(1, conn.getMetaData().getUserName());
+        ps.setString(2, (new SimpleDateFormat("dd/MM/yyyy' 'hh:mm:ss")).format(new Date()));
+        ps.setString(3, operacion);
+        ps.setString(4, tabla);
+        ps.executeUpdate();
+        ps.close();
     }
-    
-    public ArrayList<Log> listarLog(){
+
+    public ArrayList<Log> listarLog() throws SQLException {
         ArrayList<Log> logs = new ArrayList<>();
-        
+        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM LOG ORDER BY FECHA");
+        while (rs.next()) {
+            logs.add(new Log(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+        }
         return logs;
     }
 

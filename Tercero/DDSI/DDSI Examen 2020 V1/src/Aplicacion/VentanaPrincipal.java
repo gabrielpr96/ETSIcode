@@ -8,6 +8,7 @@ package Aplicacion;
 import Persistencia.ConexionOracle;
 import java.awt.event.WindowAdapter;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -71,6 +72,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuGestionColaboraciones = new javax.swing.JMenuItem();
         jMenuGestionCompleta = new javax.swing.JMenu();
         jMenuGestionGlobalBD = new javax.swing.JMenuItem();
+        jMenuLogs = new javax.swing.JMenu();
+        jMenuMostrarLogs = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -162,6 +165,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuGestionCompleta.add(jMenuGestionGlobalBD);
 
         jMenuPrincipal.add(jMenuGestionCompleta);
+
+        jMenuLogs.setText("Logs");
+
+        jMenuMostrarLogs.setText("Mostrar logs");
+        jMenuMostrarLogs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuMostrarLogsActionPerformed(evt);
+            }
+        });
+        jMenuLogs.add(jMenuMostrarLogs);
+
+        jMenuPrincipal.add(jMenuLogs);
 
         setJMenuBar(jMenuPrincipal);
 
@@ -300,6 +315,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuCerrar.setEnabled(false);
     }//GEN-LAST:event_jMenuCerrarActionPerformed
 
+    private void jMenuMostrarLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMostrarLogsActionPerformed
+        ventanaLog vIS = new ventanaLog(conexion);
+        vIS.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        vIS.setVisible(true);
+    }//GEN-LAST:event_jMenuMostrarLogsActionPerformed
+
     /**
      * Crea la ventana principoal y la muestra
      *
@@ -364,6 +385,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuGestionExertos;
     private javax.swing.JMenuItem jMenuGestionGlobalBD;
     private javax.swing.JMenuItem jMenuIniciar;
+    private javax.swing.JMenu jMenuLogs;
+    private javax.swing.JMenuItem jMenuMostrarLogs;
     private javax.swing.JMenuBar jMenuPrincipal;
     private javax.swing.JMenuItem jMenuSalir;
     // End of variables declaration//GEN-END:variables
