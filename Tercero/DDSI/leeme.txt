@@ -1,2 +1,0 @@
-Login: DDSI_012
-Password: DDSI_012
