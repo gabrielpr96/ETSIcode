@@ -49,7 +49,8 @@ public class EX_14_EJ_2 {
             total += re.etiqueta;
         }
         System.out.println("Coste: "+total);
-        
+         */
+/*
         Arista[] aristas = new Arista[]{
             new Arista(0, 1, 4),
             new Arista(0, 7, 8),
@@ -66,16 +67,16 @@ public class EX_14_EJ_2 {
             new Arista(5, 4, 10),
             new Arista(3, 5, 14)
         };
-        res = kruskal(aristas, 9);
-        total = 0;
+        Arista[] res = kruskal(aristas, 9);
+        int total = 0;
         System.out.println();
         for (Arista re : res) {
-            System.out.println(re.v1 + " --> " + re.v2+"  ("+re.etiqueta+")");
+            System.out.println(re);
             total += re.etiqueta;
         }
-        System.out.println("Coste: "+total);
-         */
- /*
+        System.out.println("Coste: " + total);
+*/
+        /*
         System.out.println(fDyV(4));
         System.out.println(fDinamica(4));
         System.out.println(fDirecta(4));
@@ -116,17 +117,17 @@ public class EX_14_EJ_2 {
          */
         //System.out.println("Existe algun algun fixed point: "+(busquedaPuntoFijo(new int[]{-3, -2, 0, 2, 3, 5, 7, 9, 12})?"Si":"No"));
 
-        /*
-        int n = 3, M = 6;
-        int[] p = {5, 3, 3};
-        int[] b = {11, 6, 6};
-        boolean[] xMochila = mochila(n, M, p, b);
-        System.out.println(Arrays.toString(xMochila));
+        
+        int n = 3, M = 5;
+        int[] p = {1, 1, 4};
+        int[] b = {2, 3, 6};
+        //boolean[] xMochila = mochila(n, M, p, b);
+        //System.out.println(Arrays.toString(xMochila));
         boolean[] xDinamica = dinamica(n, M, p, b);
         System.out.println(Arrays.toString(xDinamica));
         boolean[] xBacktracking = backtracking(n, M, p, b);
         System.out.println(Arrays.toString(xBacktracking));
-
+/*
         int t = 0;
         for (int i = 0; i < n; i++) {
             if (xMochila[i]) {
@@ -134,8 +135,8 @@ public class EX_14_EJ_2 {
                 System.out.print(b[i] + "(" + p[i] + ") ");
             }
         }
-        System.out.println(" = " + t);
-        t = 0;
+        System.out.println(" = " + t);*/
+        int t = 0;
         for (int i = 0; i < n; i++) {
             if (xDinamica[i]) {
                 t += b[i];
@@ -152,6 +153,7 @@ public class EX_14_EJ_2 {
         }
         System.out.println(" = " + t);
         
+                /*
         int n = 5;
         double[][] matriz = {
             {0, 3, 10, INF, INF},
@@ -159,7 +161,8 @@ public class EX_14_EJ_2 {
             {10, INF, 0, 6, 15},
             {INF, 5, 6, 0, 4},
             {INF, INF, 15, 4, 0},};
-         */
+         
+ /*
         int n = 5;
         double[][] matriz = {
             {0, 3, 10, INF, INF},
@@ -173,6 +176,21 @@ public class EX_14_EJ_2 {
         Floyd(n, matriz, C, D);
         System.out.println(floydDistancia(1, 5, C));
         System.out.println(floydCamino(1, 5, D));
+         */
+ /*
+        int n = 3, M = 6;
+        int[] p = {5, 3, 3};
+        int[] b = {11, 6, 6};
+        double[] xMochilaFraccionada = mochilaFraccionada(n, M, p, b);
+        System.out.println(Arrays.toString(xMochilaFraccionada));
+
+        int t = 0;
+        for (int i = 0; i < n; i++) {
+            t += b[i] * xMochilaFraccionada[i];
+            System.out.print(b[i] + "(" + xMochilaFraccionada[i] + ") ");
+        }
+        System.out.println(" = " + t);
+         */
     }
 
     public static void Floyd(int n, double matriz[][], double C[][], int[][] D) {
@@ -452,6 +470,43 @@ public class EX_14_EJ_2 {
         return total;
     }
 
+    public static double[] mochilaFraccionada(int n, int M, int[] p, int[] b) {
+        double[] x = new double[n];
+        for (int i = 0; i < n; i++) {
+            x[i] = 0;
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < n - i; j++) {
+                if (b[j] / (float) p[j] < b[j + 1] / (float) p[j + 1]) {
+                    int tmp = b[j];
+                    b[j] = b[j + 1];
+                    b[j + 1] = tmp;
+                    tmp = p[j];
+                    p[j] = p[j + 1];
+                    p[j + 1] = tmp;
+                }
+            }
+        }
+
+        int i = 0;
+        while (i < n && M >= p[i]) {
+            x[i] = 1;
+            M -= p[i];
+            i++;
+        }
+        if (i < n) {
+            x[i] = (M) / (double) p[i];
+            i++;
+            while (i < n) {
+                x[i] = 0;
+                i++;
+            }
+        }
+
+        return x;
+    }
+
     public static boolean[] mochila(int n, int M, int[] p, int[] b) {
         boolean[] x = new boolean[n];
         for (int i = 0; i < n; i++) {
@@ -606,7 +661,6 @@ public class EX_14_EJ_2 {
         return solucion.toArray(new Arista[0]);
     }
 
-    //TODO: Implementar Dijkstra y subirlo a la web
     public static Integer[] dijkstra(double[][] matriz, int nVertices, int origen, int destino) {
         boolean[] pendientes = new boolean[nVertices];
         int[] A = new int[nVertices];
@@ -686,6 +740,11 @@ public class EX_14_EJ_2 {
             } else {
                 return 0;
             }
+        }
+
+        @Override
+        public String toString() {
+            return v1 + " --> " + v2 + "  (" + etiqueta + ")";
         }
     }
 
