@@ -502,15 +502,15 @@ public class VentanaGestionGlobal extends java.awt.Frame {
      * @param evt
      */
     private void insertarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarCasoActionPerformed
-        if (((JTextField) casoFechaInicio.getDateEditor().getUiComponent()).getText().isEmpty() || ((JTextField) casoFechaFin.getDateEditor().getUiComponent()).getText().isEmpty())
-            JOptionPane.showMessageDialog(this, "Las fechas no pueden estar vacías", "Error al insertar colaboracion", JOptionPane.ERROR_MESSAGE);
+        if (((JTextField) casoFechaInicio.getDateEditor().getUiComponent()).getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "La fecha de inicio no puede estar vacía", "Error al insertar colaboracion", JOptionPane.ERROR_MESSAGE);
         else {
             try {
                 Date fInicio = eliminarHora(casoFechaInicio.getDate()), fFin = eliminarHora(casoFechaFin.getDate());
-                if (fInicio.compareTo(fFin) > 0) {
+                if (fFin != null && fInicio.compareTo(fFin) > 0) {
                     throw new Exception("La fecha de inicio debe ser anterior a la fecha de fin ");
                 }
-                mca.insertaCaso(new Caso(casoCodigo.getText(), casoNombre.getText(), espFecha.format(fInicio), espFecha.format(fFin)));
+                mca.insertaCaso(new Caso(casoCodigo.getText(), casoNombre.getText(), espFecha.format(fInicio), fFin==null?null:espFecha.format(fFin)));
                 casoCodigo.setText("");
                 casoNombre.setText("");
                 casoFechaInicio.setCalendar(null);
@@ -738,6 +738,7 @@ public class VentanaGestionGlobal extends java.awt.Frame {
     }
 
     private Date eliminarHora(Date fecha) {
+        if(fecha == null) return null;
         Calendar cal = Calendar.getInstance(); // locale-specific
         cal.setTime(fecha);
         cal.set(Calendar.HOUR_OF_DAY, 0);

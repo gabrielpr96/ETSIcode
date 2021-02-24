@@ -9,11 +9,11 @@ import java.util.ArrayList;
 public class ManejaExperto {
 
     // Se crea un objeto de tipo "conexionOracle"
-    ConexionOracle conexion = null;
+    private ConexionOracle conexion = null;
 
     // Se crea el PreparedStatement como atributo de la clase manejaExperto para
     // utilizarlo en los diferentes métodos
-    PreparedStatement ps = null;
+    private PreparedStatement ps = null;
 
     /**
      * @param c Conexión a la BD
