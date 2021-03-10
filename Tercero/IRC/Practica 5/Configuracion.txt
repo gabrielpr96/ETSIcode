@@ -1,0 +1,117 @@
+ena
+conf term
+service dhcp
+ip dhcp pool R1GX
+network 192.168.1X.0 255.255.255.0
+default-router 192.168.1X.1
+dns-server 150.214.163.13
+
+
+ena
+conf term
+service dhcp
+ip dhcp pool R1G1
+network 192.168.11.0 255.255.255.0
+default-router 192.168.11.1
+dns-server 150.214.163.13
+
+
+ena
+conf term
+service dhcp
+ip dhcp pool R1G2
+network 192.168.12.0 255.255.255.0
+default-router 192.168.12.1
+dns-server 150.214.163.13
+
+ena
+conf term
+service dhcp
+ip dhcp pool R1G3
+network 192.168.13.0 255.255.255.0
+default-router 192.168.13.1
+dns-server 150.214.163.13
+
+ena
+conf term
+service dhcp
+ip dhcp pool R1G4
+network 192.168.14.0 255.255.255.0
+default-router 192.168.14.1
+dns-server 150.214.163.13
+
+ena
+conf term
+service dhcp
+ip dhcp pool R1G5
+network 192.168.15.0 255.255.255.0
+default-router 192.168.15.1
+dns-server 150.214.163.13
+
+
+ena
+conf term
+service dhcp
+no ip dhcp pool R1GX
+interface g0/0
+ip helper-address 10.0.0.10
+
+ena
+conf term
+service dhcp
+no ip dhcp pool R1G1
+interface g0/0
+ip helper-address 10.0.0.10
+
+ena
+conf term
+service dhcp
+no ip dhcp pool R1G2
+interface g0/0
+ip helper-address 10.0.0.10
+
+ena
+conf term
+service dhcp
+no ip dhcp pool R1G3
+interface g0/0
+ip helper-address 10.0.0.10
+
+ena
+conf term
+service dhcp
+no ip dhcp pool R1G4
+interface g0/0
+ip helper-address 10.0.0.10
+
+ena
+conf term
+service dhcp
+no ip dhcp pool R1G5
+interface g0/0
+ip helper-address 10.0.0.10
+
+
+ena
+conf term
+service dhcp
+ip dhcp pool redg11
+network 192.168.11.0 255.255.255.0
+default-router 192.168.11.1
+dns-server 150.214.163.13
+ip dhcp pool redg12
+network 192.168.12.0 255.255.255.0
+default-router 192.168.12.1
+dns-server 150.214.163.13
+ip dhcp pool redg13
+network 192.168.13.0 255.255.255.0
+default-router 192.168.13.1
+dns-server 150.214.163.13
+ip dhcp pool redg14
+network 192.168.14.0 255.255.255.0
+default-router 192.168.14.1
+dns-server 150.214.163.13
+ip dhcp pool redg15
+network 192.168.15.0 255.255.255.0
+default-router 192.168.15.1
+dns-server 150.214.163.13

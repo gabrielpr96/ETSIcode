@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"*.x": "idl",
+		"malloc.h": "c"
+	}
+}
