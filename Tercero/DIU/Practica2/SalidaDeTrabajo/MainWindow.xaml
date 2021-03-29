@@ -1,0 +1,49 @@
+﻿<Window x:Class="SalidaDeTrabajo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalidaDeTrabajo"
+        mc:Ignorable="d"
+        Title="Aplicacion Practica 2" Height="494" Width="800" Icon="src/icon.png">
+    <Grid Margin="20" Background="Bisque">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle>
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="src/icon.png" Stretch="Uniform"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Background="BurlyWood" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10" FontSize="30">Hola mundo</TextBlock>
+            <Rectangle Grid.Row="1">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="src/img.jpg" Stretch="UniformToFill"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Grid Grid.Row="2" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center">Fax: 955221608</TextBlock>
+                <TextBlock Grid.Column="1" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center">Calle San Jacinto, 78</TextBlock>
+                <TextBlock Grid.Column="2" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center">Sevilla 41010</TextBlock>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

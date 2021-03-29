@@ -1,0 +1,14 @@
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\bin\Release\SalidaDeTrabajo.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\bin\Release\SalidaDeTrabajo.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\bin\Release\SalidaDeTrabajo.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\MainWindow.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\App.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo_MarkupCompile.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo_MarkupCompile.lref
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\MainWindow.baml
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo.g.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo.Properties.Resources.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo.csproj.GenerateResource.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica2\SalidaDeTrabajo\obj\Release\SalidaDeTrabajo.pdb

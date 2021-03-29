@@ -1,0 +1,47 @@
+﻿<Window x:Class="Clase2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase2"
+        mc:Ignorable="d"
+        Title="Segunda practica" Height="450" Width="800" Background="#FF23FF00" Icon="imagenes/test.jpg">
+    <Grid Margin="20, 50, 40, 10" Background="Red">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="115*"/>
+            <RowDefinition Height="244*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Comentario -->
+        <TextBlock Height="50" Background="White" FontSize="24" Grid.Column="1" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-21.886"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+            Bienvenido
+        </TextBlock>
+        <Ellipse Fill="Yellow" Grid.Column="1" Height="40" Width="150" Stroke="Black" StrokeThickness="10" VerticalAlignment="Bottom"></Ellipse>
+        <Rectangle HorizontalAlignment="Left" Height="100" Margin="10,134,0,0" Grid.Row="1" Stroke="Black" StrokeThickness="10" VerticalAlignment="Top" Width="100">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="imagenes/test.jpg"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="135*"></ColumnDefinition>
+                <ColumnDefinition Width="292*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+            </Grid.RowDefinitions>
+        </Grid>
+    </Grid>
+</Window>
