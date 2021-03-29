@@ -1,7 +1,7 @@
 #include "GestorAlmacenes.h"
 
 /*
-    CODIGO DE PRUEBAS
+    CODIGO DE PRUEBA
 void supermercado_1(CLIENT *clnt) {
     //	3
     TDatosAlmacen crearalmacen_1_arg;
@@ -384,7 +384,7 @@ void ListarProductosAlmacenOP(CLIENT *clnt, int AlmacenActualPosicion) {
             printf("Codigo     Nombre                         Precio     Cantidad     Caducidad\n");
             for (int i = 0; i < nProductos; i++) {
                 TProducto *Producto = RPC_ObtenerProducto(clnt, AlmacenActualPosicion, i);
-                printf("%-10s %-30s %-6.2f   %4d            %d/%d/%d \n", Producto->CodProducto, Producto->NombreProducto, Producto->Precio, Producto->Cantidad, Producto->Caducidad.Dia, Producto->Caducidad.Mes, Producto->Caducidad.Anyo);
+                printf("%-10s %-30s %-6.2f   %3d            %d/%d/%d \n", Producto->CodProducto, Producto->NombreProducto, Producto->Precio, Producto->Cantidad, Producto->Caducidad.Dia, Producto->Caducidad.Mes, Producto->Caducidad.Anyo);
             }
         }
     }
@@ -530,6 +530,7 @@ int main(int argc, char *argv[]) {
         clnt_pcreateerror(host);
         exit(1);
     }
+    //supermercado_1(clnt);
 
     Cadena AlmacenActualNombre;
     strcpy(AlmacenActualNombre, "");

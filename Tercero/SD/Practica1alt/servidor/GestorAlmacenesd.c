@@ -2,15 +2,16 @@
 #include "string.h"
 
 struct TAlmacenMemoria {
+    //Cantidad de usuarios que tienen abierto el almacen. 0 indica que está cerrado y puede ser reutilizado.
     int nAbierto;
     TDatosAlmacen Datos;
     int nProductos;
-    TProducto **Productos;
+    TProducto *Productos;
     Cadena Fichero;
 };
 
-int nAlmacenesMemoria = 0;
-struct TAlmacenMemoria **Almacenes = NULL;
+int nAlmacenes = 0;
+struct TAlmacenMemoria *Almacenes = NULL;
 
 /**
  * Posicion Valida
@@ -20,7 +21,7 @@ struct TAlmacenMemoria **Almacenes = NULL;
  * Devuelve verdadero si la posicion pasada se corresponde con un hueco del vector de almacenes cargados en memoria que está activo
  */
 bool_t PosicionValida(int pAlmacen) {
-    return pAlmacen < nAlmacenesMemoria && Almacenes[pAlmacen]->nAbierto > 0;
+    return pAlmacen < nAlmacenes && Almacenes[pAlmacen].nAbierto > 0;
 }
 
 /**
@@ -35,9 +36,9 @@ bool_t PosicionValida(int pAlmacen) {
 int BuscarAlmacenEnMemoria(Cadena Fichero) {
     int i = 0, pos = -1;
 
-    while (pos == -1 && i < nAlmacenesMemoria) {
-        printf("Comparo %d %s %s\n", i, Almacenes[i]->Datos.Fichero, Fichero);
-        if (Almacenes[i]->nAbierto > 0 && strcmp(Almacenes[i]->Datos.Fichero, Fichero) == 0)
+    while (pos == -1 && i < nAlmacenes) {
+        printf("Comparo %d %s %s\n", i, Almacenes[i].Datos.Fichero, Fichero);
+        if (Almacenes[i].nAbierto > 0 && strcmp(Almacenes[i].Datos.Fichero, Fichero) == 0)
             pos = i;
         else
             i++;
@@ -62,29 +63,23 @@ int CargarAlmacenMemoria(Cadena Fichero) {
 
     //Buscar el espacio para guardar el almacen. Comenzando por buscar el primer hueco no activo de los almacenes en memoria
     int pAlmacen = 0;
-    while (pAlmacen < nAlmacenesMemoria && Almacenes[pAlmacen]->nAbierto > 0) pAlmacen++;
+    while (pAlmacen < nAlmacenes && Almacenes[pAlmacen].nAbierto > 0) pAlmacen++;
     printf("Lo cargo en la posicion %d\n", pAlmacen);
 
     //Si se han recorrido todos los almacenes sin encontrar ninguno libre, se agrega un espacio nuevo
-    if (pAlmacen == nAlmacenesMemoria) {
-        //Crear un nuevo vector de punteros
-        struct TAlmacenMemoria **NuevosAlmacenes = malloc(sizeof(struct TAlmacenMemoria *) * (nAlmacenesMemoria + 1));
-        //Copiar los almacenes en memoria ya existentes
-        for (int i = 0; i < nAlmacenesMemoria; i++) {
-            NuevosAlmacenes[i] = Almacenes[i];
-        }
-        //Crear el espacio para el nuevo elemento
-        NuevosAlmacenes[pAlmacen] = malloc(sizeof(struct TAlmacenMemoria));
+    if (pAlmacen == nAlmacenes) {
         //Aumentar el numero de almacenes en memoria
-        nAlmacenesMemoria++;
-        //Liverar la estructura anterior
-        if (Almacenes != NULL)
-            free(Almacenes);
-        //Remplazar la estructura por la nueva
-        Almacenes = NuevosAlmacenes;
+        nAlmacenes++;
+        //Cambiar el tamaño del vector
+        struct TAlmacenMemoria *TmpAlmacenes = (struct TAlmacenMemoria *)realloc(Almacenes, sizeof(struct TAlmacenMemoria) * (nAlmacenes));
+        if (TmpAlmacenes == NULL) {
+            return -1;
+        } else {
+            Almacenes = TmpAlmacenes;
+        }
     }
     //Este es el hueco en el que se cargaran los datos
-    struct TAlmacenMemoria *Almacen = Almacenes[pAlmacen];
+    struct TAlmacenMemoria *Almacen = &Almacenes[pAlmacen];
 
     //Cargar la estructura de datos
     Almacen->nAbierto = 1;
@@ -92,10 +87,9 @@ int CargarAlmacenMemoria(Cadena Fichero) {
     fread(Almacen->Datos.Nombre, sizeof(Cadena), 1, ptr);
     fread(Almacen->Datos.Direccion, sizeof(Cadena), 1, ptr);
     strcpy(Almacen->Datos.Fichero, Fichero);
-    Almacen->Productos = malloc(sizeof(struct TProducto *) * (Almacen->nProductos));
+    Almacen->Productos = malloc(sizeof(struct TProducto) * (Almacen->nProductos));
     for (int i = 0; i < Almacen->nProductos; i++) {
-        Almacen->Productos[i] = malloc(sizeof(struct TProducto));
-        fread(Almacen->Productos[i], sizeof(struct TProducto), 1, ptr);
+        fread(&Almacen->Productos[i], sizeof(struct TProducto), 1, ptr);
     }
 
     //Cerrar el fichero y devolver la posicion en la que se ha cargado el almacen
@@ -117,7 +111,7 @@ bool_t GuardarAlmacenDisco(int pAlmacen) {
     if (!PosicionValida(pAlmacen)) {
         return FALSE;
     }
-    struct TAlmacenMemoria *Almacen = Almacenes[pAlmacen];
+    struct TAlmacenMemoria *Almacen = &Almacenes[pAlmacen];
     FILE *ptr = fopen(Almacen->Datos.Fichero, "wb");
     if (ptr == NULL) return FALSE;
 
@@ -125,7 +119,7 @@ bool_t GuardarAlmacenDisco(int pAlmacen) {
     fwrite(Almacen->Datos.Nombre, sizeof(Cadena), 1, ptr);
     fwrite(Almacen->Datos.Direccion, sizeof(Cadena), 1, ptr);
     for (int i = 0; i < Almacen->nProductos; i++) {
-        fwrite(Almacen->Productos[i], sizeof(struct TProducto), 1, ptr);
+        fwrite(&Almacen->Productos[i], sizeof(struct TProducto), 1, ptr);
     }
 
     fclose(ptr);
@@ -143,11 +137,11 @@ bool_t GuardarAlmacenDisco(int pAlmacen) {
  */
 int BuscarProducto(int pAlmacen, Cadena CodProducto) {
     if (PosicionValida(pAlmacen)) {
-        struct TAlmacenMemoria *Almacen = Almacenes[pAlmacen];
+        struct TAlmacenMemoria *Almacen = &Almacenes[pAlmacen];
         int i = 0, pos = -1;
 
         while (i < Almacen->nProductos && pos == -1) {
-            if (strcmp(Almacen->Productos[i]->CodProducto, CodProducto) == 0)
+            if (strcmp(Almacen->Productos[i].CodProducto, CodProducto) == 0)
                 pos = i;
             else
                 i++;
@@ -198,7 +192,7 @@ TDatosAlmacen *datosalmacen_1_svc(int *argp, struct svc_req *rqstp) {
     //Comprobar que la posicion sea valida
     printf("La posicion %d es valida", pAlmacen);
     if (PosicionValida(pAlmacen)) {
-        result = Almacenes[pAlmacen]->Datos;
+        result = Almacenes[pAlmacen].Datos;
     } else {
         strcpy(result.Nombre, "NULL");
     }
@@ -219,7 +213,7 @@ int *nproductos_1_svc(int *argp, struct svc_req *rqstp) {
 
     if (PosicionValida(pAlmacen)) {
         //Si la posicion es valida, devolver la cantidad de productos que tiene
-        result = Almacenes[pAlmacen]->nProductos;
+        result = Almacenes[pAlmacen].nProductos;
     } else {
         //Si la posicion no es valida, devolver -1
         result = -1;
@@ -260,7 +254,7 @@ int *crearalmacen_1_svc(TDatosAlmacen *argp, struct svc_req *rqstp) {
         }
     } else {
         //Si esta en memoria, hay que sumarle uno a la cantidad de usuarios que lo tienen abierto
-        Almacenes[result]->nAbierto++;
+        Almacenes[result].nAbierto++;
     }
 
     return &result;
@@ -287,7 +281,7 @@ int *abriralmacen_1_svc(char *argp, struct svc_req *rqstp) {
         result = CargarAlmacenMemoria(argp);
     } else {
         //Si esta en memoria, hay que sumarle uno a la cantidad de usuarios que lo tienen abierto
-        Almacenes[result]->nAbierto++;
+        Almacenes[result].nAbierto++;
     }
 
     return &result;
@@ -324,18 +318,15 @@ bool_t *cerraralmacen_1_svc(int *argp, struct svc_req *rqstp) {
 
     if (PosicionValida(pAlmacen)) {
         //Solo se considera libre si no esta abierto por ningun cliente. Al quedar solo 1 el hueco se liberara
-        if (Almacenes[pAlmacen]->nAbierto == 1) {
+        if (Almacenes[pAlmacen].nAbierto == 1) {
             //Guardar el almacen antes de cerrarlo
             GuardarAlmacenDisco(pAlmacen);
             //Liverar la memoria en la que se guardan los productos
-            for (int i = 0; i < Almacenes[pAlmacen]->nProductos; i++) {
-                free(Almacenes[pAlmacen]->Productos[i]);
-            }
-            free(Almacenes[pAlmacen]->Productos);
-            //Operacion completada con exito
+            free(Almacenes[pAlmacen].Productos);
         }
         //Reducir la cantidad de usuarios que lo tienen abierto
-        Almacenes[pAlmacen]->nAbierto--;
+        Almacenes[pAlmacen].nAbierto--;
+        //Operacion completada con exito
         result = TRUE;
     } else {
         result = FALSE;
@@ -387,9 +378,9 @@ struct TProducto *obtenerproducto_1_svc(TObtProd *argp, struct svc_req *rqstp) {
     int pProducto = argp->PosProducto;
 
     //La posición del almacen y del producto debe ser válida
-    if (PosicionValida(pAlmacen) && pProducto < Almacenes[pAlmacen]->nProductos) {
+    if (PosicionValida(pAlmacen) && pProducto < Almacenes[pAlmacen].nProductos) {
         //Copia los datos del producto al espacio designado
-        result = *(Almacenes[pAlmacen]->Productos[pProducto]);
+        result = Almacenes[pAlmacen].Productos[pProducto];
     } else {
         //El producto no existe y se envian datos invalidos
         strcpy(result.CodProducto, "NULL");
@@ -412,31 +403,20 @@ bool_t *anadirproducto_1_svc(TActProd *argp, struct svc_req *rqstp) {
 
     //Comprobar que el hueco sea válido y no exista un producto con el mismo codigo
     if (PosicionValida(pAlmacen) && BuscarProducto(argp->Almacen, argp->Producto.CodProducto) == -1) {
-        struct TAlmacenMemoria *Almacen = Almacenes[pAlmacen];
-        struct TProducto *Producto;
-        if (Almacen->nProductos == 0) {
-            //Si no tiene productos, creamos un nuevo vector de un solo elemenmto
-            Almacen->Productos = malloc(sizeof(struct TProducto *));
-            Producto = Almacen->Productos[0] = malloc(sizeof(struct TProducto));
-        } else {
-            //Reservar un nuevo espacio con un hueco más
-            struct TProducto **Productos = malloc(sizeof(struct TProducto *) * (Almacen->nProductos + 1));
-            //Espacio para el nuevo producto
-            Producto = Productos[Almacen->nProductos] = malloc(sizeof(struct TProducto));
-            //Copiar los elementos presentes
-            for (int i = 0; i < Almacen->nProductos; i++) {
-                Productos[i] = Almacen->Productos[i];
-            }
-            //Liberar el vector anterior e intercambiarlo
-            free(Almacen->Productos);
-            Almacen->Productos = Productos;
-        }
+        struct TAlmacenMemoria *Almacen = &Almacenes[pAlmacen];
+
+        //Agregar espacio para un producto más
         Almacen->nProductos++;
+        struct TProducto *TmpProductos = (struct TProducto *)realloc(Almacen->Productos, sizeof(struct TProducto) * Almacen->nProductos);
+        if (TmpProductos == NULL) {
+            result = FALSE;
+        } else {
+            Almacen->Productos = TmpProductos;
+            //Copiar los datos del nuevo producto al hueco reservado
+            Almacen->Productos[Almacen->nProductos - 1] = argp->Producto;
+            result = TRUE;
+        }
 
-        //Copiar los datos del nuevo producto al hueco reservado
-        (*Producto) = argp->Producto;
-
-        result = TRUE;
     } else {
         result = FALSE;
     }
@@ -463,7 +443,7 @@ bool_t *actualizarproducto_1_svc(TActProd *argp, struct svc_req *rqstp) {
         result = FALSE;
     } else {
         //Si el producto existe, se vuelcan los nuevos datos en su posición
-        (*Almacenes[argp->Almacen]->Productos[PosProd]) = argp->Producto;
+        Almacenes[argp->Almacen].Productos[PosProd] = argp->Producto;
         result = TRUE;
     }
 
@@ -486,26 +466,20 @@ bool_t *eliminarproducto_1_svc(TBusProd *argp, struct svc_req *rqstp) {
     if (PosProd == -1) {
         result = FALSE;
     } else {
-        struct TAlmacenMemoria *Almacen = Almacenes[argp->Almacen];
-        //Crear un nuevo espacio para los productos con un hueco menos
-        struct TProducto **Productos = malloc(sizeof(struct TProducto *) * (Almacen->nProductos - 1));
-        //Copiar los productos antes del que se pretende eliminar
-        int i;
-        for (i = 0; i < PosProd; i++) {
-            Productos[i] = Almacen->Productos[i];
+        struct TAlmacenMemoria *Almacen = &Almacenes[argp->Almacen];
+        //Desplazar todos los productos posteriores al que se va a eliminar
+        for (int i = PosProd + 1; i < Almacen->nProductos; i++) {
+            Almacen->Productos[i - 1] = Almacen->Productos[i];
         }
-        //Liberar la memoria del producto que se elimina
-        free(Almacen->Productos[i]);
-        //Avanzar una posicion y continuar copiando al nuevo vector
-        i++;
-        for (; i < Almacen->nProductos; i++) {
-            Productos[i - 1] = Almacen->Productos[i];
-        }
+        //Eliminar el espacio de un producto
         Almacen->nProductos--;
-        //Liverar la estructura anterior y reemplazarla
-        free(Almacen->Productos);
-        Almacen->Productos = Productos;
-        result = TRUE;
+        struct TProducto *TmpProductos = (struct TProducto *)realloc(Almacen->Productos, sizeof(struct TProducto) * Almacen->nProductos);
+        if (TmpProductos == NULL) {
+            result = FALSE;
+        } else {
+            Almacen->Productos = TmpProductos;
+            result = TRUE;
+        }
     }
 
     return &result;
