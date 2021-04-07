@@ -1,0 +1,27 @@
+﻿<Window x:Class="Clase3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase3"
+        mc:Ignorable="d"
+        Title="Mi practica 3" Height="440" Width="647" Icon="src/icon.png">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="31*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer HorizontalScrollBarVisibility="Visible">
+            <StackPanel Orientation="Horizontal" Height="150">
+                <Image Source="src/pic1.jpg" Margin="5, 10, 5, 10"></Image>
+                <Image Source="src/pic2.png" Margin="5, 10, 5, 10"></Image>
+                <Image Source="src/pic3.jpg" Margin="5, 10, 5, 10"></Image>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1">
+            <TextBox FontSize="24" TextWrapping="Wrap" Background="Aquamarine">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </TextBox>
+        </ScrollViewer>
+    </Grid>
+</Window>

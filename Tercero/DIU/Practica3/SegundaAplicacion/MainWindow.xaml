@@ -1,0 +1,154 @@
+﻿<Window x:Class="SegundaAplicacion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SegundaAplicacion"
+        mc:Ignorable="d"
+        Title="Mi segunda aplicacion" Height="494" Width="800" Icon="src/icon.png">
+    <Border BorderThickness="30, 10" BorderBrush="Black" CornerRadius="50" Margin="10">
+        <Grid Background="Lavender">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer>
+                <StackPanel Background="Coral">
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic01.jpg" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Zorrete amarillo</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero mecánico</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic02.png" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Zorrete naranja</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero Industrial</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic03.jpg" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Perrete</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero agrícola doctorado con summa cum laude</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic04.png" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Tigreton</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero en energías renovables</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic05.png" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Zorrete verde</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero en química industrial</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic06.png" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Canela</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ayudante del alcalde</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic07.jpg" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Gatete rosa</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero de minas</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic08.png" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Zorrete de genero ambiguo</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero eléctrico</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic09.jpg" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Matzz Alligator</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero informático</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
+                        <Grid Background="WhiteSmoke">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="src/pic10.jpg" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Matzz Alligator</TextBlock>
+                                <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero mecánico, volvió porque se le perdió el título</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" TextWrapping="Wrap" TextAlignment="Center" Padding="5" Background="Aquamarine">
+                Graduados de la ETSI en el año 277
+            </TextBlock>
+        </Grid>
+    </Border>
+</Window>

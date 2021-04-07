@@ -1,0 +1,15 @@
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\bin\Debug\SegundaAplicacion.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\bin\Debug\SegundaAplicacion.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\bin\Debug\SegundaAplicacion.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion.csprojAssemblyReference.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\MainWindow.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\App.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion_MarkupCompile.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion_MarkupCompile.lref
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\MainWindow.baml
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion.g.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion.Properties.Resources.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion.csproj.GenerateResource.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica3\SegundaAplicacion\obj\Debug\SegundaAplicacion.pdb
