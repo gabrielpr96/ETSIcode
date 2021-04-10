@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:SegundaAplicacion"
         mc:Ignorable="d"
         Title="Mi segunda aplicacion" Height="494" Width="800" Icon="src/icon.png">
-    <Border BorderThickness="30, 10" BorderBrush="Black" CornerRadius="50" Margin="10">
-        <Grid Background="Lavender">
+    <Border BorderThickness="30, 10" BorderBrush="Black" CornerRadius="50" Margin="10" Background="Lavender">
+        <Grid  Margin="15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="3*"/>
@@ -15,17 +15,13 @@
             <ScrollViewer>
                 <StackPanel Background="Coral">
                     <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5">
-                        <Grid Background="WhiteSmoke">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Background="White">
                             <Image Source="src/pic01.jpg" Grid.Column="0"/>
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,24" Width="310">
                                 <TextBlock Margin="0, 0, 0, 5" FontSize="20" TextAlignment="Center">Zorrete amarillo</TextBlock>
                                 <TextBlock FontSize="16" TextAlignment="Center" TextWrapping="Wrap">Ingeniero mecánico</TextBlock>
                             </StackPanel>
-                        </Grid>
+                        </StackPanel>
                     </Border>
                     <Border BorderThickness="5" BorderBrush="Black" Height="110" Margin="5, 0, 5, 5">
                         <Grid Background="WhiteSmoke">
@@ -147,7 +143,7 @@
                 </StackPanel>
             </ScrollViewer>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" TextWrapping="Wrap" TextAlignment="Center" Padding="5" Background="Aquamarine">
-                Graduados de la ETSI en el año 277
+                Graduados de la ETSI en el año 2077
             </TextBlock>
         </Grid>
     </Border>
