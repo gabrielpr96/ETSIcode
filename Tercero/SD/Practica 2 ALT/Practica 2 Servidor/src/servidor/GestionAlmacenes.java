@@ -115,6 +115,7 @@ public class GestionAlmacenes extends UnicastRemoteObject implements GestionAlma
     public int AbrirAlmacen(String pNomFichero) throws RemoteException {
         int pos = BuscarAlmacenEnMemoria(pNomFichero);
         if (pos != -1) {
+            almacenes.get(pos).setNAbierto(almacenes.get(pos).getNAbierto()+1);
             return pos;
         }
 

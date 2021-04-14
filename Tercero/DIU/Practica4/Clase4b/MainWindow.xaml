@@ -1,0 +1,17 @@
+﻿<Window x:Class="Clase4b.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase4b"
+        mc:Ignorable="d"
+        Title="Practica 4 B" Height="450" Width="728" Icon="src/icon.png">
+    <DockPanel>
+        <TextBlock Background="#f07a76" FontSize="24" DockPanel.Dock="Top" HorizontalAlignment="Center" TextWrapping="Wrap">UNO o o oo ooo ooooo oooooooo ooooooooooooo ooooooooooooooooooooo oooooooooooooooooooooooooooooooooo ooooooooooooooooooooooooooooooooooooooooooooooooooooooo</TextBlock>
+        <TextBlock Background="#16b47e" FontSize="24" DockPanel.Dock="Left" VerticalAlignment="Top">DOS</TextBlock>
+        <TextBlock Background="#5bd8bb" FontSize="24" DockPanel.Dock="Right" VerticalAlignment="Bottom">TRES</TextBlock>
+        <TextBlock Background="#9ce8d6" FontSize="24" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" TextAlignment="Center">CUATRO</TextBlock>
+        <TextBlock Background="#25b5cd" FontSize="24" DockPanel.Dock="Bottom" HorizontalAlignment="Center">SEIS</TextBlock>
+        <Image Source="src/pic06.png" StretchDirection="DownOnly" Stretch="UniformToFill" />
+    </DockPanel>
+</Window>

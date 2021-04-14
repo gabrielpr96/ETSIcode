@@ -1,0 +1,25 @@
+﻿<Window x:Class="Clase4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase4"
+        mc:Ignorable="d"
+        Title="Practica 4" Height="450" Width="728" Icon="src/icon.png">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="97*" />
+            <ColumnDefinition Width="47*" />
+        </Grid.ColumnDefinitions>
+        <WrapPanel Orientation="Vertical">
+            <TextBlock Background="#ffcfcf" FontSize="24" Padding="5">UNO</TextBlock>
+            <TextBlock Background="#e1d4fa" FontSize="24" Padding="5">DOS</TextBlock>
+            <TextBlock Background="#c6e4ca" FontSize="24" Padding="5">TRES</TextBlock>
+            <TextBlock Background="#fbf5b3" FontSize="24" Padding="5">CUATRO</TextBlock>
+            <TextBlock Background="#c1cfe5" FontSize="24" Padding="5">CINCO</TextBlock>
+            <TextBlock Background="#d58399" FontSize="24" Padding="5">SEIS</TextBlock>
+            <TextBlock Background="#81d2cb" FontSize="24" Padding="5">SIETE</TextBlock>
+            <TextBlock Background="#ffc383" FontSize="24" Padding="5">OCHO</TextBlock>
+        </WrapPanel>
+    </Grid>
+</Window>
