@@ -42,4 +42,8 @@ public class TProducto implements Serializable {
         return Caducidad;
     }
 
+    @Override
+    public String toString(){
+        return NombreProducto;
+    }
 }

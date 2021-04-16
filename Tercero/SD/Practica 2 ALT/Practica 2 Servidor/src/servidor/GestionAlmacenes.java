@@ -4,11 +4,9 @@ import comun.GestionAlmacenesIntf;
 import comun.TDatosAlmacen;
 import comun.TFecha;
 import comun.TProducto;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +14,10 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -53,17 +54,23 @@ final class TAlmacen {
 public class GestionAlmacenes extends UnicastRemoteObject implements GestionAlmacenesIntf, Serializable {
 
     private final String DIR = System.getenv("APPDATA") + "\\sdp2\\";
-    private final List<TAlmacen> almacenes;
+    private final Map<Integer, TAlmacen> almacenes;
+    private int contador;
 
     private boolean PosicionValida(int pAlmacen) {
-        return pAlmacen < almacenes.size() && pAlmacen >= 0 && almacenes.get(pAlmacen).getNAbierto() > 0;
+        return almacenes.containsKey(pAlmacen) && almacenes.get(pAlmacen).getNAbierto() > 0;
     }
 
     private int BuscarAlmacenEnMemoria(String pFichero) {
-        return IntStream.range(0, almacenes.size())
-                .filter(i -> almacenes.get(i).getDatos().getFichero().equals(pFichero))
-                .findFirst()
-                .orElse(-1);
+        int pos = -1;
+        Iterator it = almacenes.entrySet().iterator();
+        while (it.hasNext() && pos == -1) {
+            Map.Entry pair = (Map.Entry) it.next();
+            if(((TAlmacen)pair.getValue()).getDatos().getFichero().equals(pFichero)){
+                pos = (Integer) pair.getKey();
+            }
+        }
+        return pos;
     }
 
     private int BuscarProductoEnAlmacen(int pAlmacen, String pCodProducto) {
@@ -80,7 +87,8 @@ public class GestionAlmacenes extends UnicastRemoteObject implements GestionAlma
 
     public GestionAlmacenes() throws RemoteException {
         super();
-        almacenes = new ArrayList<>();
+        contador = 0;
+        almacenes = new HashMap<>();
         try {
             Path pDIR = Paths.get(DIR);
             if (!Files.exists(pDIR)) {
@@ -105,8 +113,8 @@ public class GestionAlmacenes extends UnicastRemoteObject implements GestionAlma
     @Override
     public int CrearAlmacen(String pNombre, String pDireccion, String pNomFichero) throws RemoteException {
         TAlmacen almacen = new TAlmacen(new TDatosAlmacen(pNombre, pDireccion, pNomFichero));
-        almacenes.add(almacen);
-        int pos = almacenes.size()-1;
+        int pos = contador++;
+        almacenes.put(pos, almacen);
         GuardarAlmacen(pos);
         return pos;
     }
@@ -115,80 +123,83 @@ public class GestionAlmacenes extends UnicastRemoteObject implements GestionAlma
     public int AbrirAlmacen(String pNomFichero) throws RemoteException {
         int pos = BuscarAlmacenEnMemoria(pNomFichero);
         if (pos != -1) {
-            almacenes.get(pos).setNAbierto(almacenes.get(pos).getNAbierto()+1);
+            System.out.println("Reutilizo "+pos);
+            almacenes.get(pos).setNAbierto(almacenes.get(pos).getNAbierto() + 1);
             return pos;
         }
 
-        FileInputStream fis = null;
-        DataInputStream dis = null;
+        RandomAccessFile raf = null;
 
         try {
-            fis = new FileInputStream(DIR + pNomFichero);
-            dis = new DataInputStream(fis);
+            raf = new RandomAccessFile(DIR + pNomFichero, "r");
 
-            TAlmacen almacen = new TAlmacen(new TDatosAlmacen(dis.readUTF(), dis.readUTF(), dis.readUTF()));
+            int nProductos = raf.readInt();
+            TAlmacen almacen = new TAlmacen(new TDatosAlmacen(raf.readUTF(), raf.readUTF(), pNomFichero));
 
-            while(dis.available() > 0) {
-                almacen.getProductos().add(new TProducto(dis.readUTF(), dis.readUTF(), dis.readUTF(), Float.parseFloat(dis.readUTF()), Integer.parseInt(dis.readUTF()), new TFecha(Integer.parseInt(dis.readUTF()), Integer.parseInt(dis.readUTF()), Integer.parseInt(dis.readUTF()))));
+            for (int i = 0; i < nProductos; i++) {
+                String codigo = raf.readUTF();
+                int existencias = raf.readInt();
+                String nombre = raf.readUTF();
+                float precio = raf.readFloat();
+                String descripcion = raf.readUTF();
+                TFecha caducidad = new TFecha(raf.readInt(), raf.readInt(), raf.readInt());
+
+                almacen.getProductos().add(new TProducto(codigo, nombre, descripcion, precio, existencias, caducidad));
             }
-            
-            almacenes.add(almacen);
-            return almacenes.size()-1;
+
+            pos = contador++;
+            almacenes.put(pos, almacen);
+            return pos;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (fis != null) {
-                    fis.close();
-                }
-                if (dis != null) {
-                    dis.close();
+                if (raf != null) {
+                    raf.close();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(GestionAlmacenes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         return -1;
     }
 
     @Override
     public boolean GuardarAlmacen(int pAlmacen) throws RemoteException {
-        FileOutputStream fos = null;
-        DataOutputStream dos = null;
+        RandomAccessFile ras = null;
 
         try {
             TAlmacen almacen = almacenes.get(pAlmacen);
             TDatosAlmacen datos = almacen.getDatos();
-            fos = new FileOutputStream(DIR + datos.getFichero());
-            dos = new DataOutputStream(fos);
 
-            dos.writeUTF(datos.getNombre());
-            dos.writeUTF(datos.getDireccion());
-            dos.writeUTF(datos.getFichero());
+            File file = new File(DIR + datos.getFichero());
+            if (file.exists()) {
+                file.delete();
+            }
+            ras = new RandomAccessFile(file, "rw");
+
+            ras.writeInt(almacen.getProductos().size());
+            ras.writeUTF(datos.getNombre());
+            ras.writeUTF(datos.getDireccion());
 
             for (TProducto producto : almacen.getProductos()) {
-                dos.writeUTF(producto.getCodProducto());
-                dos.writeUTF(producto.getNombreProducto());
-                dos.writeUTF(producto.getDescripcion());
-                dos.writeUTF(Float.toString(producto.getPrecio()));
-                dos.writeUTF(Integer.toString(producto.getCantidad()));
-                dos.writeUTF(Integer.toString(producto.getCaducidad().getDia()));
-                dos.writeUTF(Integer.toString(producto.getCaducidad().getMes()));
-                dos.writeUTF(Integer.toString(producto.getCaducidad().getAnyo()));
+                ras.writeUTF(producto.getCodProducto());
+                ras.writeInt(producto.getCantidad());
+                ras.writeUTF(producto.getNombreProducto());
+                ras.writeFloat(producto.getPrecio());
+                ras.writeUTF(producto.getDescripcion());
+                ras.writeInt(producto.getCaducidad().getDia());
+                ras.writeInt(producto.getCaducidad().getMes());
+                ras.writeInt(producto.getCaducidad().getAnyo());
             }
-
-            dos.flush();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         } finally {
             try {
-                if (fos != null) {
-                    fos.close();
-                }
-                if (dos != null) {
-                    dos.close();
+                if (ras != null) {
+                    ras.close();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(GestionAlmacenes.class.getName()).log(Level.SEVERE, null, ex);
