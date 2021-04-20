@@ -1,0 +1,15 @@
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\bin\Debug\Clase5b.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\bin\Debug\Clase5b.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\bin\Debug\Clase5b.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b.csprojAssemblyReference.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\MainWindow.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\App.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b_MarkupCompile.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b_MarkupCompile.lref
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\MainWindow.baml
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b.g.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b.Properties.Resources.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b.csproj.GenerateResource.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica5\Clase5b\obj\Debug\Clase5b.pdb

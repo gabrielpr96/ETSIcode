@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clase5"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Practica 5" Height="450" Width="728" Icon="src/icon.png">
+    <StackPanel>
+        <TextBlock FontSize="20" Width="250" HorizontalAlignment="Left">
+            Primera línea del texto que<LineBreak/> escribo en mi ventana con <LineBreak/> proporciones aureas
+        </TextBlock>
+        <TextBlock FontSize="20" Width="250" HorizontalAlignment="Left" TextWrapping="Wrap" Background="Aquamarine">
+            Primera línea del texto que escribo en mi ventana con proporciones aureas
+        </TextBlock>
+        <TextBlock FontSize="20" Width="250" HorizontalAlignment="Left" TextTrimming="WordEllipsis" Background="Yellow">
+            Primera línea del texto que escribo en mi ventana con proporciones aureas
+        </TextBlock>
+        <TextBlock FontSize="20" Width="250" HorizontalAlignment="Right" TextTrimming="WordEllipsis" Background="Coral" Foreground="Yellow">
+            Primera línea del texto que escribo en mi ventana con proporciones aureas
+        </TextBlock>
+        <Border BorderBrush="Black" BorderThickness="5" Width="250">
+            <TextBlock FontSize="20" TextWrapping="Wrap" Background="Gold" FontWeight="Bold" FontStyle="Italic" FontFamily="Castellar">
+                Primera línea del texto que escribo en mi ventana con proporciones aureas
+            </TextBlock>
+        </Border>
+    </StackPanel>
 </Window>

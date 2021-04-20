@@ -1,0 +1,21 @@
+﻿<Window x:Class="Clase5b.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase5b"
+        mc:Ignorable="d"
+        Title="Practica 5 B" Height="450" Width="728" Icon="src/icon.png">
+    <StackPanel>
+        <TextBox Text="Pon tu nombre" FontSize="20" BorderThickness="10" BorderBrush="Black" Background="Aquamarine" TextWrapping="Wrap" AcceptsReturn="True" SpellCheck.IsEnabled="True"></TextBox>
+        <TextBox FontSize="20" BorderThickness="10" BorderBrush="Black" Background="Yellow" TextWrapping="Wrap" AcceptsReturn="True" SpellCheck.IsEnabled="True">
+            <TextBox.ToolTip>
+                <TextBlock FontSize="20">
+                    <Ellipse Width="20" Height="20" Fill="Red"/>
+                    Pon tu primer apellido aquí
+                </TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <PasswordBox PasswordChar="*" FontSize="20" Background="Azure"></PasswordBox>
+    </StackPanel>
+</Window>
