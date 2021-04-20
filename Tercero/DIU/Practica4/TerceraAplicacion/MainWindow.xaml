@@ -9,14 +9,10 @@
     <Grid Background="#9ce8d6">
         <Border BorderBrush="#16b47e" BorderThickness="20" CornerRadius="25" Margin="10">
             <DockPanel Margin="10">
-                <Grid DockPanel.Dock="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="10*"/>
-                    </Grid.ColumnDefinitions>
+                <DockPanel DockPanel.Dock="Top">
                     <Image Grid.Column="0" Source="src/icon.png" Height="50"></Image>
                     <TextBlock Grid.Column="1" Background="White" Padding="4" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">Empresa Líder en el Sector</TextBlock>
-                </Grid>
+                </DockPanel>
                 <Grid DockPanel.Dock="Bottom">
                     <Grid.RowDefinitions>
                         <RowDefinition />

@@ -12,3 +12,4 @@ C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica4\TerceraAplicacion\obj\Debug\TerceraA
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica4\TerceraAplicacion\obj\Debug\TerceraAplicacion.csproj.CoreCompileInputs.cache
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica4\TerceraAplicacion\obj\Debug\TerceraAplicacion.exe
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica4\TerceraAplicacion\obj\Debug\TerceraAplicacion.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica4\TerceraAplicacion\obj\Debug\TerceraAplicacion.csprojAssemblyReference.cache
