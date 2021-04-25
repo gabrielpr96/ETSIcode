@@ -1,0 +1,201 @@
+model Hospital
+
+enum TipoPresentacion {Comprimido, Jarabe, Grageas}
+enum DiaSemana {Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo}
+
+-- classes
+
+class Servicio
+attributes
+	Identificador : Integer
+	Denominacion : String
+	Ubicacion : String
+operations
+	ApropiarseDeCamas()
+	HorasSemanales() : Integer
+	GenerarInforme()
+end
+
+class Persona
+attributes
+	DNI : String
+	Nombre : String
+	Apellidos : String
+	FechaNacimiento : String
+	Edad : Integer
+operations
+end
+
+class Paciente < Persona
+attributes
+	NumHistoria : Integer
+	FechaUltimoIngreso : String
+	FechaAlta : String
+operations
+	AgregarTratamiento(m: Medicamento, c: Integer)
+	AsignarCama(Cama: Cama)
+end
+
+class Trabajador < Persona
+attributes
+	CodigoTrabajador : Integer
+	HoraEntrada : String
+	HoraSalida : String
+	HorasSemanales : Integer
+operations
+	EliminarGuardia(g: Guardia)
+end
+
+class Enfermero < Trabajador
+attributes
+operations
+	AsignarPaciente(p: Paciente);
+	DesAsignarPaciente(p: Paciente)
+end
+
+class Medico < Trabajador
+attributes
+	Matricula : Integer
+	FechaInscripcion : String
+	TiempoEspecialidad : Integer
+operations
+	MigrarEspecialidad(e: Especialidad)
+end
+
+class Especialidad
+attributes
+	Identificador : Integer
+	Descripcion : String
+operations
+end
+
+class Cama
+attributes
+	Identificador : String
+	Piso : Integer
+	Habitacion : Real
+operations
+end
+
+class Medicamento
+attributes
+	Identificador : Integer
+	Presentacion : TipoPresentacion
+	Laboratorio : String
+	Dosis : Integer
+	CuandoAdministrar: String
+operations
+end
+
+class Guardia
+attributes
+	HoraEntrada : String
+	HoraSalida : String
+	Dia : DiaSemana
+operations
+end
+
+-- associations
+
+association TieneAsignada between
+	Guardia [*] role guardias
+	Trabajador [1..*] role trabajadores
+end
+
+association Utiliza between
+	Paciente [0..1] role paciente
+	Cama [1] role cama
+end
+
+association EsDe between
+	Especialidad [1] role especialidad
+	Medico [*] role medicos
+end
+
+aggregation TieneAcargo between
+	Enfermero [*] role enfermeros
+	Paciente [*] role pacientes
+end
+
+aggregation DisponeDe between
+	Servicio [1] role servicio
+	Cama [*] role camas
+end
+
+composition TrabajaEn between
+	Servicio [1] role servicio
+	Trabajador [*] role trabajadores
+end
+
+association Prescribe between
+	Medico [1] role medico
+	Medicamento [1..*] role medicamentos
+end
+
+association Administra between
+	Enfermero [1] role enfermero
+	Medicamento [1..*] role medicamentos
+end
+
+association TienePrescrito between
+	Paciente [1] role paciente
+	Medicamento [1..*] role medicamentos
+end
+
+
+constraints
+
+context Enfermero
+	inv R1: self.pacientes->forAll(p1: Paciente, p2: Paciente | (p1.cama.Piso - p2.cama.Piso).abs() <= 3)
+
+context Guardia
+	inv R2: self.trabajadores->select(t: Trabajador | t.oclIsTypeOf(Medico))->size() >= 1 and self.trabajadores->select(t: Trabajador | t.oclIsTypeOf(Enfermero))->size() >= 2
+
+context Paciente
+	inv R3: self.enfermeros->exists(e1: Enfermero, e2: Enfermero, e3: Enfermero, e4: Enfermero, e5: Enfermero, e6: Enfermero, e7: Enfermero | e1.guardias->exists(g: Guardia | g.Dia = DiaSemana::Lunes) and e2.guardias->exists(g: Guardia | g.Dia = DiaSemana::Martes) and e3.guardias->exists(g: Guardia | g.Dia = DiaSemana::Miercoles) and e4.guardias->exists(g: Guardia | g.Dia = DiaSemana::Jueves) and e5.guardias->exists(g: Guardia | g.Dia = DiaSemana::Viernes) and e6.guardias->exists(g: Guardia | g.Dia = DiaSemana::Sabado) and e7.guardias->exists(g: Guardia | g.Dia = DiaSemana::Domingo))
+
+context Paciente
+	inv R4: Paciente.allInstances()->forAll(p1: Paciente, p2: Paciente | (p1 <> p2 and p1.cama.Piso = p2.cama.Piso) implies not p1.medicamentos->exists(m1: Medicamento| p2.medicamentos->exists(m2: Medicamento | m1.Laboratorio <> m2.Laboratorio)))
+
+context Especialidad
+	inv R5: self.medicos->exists(m: Medico | m.TiempoEspecialidad > 2)
+
+context Cama
+	inv R6: Cama.allInstances()->select(c: Cama | c.Piso = self.Piso and c.Habitacion = self.Habitacion)->size() <= 2
+
+context Enfermero
+	inv R7: not self.pacientes->exists(p: Paciente | p.cama.servicio <> self.servicio)
+
+context Guardia
+	inv R8: self.trabajadores->forAll(t1: Trabajador, t2: Trabajador | (t1 <> t2 and t1.oclIsTypeOf(Medico) and t2.oclIsTypeOf(Medico)) implies t1.oclAsType(Medico).especialidad <> t2.oclAsType(Medico).especialidad)
+
+context Enfermero
+	inv R9: self.pacientes->includesAll(self.medicamentos.paciente)
+
+context Enfermero::AsignarPaciente(p: Paciente)
+	pre NoMasDe2EnfermerosPorPaciente: p.enfermeros->size() < 2
+	pre NoMasDe2PacientesPorEnfermero: self.pacientes->size() < 2
+	pre PacienteNoDadoDeAlta: p.FechaAlta = null
+	pre PacienteNoIncluido: not self.pacientes->includes(p)
+	post PacienteIncluido: self.pacientes->includes(p)
+
+context Medico::MigrarEspecialidad(e: Especialidad)
+	pre EspecialidadEsNueva: self.especialidad <> e
+	pre PermanenciaMinima: self.TiempoEspecialidad >= 2
+	pre NoEspecialidadSola: self.especialidad.medicos->size() > 1
+	post EspecialidadAgregada: self.especialidad = e
+	post EspecialidadAbandonada: not self.especialidad@pre.medicos->includes(self)
+	post ExperienciaReiniciada: self.TiempoEspecialidad = 0
+	
+context Servicio::ApropiarseDeCamas()
+	pre HayCamasApropiables: Cama.allInstances->select(c: Cama | c.servicio = null and self.camas.Piso->includes(c.Piso))->size() > 0
+	post SeHaApropiadoCamas: Cama.allInstances->forAll(c: Cama | (c.servicio@pre = null and self.camas@pre.Piso->includes(c.Piso)) implies self.camas->includes(c))
+
+context Servicio::HorasSemanales() : Integer
+	pre HayTrabajadores: self.trabajadores->size() > 0
+	post SalidaEsperada: result = self.trabajadores.HorasSemanales->sum()
+	
+context Trabajador::EliminarGuardia(g: Guardia)
+	pre TieneGuardia: self.guardias->includes(g)
+	pre PuedeEliminar: (self.oclIsTypeOf(Medico) and g.trabajadores->select(t: Trabajador | t <> self and t.oclIsTypeOf(Medico))->size() >= 1) or (self.oclIsTypeOf(Enfermero) and g.trabajadores->select(t: Trabajador | t <> self and t.oclIsTypeOf(Enfermero))->size() >= 2)
+	post GuardiaEliminada: not self.guardias->includes(g)

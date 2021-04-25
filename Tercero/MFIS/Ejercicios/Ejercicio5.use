@@ -1,0 +1,58 @@
+model Ejercicio5
+
+-- classes
+
+class League
+attributes
+	start : Integer
+	finish: Integer
+operations
+	getActivePlayers() : Integer
+end
+
+class Tournament
+attributes
+	start : Integer
+	finish : Integer
+operations
+	acceptPlayer(p : Player)
+end
+
+class Player
+attributes
+	name : String
+	email : String
+operations
+end
+
+-- associations
+
+association Has between
+	League [1] role league
+	Tournament [*] role tournaments
+end
+
+association Plays between
+	Tournament [1] role tournament
+	Player [*] role players
+end
+
+association IsIN between
+	League [*] role leagues
+	Player [*] role players
+end
+
+constraints
+
+-- La duracion de un torneo debe ser menor a una semana
+context Tournament inv A:
+	self.start - self.finish < 7
+
+-- Los jugadores pueden ser aceptados en un torneo solo si ellos están registrados con la correspondiente liga
+context Tournament::acceptPlayer(p : Player)
+	pre: League.allInstances->forAll(l : League | l.tournaments->includes(self) implies l.players->includes(p))
+
+-- El número de jugadores activos en una liga son aquellos que han sido parte en al menos un torneo de la liga
+context League::getActivePlayers() : Integer
+	post: result = tournaments->collect(players)->asSet()->size()
+

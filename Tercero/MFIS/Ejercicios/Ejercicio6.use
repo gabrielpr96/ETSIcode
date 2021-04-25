@@ -1,0 +1,136 @@
+model Ejercicio6
+
+-- classes
+
+class Customer
+attributes
+	status : String
+	name: String
+operations
+	getLoan() : Boolean
+end
+
+class PaymentRemarks
+attributes
+	date : Integer
+	info: String
+operations
+end
+
+class Bank
+attributes
+	name: String
+operations
+end
+
+class Account
+attributes
+	balance : Real
+	interest: Real
+operations
+end
+
+class Income
+attributes
+	ammount : Real
+	date: Integer
+operations
+end
+
+class Address
+attributes
+	streetName : String
+	streetNumber: Integer
+	city : String
+	country : String
+operations
+end
+
+class House
+attributes
+	taxValue : Real
+operations
+end
+
+class Loan
+attributes
+	amount : Real
+	interest: Real
+	payment : Real
+operations
+end
+
+-- associations
+
+association HasRemarks between
+	Customer [1] role customer
+	PaymentRemarks [*] role remarks
+end
+
+association HasCustomer between
+	Bank [1..*] role banks
+	Customer [*] role customers
+end
+
+association HasAccount between
+	Customer [1] role customer
+	Account [*] role accounts
+end
+
+association HasIncome between
+	Customer [1] role customer
+	Income [*] role incomes
+end
+
+association HasLoan between
+	Customer [1] role loaner
+	Loan [*] role loans
+end
+
+association IsWarantor between
+	Customer [0..1] role warrantor
+	Loan [*] role warrants
+end
+
+association Secures between
+	Loan [*] role loansSecuring
+	House [0..1] role security
+end
+
+association LoansFor between
+	House [0..1] role loansFor
+	Loan [*] role loan
+end
+
+association Owns between
+	Customer [0..1] role owner
+	House [*] role houses
+end
+
+association IsIn between
+	House [1] role house
+	Address [0..1] role address
+end
+
+association associations between
+	Customer [*] role asociate
+	Customer [*] role asociates
+end
+
+constraints
+
+-- Si una hipoteca tiene un avalista, el avalista tiene que estar asociado con el cliente que tiene la hipoteca
+context Customer inv A:
+	self.loans->forAll(l : Loan | l.warrantor->notEmpty() implies self.asociates->includes(l.warrantor))
+
+-- Si una hipoteca tiene una casa como garantia, el cliente que tiene la hipoteca tiene que ser dueño de la casa
+context Customer inv B:
+	self.loans->forAll(l : Loan | l.security->notEmpty() implies self.houses->includes(l.security))
+	
+--Si una hipoteca tiene una casa como garantia, la casa tiene que tener el valor tasado igual o superior al importe de la hipoteca
+context Loan inv C:
+	self.loansFor->notEmpty() implies self.amount >= self.loansFor.taxValue
+
+-- Asumiendo que las instancias Income resumen todos los ingresos mensuales y solo seguardan los últimos 12 meses de un cliente. Si los ingresos son 0 en un mes no se guarda Income. La operación getLoan de Customer devolverá true si se cumple que el cliente ha tenido sueldo los últimos 12 meses y el sueldo de cada uno de esos meses es superior a 950€.
+context Customer::getLoan() : Boolean
+	post: result = (self.incomes->select(i : Income | i.ammount > 950)->size() = 12)

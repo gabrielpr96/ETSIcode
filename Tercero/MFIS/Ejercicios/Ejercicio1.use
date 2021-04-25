@@ -1,0 +1,48 @@
+model Ejercicio1
+
+-- classes
+
+class Order
+attributes
+	sum : Real
+	fee : Real
+operations
+end
+
+class Book
+attributes
+	price : Real
+	idNumber : Integer
+operations
+end
+
+-- associations
+
+association OrderLine between
+	Order [*] role order
+	Book [1..*] role orderedBooks
+end
+
+
+constraints
+
+-- El atributo suma no puede ser negativo
+context Order inv A:
+	self.sum > 0
+
+-- El atributo suma será cero si no se han pedido libros
+context Order inv B:
+	self.orderedBooks->isEmpty() implies self.sum = 0
+	
+-- El atributo suma describe el precio real de los libros que se han pedido
+context Order inv C:
+	self.sum = self.orderedBooks->collect(price)->sum()
+
+-- Instancias distintas de la calse Book tienen valores distintos para el atributo idNumbers
+context Book inv D:
+	Book.allInstances->forAll(b1 : Book, b2 : Book | b1 <> b2 implies b1.idNumber <> b2.idNumber)
+	
+	
+	
+
+	

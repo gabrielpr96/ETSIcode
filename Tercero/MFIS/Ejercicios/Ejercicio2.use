@@ -1,0 +1,60 @@
+model Ejercicio2
+
+-- classes
+
+class Prision
+attributes
+operations
+end
+
+class Celda
+attributes
+operations
+end
+
+class Interno
+attributes
+operations
+end
+
+class Banda
+attributes
+operations
+end
+
+
+-- associations
+
+association CeldasEnPrision between
+	Prision [1] role prision
+	Celda [10..*] role celda
+end
+
+association CeldaAsignada between
+	Celda [1] role celda
+	Interno [*] role internos
+end
+
+association ParticipacionEnBanda between
+	Banda [2..*] role banda
+	Interno [0..1] role participantes
+end
+
+
+constraints
+
+-- Un interno no puede pertecenar a más de una banda
+-- Ya controlado por el modelo UML
+
+-- Hay internos que no pertecen a ninguna banda
+-- No requiere ninguna restricción, el modelo UML lo permite
+
+-- Las bandas tienen que estar formadas por al menos dos internos
+-- Ya controlado por el modelo UML
+
+-- La asignación de internos a las celdas tiene que ser segura, que significa que no puede haber miembros de diferentes bandas en una misma celda.
+context Celda inv:
+	self.internos->collect(banda)->size() <= 1
+	
+--c1.internos->forAll(i1, i2 : Interno | i1.banda->notEmpty() and i2.banda->notEmpty() implies i1.banda = i2.banda)
+

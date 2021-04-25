@@ -1,0 +1,104 @@
+model Ejercicio4
+
+-- classes
+
+class Flight
+attributes
+	departTime : Integer
+	arrivalTime: Integer
+	duration : Integer
+	maxNrPassengers : Integer
+operations
+end
+
+class Passenger
+attributes
+	minAge : Integer
+	age : Integer
+	needsAssistance : Boolean
+operations
+	book(f : Flight)
+end
+
+class Airline
+attributes
+	name : String
+operations
+end
+
+class Airport
+attributes
+	name : String
+operations
+end
+
+
+-- associations
+
+association TakeoffSite between
+	Flight [*] role departingFlights
+	Airport [1] role origin
+end
+
+association LandingSite between
+	Flight [*] role arrivingFlights
+	Airport [1] role destination
+end
+
+association Book between
+	Flight [*] role flight
+	Passenger [*] role passengers
+end
+
+association CEOof between
+	Airline [0..1] role airline
+	Passenger [0..1] role ceo
+end
+
+association PropertyOfBy between
+	Flight [*] role flights
+	Airline [1] role airline
+end
+
+
+constraints
+
+-- Todos los vuelos deben tener una duración menor de 4 horas
+context Flight inv A:
+	self.duration < 4
+
+-- El número máximo de pasageros de un vuelo tiene que ser menor de 300
+context Flight inv B:
+	self.maxNrPassengers < 300
+	
+-- Todos los pasageros de un vuelo tienen que ser mayores que la edad mínima exigida en ese vuelo
+context Passenger inv C:
+	self.age >= self.minAge
+
+-- La duracion de un vuelo indicada en el atributo tiene que coincidir con la diferencia entre la hora de salida y la hora de llegada
+context Flight inv D:
+	self.duration = self.arrivalTime - self.departTime
+	
+-- El aeropuerto de salida debe ser distinto al aeropuerto de llegada
+context Flight inv E:
+	self.origin <> self.destination
+	
+-- Los vuelos que salgan del aeropuerto de Málaga tienen que ser de la compañia Iberia
+context Flight inv F:
+	self.origin.name = 'Malaga' implies self.airline.name = 'Iberia'
+	
+-- El numero de pasajeros en un vuelo tiene que ser menor o igual que la capacidad del vuelo
+context Flight inv G:
+	self.passengers->size() <= self.maxNrPassengers
+	
+-- El conjunto de vuelos que llegan a un aeropuerto no puede ser vacio
+context Airport inv H:
+	self.arrivingFlights->notEmpty()
+	
+-- De todo aeropuerto sale al menos un vuelo con duracion menor de 4 horas
+context Airport inv I:
+	self.departingFlights->exists(f : Flight | f.duration < 4)
+	
+-- De todo aeropuerto sale al menos un vuelo despues de las 6
+context Airport inv J:
+	self.departingFlights->exists(f : Flight | f.departTime > 6)

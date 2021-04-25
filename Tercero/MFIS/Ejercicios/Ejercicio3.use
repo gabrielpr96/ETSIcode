@@ -1,0 +1,103 @@
+model Ejercicio3
+
+enum Gender {Male, Female}
+
+-- classes
+
+class Bank
+attributes
+	accountNumber : Integer
+operations
+end
+
+class Person
+attributes
+	isMarried : Boolean
+	isUnemployed : Boolean
+	birthDate : Integer
+	age : Integer
+	firstName : String
+	lastName : String
+	gender : Gender
+operations
+end
+
+associationclass Marriage
+between
+	Person [0..1] role wife
+	Person [0..1] role husband
+attributes
+	place : String
+	date : Real
+operations
+	income(date : Integer) : Integer
+end
+
+class Company
+attributes
+	name : String
+	numberOfEmployees : Integer
+operations
+	stockPrice() : Real
+end
+
+associationclass Job
+between
+	Person [*] role employee
+	Company [*] role employer
+attributes
+	title : String
+	startDate : Integer
+	salary : Integer
+operations
+end
+
+-- associations
+
+association CustomerAccount between
+	Bank [*] role bankAccount
+	Person [0..1] role customer
+end
+
+association CompaniesManager between
+	Person [1] role manager
+	Company [0..*] role managedCompanies
+end
+
+
+constraints
+
+-- Hay que ser mayor de 15 años para estar casado
+context Person inv A:
+	self.age < 15 implies self.isMarried = false
+
+-- El número de empleados registrados en la empresa tiene que coincidir con la cardinalidad de la asociación correspondiente con la clase Persona
+context Company inv B:
+	self.numberOfEmployees = self.employee->size()
+
+-- La longitud del nombre de una Persona es menor de 20 caracteres, igual que su apellido
+context Person inv C:
+	self.firstName.size() < 20 and self.lastName.size() < 20
+
+-- Cualquiera que sea el manager de una empresa es también empleado de esa empresa
+context Person inv D1:
+	self.employer->includesAll(self.managedCompanies)
+
+context Company inv D2:
+	self.employee->includes(self.manager)
+
+-- Todas las empresas tienen empleados y empleadas
+context Company inv E:
+	self.employee->collect(gender)->includesAll(Set{Gender::Male, Gender::Female})
+
+-- Ninguna persona puede tener más de 5 cuentas corrientes
+context Person inv F:
+	self.bankAccount->size() <= 5
+
+-- Ninguna empresa puede tener dos empleados con el mismo nombre
+context Company inv G:
+	self.employee->collect(firstName)->size() = self.employee->collect(firstName)->asSet()->size()
+
+
+
+
