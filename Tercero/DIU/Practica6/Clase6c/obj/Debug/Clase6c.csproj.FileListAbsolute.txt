@@ -1,0 +1,14 @@
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\bin\Debug\Clase6c.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\bin\Debug\Clase6c.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\bin\Debug\Clase6c.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\MainWindow.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\App.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c_MarkupCompile.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c_MarkupCompile.lref
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\MainWindow.baml
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c.g.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c.Properties.Resources.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c.csproj.GenerateResource.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica6\Clase6c\obj\Debug\Clase6c.pdb

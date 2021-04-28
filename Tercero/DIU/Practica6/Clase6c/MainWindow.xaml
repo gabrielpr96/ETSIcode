@@ -1,0 +1,16 @@
+﻿<Window x:Class="Clase6c.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase6c"
+        mc:Ignorable="d"
+        Title="Practica 7 C" Height="450" Width="728" Icon="src/icon.png">
+    <StackPanel Orientation="Horizontal">
+        <TextBlock Name="Texto" Margin="5">Nacionalidad</TextBlock>
+        <CheckBox Name="E" Background="Red" Foreground="Blue" Checked="Checkeado" Margin="5">Española</CheckBox>
+        <CheckBox Name="I" Background="LightGreen" Foreground="Blue" Checked="Checkeado" Margin="5">Italiana</CheckBox>
+        <CheckBox Name="F" Background="LightCoral" Foreground="Blue" Checked="Checkeado" Margin="5">Francesa</CheckBox>
+        <CheckBox Name="A" Background="LightCyan" Foreground="Blue" Checked="Checkeado" Margin="5" >Aussie mate</CheckBox>
+    </StackPanel>
+</Window>

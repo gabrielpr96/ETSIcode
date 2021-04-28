@@ -1,0 +1,24 @@
+﻿<Window x:Class="Clase6b.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase6b"
+        mc:Ignorable="d"
+        Title="Practica 6 B" Height="450" Width="728" Icon="src/icon.png">
+    <StackPanel>
+        <TextBlock Name="TextoEstadoCivil">Estado civil</TextBlock>
+        <RadioButton GroupName="EstadoCivil" Checked="Chequeado" Background="LightGreen" Foreground="Blue">Soltero</RadioButton>
+        <RadioButton GroupName="EstadoCivil" Checked="Chequeado" Background="Red" Foreground="Blue">Casado</RadioButton>
+        <RadioButton GroupName="EstadoCivil" Checked="Chequeado" Background="Yellow" Foreground="Blue">Separado</RadioButton>
+        <RadioButton GroupName="EstadoCivil" Checked="Chequeado" Background="Purple" Foreground="Blue">Divorciado</RadioButton>
+        <RadioButton GroupName="EstadoCivil" Checked="Chequeado" Background="Pink" Foreground="Blue">Mi familia no quiere que hable de las cosas que hago con el gato</RadioButton>
+
+        <TextBlock Name="TextoPais">Pais de nacimiento</TextBlock>
+        <RadioButton GroupName="Pais" Checked="Chequeado">España</RadioButton>
+        <RadioButton GroupName="Pais" Checked="Chequeado">Francia</RadioButton>
+        <RadioButton GroupName="Pais" Checked="Chequeado">Italia</RadioButton>
+        <RadioButton GroupName="Pais" Checked="Chequeado">Alemania</RadioButton>
+        <RadioButton GroupName="Pais" Checked="Chequeado">Equestria</RadioButton>
+    </StackPanel>
+</Window>
