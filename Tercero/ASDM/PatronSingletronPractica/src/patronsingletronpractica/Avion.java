@@ -72,7 +72,7 @@ public class Avion {
      *
      * @return Cantidad de asientos libres.
      */
-    public int cuantosAsientosQuedan() {
+    private int cuantosAsientosQuedan() {
         return (int) Arrays.asList(pasajeros).stream().filter(pasajero -> pasajero == null).count();
     }
 

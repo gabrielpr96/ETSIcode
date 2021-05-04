@@ -1,0 +1,6 @@
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\ServicioRemoto\bin\Debug\ServicioRemoto.dll
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\ServicioRemoto\bin\Debug\ServicioRemoto.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\ServicioRemoto\obj\Debug\ServicioRemoto.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\ServicioRemoto\obj\Debug\ServicioRemoto.dll
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\ServicioRemoto\obj\Debug\ServicioRemoto.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\ServicioRemoto\obj\Debug\ServicioRemoto.csprojAssemblyReference.cache

@@ -1,0 +1,10 @@
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\bin\Debug\Cliente.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\bin\Debug\Cliente.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\bin\Debug\Cliente.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\bin\Debug\ServicioRemoto.dll
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\bin\Debug\ServicioRemoto.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\obj\Debug\Cliente.csprojAssemblyReference.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\obj\Debug\Cliente.csproj.CopyComplete
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\obj\Debug\Cliente.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 3\Practica 3\Cliente\obj\Debug\Cliente.pdb

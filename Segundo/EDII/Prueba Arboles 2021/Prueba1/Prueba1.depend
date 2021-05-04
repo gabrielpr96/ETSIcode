@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1619682414 source:c:\users\borja\desktop\proyectosarborines\prueba1\main2.cpp
+	<iostream>
+	<cstdlib>
+	<queue>
+	<cmath>
+	<cstring>
+	"arbin.h"
+	"abb.h"
+	"excepcion.h"
+
+1363091698 c:\users\borja\desktop\proyectosarborines\arbin\arbin.h
+	"nodoB.h"
+	"excep_arbin.h"
+
+1144354256 c:\users\borja\desktop\proyectosarborines\arbin\nodob.h
+	<stdlib.h>
+
+1331892184 c:\users\borja\desktop\proyectosarborines\arbin\excep_arbin.h
+	"excepcion.h"
+
+1619682099 c:\users\borja\desktop\proyectosarborines\arbin\excepcion.h
+	<string>
+	<stdexcept>
+
+1331888804 c:\users\borja\desktop\proyectosarborines\arbin\abb.h
+	"nodoB.h"
+	"excep_abb.h"
+	"arbin.h"
+
+1331892184 c:\users\borja\desktop\proyectosarborines\arbin\excep_abb.h
+	"excepcion.h"
+
+1619685717 source:c:\users\borja\desktop\proyectosarborines\prueba1\main.cpp
+	<iostream>
+	<cstdlib>
+	"arbin.h"
+
