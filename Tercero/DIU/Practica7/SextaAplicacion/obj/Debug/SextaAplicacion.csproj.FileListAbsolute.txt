@@ -1,0 +1,14 @@
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\bin\Debug\SextaAplicacion.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\bin\Debug\SextaAplicacion.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\bin\Debug\SextaAplicacion.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\MainWindow.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\App.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion_MarkupCompile.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion_MarkupCompile.lref
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\MainWindow.baml
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion.g.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion.Properties.Resources.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion.csproj.GenerateResource.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica7\SextaAplicacion\obj\Debug\SextaAplicacion.pdb

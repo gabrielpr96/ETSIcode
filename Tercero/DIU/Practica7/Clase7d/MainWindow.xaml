@@ -1,0 +1,15 @@
+﻿<Window x:Class="Clase7d.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase7d"
+        mc:Ignorable="d"
+        Title="Practica 7 D" Height="450" Width="724">
+    <StackPanel>
+        <ProgressBar Minimum="0" Maximum="100" Value="75" Width="350" Height="30" IsIndeterminate="True" Name="progress" Opacity="0"/>
+        <ToggleButton Width="50" Height="50" Checked="chequeado" Unchecked="unchequeado">
+            VER
+        </ToggleButton>
+    </StackPanel>
+</Window>

@@ -1,0 +1,45 @@
+﻿<Window x:Class="SextaAplicacion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SextaAplicacion"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Title="Sexta Aplicación" Height="450" Width="724" Icon="src/icon.png">
+    <Window.Background>
+        <RadialGradientBrush>
+            <GradientStop Color="Cyan" Offset="0"/>
+            <GradientStop Color="Black" Offset="1"/>
+        </RadialGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Name="pantalla">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <TextBlock Background="Red" Foreground="White" Padding="2">ROJO (R)</TextBlock>
+                <Slider Minimum="0" Maximum="255" Width="350" Margin="20, 0, 20, 0" Name="sliderRojo" ValueChanged="slidersCambiados" IsSnapToTickEnabled="True"/>
+                <TextBlock Background="White" Padding="2" Name="valorRojo">Valor = 0</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <TextBlock Background="Green" Foreground="White" Padding="2">ROJO (R)</TextBlock>
+                <Slider Minimum="0" Maximum="255" Width="350" Margin="20, 0, 20, 0" Name="sliderVerde" ValueChanged="slidersCambiados" IsSnapToTickEnabled="True"/>
+                <TextBlock Background="White" Padding="2" Name="valorVerde">Valor = 0</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <TextBlock Background="Blue" Foreground="White" Padding="2">ROJO (R)</TextBlock>
+                <Slider Minimum="0" Maximum="255" Width="350" Margin="20, 0, 20, 0" Name="sliderAzul" ValueChanged="slidersCambiados" IsSnapToTickEnabled="True"/>
+                <TextBlock Background="White" Padding="2" Name="valorAzul">Valor = 0</TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <WebBrowser Grid.Row="1" Source="http://uhu.es/"/>
+        <ToggleButton Grid.Row="2" HorizontalAlignment="Right" Width="100" Height="30" Background="Yellow" Unchecked="unchequeado" Checked="chequeado">
+            BORRAR
+        </ToggleButton>
+    </Grid>
+</Window>
