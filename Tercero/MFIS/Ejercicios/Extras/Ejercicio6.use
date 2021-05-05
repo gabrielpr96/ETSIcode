@@ -1,0 +1,94 @@
+model Ejercicio6
+
+-- classes
+
+class TanqueCombustible
+attributes
+	capacidadCombustible : Real
+	capacidadActual: Real
+operations
+end
+
+class Automovil
+attributes
+	modeloAno : Integer
+operations
+end
+
+class Dueno
+attributes
+	dni: String
+operations
+end
+
+class TicketVentaCombustible
+attributes
+	fecha : Integer
+	litrosVendidos: Real
+	importe : Real
+operations
+end
+
+class Surtidor
+attributes
+	precioPorLitro : Real
+operations
+end
+
+class EstacionDeServicio
+attributes
+	nombre : String
+operations
+end
+
+-- associations
+
+association TieneTanque between
+	TanqueCombustible [1] role tanque
+	Automovil [1] role auto
+end
+
+association TieneCoche between
+	Automovil [1] role tieneUn
+	Dueno [1] role perteneceA
+end
+
+association Compra between
+	TicketVentaCombustible [*] role tickets
+	Dueno [1] role cliente
+end
+
+association Emite between
+	Surtidor [1] role expedidoPor
+	TicketVentaCombustible [*] role ticketsEmitidos
+end
+
+association Ubicado between
+	EstacionDeServicio [1] role ubicacion
+	Surtidor [1..*] role surtidores
+end
+
+constraints
+
+-- Un invariante que asegure que en ningún caso se vendan más litros que la capacidad máximadel  tanque  de  combustible  del  automóvil  (por razones de seguridad está prohibido vendercombustible en bidones)
+context TanqueCombustible inv:
+	self.auto.perteneceA.tickets->collect(litrosVendidos > self.capacidadCombustible)->includes(true)
+
+context TanqueCombustible inv:
+	self.capacidadCombustible <= self.auto.perteneceA.tickets.litrosVendidos->max()
+	
+context TicketVentaCombustible inv:
+	self.litrosVendidos <= self.cliente.tieneUn.tanque.capacidadCombustible
+
+--  Un invariante que garantice que un tanque de combustible nunca tenga más combustible quesu capacidad máxima.
+context TanqueCombustible inv:
+	self.capacidadActual <= self.capacidadCombustible
+
+--  Un  invariante  que  asegure  que  el  importe  de  cada  venta  de  combustible  sea  el  correcto  enfunción de los litros vendidos.
+context TicketVentaCombustible inv:
+	self.importe = self.litrosVendidos * self.expedidoPor.precioPorLitro
+
+-- Un invariante que asegure que al menos el 60 % de los automóviles que compran combustibleen una estación de servicio sean de un modelo superior al año 2000
+context EstacionDeServicio inv:
+	self.surtidores.ticketsEmitidos.cliente.tieneUn->select(a | a.modeloAno > 2000)->size() / self.surtidores.ticketsEmitidos.cliente.tieneUn->size() > 0.6
+

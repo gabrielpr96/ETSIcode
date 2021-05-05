@@ -1,0 +1,94 @@
+model Ejercicio7
+
+-- classes
+
+class Reserva
+attributes
+	fechaRealizacion : Integer
+operations
+end
+
+class Billete
+attributes
+	fechaExpedicion : Integer
+	esIV: Boolean
+operations
+end
+
+class Titular
+attributes
+operations
+end
+
+class Vuelo
+attributes
+operations
+end
+
+class Aeropuerto
+attributes
+operations
+end
+
+associationclass Plaza
+between
+	Billete [*] role billetes
+	Vuelo [1..*] role vuelos ordered
+attributes
+	codigo : String
+operations
+end
+
+-- associations
+
+association esTitularDeReserva between
+	Titular [1] role titular
+	Reserva [*] role reservas
+end
+
+association esTitularDeBillete between
+	Titular [1] role titular
+	Billete [*] role billetes
+end
+
+association consolidadoMediante between
+	Reserva [0..1] role reserva
+	Billete [*] role billetes
+end
+
+association reservaCorrespondeA between
+	Vuelo [1..*] role vuelos ordered
+	Reserva [*] role ticketsEmitidos
+end
+
+association saleDe between
+	Vuelo [0..*] role salidas
+	Aeropuerto [1] role origen
+end
+
+association llegaA between
+	Vuelo [0..*] role llegadas
+	Aeropuerto [1] role destino
+end
+
+constraints
+
+-- El titular de un billete es uno de los titulares de la reserva previa del billete en el caso de que éste tuviera reserva previa.
+context Billete inv:
+	self.reserva->notEmpty() implies self.reserva.titular = self.titular
+
+-- La secuencia de vuelos de un billete coincide con la de su reserva previa en el caso de que la tenga
+context Billete inv:
+	self.reserva->notEmpty() implies self.reserva.vuelos = self.vuelos
+
+-- La fecha de expedición de un billete no puede ser anterior a la de su reserva en el caso de que la tenga.
+context Billete inv:
+	self.reserva->notEmpty() implies self.reserva.fechaRealizacion <= self.fechaExpedicion
+
+-- Si el billete es de ida y vuelta, el primer vuelo y el último deben ser consecuentes con ello y viceversa.
+context Billete inv:
+	self.vuelos->size() = 2 implies self.vuelos->first().destino = self.vuelos->last().origen
+
+-- No puede haber más de un billete para una plaza del mismo código de asiento en un mismo vuelo.
+context Vuelo inv:
+	self.plaza->exists(p1, p2 : Plaza | p1 <> p2 implies p1.codigo <> p2.codigo)
