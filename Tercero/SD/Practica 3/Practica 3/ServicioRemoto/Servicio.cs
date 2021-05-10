@@ -59,10 +59,10 @@ namespace ServicioRemoto {
         private int BuscarProductoEnAlmacen(int pAlmacen, String pCodProducto) {
             if(PosicionValida(pAlmacen)) {
                 try {
-                    return almacenes[pAlmacen].getProductos().
-                            Where(v => v.getCodProducto().Equals(pCodProducto))
-                            .Select((v, i) => i)
-                            .First();
+                    return almacenes[pAlmacen].getProductos()
+                        .Select((prod, index) => new { prod, index })
+                        .First(p => p.prod.getCodProducto().Equals(pCodProducto))
+                        .index;
                 } catch(Exception e) {
                     return -1;
                 }

@@ -1,0 +1,6 @@
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Servicio\bin\Debug\Practica 4 Servicio.dll.config
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Servicio\bin\Debug\Practica 4 Servicio.dll
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Servicio\bin\Debug\Practica 4 Servicio.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Servicio\obj\Debug\Practica 4 Servicio.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Servicio\obj\Debug\Practica 4 Servicio.dll
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Servicio\obj\Debug\Practica 4 Servicio.pdb

@@ -1,0 +1,11 @@
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\bin\Debug\AppServicio.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\bin\Debug\AppServicio.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\bin\Debug\AppServicio.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\bin\Debug\Practica 4 Servicio.dll
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\bin\Debug\Practica 4 Servicio.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\bin\Debug\Practica 4 Servicio.dll.config
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\obj\Debug\AppServicio.csprojAssemblyReference.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\obj\Debug\AppServicio.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\obj\Debug\AppServicio.csproj.CopyComplete
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\obj\Debug\AppServicio.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\AppServicio\obj\Debug\AppServicio.pdb
