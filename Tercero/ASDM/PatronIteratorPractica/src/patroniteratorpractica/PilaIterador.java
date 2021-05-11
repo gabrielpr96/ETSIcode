@@ -1,11 +1,17 @@
 package patroniteratorpractica;
 
-public class ListaIterador implements IIterador{
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class PilaIterador implements IIterador{
     private final Object[] datos;
     private int posicion;
 
-    public ListaIterador(Object[] datos) {
-        this.datos = datos;
+    public PilaIterador(Object[] datos) {
+        List<Object> elementos = Arrays.asList(datos);
+        Collections.reverse(elementos);
+        this.datos = elementos.toArray(new Object[0]);
         posicion = 0;
     }
 
@@ -24,10 +30,7 @@ public class ListaIterador implements IIterador{
 
     @Override
     public Object anterior() throws OperacionNoSoportada {
-        if(posicion > 0)
-            return datos[--posicion];
-        else 
-            throw new OperacionNoSoportada("No hay anterior");
+        throw new OperacionNoSoportada("No se puede volver atras en una cola");
     }
     
     

@@ -1,10 +1,10 @@
 package patroniteratorpractica;
 
-public class ListaIterador implements IIterador{
+public class ColaIterador implements IIterador{
     private final Object[] datos;
     private int posicion;
 
-    public ListaIterador(Object[] datos) {
+    public ColaIterador(Object[] datos) {
         this.datos = datos;
         posicion = 0;
     }
@@ -24,10 +24,7 @@ public class ListaIterador implements IIterador{
 
     @Override
     public Object anterior() throws OperacionNoSoportada {
-        if(posicion > 0)
-            return datos[--posicion];
-        else 
-            throw new OperacionNoSoportada("No hay anterior");
+        throw new OperacionNoSoportada("No se puede volver atras en una cola");
     }
     
     

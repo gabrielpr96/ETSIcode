@@ -26,6 +26,6 @@ public class TFecha implements Serializable {
 
     @Override
     public String toString() {
-        return Dia + "/" + Mes + "/" + Anyo;
+        return (Dia<10?("0"+Dia):Dia) + "/" + (Mes<10?("0"+Mes):Mes) + "/" + Anyo;
     }
 }
