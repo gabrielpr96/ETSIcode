@@ -1,0 +1,38 @@
+﻿<Window x:Class="Clase8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase8"
+        mc:Ignorable="d"
+        Title="Practica 8" Height="450" Width="728" Icon="src/icon.png">
+    <StackPanel>
+        <ListBox SelectionChanged="seleccionado" Name="lista">
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="src/pic01.jpg" Width="30" Margin="0,0,10,0"/>
+                    <TextBlock VerticalAlignment="Center">UNO</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="src/pic02.png" Width="30" Margin="0,0,10,0"/>
+                    <TextBlock VerticalAlignment="Center">DOS</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="src/pic03.jpg" Width="30" Margin="0,0,10,0"/>
+                    <TextBlock VerticalAlignment="Center">TRES</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="src/pic04.png" Width="30" Margin="0,0,10,0"/>
+                    <TextBlock VerticalAlignment="Center">CUATRO</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+        </ListBox>
+        <Button Click="siClick" HorizontalAlignment="Center" Margin="0,10,0,0">PULSA PARA CAMBIAR LA SELECCIÓN</Button>
+    </StackPanel>
+</Window>

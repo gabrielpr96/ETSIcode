@@ -1,0 +1,16 @@
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\bin\Debug\Clase8c.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\bin\Debug\Clase8c.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\bin\Debug\Clase8c.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\MainWindow.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\App.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c_MarkupCompile.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c_MarkupCompile.lref
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\MainWindow.baml
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.g.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.Properties.Resources.resources
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.csproj.GenerateResource.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.exe
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Rojo.g.cs
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Rojo.baml
