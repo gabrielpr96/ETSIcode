@@ -12,3 +12,4 @@ C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8b\obj\Debug\Clase8b.csproj.Gen
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8b\obj\Debug\Clase8b.csproj.CoreCompileInputs.cache
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8b\obj\Debug\Clase8b.exe
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8b\obj\Debug\Clase8b.pdb
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8b\obj\Debug\Clase8b.csprojAssemblyReference.cache

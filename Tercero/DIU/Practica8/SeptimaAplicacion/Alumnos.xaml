@@ -1,0 +1,19 @@
+﻿<Window x:Class="SeptimaAplicacion.Alumnos"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeptimaAplicacion"
+        mc:Ignorable="d"
+        Title="Septima Aplicación Alumnos" Height="450" Width="728" Icon="src/icon.png">
+
+    <TabControl>
+        <TabItem Header="Universidad de Huelva">
+            <WebBrowser Source="https://www.uhu.es/"/>
+        </TabItem>
+        <TabItem Header="Universidad de Sevilla">
+            <WebBrowser Source="https://www.us.es/"/>
+        </TabItem>
+    </TabControl>
+
+</Window>
