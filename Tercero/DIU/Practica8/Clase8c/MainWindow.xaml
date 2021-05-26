@@ -10,7 +10,7 @@
         <Menu>
             <MenuItem Header="_Archivo">
                 <MenuItem.Icon>
-                    <Image Source="src/pic04.png"/>
+                    <Image Source="src/pic04.png" Click/>
                 </MenuItem.Icon>
                 <MenuItem Header="_Nuevo" Click="clickRojo" ToolTip="Atención, Vas a crear un nuevo fichero" Background="Aquamarine" InputGestureText="Alt + N">
                     <MenuItem.Icon>

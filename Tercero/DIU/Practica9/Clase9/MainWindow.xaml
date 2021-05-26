@@ -1,0 +1,28 @@
+﻿<Window x:Class="Clase9.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase9"
+        mc:Ignorable="d"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
+        Title="Practica 9" Height="450" Width="728" Icon="src/icon.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Frame Source="/Clase9;component/paginas/paginaroja.xaml" NavigationUIVisibility="Hidden">
+        </Frame>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65*"/>
+                <ColumnDefinition Width="235*"/>
+                <ColumnDefinition Width="65*"/>
+            </Grid.ColumnDefinitions>
+            <Button FontSize="24" Background="Aquamarine" Click="onMinimizar">Minimizar</Button>
+            <Button FontSize="24" Background="Beige" Grid.Column="2" Click="onCerar">Cerrar</Button>
+        </Grid>
+    </Grid>
+</Window>

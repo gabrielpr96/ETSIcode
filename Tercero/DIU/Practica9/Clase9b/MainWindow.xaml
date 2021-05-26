@@ -1,0 +1,15 @@
+﻿<Window x:Class="Clase9b.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Clase9b"
+        mc:Ignorable="d"
+        Title="Practica 9 B" Height="450" Width="728" Icon="/src/icon.png">
+    <StackPanel>
+        <TextBox Name="Entrada" Height="50" FontSize="24" Text="{Binding Texto}"/>
+        <TextBlock Height="50" FontSize="24" Text="{Binding Texto}"/>
+        <TextBlock Height="50" FontSize="24" Text="{Binding ElementName=Entrada, Path=Text}"/>
+        <ComboBox ItemsSource="{Binding Lista}" />
+    </StackPanel>
+</Window>
