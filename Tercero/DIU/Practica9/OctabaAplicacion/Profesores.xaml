@@ -1,0 +1,59 @@
+﻿<Page x:Class="OctabaAplicacion.Profesores"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OctabaAplicacion"
+        mc:Ignorable="d"
+        Title="Septima Aplicación Profesores" Height="450" Width="728">
+    <Grid>
+        <Menu>
+            <MenuItem Header="_Comunidades Autónomas">
+                <MenuItem Header="_Aragón" Tag="https://www.aragon.es/" InputGestureText="Alt + A" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/aragon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="A_ndalucía" Tag="https://www.juntadeandalucia.es/" InputGestureText="Alt + N" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/andalucia.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Extremadura" Tag="http://www.juntaex.es/" InputGestureText="Alt + E" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/extremadura.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Universidades">
+                <MenuItem Header="Univ. _Huelva" Tag="http://uhu.es/" InputGestureText="Alt + H" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/univ_uhu.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Univ. _Sevilla" Tag="https://us.es/" InputGestureText="Alt + S" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/univ_us.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Univ. _Granada" Tag="https://ugr.es/" InputGestureText="Alt + G" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/univ_ugr.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Cortes _Generales">
+                <MenuItem Header="Co_ngreso" Tag="https://www.congreso.es/" InputGestureText="Alt + N" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/congreso.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Sena_do" Tag="https://www.senado.es/" InputGestureText="Alt + D" Click="onAbrirWeb">
+                    <MenuItem.Icon>
+                        <Image Source="src/senado.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+    </Grid>
+</Page>

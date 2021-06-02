@@ -13,14 +13,14 @@ public class EX_14_EJ_2 {
     private static final double INF = Double.POSITIVE_INFINITY;
 
     public static void main(String[] args) {
-        /*
+       /*
         double[][] matriz = {
-            {0, 8, 2, INF, INF, INF},
-            {8, 0, 4, 6, 2, INF},
-            {2, 4, 0, INF, 4, 8},
-            {INF, 6, INF, 0, 1, INF},
-            {INF, 2, 4, 1, 0, 3},
-            {INF, INF, 8, INF, 3, 0},
+            {0, 9, INF, INF, 8, 1},
+            {9, 0, 3, INF, INF, 2},
+            {INF, 3, 0, 5, INF, 4},
+            {INF, INF, 5, 0, 7, INF},
+            {8, INF, INF, 7, 0, 6},
+            {1, 2, 4, INF, 6, 0},
         };
         Arista[] res = prim(matriz);
         int total = 0;
@@ -50,7 +50,7 @@ public class EX_14_EJ_2 {
         }
         System.out.println("Coste: "+total);
          */
-/*
+
         Arista[] aristas = new Arista[]{
             new Arista(0, 1, 4),
             new Arista(0, 7, 8),
@@ -75,7 +75,7 @@ public class EX_14_EJ_2 {
             total += re.etiqueta;
         }
         System.out.println("Coste: " + total);
-*/
+
         /*
         System.out.println(fDyV(4));
         System.out.println(fDinamica(4));
@@ -117,7 +117,7 @@ public class EX_14_EJ_2 {
          */
         //System.out.println("Existe algun algun fixed point: "+(busquedaPuntoFijo(new int[]{-3, -2, 0, 2, 3, 5, 7, 9, 12})?"Si":"No"));
 
-        
+        /*
         int n = 3, M = 5;
         int[] p = {1, 1, 4};
         int[] b = {2, 3, 6};
@@ -127,6 +127,7 @@ public class EX_14_EJ_2 {
         System.out.println(Arrays.toString(xDinamica));
         boolean[] xBacktracking = backtracking(n, M, p, b);
         System.out.println(Arrays.toString(xBacktracking));
+        */
 /*
         int t = 0;
         for (int i = 0; i < n; i++) {
@@ -136,6 +137,7 @@ public class EX_14_EJ_2 {
             }
         }
         System.out.println(" = " + t);*/
+/*
         int t = 0;
         for (int i = 0; i < n; i++) {
             if (xDinamica[i]) {
@@ -161,7 +163,7 @@ public class EX_14_EJ_2 {
             {10, INF, 0, 6, 15},
             {INF, 5, 6, 0, 4},
             {INF, INF, 15, 4, 0},};
-         
+         */
  /*
         int n = 5;
         double[][] matriz = {

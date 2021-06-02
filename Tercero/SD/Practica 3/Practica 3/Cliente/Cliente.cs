@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Remoting;
+using System.Runtime.Remoting.Lifetime;
 using ServicioRemoto;
 
 namespace Cliente {
@@ -229,11 +230,16 @@ namespace Cliente {
         static void Main(string[] args) {
             RemotingConfiguration.Configure("Cliente.exe.config", false);
             Servicio servicioProxy = new Servicio();
+            ILease concesion = (ILease)RemotingServices.GetLifetimeService(servicioProxy);
+            Esponsor esponsor = new Esponsor();
+            concesion.Register(esponsor);
 
             gestionar(servicioProxy);
 
             Console.WriteLine("Pulsa Enter para salir");
             Console.ReadLine();
+
+            concesion.Unregister(esponsor);
         }
     }
 }

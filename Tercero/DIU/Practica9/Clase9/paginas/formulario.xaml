@@ -11,7 +11,7 @@
     <StackPanel>
         <TextBlock>Nombre:</TextBlock>
         <TextBox Name="nombre" LostFocus="comprobar" MouseEnter="entrada" MouseLeave="borrar" Width="100" HorizontalAlignment="Left"/>
-        <TextBlock>Año de nacimiento</TextBlock>
+        <TextBlock >Año de nacimiento</TextBlock>
         <TextBox Name="ano" PreviewTextInput="validar" Width="50" HorizontalAlignment="Left"/>
     </StackPanel>
 </Page>
