@@ -1,0 +1,30 @@
+@namespace(uri="Clase_0106", prefix="Clase_0106")
+package Clase_0106;
+
+@gmf.diagram(foo="bar")
+class Grafo {
+  val Conexion[*] conexiones;
+  val Nodo[*] nodos;
+}
+
+abstract class Nodo {
+  ref Conexion[*] #destino entrante;
+  ref Conexion[*] #origen saliente;
+}
+
+@gmf.node(label="nombre", label.icon="false", tool.description="Agrega un subnodo con nombre")
+class Subnodo1 extends Nodo {
+  attr String nombre;
+}
+
+@gmf.node(label.placement="none", figure="polygon", polygon.x="20 40 20 0", polygon.y="0 20 40 20", tool.name="Decision", tool.description="Agrega un subnodo diferente")
+class Subnodo2 extends Nodo {
+}
+
+@gmf.link(label="nombre", source="origen", target="destino", target.decoration="arrow", tool.description="Agrega una arista entre nodos")
+class Conexion {
+  attr String nombre;
+  ref Nodo[1] #saliente origen;
+  ref Nodo[1] #entrante destino;
+}
+

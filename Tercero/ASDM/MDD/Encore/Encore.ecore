@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Encore" nsURI="Encore" nsPrefix="Encore">
+  <eClassifiers xsi:type="ecore:EClass" name="Concierto">
+    <eAnnotations source="gmf.diagram">
+      <details key="foo" value="bar"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="canciones" upperBound="-1"
+        eType="#//Cancion" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="luces" upperBound="-1"
+        eType="#//Luz" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secuencias" upperBound="-1"
+        eType="#//Secuencia" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unionesCancionesSencuencias"
+        upperBound="-1" eType="#//UnionCancionSecuencia" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="UnionesSencuenciasLuces"
+        upperBound="-1" eType="#//UnionSecuenciaLuz" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cancion">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="Titulo"/>
+      <details key="label.placement" value="external"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/Encore/vectores/nota.svg"/>
+      <details key="tool.name" value="Cancion"/>
+      <details key="tool.description" value="Agrega una cancion"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Titulo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Duracion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Secuencia">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="Numero"/>
+      <details key="label.placement" value="external"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/Encore/vectores/engranaje.svg"/>
+      <details key="tool.name" value="Secuencia"/>
+      <details key="tool.description" value="Agrega una sencuencia que cambia los valores de una luz durante un tiempo en una cancion"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Numero" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Modificador" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="AnguloZ" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="AnguloY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Inicio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Duracion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Luz" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Foco" eSuperTypes="#//Luz">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="ID"/>
+      <details key="label.placement" value="external"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/Encore/vectores/foco.svg"/>
+      <details key="tool.name" value="Foco"/>
+      <details key="tool.description" value="Agrega una luz de tipo foco"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Potencia" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Strobo" eSuperTypes="#//Luz">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="ID"/>
+      <details key="label.placement" value="external"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/Encore/vectores/estrobo.svg"/>
+      <details key="tool.name" value="Estrobo"/>
+      <details key="tool.description" value="Agrega una luz de tipo estrobo"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Frecuencia" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnionCancionSecuencia">
+    <eAnnotations source="gmf.link">
+      <details key="label.placement" value="none"/>
+      <details key="source" value="cancion"/>
+      <details key="target" value="secuencia"/>
+      <details key="target.decoration" value="arrow"/>
+      <details key="tool.description" value="Conecta una secuencia a una cancion"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cancion" upperBound="-1"
+        eType="#//Cancion"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secuencia" lowerBound="1"
+        eType="#//Secuencia"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnionSecuenciaLuz">
+    <eAnnotations source="gmf.link">
+      <details key="label.placement" value="none"/>
+      <details key="source" value="secuencia"/>
+      <details key="target" value="luz"/>
+      <details key="target.decoration" value="arrow"/>
+      <details key="tool.description" value="Conecta una luz a una secuencia"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secuencia" lowerBound="1"
+        upperBound="-1" eType="#//Secuencia"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="luz" upperBound="-1" eType="#//Luz"/>
+  </eClassifiers>
+</ecore:EPackage>

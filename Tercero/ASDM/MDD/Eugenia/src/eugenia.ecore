@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Eugenia" nsURI="http://eugenia" nsPrefix="Eugenia">
+  <eClassifiers xsi:type="ecore:EClass" name="Artista">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destino" lowerBound="1"
+        eType="#//Nodo"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="origen" lowerBound="1"
+        eType="#//Nodo"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Nodo">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entrantes" upperBound="-1"
+        eType="#//Artista"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="saliente" upperBound="-1"
+        eType="#//Artista"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Actividad" eSuperTypes="#//Nodo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subdiag" upperBound="-1"
+        eType="#//Nodo" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Decision" eSuperTypes="#//Nodo"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Ramificacion" eSuperTypes="#//Nodo"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NodoInicial" eSuperTypes="#//Nodo"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NodoFinal" eSuperTypes="#//Nodo"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Diagrama">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="artistas" upperBound="-1"
+        eType="#//Artista" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodos" upperBound="-1"
+        eType="#//Nodo" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

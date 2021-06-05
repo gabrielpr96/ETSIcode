@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmfgraph="http://www.eclipse.org/gmf/2006/GraphicalDefinition">
+  <gmfgraph:Canvas name="Clase_0106">
+    <figures name="Default">
+      <figures xsi:type="gmfgraph:PolylineDecoration" name="ConexionFigureTargetDecoration"/>
+      <descriptors name="Subnodo1Figure">
+        <actualFigure xsi:type="gmfgraph:RoundedRectangle" name="Subnodo1Figure">
+          <border xsi:type="gmfgraph:MarginBorder">
+            <insets top="5" left="5" bottom="5" right="5"/>
+          </border>
+          <children xsi:type="gmfgraph:Label" name="Subnodo1LabelFigure" text="Subnodo1"/>
+        </actualFigure>
+        <accessors accessor="getFigureSubnodo1LabelFigure" figure="/0/@figures.0/@descriptors.0/@actualFigure/@children.0"/>
+      </descriptors>
+      <descriptors name="Subnodo2Figure">
+        <actualFigure xsi:type="gmfgraph:ScalablePolygon" name="Subnodo2Figure">
+          <border xsi:type="gmfgraph:MarginBorder">
+            <insets top="5" left="5" bottom="5" right="5"/>
+          </border>
+          <template x="20"/>
+          <template x="40" y="20"/>
+          <template x="20" y="40"/>
+          <template y="20"/>
+        </actualFigure>
+      </descriptors>
+      <descriptors name="ConexionFigure">
+        <actualFigure xsi:type="gmfgraph:PolylineConnection" name="ConexionFigure" targetDecoration="/0/@figures.0/@figures.0"/>
+      </descriptors>
+      <descriptors name="ConexionLabelFigure">
+        <actualFigure xsi:type="gmfgraph:Label" name="ConexionLabelLabel" text="Conexion"/>
+      </descriptors>
+    </figures>
+    <nodes name="Subnodo1" figure="Subnodo1Figure"/>
+    <nodes name="Subnodo2" figure="Subnodo2Figure"/>
+    <connections name="Conexion" figure="ConexionFigure"/>
+    <labels name="Subnodo1Label" figure="Subnodo1Figure" elementIcon="false" accessor="/0/@figures.0/@descriptors.0/@accessors.0"/>
+    <labels name="ConexionLabel" figure="ConexionLabelFigure" elementIcon="false"/>
+  </gmfgraph:Canvas>
+  <gmfgraph:Label name="Subnodo2LabelFigure" text="Subnodo2"/>
+</xmi:XMI>

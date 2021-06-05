@@ -1,0 +1,51 @@
+@namespace(uri="Practica2", prefix="Practica2")
+package Practica2;
+
+@gmf.diagram(foo="bar")
+class Diagrama {
+   val Nodo[*]   nodos;
+   val Arista[*] aristas;
+}
+
+/* NODOS */
+
+abstract class Nodo {
+   ref Arista[*] #origen salientes;
+   ref Arista[*] #destino entrantes;
+}
+
+@gmf.link(label="nombre", source="origen", target="destino", target.decoration="arrow", tool.description="Agrega una arista entre dos nodos")
+class Arista {
+   attr String nombre;
+   ref Nodo[1] #salientes origen;
+   ref Nodo[1] #entrantes destino;
+}
+
+@gmf.node(label="nombre", label.icon="false", tool.description="Agrega una actividad, que puede contener subactividades")
+class Actividad extends Nodo {
+   attr String nombre;
+   @gmf.compartment(foo="bar")
+   val Nodo[*] subdiag;
+}
+
+@gmf.node(label.placement="none", figure="polygon",
+          polygon.x="20 40 20  0",
+          polygon.y=" 0 20 40 20",
+          tool.name="Decision", tool.description="Agrega un nodo de decision entre varias ramas excluyentes")
+class Decision extends Nodo {}
+
+@gmf.node(label.placement="none", figure="polygon", color="0,0,0", size="10,40",
+          polygon.x="0 10 10  0",
+          polygon.y="0  0 40 40",
+          tool.name="Ramificacion", tool.description="Agrega un nodo que ramifica la ejecucion a varias ramas paralelas")
+class Ramificacion extends Nodo {}
+
+@gmf.node(label.placement="none",
+          figure="svg", svg.uri="platform:/plugin/Practica2/iconos/nodo-inicial.svg",
+          tool.name="Nodo inicial", tool.description="Agrega un nodo por el que comienza la ejecucion de las actividades o subactividades")
+class NodoInicial extends Nodo {}
+
+@gmf.node(label.placement="none",
+          figure="svg", svg.uri="platform:/plugin/Practica2/iconos/nodo-final.svg",
+          tool.name="Nodo final", tool.description="Agrega un nodo por el que termina la ejecucion de las actividades o subactividades")
+class NodoFinal extends Nodo {}

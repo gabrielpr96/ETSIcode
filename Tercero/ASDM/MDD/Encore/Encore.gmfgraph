@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ASCII"?>
+<gmfgraph:Canvas xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmfgraph="http://www.eclipse.org/gmf/2006/GraphicalDefinition" name="Encore">
+  <figures name="Default">
+    <figures xsi:type="gmfgraph:PolylineDecoration" name="UnionCancionSecuenciaFigureTargetDecoration"/>
+    <figures xsi:type="gmfgraph:PolylineDecoration" name="UnionSecuenciaLuzFigureTargetDecoration"/>
+    <descriptors name="CancionFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="CancionFigure" documentURI="platform:/plugin/Encore/vectores/nota.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+      </actualFigure>
+    </descriptors>
+    <descriptors name="CancionLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="CancionLabelFigure" text="Cancion"/>
+    </descriptors>
+    <descriptors name="SecuenciaFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="SecuenciaFigure" documentURI="platform:/plugin/Encore/vectores/engranaje.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+      </actualFigure>
+    </descriptors>
+    <descriptors name="SecuenciaLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="SecuenciaLabelFigure" text="Secuencia"/>
+    </descriptors>
+    <descriptors name="FocoFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="FocoFigure" documentURI="platform:/plugin/Encore/vectores/foco.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+      </actualFigure>
+    </descriptors>
+    <descriptors name="FocoLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="FocoLabelFigure" text="Foco"/>
+    </descriptors>
+    <descriptors name="StroboFigure">
+      <actualFigure xsi:type="gmfgraph:SVGFigure" name="StroboFigure" documentURI="platform:/plugin/Encore/vectores/estrobo.svg">
+        <border xsi:type="gmfgraph:MarginBorder">
+          <insets top="5" left="5" bottom="5" right="5"/>
+        </border>
+      </actualFigure>
+    </descriptors>
+    <descriptors name="StroboLabelFigure">
+      <actualFigure xsi:type="gmfgraph:Label" name="StroboLabelFigure" text="Strobo"/>
+    </descriptors>
+    <descriptors name="UnionCancionSecuenciaFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="UnionCancionSecuenciaFigure" targetDecoration="//@figures.0/@figures.0"/>
+    </descriptors>
+    <descriptors name="UnionSecuenciaLuzFigure">
+      <actualFigure xsi:type="gmfgraph:PolylineConnection" name="UnionSecuenciaLuzFigure" targetDecoration="//@figures.0/@figures.1"/>
+    </descriptors>
+  </figures>
+  <nodes name="Cancion" figure="CancionFigure"/>
+  <nodes name="Secuencia" figure="SecuenciaFigure"/>
+  <nodes name="Foco" figure="FocoFigure"/>
+  <nodes name="Strobo" figure="StroboFigure"/>
+  <connections name="UnionCancionSecuencia" figure="UnionCancionSecuenciaFigure"/>
+  <connections name="UnionSecuenciaLuz" figure="UnionSecuenciaLuzFigure"/>
+  <labels name="CancionLabel" figure="CancionLabelFigure"/>
+  <labels name="SecuenciaLabel" figure="SecuenciaLabelFigure"/>
+  <labels name="FocoLabel" figure="FocoLabelFigure"/>
+  <labels name="StroboLabel" figure="StroboLabelFigure"/>
+</gmfgraph:Canvas>

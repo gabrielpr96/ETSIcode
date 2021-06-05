@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Clase_0106 -->
+      <package
+            uri="Clase_0106"
+            class="Clase_0106.Clase_0106Package"
+            genModel="Clase_0106.genmodel"/>
+   </extension>
+
+</plugin>

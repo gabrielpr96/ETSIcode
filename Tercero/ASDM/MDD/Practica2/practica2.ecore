@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Practica2" nsURI="Practica2" nsPrefix="Practica2">
+  <eClassifiers xsi:type="ecore:EClass" name="Diagrama">
+    <eAnnotations source="gmf.diagram">
+      <details key="foo" value="bar"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodos" upperBound="-1"
+        eType="#//Nodo" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aristas" upperBound="-1"
+        eType="#//Arista" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Nodo" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="salientes" upperBound="-1"
+        eType="#//Arista" eOpposite="#//Arista/origen"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entrantes" upperBound="-1"
+        eType="#//Arista" eOpposite="#//Arista/destino"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Arista">
+    <eAnnotations source="gmf.link">
+      <details key="label" value="nombre"/>
+      <details key="source" value="origen"/>
+      <details key="target" value="destino"/>
+      <details key="target.decoration" value="arrow"/>
+      <details key="tool.description" value="Agrega una arista entre dos nodos"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="origen" lowerBound="1"
+        eType="#//Nodo" eOpposite="#//Nodo/salientes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destino" lowerBound="1"
+        eType="#//Nodo" eOpposite="#//Nodo/entrantes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Actividad" eSuperTypes="#//Nodo">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="nombre"/>
+      <details key="label.icon" value="false"/>
+      <details key="tool.description" value="Agrega una actividad, que puede contener subactividades"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subdiag" upperBound="-1"
+        eType="#//Nodo" containment="true">
+      <eAnnotations source="gmf.compartment">
+        <details key="foo" value="bar"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Decision" eSuperTypes="#//Nodo">
+    <eAnnotations source="gmf.node">
+      <details key="label.placement" value="none"/>
+      <details key="figure" value="polygon"/>
+      <details key="polygon.x" value="20 40 20  0"/>
+      <details key="polygon.y" value=" 0 20 40 20"/>
+      <details key="tool.name" value="Decision"/>
+      <details key="tool.description" value="Agrega un nodo de decision entre varias ramas excluyentes"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Ramificacion" eSuperTypes="#//Nodo">
+    <eAnnotations source="gmf.node">
+      <details key="label.placement" value="none"/>
+      <details key="figure" value="polygon"/>
+      <details key="color" value="0,0,0"/>
+      <details key="size" value="10,40"/>
+      <details key="polygon.x" value="0 10 10  0"/>
+      <details key="polygon.y" value="0  0 40 40"/>
+      <details key="tool.name" value="Ramificacion"/>
+      <details key="tool.description" value="Agrega un nodo que ramifica la ejecucion a varias ramas paralelas"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodoInicial" eSuperTypes="#//Nodo">
+    <eAnnotations source="gmf.node">
+      <details key="label.placement" value="none"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/Practica2/iconos/nodo-inicial.svg"/>
+      <details key="tool.name" value="Nodo inicial"/>
+      <details key="tool.description" value="Agrega un nodo por el que comienza la ejecucion de las actividades o subactividades"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodoFinal" eSuperTypes="#//Nodo">
+    <eAnnotations source="gmf.node">
+      <details key="label.placement" value="none"/>
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/Practica2/iconos/nodo-final.svg"/>
+      <details key="tool.name" value="Nodo final"/>
+      <details key="tool.description" value="Agrega un nodo por el que termina la ejecucion de las actividades o subactividades"/>
+    </eAnnotations>
+  </eClassifiers>
+</ecore:EPackage>
