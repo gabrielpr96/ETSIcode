@@ -1,0 +1,14 @@
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Cliente\bin\Debug\Practica 4 Cliente.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Cliente\bin\Debug\Practica 4 Cliente.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Cliente\bin\Debug\Practica 4 Cliente.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.csprojAssemblyReference.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4 MOD\Practica 4 Cliente\bin\Debug\Practica 4 Cliente.exe.config
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4 MOD\Practica 4 Cliente\bin\Debug\Practica 4 Cliente.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4 MOD\Practica 4 Cliente\bin\Debug\Practica 4 Cliente.pdb
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4 MOD\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.csprojAssemblyReference.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4 MOD\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.csproj.CoreCompileInputs.cache
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4 MOD\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.exe
+C:\PROJECTOS\ETSIcode\Tercero\SD\Practica 4 MOD\Practica 4 Cliente\obj\Debug\Practica 4 Cliente.pdb
