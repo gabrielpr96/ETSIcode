@@ -14,3 +14,4 @@ C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.exe
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.pdb
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Rojo.g.cs
 C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Rojo.baml
+C:\PROJECTOS\ETSIcode\Tercero\DIU\Practica8\Clase8c\obj\Debug\Clase8c.csprojAssemblyReference.cache

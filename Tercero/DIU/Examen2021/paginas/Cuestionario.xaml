@@ -1,0 +1,71 @@
+﻿<Page x:Class="Examen2021.paginas.Cuestionario"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Examen2021.paginas"
+      mc:Ignorable="d" 
+      Background="#b8ffd2"
+      d:DesignHeight="430" d:DesignWidth="708"
+      Title="Cuestionario">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <TextBlock FontSize="22" FontFamily="Monotype" FontStyle="Oblique" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 0, 0, 10">Cuestionario</TextBlock>
+        <TextBlock Grid.Row="1" FontSize="16" FontFamily="Monotype" FontStyle="Oblique" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 0">Nombre:</TextBlock>
+        <TextBlock Grid.Row="2" FontSize="16" FontFamily="Monotype" FontStyle="Oblique" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 0">Edad:</TextBlock>
+        <TextBlock Grid.Row="3" FontSize="16" FontFamily="Monotype" FontStyle="Oblique" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 0">Contraseña:</TextBlock>
+        <TextBlock Grid.Row="4" FontSize="16" FontFamily="Monotype" FontStyle="Oblique" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 0">Salario:</TextBlock>
+        <TextBlock Grid.Row="5" FontSize="16" FontFamily="Monotype" FontStyle="Oblique" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 0">Nacionalidad:</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="0, 2, 0, 2" FontSize="16" Cursor="Pen" MouseEnter="entraRaton" MouseLeave="saleRaton" TextChanged="nombreComprobar" LostFocus="saleNombre">
+            <TextBox.ToolTip>
+                <TextBlock FontFamily="Monotype" FontStyle="Oblique">
+                    Introduzca su nombre.
+                    <LineBreak/>
+                    Mínimo 3 caracteres y máximo 10.
+                </TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="0, 2, 0, 2" FontSize="16" Cursor="Pen" MouseEnter="entraRaton" MouseLeave="saleRaton" TextChanged="edadComprobar" LostFocus="saleEdad">
+            <TextBox.ToolTip>
+                <TextBlock FontFamily="Monotype" FontStyle="Oblique">
+                    Introduzca su edad de forma numérica.
+                    <LineBreak/>
+                    La edad debe estar entre 18 y 100 años.
+                </TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <PasswordBox Grid.Row="3" Grid.Column="1" Margin="0, 2, 0, 2" FontSize="16" Cursor="Pen" MouseEnter="entraRaton" MouseLeave="saleRaton" PasswordChar="*" PreviewTextInput="passFiltrar" PasswordChanged="passComprobar" LostFocus="salePass">
+            <PasswordBox.ToolTip>
+                <TextBlock>
+                    Introduzca su nueva contraseña.
+                    <LineBreak/>
+                    Sólo se permite dígitos en la contraseña.
+                </TextBlock>
+            </PasswordBox.ToolTip>
+        </PasswordBox>
+        <Slider Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="100000" IsSnapToTickEnabled="True" ValueChanged="actualizarSueldo"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" Margin="0, 2, 0, 2" ItemsSource="{Binding}" />
+        <TextBlock Name="SalarioText" Grid.Row="4" Grid.Column="2" FontSize="16" FontFamily="Monotype" FontStyle="Oblique" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10, 0, 0, 0"/>
+        <Button Grid.Row="6" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" Margin="0, 10, 0, 0" Padding="10, 5, 10, 5" MouseRightButtonDown="navegarFinal">
+            <Button.ToolTip>
+                <TextBlock FontFamily="Monotype" FontStyle="Oblique">
+                    Funciona con click derecho.
+                </TextBlock>
+            </Button.ToolTip>
+            Enviar
+        </Button>
+    </Grid>
+</Page>

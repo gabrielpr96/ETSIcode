@@ -1,0 +1,23 @@
+﻿<Window x:Class="Examen2020.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Examen2020"
+        mc:Ignorable="d"
+        Background="Wheat"
+        WindowStartupLocation="CenterScreen"
+        Title="Prueba 2020" Height="450" Width="728" Icon="src/icon.png">
+    <Border BorderBrush="Gray" BorderThickness="10" CornerRadius="25" Margin="2">
+        <Grid Margin="10">
+            <Frame Name="Contenedor" Source="/Examen2020;component/paginas/PaginaRoja.xaml" NavigationUIVisibility="Hidden"/>
+            <Border Background="White" Margin="2" BorderBrush="Black" BorderThickness="4" CornerRadius="10" Padding="4" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" MouseDown="salir">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="src/times.png"/>
+                    <TextBlock FontSize="14" HorizontalAlignment="Center">Salir</TextBlock>
+                </StackPanel>
+            </Border>
+            <Image Source="src/icon.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" MouseDown="regresarPrincipal" />
+        </Grid>
+    </Border>
+</Window>

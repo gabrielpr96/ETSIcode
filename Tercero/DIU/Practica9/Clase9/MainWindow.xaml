@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clase9"
         mc:Ignorable="d"
-        WindowStyle="ToolWindow"
+        WindowStyle="None"
         ResizeMode="NoResize"
         Title="Practica 9" Height="450" Width="728" Icon="src/icon.png">
     <Grid>
@@ -13,8 +13,7 @@
             <RowDefinition Height="38*"/>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
-        <Frame Source="/Clase9;component/paginas/paginaroja.xaml" NavigationUIVisibility="Hidden">
-        </Frame>
+        <Frame Source="paginas/paginaroja.xaml" NavigationUIVisibility="Hidden" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="65*"/>

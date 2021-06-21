@@ -1,0 +1,65 @@
+﻿<Page x:Class="Examen2020.paginas.PaginaVerde"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Examen2020.paginas"
+      mc:Ignorable="d" 
+      d:DesignHeight="426" d:DesignWidth="704"
+      Background="LightGreen"
+      Title="PaginaVerde">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="1" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" MouseRightButtonDown="irARoja">
+            Cambiar de página
+        </Button>
+        <Grid Margin="5" Height="120" Width="300">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <TextBlock FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center">Longitud acotada</TextBlock>
+            <TextBox Cursor="Pen" Grid.Column="1" Width="150" Margin="0, 2, 0, 2" TextChanged="longitudCheck" MouseEnter="longitudEntra" MouseLeave="longitudSale">
+                <TextBox.ToolTip>
+                    <TextBlock FontFamily="Monotype" FontStyle="Oblique">La longitud debe estar entre 4 y 6, ambos inclusive.</TextBlock>
+                </TextBox.ToolTip>
+            </TextBox>
+            <TextBlock Grid.Column="2" Name="LongitudText" Margin="5, 0, 0, 0" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center"></TextBlock>
+
+            <TextBlock Grid.Row="1" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center">Nada de digitos</TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="DigitosBox" Width="150" Margin="0, 2, 0, 2" PreviewTextInput="digitoCheck">
+                <TextBox.ToolTip>
+                    <TextBlock FontFamily="Monotype" FontStyle="Oblique">No se permiten digitos, solo letras y caracteres especiales</TextBlock>
+                </TextBox.ToolTip>
+            </TextBox>
+            <TextBlock Grid.Row="1" Grid.Column="2" Name="DigitosText" Margin="5, 0, 0, 0" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center"></TextBlock>
+
+            <TextBlock Grid.Row="2" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center">Rango concreto</TextBlock>
+            <TextBox Grid.Row="2" Grid.Column="1" Name="RangoBox" Width="150" Margin="0, 2, 0, 2" TextChanged="rangoCheck">
+                <TextBox.ToolTip>
+                    <TextBlock FontFamily="Monotype" FontStyle="Oblique">Debe ser un numero entre 100 y 1000, ambos inclusive.</TextBlock>
+                </TextBox.ToolTip>
+            </TextBox>
+            <TextBlock Grid.Row="2" Grid.Column="2" Name="RangoText" Margin="5, 0, 0, 0" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center"></TextBlock>
+
+            <TextBlock Grid.Row="3" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center">Sabor</TextBlock>
+            <ComboBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Name="User" ItemsSource="{Binding Sabores}" />
+
+            <TextBlock Grid.Row="4" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center">Temperatura</TextBlock>
+            <Slider Grid.Row="4" Grid.Column="1" Minimum="-10" Maximum="50" IsSnapToTickEnabled="True" ValueChanged="cambioTemperatura" />
+            <TextBlock Grid.Row="4" Grid.Column="2" Name="TemperaturaText" Margin="5, 0, 0, 0" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center"></TextBlock>
+        </Grid>
+    </Grid>
+</Page>

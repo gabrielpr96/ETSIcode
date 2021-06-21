@@ -1,0 +1,61 @@
+﻿<Page x:Class="Examen2020.paginas.PaginaRoja"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Examen2020.paginas"
+      mc:Ignorable="d" 
+      d:DesignHeight="426" d:DesignWidth="704"
+      Background="Red"
+      Title="PaginaRoja">
+
+    <Grid MouseMove="cambiarPosicion">
+        <Grid.Background>
+            <ImageBrush TileMode="Tile" Opacity=".5" Viewport="0, 0, .05, .05" ImageSource="../src/RN.jpg"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="2" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" MouseRightButtonDown="irAVerde">
+            Cambiar de página
+        </Button>
+        <Border Background="#7FFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock FontFamily="Monotype" FontStyle="Oblique" FontSize="16" Margin="0, 0, 0, 5">
+                Fondo de la página
+                </TextBlock>
+                <RadioButton Tag="Red" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo rojo
+                </RadioButton>
+                <RadioButton Tag="Green" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo verde
+                </RadioButton>
+                <RadioButton Tag="Blue" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo azul
+                </RadioButton>
+                <RadioButton Tag="Yellow" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo amarillo
+                </RadioButton>
+                <RadioButton Tag="Magenta" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo magenta
+                </RadioButton>
+                <RadioButton Tag="Cyan" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo cyan
+                </RadioButton>
+                <RadioButton Tag="White" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo blanco
+                </RadioButton>
+                <RadioButton Tag="Black" GroupName="Fondo" Checked="cambiarFondo">
+                    Fondo negro
+                </RadioButton>
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Visibility="Collapsed" Background="White" Name="PosicionRaton" FontFamily="Monotype" FontStyle="Oblique" FontSize="16"></TextBlock>
+            <ToggleButton Padding="4" Margin="10, 0, 0, 0" Unchecked="ocultarCoordenadas" Checked="mostrarCoordenadas">Mostrar coordenadas</ToggleButton>
+        </StackPanel>
+    </Grid>
+</Page>

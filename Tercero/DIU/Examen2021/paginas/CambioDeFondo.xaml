@@ -1,0 +1,39 @@
+﻿<Page x:Class="Examen2021.paginas.CambioDeFondo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Examen2021.paginas"
+      mc:Ignorable="d" 
+      d:DesignHeight="430" d:DesignWidth="708"
+      Title="CambioDeFondo">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock FontSize="28" FontFamily="Monotype" FontStyle="Oblique" VerticalAlignment="Center" HorizontalAlignment="Center" Background="White" Padding="8, 5, 15, 5">Página principal</TextBlock>
+        <Border Grid.Row="1"   Padding="10" Background="#BFFFFFFF" CornerRadius="10" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="16" FontFamily="Monotype" FontStyle="Oblique">Cambiar el color de fondo</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Background="#D0E7B5" Margin="10, 0, 10, 0" Checked="cambiarFondo" FontFamily="Monotype" FontStyle="Oblique">Verde</RadioButton>
+                    <RadioButton Background="#D6D2FF" Margin="10, 0, 10, 0" Checked="cambiarFondo" FontFamily="Monotype" FontStyle="Oblique">Violeta</RadioButton>
+                    <RadioButton Background="#FFB4FC" Margin="10, 0, 10, 0" Checked="cambiarFondo" FontFamily="Monotype" FontStyle="Oblique">Purpura</RadioButton>
+                    <RadioButton Background="#A8DAFF" Margin="10, 0, 10, 0" Checked="cambiarFondo" FontFamily="Monotype" FontStyle="Oblique">Azul</RadioButton>
+                    <RadioButton Background="#BFFAFF" Margin="10, 0, 10, 0" Checked="cambiarFondo" FontFamily="Monotype" FontStyle="Oblique">Cielo</RadioButton>
+                    <RadioButton Background="#00000000" Margin="10, 0, 10, 0" Checked="cambiarFondo" FontFamily="Monotype" FontStyle="Oblique" IsChecked="True">Transparente</RadioButton>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10, 5, 10, 5" MouseRightButtonDown="irACuestionario" FontSize="16">
+            <Button.ToolTip>
+                <TextBlock FontFamily="Monotype" FontStyle="Oblique">
+                    Funciona con click derecho.
+                </TextBlock>
+            </Button.ToolTip>
+            Ir al cuestionario
+        </Button>
+    </Grid>
+</Page>

@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="Quinta aplicacion" Height="450" Width="724" Icon="src/icon.png">
     <Border BorderBrush="Black" BorderThickness="15" Background="White" Name="ExternalBorder">
-        <StackPanel Margin="10" Orientation="Vertical"> 
+        <StackPanel Margin="10" Orientation="Vertical">
             <StackPanel.Background>
                 <ImageBrush ImageSource="src/background.jpeg" Opacity="0.5" />
             </StackPanel.Background>
             <TextBlock Name="TextBackground" Padding="5" Margin="10,20,0,0" Background="White" HorizontalAlignment="Left">Background</TextBlock>
             <StackPanel Orientation="Horizontal" Margin="50, 20, 0, 0">
-                <RadioButton GroupName="Background" Margin="0, 0, 20, 0" Checked="onChecked">Green</RadioButton>
+                <RadioButton GroupName="Background" Margin="0, 0, 20, 0" Tag="Green" Checked="onChecked">Fondo verde</RadioButton>
                 <RadioButton GroupName="Background" Margin="0, 0, 20, 0" Checked="onChecked">Yellow</RadioButton>
                 <RadioButton GroupName="Background" Margin="0, 0, 20, 0" Checked="onChecked">Blue</RadioButton>
                 <RadioButton GroupName="Background" Margin="0, 0, 20, 0" Checked="onChecked">White</RadioButton>
