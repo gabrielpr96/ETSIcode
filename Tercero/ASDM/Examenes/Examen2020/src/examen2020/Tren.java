@@ -3,64 +3,67 @@ package examen2020;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tren implements IPublicador{
+public class Tren implements IPublicador {
+
     private final int capacidad;
     private int plazasDisponibles;
     private boolean direccion, estado;
     private int nEstacion;
-    
+
     private static final Tren tren = new Tren();
-    
+
     private final List<IObservador> suscritos;
-    
-    private Tren(){
+
+    private Tren() {
         capacidad = plazasDisponibles = 100;
         direccion = true;
         estado = false;
         nEstacion = 0;
         suscritos = new ArrayList<>();
     }
-    
-    public static Tren getTren(){
+
+    public static Tren getTren() {
         return tren;
     }
-    
-    public void moverse(){
+
+    public void moverse() {
         estado = true;
-        if(direccion && nEstacion < 4){
-            nEstacion ++;
-            if(nEstacion == 4)
+        if (direccion && nEstacion < 4) {
+            nEstacion++;
+            if (nEstacion == 4) {
                 direccion = false;
-        }else if(!direccion && nEstacion > 0){
-            nEstacion --;
-            if(nEstacion == 0)
+            }
+        } else if (!direccion && nEstacion > 0) {
+            nEstacion--;
+            if (nEstacion == 0) {
                 direccion = true;
+            }
         }
         notificar();
     }
-    
-    public int getPlazasDisponibles(){
+
+    public int getPlazasDisponibles() {
         return plazasDisponibles;
     }
-    
-    public void setPlazasDisponibles(int suben, int bajan){
+
+    public void setPlazasDisponibles(int suben, int bajan) {
         estado = false;
         int diff = suben - bajan;
-        if(diff <= plazasDisponibles){
+        if (diff <= plazasDisponibles) {
             plazasDisponibles -= diff;
         }
         notificar();
     }
-    
-    public void establecerDireccion(boolean d){
+
+    public void establecerDireccion(boolean d) {
         direccion = d;
     }
-    
-    public boolean getDireccion(){
+
+    public boolean getDireccion() {
         return direccion;
     }
-    
-    public int getNEstacion(){
+
+    public int getNEstacion() {
         return nEstacion;
     }
 
