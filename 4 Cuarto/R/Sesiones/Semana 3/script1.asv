@@ -1,0 +1,29 @@
+clear all
+clc
+k=1;
+
+for s = 0 : 0.01 : 4*pi
+    t(k) = s;
+    y(k) = signal_v0(t(k));
+    k = k+1;
+end
+
+plot(t, y)
+
+k = 1;
+tiempo(1) = 0;
+tstart = tic();
+while tiempo(k) < 4*pi
+    %x = sin(tiempo);
+    cla
+
+    hold on
+    plot(t, y)
+    plot(signal_vtiempo(k), t(k), 'Or')
+    %y(k) = signal_v0(tiempo(k));
+    axis([0 4*pi -1 1])
+    drawnow
+
+    k = k+1;
+    tiempo(k) = toc(tstart);
+end
