@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ejercicio formulario DAW</title>
+    </head>
+    <body>
+        <form>
+            <fieldset title="Datos Personales">
+                <label for="fNombre">Nombre y apellidos</label>
+                <input type="text" name="nombre" id="fNormal" required><br>
+    
+                <label for="fSexo">Sexo</label>
+                <select name="sexo" id="fSexo">
+                    <option value="m">Masculino</option>
+                    <option value="f">Femenino</option>
+                </select><br>
+    
+                <label for="fDNI">DNI</label>
+                <input type="text" name="dni" id="fDNI" pattern="[0-9]+\.[0-9]+\.[0-9]+[A-Z]"><br>
+    
+                <label for="fEmail">Correo electrónico</label>
+                <input type="email" name="email" id="fEmail"><br>
+    
+                <label for="fNacimiento">Fecha de nacimiento</label>
+                <input type="date" name="nacimiento" id="nacimiento"><br>
+    
+                <label for="fWeb">Página web</label>
+                <input type="url" name="web" id="fWeb"><br>
+    
+                <label for="fCurriculum">Curriculum</label>
+                <input type="file" name="curriculum" id="fCurriculum">
+            </fieldset>
+
+            <fieldset title="Tus intereses">
+                <label for="fSalarioEsperado">Salario esperado</label>
+                <input type="number" name="salarioEsperado" id="fSalarioEsperado" min="600" max="2000"><br>
+
+                <label for="fInteresAgrico">Interés por un trabajo agrícola</label>
+                <input type="range" name="interesAgricola" id="fInteresAgricola" min="0" max="100"><br>
+
+                <label for="fInteresConstruccion">Interés por un trabajo en la construcción</label>
+                <input type="range" name="interesConstruccion" id="fInteresConstruccion" min="0" max="100"><br>
+
+                <label for="fObservaciones">Observaciones</label>
+                <textarea name="observaciones" id="fObservaciones"></textarea>
+            </fieldset>
+
+            <input type="submit">
+        </form>
+    </body>
+</html>
