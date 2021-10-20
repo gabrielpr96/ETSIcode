@@ -1,0 +1,9 @@
+form {
+    border: solid 2px blue;
+    background-color: orange;
+    color: blue;
+}
+
+h1:hover{
+    color:red;
+}

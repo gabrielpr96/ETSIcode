@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Practica 1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h1>Mi primera aplicación</h1>
+        
+        <form action="saludo.jsp" method="post" onsubmit="return validar(this);">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" />
+            
+            <input type="submit" value="Saludame" />
+        </form>
+        
+        <script src="js/funciones.js" type="text/javascript"></script>
+    </body>
+</html>
