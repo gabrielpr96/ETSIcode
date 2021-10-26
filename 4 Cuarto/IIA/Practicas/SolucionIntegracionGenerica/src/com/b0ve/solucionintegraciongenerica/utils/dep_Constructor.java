@@ -1,13 +1,15 @@
 package com.b0ve.solucionintegraciongenerica.utils;
 
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.excepciones.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Constructor {
+public class dep_Constructor {
     private final List<Tarea> tareas;
 
-    public Constructor() {
+    public dep_Constructor() {
         this.tareas = new ArrayList<>();
     }
     

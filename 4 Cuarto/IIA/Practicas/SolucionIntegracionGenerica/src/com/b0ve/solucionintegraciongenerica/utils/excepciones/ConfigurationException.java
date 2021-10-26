@@ -1,4 +1,4 @@
-package com.b0ve.solucionintegraciongenerica.utils;
+package com.b0ve.solucionintegraciongenerica.utils.excepciones;
 
 public class ConfigurationException extends Exception{
 

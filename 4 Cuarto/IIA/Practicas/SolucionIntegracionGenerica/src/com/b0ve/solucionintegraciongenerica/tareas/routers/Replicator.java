@@ -1,7 +1,8 @@
-package com.b0ve.solucionintegraciongenerica.tareas;
+package com.b0ve.solucionintegraciongenerica.tareas.routers;
 
-import com.b0ve.solucionintegraciongenerica.utils.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.Mensaje;
+import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 
 public class Replicator extends Tarea {
 
@@ -10,7 +11,7 @@ public class Replicator extends Tarea {
     }
 
     @Override
-    protected void procesar() {
+    public void procesar() {
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
             Mensaje m = entrada.retrive();

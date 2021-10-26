@@ -1,5 +1,7 @@
-package com.b0ve.solucionintegraciongenerica.utils;
+package com.b0ve.solucionintegraciongenerica.utils.flujo;
 
+import com.b0ve.solucionintegraciongenerica.tareas.Avisable;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -22,6 +24,14 @@ public final class Buffer {
     
     public void push(Mensaje mensaje){
         mensajes.add(mensaje);
-        salida.signalInput();
+        if(salida != null) salida.signalInput();
+    }
+    
+    public Iterator<Mensaje> getIterator(){
+        return mensajes.iterator();
+    }
+    
+    public void deleteMessage(Mensaje mensaje){
+        mensajes.remove(mensaje);
     }
 }

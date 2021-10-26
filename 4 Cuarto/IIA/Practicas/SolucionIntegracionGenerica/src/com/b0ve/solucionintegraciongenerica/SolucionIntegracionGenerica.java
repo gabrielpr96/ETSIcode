@@ -1,18 +1,30 @@
 package com.b0ve.solucionintegraciongenerica;
 
-import com.b0ve.solucionintegraciongenerica.utils.Constructor;
-import com.b0ve.solucionintegraciongenerica.utils.ConfigurationException;
+import com.b0ve.solucionintegraciongenerica.utils.excepciones.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.adaptadores.AdaptadorPantalla;
 import com.b0ve.solucionintegraciongenerica.adaptadores.AdaptadorTeclado;
 import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
-import com.b0ve.solucionintegraciongenerica.tareas.Replicator;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
+import com.b0ve.solucionintegraciongenerica.test.Tests;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.utils.Proceso;
 import java.util.ArrayList;
+import java.util.Iterator;
+import org.w3c.dom.NodeList;
 
 public class SolucionIntegracionGenerica {
 
-    public static void main(String[] args) throws ConfigurationException, InterruptedException {
+    /*
+        TODO List:
+            ContextSlimmer.slim
+            Adaptador generico de MySQL
+            Adaptador generico File Writer
+            Adaptador generico File Whatcher Read
+    */
+    
+    public static void main(String[] args) throws Exception {
+        Tests.test();
+        
         //Sintaxis V2
         Proceso p = new Proceso();
         AdaptadorTeclado teclado = new AdaptadorTeclado();
@@ -27,9 +39,9 @@ public class SolucionIntegracionGenerica {
         p.encadenar(replicator, pConsola);
         
         p.ejecutar();
-        p.terminar();
+        //p.terminar();
         p.esperar();
-        teclado.detener();
+        //teclado.detener();
         System.out.println("Terminado");
         
         

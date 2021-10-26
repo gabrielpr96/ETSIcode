@@ -1,13 +1,10 @@
 package com.b0ve.solucionintegraciongenerica.tareas;
 
-import com.b0ve.solucionintegraciongenerica.utils.Avisable;
-import com.b0ve.solucionintegraciongenerica.utils.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.ConfigurationException;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.excepciones.ConfigurationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 abstract public class Tarea implements Runnable, Avisable{
 
@@ -27,14 +24,12 @@ abstract public class Tarea implements Runnable, Avisable{
         this.maxSalidas = maxSalidas;
     }
 
-    public void addEntrada(Buffer entrada) throws ConfigurationException {
+    public void addEntrada(Buffer entrada) {
         this.entradas.add(entrada);
-        if(maxEntradas != 0 && this.entradas.size() > maxEntradas) throw new ConfigurationException("Error de multiplicidad entradas");
     }
 
-    public void addSalida(Buffer salida) throws ConfigurationException {
+    public void addSalida(Buffer salida) {
         this.salidas.add(salida);
-        if(maxSalidas != 0 && this.salidas.size() > maxSalidas) throw new ConfigurationException("Error de multiplicidad salidas");
     }
     
     @Override
@@ -56,6 +51,11 @@ abstract public class Tarea implements Runnable, Avisable{
         }
     }
     
-    protected abstract void procesar();
+    public abstract void procesar();
+    
+    public void validar() throws ConfigurationException{
+        if(maxEntradas != 0 && this.entradas.size() > maxEntradas) throw new ConfigurationException("Error de multiplicidad entradas");
+        if(maxSalidas != 0 && this.salidas.size() > maxSalidas) throw new ConfigurationException("Error de multiplicidad salidas");
+    }
 
 }

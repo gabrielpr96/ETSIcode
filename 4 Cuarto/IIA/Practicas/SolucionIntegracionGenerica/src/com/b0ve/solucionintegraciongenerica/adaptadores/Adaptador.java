@@ -1,6 +1,6 @@
 package com.b0ve.solucionintegraciongenerica.adaptadores;
 
-import com.b0ve.solucionintegraciongenerica.utils.Mensaje;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
 
 public abstract class Adaptador {

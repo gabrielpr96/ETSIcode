@@ -1,8 +1,8 @@
 package com.b0ve.solucionintegraciongenerica.puertos;
 
-import com.b0ve.solucionintegraciongenerica.utils.Avisable;
-import com.b0ve.solucionintegraciongenerica.utils.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.Mensaje;
+import com.b0ve.solucionintegraciongenerica.tareas.Avisable;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 
@@ -17,7 +17,7 @@ public class Puerto extends Tarea {
     }
 
     @Override
-    protected void procesar() {
+    public void procesar() {
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
             adaptador.enviarApp(entrada.retrive());
