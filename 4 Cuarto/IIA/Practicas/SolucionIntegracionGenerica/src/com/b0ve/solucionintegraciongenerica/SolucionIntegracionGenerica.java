@@ -7,6 +7,8 @@ import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 import com.b0ve.solucionintegraciongenerica.test.Tests;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.utils.Proceso;
+import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
+import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,12 +19,13 @@ public class SolucionIntegracionGenerica {
     /*
         TODO List:
             ContextSlimmer.slim
-            Adaptador generico de MySQL
-            Adaptador generico File Writer
-            Adaptador generico File Whatcher Read
     */
     
     public static void main(String[] args) throws Exception {
+        Tests.test();
+        
+        
+        /*
         Proceso pross = new Proceso();
         AdaptadorFicheroWhatcher adapterFichero = new AdaptadorFicheroWhatcher("C:\\Users\\borja\\Downloads\\watch", "C:\\Users\\borja\\Downloads\\salida");
         Puerto pFile = pross.crearPuerto(adapterFichero);
@@ -34,7 +37,6 @@ public class SolucionIntegracionGenerica {
         pross.ejecutar();
         pross.esperar();
         
-        /*
         Proceso pross = new Proceso();
         AdaptadorMySQL adapterMysql = new AdaptadorMySQL("localhost", 3306, "cafe", "root", "");
         Puerto pMysql = pross.crearPuerto(adapterMysql);
@@ -45,11 +47,8 @@ public class SolucionIntegracionGenerica {
         
         pross.ejecutar();
         pross.esperar();
-        */
         
         System.exit(0);
-        
-        Tests.test();
         
         //Sintaxis V2
         Proceso p = new Proceso();

@@ -2,7 +2,6 @@ package com.b0ve.solucionintegraciongenerica.tareas.routers;
 
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 
 public abstract class DistributorTemplate extends Tarea {

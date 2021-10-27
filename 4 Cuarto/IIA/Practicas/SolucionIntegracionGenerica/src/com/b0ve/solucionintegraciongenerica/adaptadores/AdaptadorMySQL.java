@@ -37,7 +37,7 @@ public class AdaptadorMySQL extends Adaptador {
             Document doc = JDBCUtil.toDocument(rs);
             rs.close();
             stmt.close();
-            enviarPuerto(new Mensaje(doc));
+            enviarPuerto(new Mensaje(doc, m.getCorrelationID()));
         } catch (SQLException | ParserConfigurationException | TransformerException ex) {
             Logger.getLogger(AdaptadorMySQL.class.getName()).log(Level.SEVERE, null, ex);
         }

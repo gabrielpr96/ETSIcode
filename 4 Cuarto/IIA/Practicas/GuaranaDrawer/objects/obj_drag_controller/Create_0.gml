@@ -1,0 +1,3 @@
+/// @description Inicializar
+
+dragging = noone;

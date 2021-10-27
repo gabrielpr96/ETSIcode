@@ -1,0 +1,40 @@
+header{
+    width: 900px;
+    border: black solid 1px;
+    margin: 0 auto;
+    text-align: center;
+}
+header > img {
+    width: 100%;
+}
+nav{
+    width: 880px;
+    border: black solid 1px;
+    margin: 10px auto;
+    background-color: deepskyblue;
+    padding: 10px;
+}
+nav > a {
+    color: white;
+    text-decoration: none;
+}
+nav > a.selected {
+    color: red;
+}
+nav{
+    font-size: 1.5rem;
+    text-align: center;
+}
+section {
+    width: 890px;
+    border: black solid 1px;
+    margin: 0 auto;
+    padding: 5px;
+}
+footer {
+    width: 890px;
+    border: black solid 1px;
+    margin: 5px auto;
+    padding: 5px;
+    text-align: center;
+}

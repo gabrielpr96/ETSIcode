@@ -1,7 +1,6 @@
 package com.b0ve.solucionintegraciongenerica.adaptadores;
 
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
 import com.github.hindol.commons.file.DirectoryWatcher;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,37 +9,64 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class AdaptadorFicheroWhatcher extends Adaptador {
 
     private final String destdir;
-    private final DirectoryWatcher watcher;
+    //private final DirectoryWatcher watcher;
+    private final Thread watcher;
 
     public AdaptadorFicheroWhatcher(String watchDir, String destdir) {
         this.destdir = destdir;
 
-        watcher = new DirectoryWatcher.Builder()
-                .addDirectories(watchDir)
-                .setPreExistingAsCreated(true)
-                .build((DirectoryWatcher.Event event, Path path) -> {
-                    switch (event) {
-                        case ENTRY_CREATE:
+        if (watchDir != null) {
+            File folder = new File(watchDir);
+            watcher = new Thread() {
+                @Override
+                public void run() {
+                    while (!isInterrupted()) {
+                        try {
+                            for (final File fileEntry : folder.listFiles()) {
+                                if (fileEntry.isFile()) {
+                                    enviarPuerto(new Mensaje(new String(Files.readAllBytes(fileEntry.toPath()), StandardCharsets.UTF_8)));
+                                    fileEntry.delete();
+                                }
+                            }
+                            sleep(1000);
+                        } catch (InterruptedException | IOException ex) {
+                            Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            };
+            /*
+            watcher = new DirectoryWatcher.Builder()
+                    .addDirectories(watchDir)
+                    .setPreExistingAsCreated(true)
+                    .build((DirectoryWatcher.Event event, Path path) -> {
+                        switch (event) {
+                            case ENTRY_CREATE:
                             try {
                                 enviarPuerto(new Mensaje(new String(Files.readAllBytes(path), StandardCharsets.UTF_8)));
                                 (new File(path.toUri())).delete();
                             } catch (IOException ex) {
+                                ex.printStackTrace();
                             }
                             break;
 
-                    }
-                });
-        try {
-            watcher.start();
-        } catch (Exception ex) {
-            Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+            try {
+                watcher.start();
+            } catch (Exception ex) {
+                Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             */
+        } else {
+            watcher = null;
         }
     }
 
@@ -58,7 +84,16 @@ public class AdaptadorFicheroWhatcher extends Adaptador {
 
     @Override
     public void detener() {
-        watcher.stop();
+        if (watcher != null) {
+            //watcher.stop();
+            watcher.interrupt();
+        }
+    }
+
+    public void iniciar() {
+        if (watcher != null) {
+            watcher.start();
+        }
     }
 
 }
