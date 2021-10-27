@@ -1,6 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.tareas.transformers;
 
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
+import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 
@@ -19,6 +20,7 @@ public abstract class SplitterTemplate extends Tarea {
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
             Mensaje mensaje = entrada.retrive();
+            if(mensaje.getSequenceSize() != 0) throw new ExecutionException("No se puede fragmentar un fragmento de mensaje");
             String[] parts = split(mensaje);
             for (int i = 0; i < parts.length; i++) {
                 Mensaje parte = new Mensaje(parts[i], contador, parts.length);

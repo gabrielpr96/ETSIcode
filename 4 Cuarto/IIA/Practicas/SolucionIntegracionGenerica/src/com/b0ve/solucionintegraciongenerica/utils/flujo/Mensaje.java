@@ -44,6 +44,10 @@ public class Mensaje {
         this(ID, correlationID, body, 0, 0);
     }
 
+    public Mensaje(Document body) throws TransformerException {
+        this(serialiceXML(body));
+    }
+    
     public Mensaje(String body) {
         this(counter, counter, body, 0, 0);
         counter++;
