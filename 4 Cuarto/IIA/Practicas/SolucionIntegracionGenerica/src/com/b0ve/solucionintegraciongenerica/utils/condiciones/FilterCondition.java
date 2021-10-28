@@ -1,18 +1,18 @@
 package com.b0ve.solucionintegraciongenerica.utils.condiciones;
 
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import com.b0ve.solucionintegraciongenerica.utils.condiciones.Comprobable;
 
-public class FilterCondition implements Comprobable{
-    private final String xpath, value;
+public abstract class FilterCondition implements Comprobable{
+    private final String xpath;
 
-    public FilterCondition(String xpath, String value) {
+    public FilterCondition(String xpath) {
         this.xpath = xpath;
-        this.value = value;
     }
     
     @Override
-    public boolean checkCondition(Mensaje mensaje){
-        return mensaje.evaluateXPath(xpath).item(0).getTextContent().equals(value);
+    public final boolean checkCondition(Mensaje mensaje){
+        return testValue(mensaje.evaluateXPath(xpath).item(0).getTextContent());
     }
+    
+    protected abstract boolean testValue(String text);
 }

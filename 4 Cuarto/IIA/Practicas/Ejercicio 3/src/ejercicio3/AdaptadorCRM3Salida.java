@@ -1,30 +1,27 @@
 package ejercicio3;
 
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.JDBCUtil;
-import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class AdaptadorCRM3Salida extends Adaptador {
 
     private Connection conn;
+    private final AdaptadorCRM3Entrada adaptadorEntrada;
 
-    public AdaptadorCRM3Salida() {
+    public AdaptadorCRM3Salida(AdaptadorCRM3Entrada adaptadorEntrada) {
+        this.adaptadorEntrada = adaptadorEntrada;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ejercicio3", "root", "");
@@ -36,7 +33,8 @@ public class AdaptadorCRM3Salida extends Adaptador {
     @Override
     public void enviarApp(Mensaje m) {
         try {
-            NodeList cambios = m.evaluateXPath("/cambios/cambio");
+            //En realidad por cada mensaje solo hay un cambio, pero es faicilmente modificable
+            NodeList cambios = m.evaluateXPath("/cambio");
             for (int i = 0; i < cambios.getLength(); i++) {
                 Document doc = Mensaje.node2document(cambios.item(0));
                 String tipo = Mensaje.evaluateXPath(doc, "/cambio/tipo").item(0).getTextContent();
@@ -57,10 +55,12 @@ public class AdaptadorCRM3Salida extends Adaptador {
                         stmt.execute("INSERT INTO `Direcciones` (`Cliente`, `Direccion`) VALUES " + dirs);
                         stmt.close();
                     }
+                    adaptadorEntrada.addConocido(dni);
                 } else if (tipo.equals("eliminar")) {
                     Statement stmt = conn.createStatement();
                     stmt.execute("DELETE FROM `Clientes` WHERE `DNI` = '" + dni + "'");
                     stmt.close();
+                    adaptadorEntrada.removeConocido(dni);
                 }
             }
         } catch (SQLException | ParserConfigurationException  ex) {

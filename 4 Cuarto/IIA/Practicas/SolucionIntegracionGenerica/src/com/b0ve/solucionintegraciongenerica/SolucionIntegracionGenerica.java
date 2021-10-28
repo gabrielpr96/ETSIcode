@@ -8,7 +8,7 @@ import com.b0ve.solucionintegraciongenerica.test.Tests;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.utils.Proceso;
 import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
-import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
+import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import java.util.ArrayList;
 import java.util.Iterator;

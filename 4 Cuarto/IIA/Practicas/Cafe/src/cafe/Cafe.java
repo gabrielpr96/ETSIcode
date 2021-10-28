@@ -5,7 +5,7 @@ import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 import com.b0ve.solucionintegraciongenerica.utils.Proceso;
 import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
-import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
+import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
 
 public class Cafe {
 
@@ -23,7 +23,7 @@ public class Cafe {
         Puerto pBarmanCaliente = p.crearPuerto(barmanCaliente);
         
         Tarea divisor = p.crearTarea(SPLITTER, "/cafeorder/drink");
-        Tarea encauzador = p.crearTarea(DISTRIBUTOR, new FilterCondition[]{new FilterCondition("/drink/type", "cold"), new FilterCondition("/drink/type", "hot")});
+        Tarea encauzador = p.crearTarea(DISTRIBUTOR, new FilterConditionEquals[]{new FilterConditionEquals("/drink/type", "cold"), new FilterConditionEquals("/drink/type", "hot")});
         
         Tarea replicadorFrio = p.crearTarea(REPLICATOR);
         Tarea traductorQuerryFrio = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"

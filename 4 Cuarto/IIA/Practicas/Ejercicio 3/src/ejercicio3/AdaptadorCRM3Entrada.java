@@ -1,7 +1,6 @@
 package ejercicio3;
 
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.JDBCUtil;
 import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import java.sql.Connection;
@@ -10,9 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -26,48 +23,50 @@ public class AdaptadorCRM3Entrada extends Adaptador {
 
     private Connection conn;
     private Thread hilo;
+    private final List<String> conocidos;
 
     public AdaptadorCRM3Entrada() {
+        conocidos = new ArrayList<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ejercicio3", "root", "");
             hilo = new Thread() {
                 @Override
                 public void run() {
-                    List<String> conocidos = new ArrayList<>();
                     while (!isInterrupted()) {
                         try {
-                            List<String> nuevos = new ArrayList<>();
-                            List<String> eliminados = new ArrayList<>(conocidos);
-                            Statement stmt = conn.createStatement();
-                            ResultSet rs = stmt.executeQuery("SELECT `DNI` FROM `clientes`");
-                            while (rs.next()) {
-                                String dni = rs.getString(1);
-                                if (!conocidos.contains(dni)) {
-                                    nuevos.add(dni);
-                                    conocidos.add(dni);
-                                } else {
-                                    eliminados.remove(dni);
+                            synchronized (AdaptadorCRM3Entrada.this) {
+                                List<String> nuevos = new ArrayList<>();
+                                List<String> eliminados = new ArrayList<>(conocidos);
+                                Statement stmt = conn.createStatement();
+                                ResultSet rs = stmt.executeQuery("SELECT `DNI` FROM `clientes`");
+                                while (rs.next()) {
+                                    String dni = rs.getString(1);
+                                    if (!conocidos.contains(dni)) {
+                                        nuevos.add(dni);
+                                        conocidos.add(dni);
+                                    } else {
+                                        eliminados.remove(dni);
+                                    }
                                 }
-                            }
-                            conocidos.removeAll(eliminados);
-                            rs.close();
-                            stmt.close();
-                            if (!nuevos.isEmpty() || !eliminados.isEmpty()) {
-                                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-                                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                                Document doc = docBuilder.newDocument();
-                                Element root = doc.createElement("cambios");
-                                doc.appendChild(root);
-                                for (String dni : nuevos) {
-                                    createCambio(doc, root, dni, "crear");
+                                conocidos.removeAll(eliminados);
+                                rs.close();
+                                stmt.close();
+                                if (!nuevos.isEmpty() || !eliminados.isEmpty()) {
+                                    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+                                    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+                                    Document doc = docBuilder.newDocument();
+                                    Element root = doc.createElement("cambios");
+                                    doc.appendChild(root);
+                                    for (String dni : nuevos) {
+                                        createCambio(doc, root, dni, "crear");
+                                    }
+                                    for (String dni : eliminados) {
+                                        createCambio(doc, root, dni, "eliminar");
+                                    }
+                                    Mensaje mensaje = new Mensaje(Mensaje.serialiceXML(doc));
+                                    enviarPuerto(mensaje);
                                 }
-                                for (String dni : eliminados) {
-                                    createCambio(doc, root, dni, "eliminar");
-                                }
-                                Mensaje mensaje = new Mensaje(Mensaje.serialiceXML(doc));
-                                enviarPuerto(mensaje);
-                                System.out.println(mensaje.getBody());
                             }
                             sleep(1000);
                         } catch (InterruptedException | SQLException | ParserConfigurationException | TransformerException ex) {
@@ -90,7 +89,7 @@ public class AdaptadorCRM3Entrada extends Adaptador {
         eCambio.appendChild(eTipo);
 
         Element eFuente = doc.createElement("fuente");
-        eFuente.setTextContent("CRM1");
+        eFuente.setTextContent("CRM3");
         eCambio.appendChild(eFuente);
 
         Element eDatos = doc.createElement("datos");
@@ -100,19 +99,21 @@ public class AdaptadorCRM3Entrada extends Adaptador {
         eDNI.setTextContent(dni);
         eDatos.appendChild(eDNI);
 
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT `Nombre` FROM `clientes` WHERE `DNI` = '" + dni + "'");
-        rs.next();
-        Element eNombre = doc.createElement("nombre");
-        eNombre.setTextContent(rs.getString(1));
-        eDatos.appendChild(eNombre);
+        if(tipo == "crear"){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT `Nombre` FROM `clientes` WHERE `DNI` = '" + dni + "'");
+            rs.next();
+            Element eNombre = doc.createElement("nombre");
+            eNombre.setTextContent(rs.getString(1));
+            eDatos.appendChild(eNombre);
 
-        stmt = conn.createStatement();
-        rs = stmt.executeQuery("SELECT `Direccion` FROM `direcciones` WHERE `Cliente` = '" + dni + "'");
-        while (rs.next()) {
-            Element eDireccion = doc.createElement("direccion");
-            eDireccion.setTextContent(rs.getString(1));
-            eDatos.appendChild(eDireccion);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT `Direccion` FROM `direcciones` WHERE `Cliente` = '" + dni + "'");
+            while (rs.next()) {
+                Element eDireccion = doc.createElement("direccion");
+                eDireccion.setTextContent(rs.getString(1));
+                eDatos.appendChild(eDireccion);
+            }
         }
 
     }
@@ -138,6 +139,14 @@ public class AdaptadorCRM3Entrada extends Adaptador {
         if (hilo != null) {
             hilo.start();
         }
+    }
+    
+    public synchronized void addConocido(String dni){
+        conocidos.add(dni);
+    }
+    
+    public synchronized void removeConocido(String dni){
+        conocidos.remove(dni);
     }
 
 }

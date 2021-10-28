@@ -5,7 +5,7 @@ import com.b0ve.solucionintegraciongenerica.tareas.routers.*;
 import com.b0ve.solucionintegraciongenerica.tareas.transformers.*;
 import com.b0ve.solucionintegraciongenerica.test.ConsoleColors.Color;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
+import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -127,7 +127,7 @@ public class Tests {
                 m4 = new Mensaje(3, 3, "<cid>2</cid>"),
                 m5 = new Mensaje(4, 5, "<cid>0</cid>"),
                 m6 = new Mensaje(5, 4, "<cid>err</cid>");
-        Distributor distributor = new Distributor(new FilterCondition[]{new FilterCondition("/cid", "0"), new FilterCondition("/cid", "1")});
+        Distributor distributor = new Distributor(new FilterConditionEquals[]{new FilterConditionEquals("/cid", "0"), new FilterConditionEquals("/cid", "1")});
         Buffer in1 = new Buffer(null);
         distributor.addEntrada(in1);
         Buffer out1 = new Buffer(null);
@@ -161,7 +161,7 @@ public class Tests {
                 m2 = new Mensaje(1, 1, "<cid>1</cid>"),
                 m3 = new Mensaje(2, 2, "<cid>2</cid>");
         
-        Filter filter = new Filter(new FilterCondition("cid", "1"));
+        Filter filter = new Filter(new FilterConditionEquals("cid", "1"));
         Buffer in = new Buffer(null);
         filter.addEntrada(in);
         Buffer out = new Buffer(null);
