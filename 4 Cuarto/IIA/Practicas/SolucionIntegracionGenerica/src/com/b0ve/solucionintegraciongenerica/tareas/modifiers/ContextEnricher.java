@@ -14,6 +14,7 @@ public class ContextEnricher extends ContextEnricherTemplate {
     @Override
     protected void enrich(Mensaje mensaje, Mensaje condicion){
         try {
+            System.out.println("Enrich "+mensaje.evaluateXPath("/drink/name").item(0).getTextContent());
             mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), condicion.getBody()));
         } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
             Logger.getLogger(ContextEnricher.class.getName()).log(Level.SEVERE, null, ex);

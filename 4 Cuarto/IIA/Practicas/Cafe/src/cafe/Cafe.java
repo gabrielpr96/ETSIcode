@@ -15,7 +15,7 @@ public class Cafe {
         AdaptadorFicheroWhatcher comandas = new AdaptadorFicheroWhatcher("C:\\Users\\borja\\Downloads\\comandas", null);
         AdaptadorFicheroWhatcher camarero = new AdaptadorFicheroWhatcher(null, "C:\\Users\\borja\\Downloads\\camarero");
         AdaptadorMySQL barmanFrio = new AdaptadorMySQL("localhost", 3306, "cafe", "root", "");
-        AdaptadorMySQL barmanCaliente = new AdaptadorMySQL("localhost", 3306, "cafe", "root", "");
+        AdaptadorPHP barmanCaliente = new AdaptadorPHP("http://localhost/cafe/api.php");
         
         Puerto pComandas = p.crearPuerto(comandas);
         Puerto pCamarero = p.crearPuerto(camarero);
@@ -37,10 +37,10 @@ public class Cafe {
         
         Tarea replicadorCaliente = p.crearTarea(REPLICATOR);
         Tarea traductorQuerryCaliente = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
-                + "<sql>SELECT `Stock` FROM `cafe` WHERE `Nombre` = '<xsl:value-of select=\"name\"/>'</sql>"
+                + "<action>consultarStock</action><nombre><xsl:value-of select=\"name\"/></nombre>"
                 + "</xsl:template></xsl:stylesheet>");
-        Tarea traductorResultadoCaliente = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/Results\">"
-                + "<drink><stock><xsl:value-of select=\"Row/Stock\"/></stock></drink>"
+        Tarea traductorResultadoCaliente = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/response\">"
+                + "<drink><stock><xsl:value-of select=\"msg\"/></stock></drink>"
                 + "</xsl:template></xsl:stylesheet>");
         Tarea juntadorCaliente = p.crearTarea(CORRELATOR);
         Tarea combinadorCaliente = p.crearTarea(CONTEXT_ENRICHER);

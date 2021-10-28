@@ -44,6 +44,10 @@ public class Mensaje {
         this(ID, correlationID, body, 0, 0);
     }
 
+    public Mensaje(String body, int correlationID) throws TransformerException {
+        this(counter++, correlationID, body);
+    }
+
     public Mensaje(Document body, int correlationID) throws TransformerException {
         this(counter++, correlationID, serialiceXML(body));
     }

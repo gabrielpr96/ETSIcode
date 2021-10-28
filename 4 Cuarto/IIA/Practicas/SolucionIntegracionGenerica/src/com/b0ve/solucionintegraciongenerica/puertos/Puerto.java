@@ -20,11 +20,19 @@ public class Puerto extends Tarea {
     public void procesar() {
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
-            adaptador.enviarApp(entrada.retrive());
+            Mensaje mensaje = entrada.retrive();
+            //TODO:Crear un hilo por cada peticion realizada
+            (new Thread() {
+                @Override
+                public void run() {
+                    adaptador.enviarApp(mensaje);
+                }
+
+            }).start();
         }
     }
-    
-    public void enviar(Mensaje m){
+
+    public void enviar(Mensaje m) {
         Buffer salida = salidas.get(0);
         salida.push(m);
     }
