@@ -37,7 +37,7 @@ public class Cafe {
         
         Tarea replicadorCaliente = p.crearTarea(REPLICATOR);
         Tarea traductorQuerryCaliente = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
-                + "<action>consultarStock</action><nombre><xsl:value-of select=\"name\"/></nombre>"
+                + "<call><action>consultarStock</action><nombre><xsl:value-of select=\"name\"/></nombre></call>"
                 + "</xsl:template></xsl:stylesheet>");
         Tarea traductorResultadoCaliente = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/response\">"
                 + "<drink><stock><xsl:value-of select=\"msg\"/></stock></drink>"

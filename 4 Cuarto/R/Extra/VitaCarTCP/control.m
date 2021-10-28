@@ -7,6 +7,7 @@ TRANS_SPEED = 0.0005;
 x = 0;
 y = 0;
 rot = 0;
+pinta_robot(x, y, rot, 0);
 
 vez = 0;
 while true

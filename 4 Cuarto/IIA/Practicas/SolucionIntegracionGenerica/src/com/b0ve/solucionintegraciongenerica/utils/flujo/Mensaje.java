@@ -105,6 +105,12 @@ public class Mensaje {
             return null;
         }
     }
+    
+    public String evaluateXPathString(String expresion) {
+        NodeList res = evaluateXPath(expresion);
+        if(res == null) return null;
+        return res.item(0).getTextContent();
+    }
 
     public void transformBody(String style) {
         try {
@@ -148,7 +154,9 @@ public class Mensaje {
     }
 
     public static NodeList evaluateXPath(String xml, String expresion) throws ParserConfigurationException, XPathExpressionException, SAXException, IOException {
-        Document documento = parseXML(xml);
+        return evaluateXPath(parseXML(xml), expresion);
+    }
+    public static NodeList evaluateXPath(Document documento, String expresion) throws ParserConfigurationException, XPathExpressionException, SAXException, IOException {
         XPath xpath = XPathFactory.newInstance().newXPath();
         return (NodeList) xpath.evaluate(expresion, documento, XPathConstants.NODESET);
     }

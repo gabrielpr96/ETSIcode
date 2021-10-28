@@ -4,6 +4,7 @@ import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
 
 public abstract class Adaptador {
+
     private Puerto puerto;
 
     public Adaptador() {
@@ -12,12 +13,14 @@ public abstract class Adaptador {
     public void setPuerto(Puerto puerto) {
         this.puerto = puerto;
     }
-    
+
     public abstract void enviarApp(Mensaje m);
-    
-    protected void enviarPuerto(Mensaje m){
-        puerto.enviar(m);
+
+    protected void enviarPuerto(Mensaje m) {
+        if (puerto != null) {
+            puerto.enviar(m);
+        }
     }
-    
+
     public abstract void detener();
 }

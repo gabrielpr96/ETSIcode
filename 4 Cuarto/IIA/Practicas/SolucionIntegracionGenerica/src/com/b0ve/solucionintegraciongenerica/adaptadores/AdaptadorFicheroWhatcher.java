@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 public class AdaptadorFicheroWhatcher extends Adaptador {
 
     private final String destdir;
-    //private final DirectoryWatcher watcher;
     private final Thread watcher;
 
     public AdaptadorFicheroWhatcher(String watchDir, String destdir) {
@@ -23,8 +22,8 @@ public class AdaptadorFicheroWhatcher extends Adaptador {
             watcher = new Thread() {
                 @Override
                 public void run() {
-                    while (!isInterrupted()) {
-                        try {
+                    try {
+                        while (!isInterrupted()) {
                             for (final File fileEntry : folder.listFiles()) {
                                 if (fileEntry.isFile()) {
                                     enviarPuerto(new Mensaje(new String(Files.readAllBytes(fileEntry.toPath()), StandardCharsets.UTF_8)));
@@ -32,35 +31,12 @@ public class AdaptadorFicheroWhatcher extends Adaptador {
                                 }
                             }
                             sleep(1000);
-                        } catch (InterruptedException | IOException ex) {
-                            Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                    } catch (InterruptedException | IOException ex) {
+                        Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             };
-            /*
-            watcher = new DirectoryWatcher.Builder()
-                    .addDirectories(watchDir)
-                    .setPreExistingAsCreated(true)
-                    .build((DirectoryWatcher.Event event, Path path) -> {
-                        switch (event) {
-                            case ENTRY_CREATE:
-                            try {
-                                enviarPuerto(new Mensaje(new String(Files.readAllBytes(path), StandardCharsets.UTF_8)));
-                                (new File(path.toUri())).delete();
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                            break;
-
-                        }
-                    });
-            try {
-                watcher.start();
-            } catch (Exception ex) {
-                Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             */
         } else {
             watcher = null;
         }
@@ -81,7 +57,6 @@ public class AdaptadorFicheroWhatcher extends Adaptador {
     @Override
     public void detener() {
         if (watcher != null) {
-            //watcher.stop();
             watcher.interrupt();
         }
     }

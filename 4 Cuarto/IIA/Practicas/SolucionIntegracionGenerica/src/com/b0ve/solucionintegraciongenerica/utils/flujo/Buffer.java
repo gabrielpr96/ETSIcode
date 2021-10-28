@@ -14,24 +14,24 @@ public final class Buffer {
         this.salida = salida;
     }
     
-    public boolean empty(){
+    public synchronized boolean empty(){
         return this.mensajes.isEmpty();
     }
     
-    public Mensaje retrive(){
+    public synchronized Mensaje retrive(){
         return mensajes.poll();
     }
     
-    public void push(Mensaje mensaje){
+    public synchronized void push(Mensaje mensaje){
         mensajes.add(mensaje);
         if(salida != null) salida.signalInput();
     }
     
-    public Iterator<Mensaje> getIterator(){
+    public synchronized Iterator<Mensaje> getIterator(){
         return mensajes.iterator();
     }
     
-    public void deleteMessage(Mensaje mensaje){
+    public synchronized void deleteMessage(Mensaje mensaje){
         mensajes.remove(mensaje);
     }
 }

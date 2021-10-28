@@ -114,8 +114,9 @@ public final class Proceso {
         return tarea;
     }
 
-    public void addTarea(Tarea tarea) {
+    public Tarea addTarea(Tarea tarea) {
         tareas.add(tarea);
+        return tarea;
     }
 
     public Puerto crearPuerto(Adaptador adaptador) {
