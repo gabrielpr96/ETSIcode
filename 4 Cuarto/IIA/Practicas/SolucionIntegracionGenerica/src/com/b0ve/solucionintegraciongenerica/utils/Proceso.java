@@ -6,6 +6,7 @@ import com.b0ve.solucionintegraciongenerica.utils.condiciones.Comprobable;
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
+import com.b0ve.solucionintegraciongenerica.tareas.TareaDebug;
 import com.b0ve.solucionintegraciongenerica.tareas.routers.*;
 import com.b0ve.solucionintegraciongenerica.tareas.modifiers.*;
 import com.b0ve.solucionintegraciongenerica.tareas.transformers.*;
@@ -31,7 +32,8 @@ public final class Proceso {
         SPLITTER,
         AGGREGATOR,
         CHOPPER,
-        ASSEMBLER
+        ASSEMBLER,
+        DEBUG
     }
 
     public Proceso() {
@@ -97,13 +99,16 @@ public final class Proceso {
                 tarea = new Splitter((String) configuracion);
                 break;
             case AGGREGATOR:
-                tarea = new Aggregator((String) configuracion);
+                tarea = new Aggregator(configuracion);
                 break;
             case CHOPPER:
                 tarea = new Chopper((String) configuracion);
                 break;
             case ASSEMBLER:
                 tarea = new Assembler((String) configuracion);
+                break;
+            case DEBUG:
+                tarea = new TareaDebug((boolean) configuracion);
                 break;
             default:
                 tarea = null;

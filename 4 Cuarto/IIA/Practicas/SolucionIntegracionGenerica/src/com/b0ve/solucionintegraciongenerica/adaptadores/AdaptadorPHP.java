@@ -36,7 +36,7 @@ public class AdaptadorPHP extends Adaptador {
     @Override
     public void enviarApp(Mensaje m) {
         try {
-            System.out.println("Consulta PHP "+m.evaluateXPath("/call/nombre").item(0).getTextContent());
+            //System.out.println("Consulta PHP "+m.evaluateXPath("/call/nombre").item(0).getTextContent());
             JSONObject xmlJSONObj = XML.toJSONObject(m.getBody());
             String request = xmlJSONObj.toString(4);
             String response = request(request);

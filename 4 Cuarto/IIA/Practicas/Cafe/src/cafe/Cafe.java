@@ -12,8 +12,8 @@ public class Cafe {
     public static void main(String[] args) throws Exception {
         Proceso p = new Proceso();
         
-        AdaptadorFicheroWhatcher comandas = new AdaptadorFicheroWhatcher("C:\\Users\\borja\\Downloads\\comandas", null);
-        AdaptadorFicheroWhatcher camarero = new AdaptadorFicheroWhatcher(null, "C:\\Users\\borja\\Downloads\\camarero");
+        AdaptadorFicheroWhatcher comandas = new AdaptadorFicheroWhatcher("C:\\Users\\borja\\Downloads\\cafe\\comandas", null);
+        AdaptadorFicheroWhatcher camarero = new AdaptadorFicheroWhatcher(null, "C:\\Users\\borja\\Downloads\\cafe\\camarero");
         AdaptadorMySQL barmanFrio = new AdaptadorMySQL("localhost", 3306, "cafe", "root", "");
         AdaptadorPHP barmanCaliente = new AdaptadorPHP("http://localhost/cafe/api.php");
         
@@ -22,12 +22,12 @@ public class Cafe {
         Puerto pBarmanFrio = p.crearPuerto(barmanFrio);
         Puerto pBarmanCaliente = p.crearPuerto(barmanCaliente);
         
-        Tarea divisor = p.crearTarea(SPLITTER, "/cafeorder/drink");
+        Tarea divisor = p.crearTarea(SPLITTER, "/cafe_order/drinks/drink");
         Tarea encauzador = p.crearTarea(DISTRIBUTOR, new FilterConditionEquals[]{new FilterConditionEquals("/drink/type", "cold"), new FilterConditionEquals("/drink/type", "hot")});
         
         Tarea replicadorFrio = p.crearTarea(REPLICATOR);
         Tarea traductorQuerryFrio = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
-                + "<sql>SELECT `Stock` FROM `cafe` WHERE `Nombre` = '<xsl:value-of select=\"name\"/>'</sql>"
+                + "<sql>SELECT `Stock` FROM `bebidas` WHERE `Nombre` = '<xsl:value-of select=\"name\"/>'</sql>"
                 + "</xsl:template></xsl:stylesheet>");
         Tarea traductorResultadoFrio = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/Results\">"
                 + "<drink><stock><xsl:value-of select=\"Row/Stock\"/></stock></drink>"
@@ -46,7 +46,7 @@ public class Cafe {
         Tarea combinadorCaliente = p.crearTarea(CONTEXT_ENRICHER);
         
         Tarea reunidor = p.crearTarea(MERGER);
-        Tarea arrejuntador = p.crearTarea(AGGREGATOR, "cafeorder");
+        Tarea arrejuntador = p.crearTarea(AGGREGATOR, new String[]{"cafe_order", "drinks"});
         
         p.encadenar(pComandas, divisor);
         p.encadenar(divisor, encauzador);
