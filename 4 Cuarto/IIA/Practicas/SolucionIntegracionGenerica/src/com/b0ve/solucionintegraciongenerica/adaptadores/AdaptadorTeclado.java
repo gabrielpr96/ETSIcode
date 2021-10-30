@@ -8,7 +8,6 @@ public class AdaptadorTeclado extends Adaptador{
     private final Thread hilo;
     
     public AdaptadorTeclado() {
-        
         hilo = new Thread(){
             @Override
             public void run() {
@@ -20,14 +19,16 @@ public class AdaptadorTeclado extends Adaptador{
                 }while(!texto.equals("salir") && !isInterrupted());
             }
         };
-        hilo.start();
     }
-    
-    
 
     @Override
     public void enviarApp(Mensaje m) {
         System.out.println(m.getBody());
+    }
+
+    @Override
+    public void iniciar() {
+        hilo.start();
     }
 
     @Override

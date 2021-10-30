@@ -17,7 +17,7 @@ public abstract class AssemblerTemplate extends Tarea {
 
     @Override
     public final void procesar() {
-        Map<Integer, Mensaje[]> fragmentos = new HashMap<>();
+        Map<Long, Mensaje[]> fragmentos = new HashMap<>();
         Buffer salida = salidas.get(0);
         for (int i = 0; i < entradas.size(); i++) {
             for (Iterator<Mensaje> iterator = entradas.get(i).getIterator(); iterator.hasNext();) {
@@ -30,7 +30,7 @@ public abstract class AssemblerTemplate extends Tarea {
                 lista[i] = mensaje;
             }
         }
-        for (Map.Entry<Integer, Mensaje[]> fragmento : fragmentos.entrySet()) {
+        for (Map.Entry<Long, Mensaje[]> fragmento : fragmentos.entrySet()) {
             Mensaje[] mensajes = fragmento.getValue();
             boolean completo = true;
             int i = 0;

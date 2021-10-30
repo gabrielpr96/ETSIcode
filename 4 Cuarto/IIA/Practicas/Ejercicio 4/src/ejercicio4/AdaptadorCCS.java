@@ -1,15 +1,15 @@
-package ejercicio3;
+package ejercicio4;
 
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import java.util.Scanner;
 
-public class AdaptadorCRM2Entrada extends Adaptador {
+public class AdaptadorCCS extends Adaptador {
 
     private final Thread watcher;
 
-    public AdaptadorCRM2Entrada() {
+    public AdaptadorCCS() {
         watcher = new Thread() {
             @Override
             public void run() {

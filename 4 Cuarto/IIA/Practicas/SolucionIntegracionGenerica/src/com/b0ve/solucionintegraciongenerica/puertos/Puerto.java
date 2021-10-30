@@ -1,6 +1,5 @@
 package com.b0ve.solucionintegraciongenerica.puertos;
 
-import com.b0ve.solucionintegraciongenerica.tareas.Avisable;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
@@ -35,5 +34,9 @@ public class Puerto extends Tarea {
     public void enviar(Mensaje m) {
         Buffer salida = salidas.get(0);
         salida.push(m);
+    }
+
+    public Adaptador getAdaptador() {
+        return adaptador;
     }
 }

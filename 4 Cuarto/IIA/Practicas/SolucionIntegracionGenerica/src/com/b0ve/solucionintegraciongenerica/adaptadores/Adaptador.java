@@ -22,5 +22,6 @@ public abstract class Adaptador {
         }
     }
 
-    public abstract void detener();
+    public void detener(){}
+    public void iniciar(){}
 }

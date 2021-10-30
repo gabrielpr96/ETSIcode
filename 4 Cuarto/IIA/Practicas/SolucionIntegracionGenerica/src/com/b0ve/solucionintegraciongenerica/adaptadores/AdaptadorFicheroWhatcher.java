@@ -61,6 +61,7 @@ public class AdaptadorFicheroWhatcher extends Adaptador {
         }
     }
 
+    @Override
     public void iniciar() {
         if (watcher != null) {
             watcher.start();

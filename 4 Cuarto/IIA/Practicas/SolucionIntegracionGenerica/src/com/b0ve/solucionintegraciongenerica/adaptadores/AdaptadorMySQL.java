@@ -16,21 +16,21 @@ import org.w3c.dom.Document;
 public class AdaptadorMySQL extends Adaptador {
 
     private Connection conn;
+    private final String ip, db, user, pass;
+    private final int puerto;
 
     public AdaptadorMySQL(String ip, int puerto, String db, String user, String pass) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://"+ip+":"+puerto+"/"+db+"", user, pass);
-        } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-            conn = null;
-        }
+        this.ip = ip;
+        this.puerto = puerto;
+        this.db = db;
+        this.user = user;
+        this.pass = pass;
     }
 
     @Override
     public void enviarApp(Mensaje m) {
         //TODO: <sql>SELECT * FROM `cafe`</sql>
-        String sql = m.evaluateXPath("/sql").item(0).getTextContent();
+        String sql = m.evaluateXPathString("/sql");
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -44,8 +44,19 @@ public class AdaptadorMySQL extends Adaptador {
     }
 
     @Override
+    public void iniciar() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + puerto + "/" + db + "", user, pass);
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+            conn = null;
+        }
+    }
+
+    @Override
     public void detener() {
-        if(conn != null) try {
+        try {
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(AdaptadorMySQL.class.getName()).log(Level.SEVERE, null, ex);

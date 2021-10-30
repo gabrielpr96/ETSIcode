@@ -9,8 +9,4 @@ public class AdaptadorCRM2Salida extends Adaptador {
     public void enviarApp(Mensaje m) {
         System.out.println("CAMBIO: "+m.getBody());
     }
-
-    @Override
-    public void detener() {
-    }
 }

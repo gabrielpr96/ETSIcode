@@ -15,6 +15,7 @@ import java.util.List;
 
 public final class Proceso {
 
+    private final boolean debug;
     private final List<Tarea> tareas;
     private final List<Thread> hilos;
 
@@ -36,16 +37,24 @@ public final class Proceso {
         DEBUG
     }
 
-    public Proceso() {
+    public Proceso(){
+        this(false);
+    }
+    public Proceso(boolean debug) {
+        this.debug = debug;
         this.tareas = new ArrayList<>();
         this.hilos = new ArrayList<>();
     }
 
     public void ejecutar() {
-        for (int i = 0; i < tareas.size(); i++) {
-            Thread hilo = new Thread(tareas.get(i));
+        for (Tarea tarea : tareas) {
+            Thread hilo = new Thread(tarea);
             hilos.add(hilo);
             hilo.start();
+            if(tarea instanceof Puerto){
+                ((Puerto) tarea).getAdaptador().iniciar();
+            }
+            tarea.setProceso(this);
         }
     }
 
@@ -139,6 +148,12 @@ public final class Proceso {
     public void validar() throws ConfigurationException{
         for (Tarea tarea : tareas) {
             tarea.validar();
+        }
+    }
+    
+    public void debugLog(String log){
+        if(debug){
+            System.out.println("DEBUG: "+log);
         }
     }
 }

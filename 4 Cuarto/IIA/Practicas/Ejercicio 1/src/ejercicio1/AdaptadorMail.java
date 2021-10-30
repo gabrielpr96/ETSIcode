@@ -13,8 +13,4 @@ public class AdaptadorMail extends Adaptador {
         String nota = m.evaluateXPathString("/alumno/nota");
         System.out.println("Enviar email ("+email+"): Has sacado un "+nota+" en la asignatura "+asignatura+". "+id);
     }
-
-    @Override
-    public void detener() {
-    }
 }

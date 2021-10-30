@@ -1,5 +1,6 @@
 package com.b0ve.solucionintegraciongenerica.tareas;
 
+import com.b0ve.solucionintegraciongenerica.utils.Proceso;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.excepciones.ConfigurationException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.concurrent.Semaphore;
 
 abstract public class Tarea implements Runnable, Avisable{
 
+    private Proceso proceso;
     protected final List<Buffer> entradas, salidas;
     private final Semaphore s;
     protected final int maxEntradas, maxSalidas;
@@ -56,6 +58,13 @@ abstract public class Tarea implements Runnable, Avisable{
     public void validar() throws ConfigurationException{
         if(maxEntradas != 0 && this.entradas.size() > maxEntradas) throw new ConfigurationException("Error de multiplicidad entradas");
         if(maxSalidas != 0 && this.salidas.size() > maxSalidas) throw new ConfigurationException("Error de multiplicidad salidas");
+    }
+    
+    public void setProceso(Proceso p){
+        proceso = p;
+    }
+    protected void debugLog(String log){
+        proceso.debugLog(log);
     }
 
 }

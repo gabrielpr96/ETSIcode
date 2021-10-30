@@ -77,12 +77,7 @@ public class Cafe {
         
         p.validar();
         p.ejecutar();
-        
-        comandas.iniciar();
-        camarero.iniciar();
-        
         p.esperar();
-        System.out.println("Terminado");
     }
     
 }

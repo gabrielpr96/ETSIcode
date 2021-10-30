@@ -9,7 +9,7 @@ import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNot
 
 public class Ejercicio1 {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
         Proceso p = new Proceso();
         
         AdaptadorGMS aGMS = new AdaptadorGMS();
@@ -46,7 +46,7 @@ public class Ejercicio1 {
         Tarea translator2 = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
         "    <xsl:template match=\"/alumno\">\n" +
         "        <sql>\n" +
-        "            SELECT `Email`, `Telefono` FROM `Alumnos` WHERE `ID` = '<xsl:value-of select=\"id\"/>'\n" +
+        "            SELECT `Email`, `Telefono` FROM `alumnos` WHERE `ID` = '<xsl:value-of select=\"id\"/>'\n" +
         "        </sql>\n" +
         "    </xsl:template>\n" +
         "</xsl:stylesheet>");
@@ -78,11 +78,9 @@ public class Ejercicio1 {
         p.encadenar(replicator2, filter);
         p.encadenar(filter, pSMS);
         
-        aGMS.iniciar();
-        
+        p.validar();
         p.ejecutar();
         p.esperar();
-        
     }
     
 }

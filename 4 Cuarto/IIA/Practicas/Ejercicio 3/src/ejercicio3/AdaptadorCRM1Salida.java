@@ -2,11 +2,8 @@ package ejercicio3;
 
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,9 +25,5 @@ public class AdaptadorCRM1Salida extends Adaptador {
         } catch (IOException ex) {
             Logger.getLogger(AdaptadorCRM1Salida.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void detener() {
     }
 }

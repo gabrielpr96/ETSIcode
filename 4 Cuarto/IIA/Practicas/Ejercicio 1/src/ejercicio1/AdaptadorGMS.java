@@ -27,16 +27,16 @@ public class AdaptadorGMS extends Adaptador {
     }
 
     @Override
-    public void detener() {
-        if (watcher != null) {
-            watcher.interrupt();
-        }
-    }
-
     public void iniciar() {
         if (watcher != null) {
             watcher.start();
         }
     }
 
+    @Override
+    public void detener() {
+        if (watcher != null) {
+            watcher.interrupt();
+        }
+    }
 }

@@ -8,12 +8,6 @@ import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class Ejercicio3 {
 
@@ -75,10 +69,7 @@ public class Ejercicio3 {
         p.encadenar(filterCrm2, pCrm2Out);
         p.encadenar(filterCrm3, pCrm3Out);
 
-        crm1In.iniciar();
-        crm2In.iniciar();
-        crm3In.iniciar();
-
+        p.validar();
         p.ejecutar();
         p.esperar();
     }

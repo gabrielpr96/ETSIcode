@@ -17,7 +17,7 @@ public abstract class AggregatorTemplate extends Tarea {
 
     @Override
     public final void procesar() {
-        Map<Integer, List<Mensaje>> fragmentos = new HashMap<>();
+        Map<Long, List<Mensaje>> fragmentos = new HashMap<>();
         Buffer salida = salidas.get(0);
         Buffer entrada = entradas.get(0);
         for (Iterator<Mensaje> iterator = entrada.getIterator(); iterator.hasNext();) {
@@ -29,7 +29,7 @@ public abstract class AggregatorTemplate extends Tarea {
             }
             lista.add(mensaje);
         }
-        for (Map.Entry<Integer, List<Mensaje>> fragmento : fragmentos.entrySet()) {
+        for (Map.Entry<Long, List<Mensaje>> fragmento : fragmentos.entrySet()) {
             List<Mensaje> mensajes = fragmento.getValue();
             if (mensajes.get(0).getSequenceSize() == mensajes.size()) {
                 for (Mensaje mensaje : mensajes) {

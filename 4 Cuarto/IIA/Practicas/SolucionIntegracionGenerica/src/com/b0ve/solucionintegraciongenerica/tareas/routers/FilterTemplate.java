@@ -18,6 +18,8 @@ public abstract class FilterTemplate extends Tarea {
             Mensaje mensaje = entrada.retrive();
             if (comprobar(mensaje)) {
                 salida.push(mensaje);
+            } else {
+                debugLog("Filtro elimino: " + mensaje.toString());
             }
         }
     }

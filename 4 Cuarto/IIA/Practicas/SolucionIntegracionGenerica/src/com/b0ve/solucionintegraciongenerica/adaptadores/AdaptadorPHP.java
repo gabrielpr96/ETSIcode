@@ -1,6 +1,5 @@
 package com.b0ve.solucionintegraciongenerica.adaptadores;
 
-import com.b0ve.solucionintegraciongenerica.utils.JDBCUtil;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,16 +10,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import org.w3c.dom.Document;
 import org.json.JSONObject;
 import org.json.XML;
 import org.json.JSONException;

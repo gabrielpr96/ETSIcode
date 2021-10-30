@@ -27,12 +27,13 @@ import org.xml.sax.SAXException;
 
 public class Mensaje {
 
-    private final int ID, sequenceID, sequenceSize;
+    private final long ID, sequenceID;
+    private final int sequenceSize;
     private int correlationID;
     private String body;
     private static int counter = 0;
 
-    public Mensaje(int ID, int correlationID, String body, int sequenceID, int sequenceSize) {
+    public Mensaje(long ID, int correlationID, String body, long sequenceID, int sequenceSize) {
         this.ID = ID;
         this.correlationID = correlationID;
         this.body = body;
@@ -70,7 +71,7 @@ public class Mensaje {
         this(counter++, m.correlationID, m.body, m.sequenceID, m.sequenceSize);
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
@@ -82,7 +83,7 @@ public class Mensaje {
         return body;
     }
 
-    public int getSequenceID() {
+    public long getSequenceID() {
         return sequenceID;
     }
 

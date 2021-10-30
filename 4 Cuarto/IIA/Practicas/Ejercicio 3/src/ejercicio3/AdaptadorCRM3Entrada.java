@@ -124,6 +124,13 @@ public class AdaptadorCRM3Entrada extends Adaptador {
     }
 
     @Override
+    public void iniciar() {
+        if (hilo != null) {
+            hilo.start();
+        }
+    }
+
+    @Override
     public void detener() {
         if (conn != null) try {
             conn.close();
@@ -132,12 +139,6 @@ public class AdaptadorCRM3Entrada extends Adaptador {
         }
         if (hilo != null) {
             hilo.interrupt();
-        }
-    }
-
-    public void iniciar() {
-        if (hilo != null) {
-            hilo.start();
         }
     }
     

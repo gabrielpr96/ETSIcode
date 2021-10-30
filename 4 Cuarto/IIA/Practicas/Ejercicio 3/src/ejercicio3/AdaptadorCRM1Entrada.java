@@ -12,9 +12,6 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class AdaptadorCRM1Entrada extends Adaptador {
@@ -50,16 +47,16 @@ public class AdaptadorCRM1Entrada extends Adaptador {
     }
 
     @Override
-    public void detener() {
-        if (watcher != null) {
-            watcher.interrupt();
-        }
-    }
-
     public void iniciar() {
         if (watcher != null) {
             watcher.start();
         }
     }
 
+    @Override
+    public void detener() {
+        if (watcher != null) {
+            watcher.interrupt();
+        }
+    }
 }
