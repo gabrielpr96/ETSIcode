@@ -21,7 +21,7 @@ public class TareaDebug extends Tarea {
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
             Mensaje mensaje = entrada.retrive();
-            System.out.println("DEBUGG: "+mensaje.getBody());
+            debugLog(mensaje.getBody());
             if(continuar){
                 Buffer salida = salidas.get(0);
                 salida.push(mensaje);

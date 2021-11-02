@@ -16,7 +16,7 @@ public class Ejercicio2 {
     public static void main(String[] args) throws Exception {
         Proceso p = new Proceso(true);
         
-        AdaptadorFicheroWhatcher aEMS1 = new AdaptadorFicheroWhatcher("C:\\Users\\borja\\Downloads\\ejercicio2\\in", null);
+        AdaptadorFicheroWhatcher aEMS1 = new AdaptadorFicheroWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio2\\in", null);
         AdaptadorBD aEMS2 = new AdaptadorBD();
         AdaptadorExchange aEMS3 = new AdaptadorExchange();
         AdaptadorEstimador aEstimador = new AdaptadorEstimador();

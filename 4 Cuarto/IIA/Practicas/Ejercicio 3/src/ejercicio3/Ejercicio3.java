@@ -10,14 +10,14 @@ import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 
 public class Ejercicio3 {
-
+//<cambios><cambio><fuente>CRM2</fuente><tipo>eliminar</tipo><datos><dni>40144663C</dni></datos></cambio></cambios>
     public static void main(String[] args) throws Exception {
         Proceso p = new Proceso();
 
-        AdaptadorCRM1Entrada crm1In = new AdaptadorCRM1Entrada("C:\\Users\\borja\\Downloads\\ejercicio3\\cambios");
+        AdaptadorCRM1Entrada crm1In = new AdaptadorCRM1Entrada("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio3\\cambios");
         AdaptadorCRM2Entrada crm2In = new AdaptadorCRM2Entrada();
         AdaptadorCRM3Entrada crm3In = new AdaptadorCRM3Entrada();
-        AdaptadorCRM1Salida crm1Out = new AdaptadorCRM1Salida("C:\\Users\\borja\\Downloads\\ejercicio3\\replicados");
+        AdaptadorCRM1Salida crm1Out = new AdaptadorCRM1Salida("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio3\\replicados");
         AdaptadorCRM2Salida crm2Out = new AdaptadorCRM2Salida();
         AdaptadorCRM3Salida crm3Out = new AdaptadorCRM3Salida(crm3In);
 

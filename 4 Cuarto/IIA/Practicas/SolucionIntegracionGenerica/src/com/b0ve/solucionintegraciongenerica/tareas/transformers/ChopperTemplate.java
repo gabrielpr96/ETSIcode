@@ -19,7 +19,7 @@ public abstract class ChopperTemplate extends Tarea {
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
             Mensaje mensaje = entrada.retrive();
-            if(mensaje.getSequenceSize() != 0) throw new ExecutionException("No se puede fragmentar un fragmento de mensaje");
+            //if(mensaje.getSequenceSize() != 0) throw new ExecutionException("No se puede fragmentar un fragmento de mensaje");
             String[] parts = split(mensaje);
             for (int i = 0; i < parts.length; i++) {
                 Mensaje parte = new Mensaje(parts[i], contador, parts.length);

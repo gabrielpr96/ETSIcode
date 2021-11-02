@@ -12,8 +12,8 @@ public class Cafe {
     public static void main(String[] args) throws Exception {
         Proceso p = new Proceso();
         
-        AdaptadorFicheroWhatcher comandas = new AdaptadorFicheroWhatcher("C:\\Users\\borja\\Downloads\\cafe\\comandas", null);
-        AdaptadorFicheroWhatcher camarero = new AdaptadorFicheroWhatcher(null, "C:\\Users\\borja\\Downloads\\cafe\\camarero");
+        AdaptadorFicheroWhatcher comandas = new AdaptadorFicheroWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\comandas", null);
+        AdaptadorFicheroWhatcher camarero = new AdaptadorFicheroWhatcher(null, "C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\camarero");
         AdaptadorMySQL barmanFrio = new AdaptadorMySQL("localhost", 3306, "cafe", "root", "");
         AdaptadorPHP barmanCaliente = new AdaptadorPHP("http://localhost/cafe/api.php");
         
