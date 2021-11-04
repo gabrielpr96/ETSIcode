@@ -17,6 +17,8 @@ public abstract class AggregatorTemplate extends Tarea {
 
     @Override
     public final void procesar() {
+        //Bloquear las nuevas entradas
+        lockPushes();
         Map<Long, List<Mensaje>> fragmentos = new HashMap<>();
         Buffer salida = salidas.get(0);
         Buffer entrada = entradas.get(0);
@@ -38,6 +40,8 @@ public abstract class AggregatorTemplate extends Tarea {
                 salida.push(new Mensaje(join(mensajes.toArray(new Mensaje[0]))));
             }
         }
+        //Desbloquear las nuevas entradas
+        unlockPushes();
     }
 
     protected abstract String join(Mensaje[] mensajes);

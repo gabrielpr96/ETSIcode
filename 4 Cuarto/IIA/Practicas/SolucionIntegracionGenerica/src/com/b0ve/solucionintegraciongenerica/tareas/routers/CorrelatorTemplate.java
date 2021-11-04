@@ -1,6 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.tareas.routers;
 
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,8 @@ public abstract class CorrelatorTemplate extends Tarea {
 
     @Override
     public final void procesar() {
+        //Bloquear las nuevas entradas
+        lockPushes();
         //Buscar en los mensajes del primer buffer, uno a uno en los otros buffers
         Map<Mensaje, List<Mensaje>> relacionados = new HashMap<>();
         for (Iterator<Mensaje> iteradorPrincipal = entradas.get(0).getIterator(); iteradorPrincipal.hasNext();) {
@@ -50,6 +53,8 @@ public abstract class CorrelatorTemplate extends Tarea {
                 }
             }
         }
+        //Desbloquear las nuevas entradas
+        unlockPushes();
         /*
         //Buscar en los mensajes del primer buffer, uno a uno en los otros buffers
         for (Iterator<Mensaje> iteradorPrincipal = entradas.get(0).getIterator(); iteradorPrincipal.hasNext();) {

@@ -13,10 +13,10 @@ import com.b0ve.solucionintegraciongenerica.tareas.transformers.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Proceso {
+public class Proceso {
 
     private final boolean debug;
-    private final List<Tarea> tareas;
+    protected final List<Tarea> tareas;
     private final List<Thread> hilos;
 
     public enum TipoTarea {
@@ -37,9 +37,10 @@ public final class Proceso {
         DEBUG
     }
 
-    public Proceso(){
+    public Proceso() {
         this(false);
     }
+
     public Proceso(boolean debug) {
         this.debug = debug;
         this.tareas = new ArrayList<>();
@@ -51,10 +52,9 @@ public final class Proceso {
             Thread hilo = new Thread(tarea);
             hilos.add(hilo);
             hilo.start();
-            if(tarea instanceof Puerto){
+            if (tarea instanceof Puerto) {
                 ((Puerto) tarea).getAdaptador().iniciar();
             }
-            tarea.setProceso(this);
         }
     }
 
@@ -67,6 +67,11 @@ public final class Proceso {
     public void terminar() {
         for (Thread hilo : hilos) {
             hilo.interrupt();
+        }
+        for (Tarea tarea : tareas) {
+            if (tarea instanceof Puerto) {
+                ((Puerto) tarea).getAdaptador().detener();
+            }
         }
     }
 
@@ -123,13 +128,14 @@ public final class Proceso {
                 tarea = null;
         }
         if (tarea != null) {
-            tareas.add(tarea);
+            addTarea(tarea);
         }
         return tarea;
     }
 
     public Tarea addTarea(Tarea tarea) {
         tareas.add(tarea);
+        tarea.setProceso(this);
         return tarea;
     }
 
@@ -145,15 +151,15 @@ public final class Proceso {
         t2.addEntrada(b);
     }
 
-    public void validar() throws ConfigurationException{
+    public void validar() throws ConfigurationException {
         for (Tarea tarea : tareas) {
             tarea.validar();
         }
     }
-    
-    public void debugLog(String log){
-        if(debug){
-            System.out.println("DEBUG: "+log);
+
+    public void debugLog(String log) {
+        if (debug) {
+            System.out.println("DEBUG: " + log);
         }
     }
 }

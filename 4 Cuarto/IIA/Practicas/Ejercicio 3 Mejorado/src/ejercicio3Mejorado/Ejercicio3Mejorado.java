@@ -15,7 +15,7 @@ import ejercicio3.AdaptadorCRM3Salida;
 
 public class Ejercicio3Mejorado {
 //<cambios><cambio><tipo>eliminar</tipo><datos><dni>40144663C</dni></datos></cambio></cambios>
-//<cambios><cambio><tipo>crear</tipo><datos><dni>40144663C</dni><nombre>Juan</nombre><direccion>Raul Cimas 5</direccion></datos></cambio></cambios>
+//<cambios><cambio><tipo>crear</tipo><datos><dni>40144664S</dni><nombre>Manolo</nombre><direccion>Alan Turing 2</direccion></datos></cambio></cambios>
 
     public static void main(String[] args) throws Exception {
         Proceso p = new Proceso(false);
@@ -34,7 +34,7 @@ public class Ejercicio3Mejorado {
         Puerto pCrm2Out = p.crearPuerto(crm2Out);
         Puerto pCrm3Out = p.crearPuerto(crm3Out);
 
-        Tarea translatorCrm1In = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Tarea translatorCrm1In = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
                 + "    <xsl:template match=\"/cambios\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:for-each-group select=\"cambio\" group-by=\"datos/dni\">\n"
@@ -88,7 +88,7 @@ public class Ejercicio3Mejorado {
         Tarea filterCrm1Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM1"));
         Tarea filterCrm2Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM2"));
         Tarea filterCrm3Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM3"));
-        Tarea translatorCrm1Out = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Tarea translatorCrm1Out = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
                 + "    <xsl:template match=\"/cambio\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:choose>\n"
@@ -127,7 +127,10 @@ public class Ejercicio3Mejorado {
         Tarea splitterCrm1Out = p.crearTarea(SPLITTER, "/cambios/cambio");
 
         p.encadenar(pCrm1In, translatorCrm1In);
-        p.encadenar(translatorCrm1In, splitterCrm1In);
+        Tarea debug = p.crearTarea(DEBUG, true);
+        p.encadenar(translatorCrm1In, debug);
+        p.encadenar(debug, splitterCrm1In);
+        //p.encadenar(translatorCrm1In, splitterCrm1In);
         p.encadenar(splitterCrm1In, enricherCrm1In);
         p.encadenar(pCrm2In, splitterCrm2In);
         p.encadenar(splitterCrm2In, enricherCrm2In);
@@ -141,9 +144,6 @@ public class Ejercicio3Mejorado {
         p.encadenar(replicator, filterCrm2Out);
         p.encadenar(replicator, filterCrm3Out);
         p.encadenar(filterCrm1Out, translatorCrm1Out);
-        //Tarea debug = p.crearTarea(DEBUG, true);
-        //p.encadenar(translatorCrm1Out, debug);
-        //p.encadenar(debug, splitterCrm1Out);
         p.encadenar(translatorCrm1Out, splitterCrm1Out);
         p.encadenar(splitterCrm1Out, pCrm1Out);
         p.encadenar(filterCrm2Out, pCrm2Out);

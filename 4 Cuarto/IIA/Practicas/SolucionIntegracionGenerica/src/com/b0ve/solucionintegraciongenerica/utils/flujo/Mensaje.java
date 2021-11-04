@@ -3,12 +3,13 @@ package com.b0ve.solucionintegraciongenerica.utils.flujo;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -18,6 +19,12 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.Xslt30Transformer;
+import net.sf.saxon.s9api.XsltCompiler;
+import net.sf.saxon.s9api.XsltExecutable;
 import org.atteo.xmlcombiner.XmlCombiner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -56,7 +63,7 @@ public class Mensaje {
     public Mensaje(Document body) throws TransformerException {
         this(serialiceXML(body));
     }
-    
+
     public Mensaje(String body) {
         this(counter, counter, body, 0, 0);
         counter++;
@@ -106,29 +113,34 @@ public class Mensaje {
             return null;
         }
     }
-    
+
     public String evaluateXPathString(String expresion) {
         NodeList res = evaluateXPath(expresion);
-        if(res == null) return null;
+        if (res == null) {
+            return null;
+        }
         return res.item(0).getTextContent();
     }
 
     public void transformBody(String style) {
         try {
-            TransformerFactory factory = TransformerFactory.newInstance();
             Source xslt = new StreamSource(new StringReader(style)); //El XLT con el formato
-            Transformer transformer = factory.newTransformer(xslt);
-
             Source text = new StreamSource(new StringReader(body)); //El XML con los datos
             StringWriter outWriter = new StringWriter();
-            StreamResult result = new StreamResult(outWriter);
-            transformer.transform(text, result);
+
+            Processor processor = new Processor(false);
+            XsltCompiler compiler = processor.newXsltCompiler();
+            XsltExecutable stylesheet = compiler.compile(xslt);
+            Serializer out = processor.newSerializer(outWriter);
+            out.setOutputProperty(Serializer.Property.METHOD, "xml");
+            out.setOutputProperty(Serializer.Property.INDENT, "no");
+            Xslt30Transformer transformer = stylesheet.load30();
+            transformer.transform(text, out);
+
             StringBuffer sb = outWriter.getBuffer();
             body = sb.toString();
-        } catch (TransformerConfigurationException ex) {
-            body = null;
-        } catch (TransformerException ex) {
-            body = null;
+        } catch (SaxonApiException ex) {
+            Logger.getLogger(Mensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -136,8 +148,6 @@ public class Mensaje {
     public String toString() {
         return "Mensaje{" + "ID=" + ID + ", sequenceID=" + sequenceID + ", sequenceSize=" + sequenceSize + ", correlationID=" + correlationID + ", body=" + body + '}';
     }
-
-    
 
     public static Document parseXML(String xml) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -157,6 +167,7 @@ public class Mensaje {
     public static NodeList evaluateXPath(String xml, String expresion) throws ParserConfigurationException, XPathExpressionException, SAXException, IOException {
         return evaluateXPath(parseXML(xml), expresion);
     }
+
     public static NodeList evaluateXPath(Document documento, String expresion) throws ParserConfigurationException, XPathExpressionException, SAXException, IOException {
         XPath xpath = XPathFactory.newInstance().newXPath();
         return (NodeList) xpath.evaluate(expresion, documento, XPathConstants.NODESET);

@@ -4,6 +4,7 @@ import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
+import com.b0ve.solucionintegraciongenerica.utils.ProcesoSync;
 
 public class Puerto extends Tarea {
 
@@ -17,17 +18,22 @@ public class Puerto extends Tarea {
 
     @Override
     public void procesar() {
-        Buffer entrada = entradas.get(0);
-        while (!entrada.empty()) {
-            Mensaje mensaje = entrada.retrive();
-            //TODO:Crear un hilo por cada peticion realizada
-            (new Thread() {
-                @Override
-                public void run() {
+        if (entradas.size() > 0) {
+            Buffer entrada = entradas.get(0);
+            while (!entrada.empty()) {
+                Mensaje mensaje = entrada.retrive();
+                //TODO:Crear un hilo por cada peticion realizada
+                if (proceso != null && proceso instanceof ProcesoSync) {
                     adaptador.enviarApp(mensaje);
+                } else {
+                    (new Thread() {
+                        @Override
+                        public void run() {
+                            adaptador.enviarApp(mensaje);
+                        }
+                    }).start();
                 }
-
-            }).start();
+            }
         }
     }
 

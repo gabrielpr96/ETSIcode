@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-abstract public class Tarea implements Runnable, Avisable{
+abstract public class Tarea implements Runnable, Avisable {
 
-    private Proceso proceso;
+    protected Proceso proceso;
     protected final List<Buffer> entradas, salidas;
     private final Semaphore s;
     protected final int maxEntradas, maxSalidas;
@@ -33,9 +33,9 @@ abstract public class Tarea implements Runnable, Avisable{
     public void addSalida(Buffer salida) {
         this.salidas.add(salida);
     }
-    
+
     @Override
-    public final void signalInput(){
+    public final void signalInput() {
         s.release();
     }
 
@@ -52,19 +52,37 @@ abstract public class Tarea implements Runnable, Avisable{
             System.out.println("Tarea detenida");
         }
     }
-    
+
     public abstract void procesar();
-    
-    public void validar() throws ConfigurationException{
-        if(maxEntradas != 0 && this.entradas.size() > maxEntradas) throw new ConfigurationException("Error de multiplicidad entradas");
-        if(maxSalidas != 0 && this.salidas.size() > maxSalidas) throw new ConfigurationException("Error de multiplicidad salidas");
+
+    public void validar() throws ConfigurationException {
+        if (maxEntradas != 0 && this.entradas.size() > maxEntradas) {
+            throw new ConfigurationException("Error de multiplicidad entradas");
+        }
+        if (maxSalidas != 0 && this.salidas.size() > maxSalidas) {
+            throw new ConfigurationException("Error de multiplicidad salidas");
+        }
     }
-    
-    public void setProceso(Proceso p){
+
+    public void setProceso(Proceso p) {
         proceso = p;
     }
-    protected void debugLog(String log){
-        proceso.debugLog(log);
+
+    protected void lockPushes() {
+        for (Buffer entrada : entradas) {
+            entrada.lockPushes();
+        }
+    }
+    protected void unlockPushes() {
+        for (Buffer entrada : entradas) {
+            entrada.unlockPushes();
+        }
+    }
+
+    protected void debugLog(String log) {
+        if (proceso != null) {
+            proceso.debugLog(log);
+        }
     }
 
 }

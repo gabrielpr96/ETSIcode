@@ -4,6 +4,7 @@ import com.b0ve.solucionintegraciongenerica.adaptadores.*;
 import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 import com.b0ve.solucionintegraciongenerica.utils.Proceso;
+import com.b0ve.solucionintegraciongenerica.utils.ProcesoSync;
 import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
 

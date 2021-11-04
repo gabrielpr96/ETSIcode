@@ -1,4 +1,4 @@
-function pinta_robot(x, y, theta, alpha)
+function pinta_robot_v2(x, y, theta, alpha)
     persistent SR_robot SR_rueda_izquierda SR_rueda_derecha  SR_cabeza SR_ojo_izq SR_ojo_der;
 
     %Esquina inferior izquierda (-1.5, -1.5) y tamaño anchura 3, altura 3 (Centrado)
