@@ -10,7 +10,7 @@ import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 
 public class Ejercicio3 {
-//<cambios><cambio><fuente>CRM2</fuente><tipo>eliminar</tipo><datos><dni>40144663C</dni></datos></cambio></cambios>
+//<cambios><cambio><fuente>CRM1</fuente><tipo>eliminar</tipo><datos><dni>40144663C</dni></datos></cambio></cambios>
     public static void main(String[] args) throws Exception {
         Proceso p = new Proceso();
 

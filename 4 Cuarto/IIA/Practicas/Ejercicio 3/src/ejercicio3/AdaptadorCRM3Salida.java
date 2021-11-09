@@ -54,8 +54,8 @@ public class AdaptadorCRM3Salida extends Adaptador {
                         stmt = conn.createStatement();
                         stmt.execute("INSERT INTO `Direcciones` (`Cliente`, `Direccion`) VALUES " + dirs);
                         stmt.close();
+                        adaptadorEntrada.addConocido(dni);
                     }
-                    adaptadorEntrada.addConocido(dni);
                 } else if (tipo.equals("eliminar")) {
                     Statement stmt = conn.createStatement();
                     stmt.execute("DELETE FROM `Clientes` WHERE `DNI` = '" + dni + "'");

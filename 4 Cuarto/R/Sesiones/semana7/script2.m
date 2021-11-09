@@ -25,20 +25,23 @@ error = [];
 velocidad = [];
 tstart = tic;
 tiempo_final = 10;
+delay = 2;
+periodo = 6;
+amplitud = 90;
+KP = 0.7;
 start(motor_cabeza);
-KP = 0.6;
 
 disp 'Pulse para salir';
 while (isempty(t) || (t(s) < tiempo_final) && (readTouch(touchSensor(robot,2)) == 0 ))
     s = s + 1;
     t(s) = toc(tstart);
     alpha(s) = readRotation(motor_cabeza);
-    referencia(s) = 90;
+    referencia(s) = signal_vf(t(s), delay, periodo, amplitud);
     error(s) = referencia(s) - alpha(s);
 
     % Controlador
-    velocidad(i) = error(i) * KP;
-    motor_cabeza.Speed = velocidad(i);
+    velocidad(s) = error(s) * KP;
+    motor_cabeza.Speed = velocidad(s);
 end
 
 %Dibujar los resultados
@@ -55,3 +58,6 @@ plot(t, error);
 plot(t, velocidad);
 title('Error + Velocidad vs Tiempo');
 hold off;
+
+motor_cabeza.Speed = 0;
+motor_cabeza.stop();

@@ -141,7 +141,7 @@ public class Proceso {
 
     public Puerto crearPuerto(Adaptador adaptador) {
         Puerto puerto = new Puerto(adaptador);
-        tareas.add(puerto);
+        addTarea(puerto);
         return puerto;
     }
 

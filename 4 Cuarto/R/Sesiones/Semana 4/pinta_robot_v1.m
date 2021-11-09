@@ -14,38 +14,38 @@ function pinta_robot_v1(x, y, theta, alpha)
 
     if isempty(SR_robot) || ~isvalid(SR_robot)
         SR_robot = hgtransform;
+        rectangle('Position', robot_size, 'Parent', SR_robot);
     end
-    rectangle('Position', robot_size, 'Parent', SR_robot);
     SR_robot.Matrix = makehgtform('translate', [x y 0], 'zrotate', theta);
     
     if isempty(SR_rueda_derecha) || ~isvalid(SR_rueda_derecha)
         SR_rueda_derecha = hgtransform('Parent', SR_robot);
+        rectangle('Position', rueda_size, 'Parent', SR_rueda_derecha);
     end
-    rectangle('Position', rueda_size, 'Parent', SR_rueda_derecha);
     SR_rueda_derecha.Matrix = makehgtform('translate', rueda_izquierda_pos);
     
     if isempty(SR_rueda_izquierda) || ~isvalid(SR_rueda_izquierda)
         SR_rueda_izquierda = hgtransform('Parent', SR_robot);
+        rectangle('Position', rueda_size, 'Parent', SR_rueda_izquierda);
     end
-    rectangle('Position', rueda_size, 'Parent', SR_rueda_izquierda);
     SR_rueda_izquierda.Matrix = makehgtform('translate', rueda_derecha_pos);
     
     if isempty(SR_cabeza) || ~isvalid(SR_cabeza)
         SR_cabeza = hgtransform('Parent', SR_robot);
+        rectangle('Position', cabeza_size, 'Parent', SR_cabeza);
     end
-    rectangle('Position', cabeza_size, 'Parent', SR_cabeza);
     SR_cabeza.Matrix = makehgtform('translate', cabeza_pos, 'zrotate', alpha);
 
     if isempty(SR_ojo_izq) || ~isvalid(SR_ojo_izq)
         SR_ojo_izq = hgtransform('Parent', SR_cabeza);
+        rectangle('Position', ojo_size, 'Parent', SR_ojo_izq, 'FaceColor', 'r');
     end
-    rectangle('Position', ojo_size, 'Parent', SR_ojo_izq, 'FaceColor', 'r');
     SR_ojo_izq.Matrix = makehgtform('translate', ojo_izq_pos);
 
     if isempty(SR_ojo_der) || ~isvalid(SR_ojo_der)
         SR_ojo_der = hgtransform('Parent', SR_cabeza);
+        rectangle('Position', ojo_size, 'Parent', SR_ojo_der, 'FaceColor', 'r');
     end
-    rectangle('Position', ojo_size, 'Parent', SR_ojo_der, 'FaceColor', 'r');
     SR_ojo_der.Matrix = makehgtform('translate', ojo_der_pos);
 
     axis([-10 10 -10 10]);

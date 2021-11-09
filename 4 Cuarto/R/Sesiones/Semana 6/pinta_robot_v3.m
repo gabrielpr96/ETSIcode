@@ -1,4 +1,4 @@
-function pinta_robot_v3(x, y, theta, alpha, distancia)
+function mapa = pinta_robot_v3(x, y, theta, alpha, distancia, mapa)
     persistent SR_robot SR_rueda_izquierda SR_rueda_derecha  SR_cabeza SR_ojo_izq SR_ojo_der;
 
     %Esquina inferior izquierda (-1.5, -1.5) y tamaño anchura 3, altura 3 (Centrado)
@@ -52,7 +52,8 @@ function pinta_robot_v3(x, y, theta, alpha, distancia)
 
     T = SR_robot.Matrix * SR_cabeza.Matrix;
     punto = T*[distancia, 0, 0, 1]';
-    d = animatedline(punto(1), punto(2), 'Marker','*', 'LineStyle','none');
+    mapa = [mapa; punto(1), punto(2)];
+    animatedline(mapa(:, 1), mapa(:, 2), 'Marker','*', 'LineStyle','none');
 
     drawnow;
 end

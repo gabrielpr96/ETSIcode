@@ -84,5 +84,10 @@ abstract public class Tarea implements Runnable, Avisable {
             proceso.debugLog(log);
         }
     }
+    
+    public void encadenar(Tarea tarea) throws ConfigurationException{
+        if(proceso == null) throw new ConfigurationException("Esta tarea no pertenece a ningun proceso, no se puede encadenar");
+        proceso.encadenar(this, tarea);
+    }
 
 }
