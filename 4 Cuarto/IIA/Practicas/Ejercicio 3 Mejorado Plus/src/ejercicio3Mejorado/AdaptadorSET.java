@@ -24,7 +24,7 @@ class AdaptadorSET extends Adaptador {
         if (accion.equals("crear")) {
             resultado = set.contains(valor);
             if (!resultado) {
-                set.add(accion);
+                set.add(valor);
             }
         } else if (accion.equals("eliminar")) {
             resultado = !set.contains(valor);
