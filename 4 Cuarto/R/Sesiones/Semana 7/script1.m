@@ -25,7 +25,7 @@ error = [];
 velocidad = [];
 tstart = tic;
 tiempo_final = 10;
-KP = 10;
+KP = 0.6;
 start(motor_cabeza);
 
 disp 'Pulse para salir';
@@ -43,6 +43,7 @@ while (isempty(t) || (t(s) < tiempo_final) && (readTouch(touchSensor(robot,2)) =
     elseif velocidad(s) < -100
             velocidad(s) = -100;
     end
+    velocidad(s) = int8(velocidad(s));
     motor_cabeza.Speed = velocidad(s);
 end
 

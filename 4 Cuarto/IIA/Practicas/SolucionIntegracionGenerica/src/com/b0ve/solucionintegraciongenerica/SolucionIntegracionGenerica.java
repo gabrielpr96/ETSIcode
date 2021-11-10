@@ -4,7 +4,6 @@ import com.b0ve.solucionintegraciongenerica.utils.excepciones.ConfigurationExcep
 import com.b0ve.solucionintegraciongenerica.adaptadores.*;
 import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.test.Tests;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.utils.Proceso;
 import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
@@ -22,9 +21,6 @@ public class SolucionIntegracionGenerica {
     */
     
     public static void main(String[] args) throws Exception {
-        Tests.test();
-        
-        
         /*
         Proceso pross = new Proceso();
         AdaptadorFicheroWhatcher adapterFichero = new AdaptadorFicheroWhatcher("C:\\Users\\borja\\Downloads\\watch", "C:\\Users\\borja\\Downloads\\salida");

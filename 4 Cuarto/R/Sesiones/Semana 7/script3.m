@@ -48,6 +48,7 @@ while (isempty(t) || (t(s) < tiempo_final) && (readTouch(touchSensor(robot,2)) =
     elseif velocidad(s) < -100
             velocidad(s) = -100;
     end
+    velocidad(s) = int8(velocidad(s));
     motor_cabeza.Speed = velocidad(s);
 end
 
