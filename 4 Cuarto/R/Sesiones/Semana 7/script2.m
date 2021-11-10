@@ -28,7 +28,7 @@ tiempo_final = 10;
 delay = 2;
 periodo = 6;
 amplitud = 90;
-KP = 0.7;
+KP = 0.6;
 start(motor_cabeza);
 
 disp 'Pulse para salir';
@@ -41,6 +41,11 @@ while (isempty(t) || (t(s) < tiempo_final) && (readTouch(touchSensor(robot,2)) =
 
     % Controlador
     velocidad(s) = error(s) * KP;
+    if velocidad(s) > 100
+        velocidad(s) = 100;
+    elseif velocidad(s) < -100
+            velocidad(s) = -100;
+    end
     motor_cabeza.Speed = velocidad(s);
 end
 

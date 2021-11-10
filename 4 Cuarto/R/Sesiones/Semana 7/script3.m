@@ -5,9 +5,11 @@ cla;
 % Definir motor
 robot = legoev3('USB');
 motor_cabeza = motor(robot,'A');
+motor_derecha = motor(robot,'C');
 
 % Reset Encoder
 resetRotation(motor_cabeza);
+resetRotation(motor_derecha);
 
 % Esperar para iniciar el script
 disp 'Pulsa para comenzar'
@@ -25,7 +27,10 @@ error = [];
 velocidad = [];
 tstart = tic;
 tiempo_final = 10;
-KP = 10;
+delay = 2;
+periodo = 6;
+amplitud = 90;
+KP = 0.6;
 start(motor_cabeza);
 
 disp 'Pulse para salir';
@@ -33,7 +38,7 @@ while (isempty(t) || (t(s) < tiempo_final) && (readTouch(touchSensor(robot,2)) =
     s = s + 1;
     t(s) = toc(tstart);
     alpha(s) = readRotation(motor_cabeza);
-    referencia(s) = 90;
+    referencia(s) = readRotation(motor_derecha);
     error(s) = referencia(s) - alpha(s);
 
     % Controlador
