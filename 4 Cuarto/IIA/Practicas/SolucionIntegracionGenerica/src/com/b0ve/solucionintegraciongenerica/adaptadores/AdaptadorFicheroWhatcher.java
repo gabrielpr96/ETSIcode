@@ -8,6 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.xml.sax.SAXException;
 
 public class AdaptadorFicheroWhatcher extends Adaptador {
 
@@ -32,7 +35,7 @@ public class AdaptadorFicheroWhatcher extends Adaptador {
                             }
                             sleep(1000);
                         }
-                    } catch (InterruptedException | IOException ex) {
+                    } catch (InterruptedException | IOException | ParserConfigurationException | SAXException ex) {
                         Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -47,7 +50,7 @@ public class AdaptadorFicheroWhatcher extends Adaptador {
         FileWriter myWriter = null;
         try {
             myWriter = new FileWriter(destdir + "/" + m.getID() + ".xml");
-            myWriter.write(m.getBody());
+            myWriter.write(m.getBodyString());
             myWriter.close();
         } catch (IOException ex) {
             Logger.getLogger(AdaptadorFicheroWhatcher.class.getName()).log(Level.SEVERE, null, ex);

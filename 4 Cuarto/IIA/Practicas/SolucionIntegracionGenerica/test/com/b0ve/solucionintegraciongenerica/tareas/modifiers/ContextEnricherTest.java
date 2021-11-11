@@ -7,6 +7,7 @@ package com.b0ve.solucionintegraciongenerica.tareas.modifiers;
 
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -22,8 +23,8 @@ public class ContextEnricherTest {
 
     @Test
     public void testContextEnricher1() throws ParserConfigurationException, XPathExpressionException, SAXException, IOException {
-        Mensaje m1 = new Mensaje(0, 0, "<pelicula><titulo>Crimen Ferpecto</titulo></pelicula>"),
-                m2 = new Mensaje(0, 0, "<pelicula><precio>10.5</precio></pelicula>");
+        Mensaje m1 = newMensaje(0, 0, "<pelicula><titulo>Crimen Ferpecto</titulo></pelicula>"),
+                m2 = newMensaje(0, 0, "<pelicula><precio>10.5</precio></pelicula>");
 
         ContextEnricher enricher = new ContextEnricher();
         Buffer in1 = new Buffer(null);

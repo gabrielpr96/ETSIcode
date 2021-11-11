@@ -20,7 +20,7 @@ public class AdaptadorCRM1Salida extends Adaptador {
         FileWriter myWriter = null;
         try {
             myWriter = new FileWriter(dir + "/" + m.getID() + ".xml");
-            myWriter.write(m.getBody());
+            myWriter.write(m.getBodyString());
             myWriter.close();
         } catch (IOException ex) {
             Logger.getLogger(AdaptadorCRM1Salida.class.getName()).log(Level.SEVERE, null, ex);

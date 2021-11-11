@@ -23,7 +23,7 @@ public final class Aggregator extends AggregatorTemplate {
     }
 
     @Override
-    protected String join(Mensaje[] mensajes) {
+    protected Document join(Mensaje[] mensajes) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dbf.newDocumentBuilder();
@@ -48,12 +48,12 @@ public final class Aggregator extends AggregatorTemplate {
                 doc.appendChild(appendPoint);
             }
             for (Mensaje mensaje : mensajes) {
-                Node newChild = Mensaje.document2node(Mensaje.parseXML(mensaje.getBody()));
+                Node newChild = Mensaje.document2node(mensaje.getBody());
                 Node imported = doc.importNode(newChild, true);
                 appendPoint.appendChild(imported);
             }
-            return Mensaje.serialiceXML(doc);
-        } catch (ParserConfigurationException | TransformerException | SAXException | IOException ex) {
+            return doc;
+        } catch (ParserConfigurationException  ex) {
             Logger.getLogger(Aggregator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }

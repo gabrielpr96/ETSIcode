@@ -7,6 +7,7 @@ package com.b0ve.solucionintegraciongenerica.tareas.routers;
 
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -18,7 +19,7 @@ public class ReplicatorTest {
 
     @Test
     public void testReplicator1() {
-        Mensaje m1 = new Mensaje(0, 0, "<cid>0</cid>");
+        Mensaje m1 = newMensaje(0, 0, "<cid>0</cid>");
 
         Replicator replicator = new Replicator();
         Buffer in1 = new Buffer(null);

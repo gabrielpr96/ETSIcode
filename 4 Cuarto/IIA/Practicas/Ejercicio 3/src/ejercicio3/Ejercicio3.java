@@ -8,6 +8,7 @@ import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
 
 public class Ejercicio3 {
 //<cambios><cambio><fuente>CRM1</fuente><tipo>eliminar</tipo><datos><dni>40144663C</dni></datos></cambio></cambios>
@@ -75,7 +76,7 @@ public class Ejercicio3 {
     }
 
     private static void test1() throws Exception {
-        Mensaje m1 = new Mensaje(0, 0, "<cambios>\n"
+        Mensaje m1 = newMensaje(0, 0, "<cambios>\n"
                 + "	<cambio>\n"
                 + "		<tipo>agregar</tipo>\n"
                 + "		<fuente>CRM1</fuente>\n"

@@ -3,6 +3,7 @@ package ejercicio3;
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 public class AdaptadorCRM3Entrada extends Adaptador {
 
@@ -69,7 +71,7 @@ public class AdaptadorCRM3Entrada extends Adaptador {
                                 }
                             }
                             sleep(1000);
-                        } catch (InterruptedException | SQLException | ParserConfigurationException | TransformerException ex) {
+                        } catch (InterruptedException | SQLException | ParserConfigurationException | TransformerException | SAXException | IOException ex) {
                             Logger.getLogger(AdaptadorCRM3Entrada.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }

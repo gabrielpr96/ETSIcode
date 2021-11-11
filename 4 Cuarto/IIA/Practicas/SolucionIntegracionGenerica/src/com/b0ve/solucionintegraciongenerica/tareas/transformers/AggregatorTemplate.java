@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.w3c.dom.Document;
 
 public abstract class AggregatorTemplate extends Tarea {
 
@@ -24,16 +25,16 @@ public abstract class AggregatorTemplate extends Tarea {
         Buffer entrada = entradas.get(0);
         for (Iterator<Mensaje> iterator = entrada.getIterator(); iterator.hasNext();) {
             Mensaje mensaje = iterator.next();
-            List<Mensaje> lista = fragmentos.get(mensaje.getSequenceID());
+            List<Mensaje> lista = fragmentos.get(mensaje.getFragmentID());
             if (lista == null) {
                 lista = new ArrayList<>();
-                fragmentos.put(mensaje.getSequenceID(), lista);
+                fragmentos.put(mensaje.getFragmentID(), lista);
             }
             lista.add(mensaje);
         }
         for (Map.Entry<Long, List<Mensaje>> fragmento : fragmentos.entrySet()) {
             List<Mensaje> mensajes = fragmento.getValue();
-            if (mensajes.get(0).getSequenceSize() == mensajes.size()) {
+            if (mensajes.get(0).getFragmentSize()== mensajes.size()) {
                 for (Mensaje mensaje : mensajes) {
                     entrada.deleteMessage(mensaje);
                 }
@@ -44,6 +45,6 @@ public abstract class AggregatorTemplate extends Tarea {
         unlockPushes();
     }
 
-    protected abstract String join(Mensaje[] mensajes);
+    protected abstract Document join(Mensaje[] mensajes);
 
 }

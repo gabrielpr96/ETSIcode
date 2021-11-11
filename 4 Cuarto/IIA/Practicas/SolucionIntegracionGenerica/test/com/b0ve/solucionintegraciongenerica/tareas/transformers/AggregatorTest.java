@@ -7,6 +7,7 @@ package com.b0ve.solucionintegraciongenerica.tareas.transformers;
 
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -18,7 +19,7 @@ public class AggregatorTest {
 
     @Test
     public void testAggregator1() {
-        Mensaje m1 = new Mensaje(0, 0, "<libros>\n"
+        Mensaje m1 = newMensaje(0, 0, "<libros>\n"
                 + "	<libro>\n"
                 + "		<titulo>Robotica Vision y Control</titulo>\n"
                 + "		<precio>70</precio>\n"

@@ -24,7 +24,7 @@ public final class Assembler extends AssemblerTemplate {
     }
 
     @Override
-    protected String join(Mensaje[] mensajes) {
+    protected Document join(Mensaje[] mensajes) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dbf.newDocumentBuilder();
@@ -32,12 +32,12 @@ public final class Assembler extends AssemblerTemplate {
             Element root = doc.createElement(rootName);
             doc.appendChild(root);
             for (Mensaje mensaje : mensajes) {
-                Node newChild = Mensaje.document2node(Mensaje.parseXML(mensaje.getBody()));
+                Node newChild = Mensaje.document2node(mensaje.getBody());
                 Node imported = doc.importNode(newChild, true);
                 root.appendChild(imported);
             }
-            return Mensaje.serialiceXML(doc);
-        } catch (ParserConfigurationException | TransformerException | SAXException | IOException ex) {
+            return doc;
+        } catch (ParserConfigurationException ex) {
             Logger.getLogger(Assembler.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }

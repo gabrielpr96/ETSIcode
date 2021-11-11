@@ -4,6 +4,7 @@ import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 import com.b0ve.solucionintegraciongenerica.tareas.transformers.Splitter;
 import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.FragmentInfo;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -41,15 +42,21 @@ public class SplitterParticionado extends Tarea {
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
             Mensaje mensaje = entrada.retrive();
-            if (mensaje.getSequenceSize() != 0) {
+            if (mensaje.getFragmentSize() != 0) {
                 throw new ExecutionException("No se puede fragmentar un fragmento de mensaje");
             }
             Map<String, List<String>> parts = split(mensaje);
             for (Map.Entry<String, List<String>> entry : parts.entrySet()) {
                 List<String> mensajes = entry.getValue();
-                for (String doc: mensajes) {
-                    Mensaje parte = new Mensaje(doc, contador, mensajes.size());
-                    salida.push(parte);
+                for (String doc : mensajes) {
+                    Mensaje parte;
+                    try {
+                        parte = new Mensaje(doc);
+                        parte.addFragmentInfo(new FragmentInfo(contador, mensajes.size()));
+                        salida.push(parte);
+                    } catch (ParserConfigurationException | SAXException | IOException ex) {
+                        Logger.getLogger(SplitterParticionado.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 contador++;
             }
@@ -64,7 +71,7 @@ public class SplitterParticionado extends Tarea {
                 Document doc = Mensaje.node2document(lista.item(i));
                 String fragmento = Mensaje.evaluateXPath(doc, xpathParticion).item(0).getTextContent();
                 List<String> particion = divisiones.get(fragmento);
-                if(particion == null){
+                if (particion == null) {
                     particion = new ArrayList<>();
                     divisiones.put(fragmento, particion);
                 }

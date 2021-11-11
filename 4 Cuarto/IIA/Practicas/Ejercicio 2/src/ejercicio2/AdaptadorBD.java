@@ -70,13 +70,13 @@ public class AdaptadorBD extends Adaptador {
                                         eValor.setTextContent(rs.getString(2));
                                         root.appendChild(eValor);
 
-                                        Mensaje mensaje = new Mensaje(Mensaje.serialiceXML(doc));
+                                        Mensaje mensaje = new Mensaje(doc);
                                         enviarPuerto(mensaje);
                                     }
                                 }
                             }
                             sleep(1000);
-                        } catch (InterruptedException | SQLException | ParserConfigurationException | TransformerException ex) {
+                        } catch (InterruptedException | SQLException | ParserConfigurationException  ex) {
                             Logger.getLogger(AdaptadorBD.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }

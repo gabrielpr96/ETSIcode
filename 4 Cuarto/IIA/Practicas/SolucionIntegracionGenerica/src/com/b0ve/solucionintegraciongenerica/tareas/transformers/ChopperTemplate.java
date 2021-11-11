@@ -3,15 +3,13 @@ package com.b0ve.solucionintegraciongenerica.tareas.transformers;
 import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
 import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.flujo.FragmentInfo;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import org.w3c.dom.Document;
 
 public abstract class ChopperTemplate extends Tarea {
-
-    private int contador;
-    
     public ChopperTemplate() {
         super(1, 0);
-        contador = 0;
     }
 
     @Override
@@ -20,15 +18,17 @@ public abstract class ChopperTemplate extends Tarea {
         while (!entrada.empty()) {
             Mensaje mensaje = entrada.retrive();
             //if(mensaje.getSequenceSize() != 0) throw new ExecutionException("No se puede fragmentar un fragmento de mensaje");
-            String[] parts = split(mensaje);
+            Document[] parts = split(mensaje);
+            long fragmentID = FragmentInfo.uniqueID();
             for (int i = 0; i < parts.length; i++) {
-                Mensaje parte = new Mensaje(parts[i], contador, parts.length);
+                Mensaje parte = new Mensaje(parts[i]);
+                parte.addFragmentInfo(mensaje.getFragmentInfoStack());
+                parte.addFragmentInfo(new FragmentInfo(fragmentID, parts.length));
                 salidas.get(i).push(parte);
             }
-            contador++;
         }
     }
 
-    protected abstract String[] split(Mensaje mensaje);
+    protected abstract Document[] split(Mensaje mensaje);
 
 }

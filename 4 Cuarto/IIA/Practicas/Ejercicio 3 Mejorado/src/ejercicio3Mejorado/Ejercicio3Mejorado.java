@@ -68,19 +68,19 @@ public class Ejercicio3Mejorado {
         Tarea enricherCrm1In = p.addTarea(new Enricher() {
             @Override
             protected void enrich(Mensaje mensaje) throws Exception {
-                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), "<cambio><fuente>CRM1</fuente></cambio>"));
+                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), Mensaje.parseXML("<cambio><fuente>CRM1</fuente></cambio>")));
             }
         });
         Tarea enricherCrm2In = p.addTarea(new Enricher() {
             @Override
             protected void enrich(Mensaje mensaje) throws Exception {
-                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), "<cambio><fuente>CRM2</fuente></cambio>"));
+                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), Mensaje.parseXML("<cambio><fuente>CRM2</fuente></cambio>")));
             }
         });
         Tarea enricherCrm3In = p.addTarea(new Enricher() {
             @Override
             protected void enrich(Mensaje mensaje) throws Exception {
-                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), "<cambio><fuente>CRM3</fuente></cambio>"));
+                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), Mensaje.parseXML("<cambio><fuente>CRM3</fuente></cambio>")));
             }
         });
         Tarea merger = p.crearTarea(MERGER);

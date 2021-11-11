@@ -2,11 +2,14 @@ package ejercicio3Mejorado;
 
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import org.xml.sax.SAXException;
 
 class AdaptadorSET extends Adaptador {
 
@@ -34,8 +37,10 @@ class AdaptadorSET extends Adaptador {
         }
         System.out.println("Me preguntan por: " + accion + " " + valor + " le digo que " + resultado);
         try {
-            enviarPuerto(new Mensaje("<contenido>" + (resultado ? "true" : "false") + "</contenido>", m.getCorrelationID()));
-        } catch (TransformerException ex) {
+            Mensaje mensaje = new Mensaje("<contenido>" + (resultado ? "true" : "false") + "</contenido>");
+            mensaje.setCorrelationID(m.getCorrelationID());
+            enviarPuerto(mensaje);
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(AdaptadorSET.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

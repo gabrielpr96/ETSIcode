@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.w3c.dom.Document;
 
 public abstract class AssemblerTemplate extends Tarea {
 
@@ -22,10 +23,10 @@ public abstract class AssemblerTemplate extends Tarea {
         for (int i = 0; i < entradas.size(); i++) {
             for (Iterator<Mensaje> iterator = entradas.get(i).getIterator(); iterator.hasNext();) {
                 Mensaje mensaje = iterator.next();
-                Mensaje[] lista = fragmentos.get(mensaje.getSequenceID());
+                Mensaje[] lista = fragmentos.get(mensaje.getFragmentID());
                 if (lista == null) {
                     lista = new Mensaje[entradas.size()];
-                    fragmentos.put(mensaje.getSequenceID(), lista);
+                    fragmentos.put(mensaje.getFragmentID(), lista);
                 }
                 lista[i] = mensaje;
             }
@@ -50,6 +51,6 @@ public abstract class AssemblerTemplate extends Tarea {
         }
     }
 
-    protected abstract String join(Mensaje[] mensajes);
+    protected abstract Document join(Mensaje[] mensajes);
 
 }

@@ -12,10 +12,12 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.json.JSONException;
+import org.xml.sax.SAXException;
 
 public class AdaptadorPHP extends Adaptador {
 
@@ -29,13 +31,15 @@ public class AdaptadorPHP extends Adaptador {
     public void enviarApp(Mensaje m) {
         try {
             //System.out.println("Consulta PHP "+m.evaluateXPath("/call/nombre").item(0).getTextContent());
-            JSONObject xmlJSONObj = XML.toJSONObject(m.getBody());
+            JSONObject xmlJSONObj = XML.toJSONObject(m.getBodyString());
             String request = xmlJSONObj.toString(4);
             String response = request(request);
             JSONObject json = new JSONObject(response);
             String responseXML = XML.toString(json);
-            enviarPuerto(new Mensaje(responseXML, m.getCorrelationID()));
-        } catch (JSONException | TransformerException ex) {
+            Mensaje r = new Mensaje(responseXML);
+            r.setCorrelationID(r.getCorrelationID());
+            enviarPuerto(r);
+        } catch (JSONException | ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(AdaptadorPHP.class.getName()).log(Level.SEVERE, null, ex);
         }
 

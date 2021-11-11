@@ -7,6 +7,7 @@ package com.b0ve.solucionintegraciongenerica.tareas.modifiers;
 
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,21 +28,16 @@ public class SlimmerTemplateTest {
 
     @Test
     public void testSlimmerTemplate1() throws ParserConfigurationException, XPathExpressionException, SAXException, IOException {
-        Mensaje m1 = new Mensaje(0, 0, "<pelicula><titulo>Crimen Ferpecto</titulo><precio>10.5</precio></pelicula>");
+        Mensaje m1 = newMensaje(0, 0, "<pelicula><titulo>Crimen Ferpecto</titulo><precio>10.5</precio></pelicula>");
 
         SlimmerTemplate slimer = new SlimmerTemplate() {
             @Override
             protected void slim(Mensaje mensaje) {
-                try {
-                    Document xml = Mensaje.parseXML(mensaje.getBody());
-                    Node precio = xml.getElementsByTagName("precio").item(0);
-                    Node pelicula = xml.getElementsByTagName("pelicula").item(0);
-                    pelicula.removeChild(precio);
-                    mensaje.setBody(Mensaje.serialiceXML(xml));
-                } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
-                    ex.printStackTrace();
-                }
-
+                Document xml = mensaje.getBody();
+                Node precio = xml.getElementsByTagName("precio").item(0);
+                Node pelicula = xml.getElementsByTagName("pelicula").item(0);
+                pelicula.removeChild(precio);
+                mensaje.setBody(xml);
             }
         };
         Buffer in = new Buffer(null);

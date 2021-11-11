@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 public final class Splitter extends SplitterTemplate {
@@ -17,17 +18,17 @@ public final class Splitter extends SplitterTemplate {
     }
 
     @Override
-    protected String[] split(Mensaje mensaje) {
+    protected Document[] split(Mensaje mensaje) {
         try {
             NodeList lista = mensaje.evaluateXPath(xpath);
-            String[] partes = new String[lista.getLength()];
+            Document[] partes = new Document[lista.getLength()];
             for (int i = 0; i < lista.getLength(); i++) {
-                partes[i] = Mensaje.serialiceXML(Mensaje.node2document(lista.item(i)));
+                partes[i] = Mensaje.node2document(lista.item(i));
             }
             return partes;
-        } catch (TransformerException | ParserConfigurationException ex) {
+        } catch (ParserConfigurationException ex) {
             Logger.getLogger(Splitter.class.getName()).log(Level.SEVERE, null, ex);
-            return new String[0];
+            return new Document[0];
         }
     }
 

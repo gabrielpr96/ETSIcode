@@ -2,7 +2,12 @@ package com.b0ve.solucionintegraciongenerica.adaptadores;
 
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 public class AdaptadorTeclado extends Adaptador{
     private final Thread hilo;
@@ -15,7 +20,11 @@ public class AdaptadorTeclado extends Adaptador{
                 String texto = null;
                 do{
                     texto = es.nextLine();
-                    enviarPuerto(new Mensaje(texto));
+                    try {
+                        enviarPuerto(new Mensaje(texto));
+                    } catch (ParserConfigurationException | SAXException | IOException ex) {
+                        Logger.getLogger(AdaptadorTeclado.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }while(!texto.equals("salir") && !isInterrupted());
             }
         };

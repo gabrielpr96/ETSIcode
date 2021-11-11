@@ -3,7 +3,12 @@ package ejercicio2;
 import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
 import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 public class AdaptadorExchange extends Adaptador {
 
@@ -15,7 +20,11 @@ public class AdaptadorExchange extends Adaptador {
             public void run() {
                 Scanner s = new Scanner(System.in);
                 while (!isInterrupted()) {
-                    enviarPuerto(new Mensaje(s.nextLine()));
+                    try {
+                        enviarPuerto(new Mensaje(s.nextLine()));
+                    } catch (ParserConfigurationException | SAXException | IOException ex) {
+                        Logger.getLogger(AdaptadorExchange.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         };
