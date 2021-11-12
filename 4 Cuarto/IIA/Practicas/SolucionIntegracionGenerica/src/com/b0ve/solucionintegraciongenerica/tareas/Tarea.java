@@ -49,7 +49,7 @@ abstract public class Tarea implements Runnable, Avisable {
                 }
             }
         } catch (InterruptedException ex) {
-            System.out.println("Tarea detenida");
+            //System.out.println("Tarea detenida");
         }
     }
 

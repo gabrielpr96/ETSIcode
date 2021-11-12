@@ -8,6 +8,7 @@ package com.b0ve.solucionintegraciongenerica.tareas.transformers;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
 import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import java.util.Iterator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -56,6 +57,50 @@ public class AggregatorTest {
         assertNotNull(mid.retrive());
         assertNotNull(mid.retrive());
         assertNull(mid.retrive());
+    }
+    
+    @Test
+    public void testAggregator2() {
+        Mensaje m1 = newMensaje(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
+        
+        Splitter s1 = new Splitter("/a/b");
+        Buffer sin = new Buffer(null);
+        s1.addEntrada(sin);
+        Buffer smid = new Buffer(null);
+        s1.addSalida(smid);
+        Splitter s2 = new Splitter("/b/c");
+        s2.addEntrada(smid);
+        Buffer sout = new Buffer(null);
+        s2.addSalida(sout);
+        
+        Aggregator a2 = new Aggregator("b");
+        a2.addEntrada(sout);
+        Buffer amid = new Buffer(null);
+        a2.addSalida(amid);
+        Aggregator a1 = new Aggregator("a");
+        a1.addEntrada(amid);
+        Buffer aout = new Buffer(null);
+        a1.addSalida(aout);
+
+        sin.push(m1);
+        sin.push(new Mensaje(m1));
+
+        s1.procesar();
+        s2.procesar();
+        
+        Iterator<Mensaje> iter = sout.getIterator();
+        iter.next();
+        iter.next();
+        sout.deleteMessage(iter.next());
+        
+        a2.procesar();
+        a1.procesar();
+
+        assertTrue(aout.retrive().getBodyString().contains("<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>"));
+        assertTrue(aout.empty());
+        assertTrue(sout.empty());
+        assertTrue(amid.retrive().getBodyString().contains("<b><c>b1c1</c><c>b1c2</c></b>"));
+        assertNull(amid.retrive());
     }
 
 }

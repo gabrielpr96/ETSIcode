@@ -50,7 +50,41 @@ public class ChopperTest {
         assertTrue(out1.retrive().evaluateXPath("/libro").item(0).getTextContent().contains("Robotica Vision y Control"));
         assertTrue(out2.retrive().evaluateXPath("/libro").item(0).getTextContent().contains("Interspecies Reviewers"));
         assertTrue(out3.retrive().evaluateXPath("/libro").item(0).getTextContent().contains("No lunch break"));
+    }
+    
+    @Test
+    public void testChopper2() {
+        Mensaje m1 = newMensaje(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>");
+        Chopper c1 = new Chopper("/a/b");
+        Buffer in = new Buffer(null);
+        c1.addEntrada(in);
+        Buffer mid1 = new Buffer(null);
+        Buffer mid2 = new Buffer(null);
+        c1.addSalida(mid1);
+        c1.addSalida(mid2);
+        Chopper c2a = new Chopper("/b/c");
+        Chopper c2b = new Chopper("/b/c");
+        c2a.addEntrada(mid1);
+        c2b.addEntrada(mid2);
+        Buffer out1 = new Buffer(null);
+        Buffer out2 = new Buffer(null);
+        Buffer out3 = new Buffer(null);
+        Buffer out4 = new Buffer(null);
+        c2a.addSalida(out1);
+        c2a.addSalida(out2);
+        c2b.addSalida(out3);
+        c2b.addSalida(out4);
 
+        in.push(m1);
+
+        c1.procesar();
+        c2a.procesar();
+        c2b.procesar();
+
+        assertEquals(out1.retrive().evaluateXPath("/c").item(0).getTextContent(), "b1c1");
+        assertEquals(out2.retrive().evaluateXPath("/c").item(0).getTextContent(), "b1c2");
+        assertEquals(out3.retrive().evaluateXPath("/c").item(0).getTextContent(), "b2c1");
+        assertEquals(out4.retrive().evaluateXPath("/c").item(0).getTextContent(), "b2c2");
     }
 
 }

@@ -58,4 +58,9 @@ public final class Buffer {
             salida.signalInput();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Buffer{" + "mensajes=" + mensajes + ", reserva=" + reserva + '}';
+    }
 }

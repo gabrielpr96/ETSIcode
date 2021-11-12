@@ -48,4 +48,26 @@ public class SplitterTest {
         assertTrue(out.retrive().evaluateXPath("/libro").item(0).getTextContent().contains("No lunch break"));
     }
 
+    @Test
+    public void testSplitter2() {
+        Mensaje m1 = newMensaje(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
+        Splitter s1 = new Splitter("/a/b");
+        Buffer in = new Buffer(null);
+        s1.addEntrada(in);
+        Buffer mid = new Buffer(null);
+        s1.addSalida(mid);
+        Splitter s2 = new Splitter("/b/c");
+        s2.addEntrada(mid);
+        Buffer out = new Buffer(null);
+        s2.addSalida(out);
+
+        in.push(m1);
+
+        s1.procesar();
+        s2.procesar();
+
+        assertEquals(out.retrive().evaluateXPath("/c").item(0).getTextContent(), "b1c1");
+        assertEquals(out.retrive().evaluateXPath("/c").item(0).getTextContent(), "b1c2");
+        assertEquals(out.retrive().evaluateXPath("/c").item(0).getTextContent(), "b2c1");
+    }
 }

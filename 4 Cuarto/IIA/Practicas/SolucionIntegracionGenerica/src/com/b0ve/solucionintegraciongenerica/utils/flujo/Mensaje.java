@@ -62,9 +62,6 @@ public final class Mensaje {
 
     public Mensaje(Mensaje m) {
         this(counter++, m.correlationID, m.body);
-        for (Iterator<FragmentInfo> iterator = m.fragmentInfo.iterator(); iterator.hasNext();) {
-            addFragmentInfo(iterator.next());
-        }
         addFragmentInfo(m.getFragmentInfoStack());
     }
 

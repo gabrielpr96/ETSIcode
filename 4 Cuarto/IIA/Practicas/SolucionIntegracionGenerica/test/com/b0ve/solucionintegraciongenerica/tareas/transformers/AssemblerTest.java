@@ -63,5 +63,65 @@ public class AssemblerTest {
         assertNull(mid2.retrive());
         assertNotNull(mid3.retrive());
     }
+    
+    @Test
+    public void testAssembler2() {
+        Mensaje m1 = newMensaje(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>");
+        Chopper c1 = new Chopper("/a/b");
+        Buffer in = new Buffer(null);
+        c1.addEntrada(in);
+        Buffer cmid1 = new Buffer(null);
+        Buffer cmid2 = new Buffer(null);
+        c1.addSalida(cmid1);
+        c1.addSalida(cmid2);
+        Chopper c2a = new Chopper("/b/c");
+        Chopper c2b = new Chopper("/b/c");
+        c2a.addEntrada(cmid1);
+        c2b.addEntrada(cmid2);
+        Buffer cout1 = new Buffer(null);
+        Buffer cout2 = new Buffer(null);
+        Buffer cout3 = new Buffer(null);
+        Buffer cout4 = new Buffer(null);
+        c2a.addSalida(cout1);
+        c2a.addSalida(cout2);
+        c2b.addSalida(cout3);
+        c2b.addSalida(cout4);
+
+        Assembler a1a = new Assembler("b");
+        Assembler a1b = new Assembler("b");
+        a1a.addEntrada(cout1);
+        a1a.addEntrada(cout2);
+        a1b.addEntrada(cout3);
+        a1b.addEntrada(cout4);
+        Buffer amid1 = new Buffer(null);
+        Buffer amid2 = new Buffer(null);
+        a1a.addSalida(amid1);
+        a1b.addSalida(amid2);
+        Assembler a2 = new Assembler("a");
+        a2.addEntrada(amid1);
+        a2.addEntrada(amid2);
+        Buffer aout = new Buffer(null);
+        a2.addSalida(aout);
+
+        in.push(m1);
+        in.push(new Mensaje(m1));
+
+        c1.procesar();
+        c2a.procesar();
+        c2b.procesar();
+        cout4.retrive();
+        a1a.procesar();
+        a1b.procesar();
+        a2.procesar();
+
+        assertTrue(aout.retrive().getBodyString().contains("<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>"));
+        assertTrue(aout.empty());
+        assertTrue(cout1.empty());
+        assertTrue(cout2.empty());
+        assertFalse(cout3.empty());
+        assertTrue(cout4.empty());
+        assertFalse(amid1.empty());
+        assertTrue(amid2.empty());
+    }
 
 }

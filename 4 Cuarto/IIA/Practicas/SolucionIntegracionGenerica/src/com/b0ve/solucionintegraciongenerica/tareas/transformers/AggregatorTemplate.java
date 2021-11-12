@@ -38,7 +38,10 @@ public abstract class AggregatorTemplate extends Tarea {
                 for (Mensaje mensaje : mensajes) {
                     entrada.deleteMessage(mensaje);
                 }
-                salida.push(new Mensaje(join(mensajes.toArray(new Mensaje[0]))));
+                Mensaje mensaje = new Mensaje(join(mensajes.toArray(new Mensaje[0])));
+                mensajes.get(0).removeFragmentInfo();
+                mensaje.addFragmentInfo(mensajes.get(0).getFragmentInfoStack());
+                salida.push(mensaje);
             }
         }
         //Desbloquear las nuevas entradas
