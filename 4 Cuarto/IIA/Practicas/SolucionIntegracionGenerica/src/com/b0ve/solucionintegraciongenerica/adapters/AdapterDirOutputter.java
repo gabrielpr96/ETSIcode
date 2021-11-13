@@ -1,7 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.adapters;
 
-import com.b0ve.solucionintegraciongenerica.utils.Process;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;

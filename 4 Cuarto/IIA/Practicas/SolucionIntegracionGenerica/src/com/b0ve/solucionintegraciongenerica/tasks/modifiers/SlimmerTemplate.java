@@ -1,8 +1,8 @@
 package com.b0ve.solucionintegraciongenerica.tasks.modifiers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public abstract class SlimmerTemplate extends Task {
@@ -23,9 +23,4 @@ public abstract class SlimmerTemplate extends Task {
     }
 
     protected abstract void slim(Message m) throws SIGException;
-
-    public void procesar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

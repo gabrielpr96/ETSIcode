@@ -1,8 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.adapters;
 
-import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
+import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,14 +12,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
 import org.json.JSONObject;
 import org.json.XML;
-import org.json.JSONException;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 public class AdapterPHP extends Adapter {
 

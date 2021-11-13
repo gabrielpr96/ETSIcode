@@ -1,14 +1,14 @@
 package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.Task;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.FragmentInfo;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 
 public abstract class ChopperTemplate extends Task {
+
     public ChopperTemplate() {
         super(1, 0);
     }

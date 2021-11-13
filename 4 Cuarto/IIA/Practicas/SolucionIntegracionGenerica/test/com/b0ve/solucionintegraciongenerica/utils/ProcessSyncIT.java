@@ -24,17 +24,13 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.XSLTransformationException;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
+import org.junit.Test;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 /**
  *

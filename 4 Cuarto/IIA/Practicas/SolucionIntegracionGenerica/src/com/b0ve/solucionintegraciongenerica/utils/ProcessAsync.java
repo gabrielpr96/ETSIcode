@@ -5,15 +5,15 @@ import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProcessAsync extends Process{
+public class ProcessAsync extends Process {
 
     private final List<Thread> threads;
-    
+
     public ProcessAsync(boolean debug) {
         super(debug);
         this.threads = new ArrayList<>();
     }
-    
+
     public ProcessAsync() {
         this(false);
     }
@@ -36,7 +36,7 @@ public class ProcessAsync extends Process{
             hilo.join();
         }
     }
-    
+
     @Override
     public void shutdown() {
         for (Thread hilo : threads) {
@@ -48,5 +48,5 @@ public class ProcessAsync extends Process{
             }
         }
     }
-    
+
 }

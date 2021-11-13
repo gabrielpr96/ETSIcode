@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.b0ve.solucionintegraciongenerica.tareas.modifiers;
+package com.b0ve.solucionintegraciongenerica.tasks.modifiers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.modifiers.ContextEnricher;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
-import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.xml.sax.SAXException;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.xml.sax.SAXException;
 
 /**
  *

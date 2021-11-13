@@ -1,7 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.tasks.routers;
 
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public final class Correlator extends CorrelatorTemplate {
@@ -29,9 +29,9 @@ public final class Correlator extends CorrelatorTemplate {
     @Override
     public void validate() throws ConfigurationException {
         super.validate();
-        if(nInputs() != nOutputs()) throw new ConfigurationException("Correlator requires the same number of inputs and outputs", null, null);
+        if (nInputs() != nOutputs()) {
+            throw new ConfigurationException("Correlator requires the same number of inputs and outputs", null, null);
+        }
     }
-    
-    
 
 }

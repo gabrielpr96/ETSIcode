@@ -1,13 +1,11 @@
 package com.b0ve.solucionintegraciongenerica.ports;
 
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
-import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.ProcessSync;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class Port extends Task {
 

@@ -1,8 +1,8 @@
 package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public abstract class AggregatorTemplate extends Task {
         }
         for (Map.Entry<Long, List<Message>> fragment : fragments.entrySet()) {
             List<Message> messages = fragment.getValue();
-            if (messages.get(0).getFragmentSize()== messages.size()) {
+            if (messages.get(0).getFragmentSize() == messages.size()) {
                 for (Message mensaje : messages) {
                     input.deleteMessage(mensaje);
                 }

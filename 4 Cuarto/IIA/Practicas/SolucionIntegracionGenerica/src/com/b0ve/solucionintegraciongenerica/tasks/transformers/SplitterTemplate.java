@@ -1,14 +1,14 @@
 package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.Task;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.FragmentInfo;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 
 public abstract class SplitterTemplate extends Task {
+
     public SplitterTemplate() {
         super(1, 1);
     }
@@ -30,6 +30,6 @@ public abstract class SplitterTemplate extends Task {
         }
     }
 
-    protected abstract Document[] split(Message m) throws SIGException ;
+    protected abstract Document[] split(Message m) throws SIGException;
 
 }

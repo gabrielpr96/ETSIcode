@@ -1,9 +1,9 @@
 package com.b0ve.solucionintegraciongenerica.flow;
 
+import com.b0ve.solucionintegraciongenerica.tasks.Notifiable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import com.b0ve.solucionintegraciongenerica.tasks.Notifiable;
 
 public final class Buffer {
 

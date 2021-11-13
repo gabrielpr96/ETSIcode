@@ -7,10 +7,7 @@ import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
-import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 public abstract class Adapter {
 
@@ -23,7 +20,7 @@ public abstract class Adapter {
         this.port = puerto;
     }
 
-    public Document sendApp(Message m) throws SIGException{
+    public Document sendApp(Message m) throws SIGException {
         throw new ExecutionException("This port does not support sending direct messages to the app", null, null);
     }
 
@@ -42,10 +39,12 @@ public abstract class Adapter {
 
     public void iniciate() {
     }
-    
+
     public abstract PORTS getCompatiblePortType();
 
-    public void handleException(SIGException exception){
-        if(port != null) port.handleException(exception);
+    public void handleException(SIGException exception) {
+        if (port != null) {
+            port.handleException(exception);
+        }
     }
 }

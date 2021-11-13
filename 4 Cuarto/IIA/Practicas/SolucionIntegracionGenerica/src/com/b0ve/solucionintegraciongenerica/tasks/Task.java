@@ -1,7 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.tasks;
 
-import com.b0ve.solucionintegraciongenerica.utils.Process;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.util.ArrayList;
@@ -61,38 +61,47 @@ abstract public class Task implements Runnable, Notifiable {
     public abstract void process() throws SIGException;
 
     public void validate() throws ConfigurationException {
-        if(maxInputs == -1 && !inputs.isEmpty()){
-            throw new ConfigurationException("Input multiplicity error", "No inputs allowed, Actual: "+inputs.size(), null);
+        if (maxInputs == -1 && !inputs.isEmpty()) {
+            throw new ConfigurationException("Input multiplicity error", "No inputs allowed, Actual: " + inputs.size(), null);
         }
         if (maxInputs > 0 && inputs.size() > maxInputs) {
-            throw new ConfigurationException("Input multiplicity error", "Max: "+maxInputs+", Actual: "+inputs.size(), null);
+            throw new ConfigurationException("Input multiplicity error", "Max: " + maxInputs + ", Actual: " + inputs.size(), null);
         }
-        if(maxOutputs == -1 && !outputs.isEmpty()){
-            throw new ConfigurationException("Output multiplicity error", "No outputs allowed, Actual: "+outputs.size(), null);
+        if (maxOutputs == -1 && !outputs.isEmpty()) {
+            throw new ConfigurationException("Output multiplicity error", "No outputs allowed, Actual: " + outputs.size(), null);
         }
         if (maxOutputs > 0 && outputs.size() > maxOutputs) {
-            throw new ConfigurationException("Output multiplicity error", "Max: "+maxOutputs+", Actual: "+outputs.size(), null);
+            throw new ConfigurationException("Output multiplicity error", "Max: " + maxOutputs + ", Actual: " + outputs.size(), null);
         }
     }
-    
-    protected final Buffer input(int n) throws ConfigurationException{
-        if(inputs.size() <= n) throw new ConfigurationException("Input number "+n+" does not exist in this task", n, null);
+
+    protected final Buffer input(int n) throws ConfigurationException {
+        if (inputs.size() <= n) {
+            throw new ConfigurationException("Input number " + n + " does not exist in this task", n, null);
+        }
         return inputs.get(n);
     }
-    protected final boolean hasInputs(){
+
+    protected final boolean hasInputs() {
         return !inputs.isEmpty();
     }
-    protected final int nInputs(){
+
+    protected final int nInputs() {
         return inputs.size();
     }
-    protected final Buffer output(int n) throws ConfigurationException{
-        if(outputs.size() <= n) throw new ConfigurationException("Output number "+n+" does not exist in this task", n, null);
+
+    protected final Buffer output(int n) throws ConfigurationException {
+        if (outputs.size() <= n) {
+            throw new ConfigurationException("Output number " + n + " does not exist in this task", n, null);
+        }
         return outputs.get(n);
     }
-    protected final boolean hasOutputs(){
+
+    protected final boolean hasOutputs() {
         return !outputs.isEmpty();
     }
-    protected final int nOutputs(){
+
+    protected final int nOutputs() {
         return outputs.size();
     }
 
@@ -105,6 +114,7 @@ abstract public class Task implements Runnable, Notifiable {
             entrada.lockPushes();
         }
     }
+
     protected void unlockPushes() {
         for (Buffer entrada : inputs) {
             entrada.unlockPushes();
@@ -116,14 +126,17 @@ abstract public class Task implements Runnable, Notifiable {
             process.debugLog(log);
         }
     }
+
     public void handleException(SIGException exception) {
         if (process != null) {
             process.handleException(exception);
         }
     }
-    
-    public void connect(Task tarea) throws ConfigurationException{
-        if(process == null) throw new ConfigurationException("Esta tarea no pertenece a ningun proceso, no se puede encadenar", null, null);
+
+    public void connect(Task tarea) throws ConfigurationException {
+        if (process == null) {
+            throw new ConfigurationException("Esta tarea no pertenece a ningun proceso, no se puede encadenar", null, null);
+        }
         process.connect(this, tarea);
     }
 

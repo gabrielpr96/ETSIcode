@@ -1,7 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.tasks.routers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public class Merger extends Task {

@@ -1,19 +1,14 @@
 package com.b0ve.solucionintegraciongenerica.adapters;
 
-import com.b0ve.solucionintegraciongenerica.utils.Process;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 public class AdapterDirWhatcher extends Adapter {
 

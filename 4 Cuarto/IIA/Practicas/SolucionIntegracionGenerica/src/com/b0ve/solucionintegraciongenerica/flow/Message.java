@@ -1,7 +1,6 @@
 package com.b0ve.solucionintegraciongenerica.flow;
 
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.XMLMergeException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.XSLTransformationException;
@@ -10,8 +9,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

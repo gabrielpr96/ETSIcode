@@ -1,0 +1,27 @@
+package com.b0ve.solucionintegraciongenerica.tasks.modifiers;
+
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+public class Slimmer extends SlimmerTemplate {
+
+    private final String[] xpaths;
+
+    public Slimmer(String[] xpaths) {
+        this.xpaths = xpaths;
+    }
+
+    @Override
+    protected void slim(Message m) throws SIGException {
+        Document doc = m.getBody();
+        for (String xpath : xpaths) {
+            NodeList nodes = Message.evaluateXPath(doc, xpath);
+            for (int i = 0; i < nodes.getLength(); i++) {
+                nodes.item(i).getParentNode().removeChild(nodes.item(i));
+            }
+        }
+    }
+
+}

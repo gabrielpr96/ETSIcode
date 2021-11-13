@@ -1,12 +1,11 @@
 package com.b0ve.solucionintegraciongenerica.utils.exceptions;
 
-import com.b0ve.solucionintegraciongenerica.flow.Message;
+public class SIGException extends Exception {
 
-public class SIGException extends Exception{
     private final Object associatedObject;
     private final Exception nestedException;
-    
-    public SIGException(String text, Object associatedObject, Exception nestedException){
+
+    public SIGException(String text, Object associatedObject, Exception nestedException) {
         super(text);
         this.associatedObject = associatedObject;
         this.nestedException = nestedException;
@@ -19,6 +18,5 @@ public class SIGException extends Exception{
     public Exception getNestedException() {
         return nestedException;
     }
-    
-    
+
 }

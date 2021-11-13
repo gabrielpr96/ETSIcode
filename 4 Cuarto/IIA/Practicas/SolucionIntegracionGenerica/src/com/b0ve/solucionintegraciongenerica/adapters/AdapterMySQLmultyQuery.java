@@ -1,17 +1,14 @@
 package com.b0ve.solucionintegraciongenerica.adapters;
 
-import com.b0ve.solucionintegraciongenerica.utils.JDBCUtil;
-import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -39,9 +36,9 @@ public class AdapterMySQLmultyQuery extends Adapter {
                 stmt.executeQuery(sql);
                 stmt.close();
             }
-        } catch (SQLException  ex) {
+        } catch (SQLException ex) {
             handleException(new SIGException("SQL Exception ", m, ex));
-        } catch (SIGException  ex) {
+        } catch (SIGException ex) {
             handleException(ex);
         }
         return null;

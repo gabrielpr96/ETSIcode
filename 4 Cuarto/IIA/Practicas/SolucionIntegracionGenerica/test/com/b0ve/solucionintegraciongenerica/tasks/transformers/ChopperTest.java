@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.b0ve.solucionintegraciongenerica.tareas.transformers;
+package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.transformers.Chopper;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *

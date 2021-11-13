@@ -3,10 +3,8 @@ package com.b0ve.solucionintegraciongenerica.utils;
 import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class ProcessSync extends Process{
+public class ProcessSync extends Process {
 
     private Thread ejecucion;
 
@@ -17,10 +15,10 @@ public class ProcessSync extends Process{
                 ((Port) tarea).getAdapter().iniciate();
             }
         }
-        ejecucion = new Thread(){
+        ejecucion = new Thread() {
             @Override
             public void run() {
-                while (!isInterrupted()) {                    
+                while (!isInterrupted()) {
                     for (Task tarea : tasks) {
                         try {
                             tarea.process();
@@ -30,11 +28,11 @@ public class ProcessSync extends Process{
                     }
                 }
             }
-            
+
         };
         ejecucion.start();
     }
-    
+
     @Override
     public void shutdown() {
         ejecucion.interrupt();
@@ -49,5 +47,5 @@ public class ProcessSync extends Process{
     public void waitToEnd() throws InterruptedException {
         ejecucion.join();
     }
-    
+
 }

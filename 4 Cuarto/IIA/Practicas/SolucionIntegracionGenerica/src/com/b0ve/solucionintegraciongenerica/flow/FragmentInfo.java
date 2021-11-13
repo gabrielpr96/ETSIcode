@@ -4,7 +4,7 @@ public class FragmentInfo {
 
     private final long fragmentID;
     private final int fragmentSize;
-    
+
     private static long contador = 0;
 
     public FragmentInfo(long fragmentID, int fragmentSize) {
@@ -24,9 +24,9 @@ public class FragmentInfo {
     public String toString() {
         return "FragmentInfo{" + "ID=" + fragmentID + ", Size=" + fragmentSize + '}';
     }
-    
-    public static long uniqueID(){
+
+    public static long uniqueID() {
         return contador++;
     }
-    
+
 }

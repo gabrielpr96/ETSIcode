@@ -25,21 +25,21 @@ public final class Aggregator extends AggregatorTemplate {
             DocumentBuilder builder = dbf.newDocumentBuilder();
             Document doc = builder.newDocument();
             Element appendPoint = null;
-            if(rootName instanceof String){
+            if (rootName instanceof String) {
                 appendPoint = doc.createElement((String) rootName);
                 doc.appendChild(appendPoint);
-            }else if(rootName instanceof String[]){
+            } else if (rootName instanceof String[]) {
                 String[] rootNames = (String[]) rootName;
                 for (String name : rootNames) {
                     Element newPoint = doc.createElement(name);
-                    if(appendPoint == null){
+                    if (appendPoint == null) {
                         doc.appendChild(newPoint);
-                    }else{
+                    } else {
                         appendPoint.appendChild(newPoint);
                     }
                     appendPoint = newPoint;
                 }
-            }else{
+            } else {
                 appendPoint = doc.createElement("list");
                 doc.appendChild(appendPoint);
             }
@@ -49,7 +49,7 @@ public final class Aggregator extends AggregatorTemplate {
                 appendPoint.appendChild(imported);
             }
             return doc;
-        } catch (ParserConfigurationException  ex) {
+        } catch (ParserConfigurationException ex) {
             throw new SIGException("Messages could not be combined", messages, ex);
         }
     }

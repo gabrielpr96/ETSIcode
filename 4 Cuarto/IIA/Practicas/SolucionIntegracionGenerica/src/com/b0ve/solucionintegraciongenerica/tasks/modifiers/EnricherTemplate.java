@@ -1,8 +1,8 @@
 package com.b0ve.solucionintegraciongenerica.tasks.modifiers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public abstract class EnricherTemplate extends Task {
@@ -22,6 +22,6 @@ public abstract class EnricherTemplate extends Task {
         }
     }
 
-    protected abstract void enrich(Message mensaje) throws SIGException;
+    protected abstract void enrich(Message m) throws SIGException;
 
 }

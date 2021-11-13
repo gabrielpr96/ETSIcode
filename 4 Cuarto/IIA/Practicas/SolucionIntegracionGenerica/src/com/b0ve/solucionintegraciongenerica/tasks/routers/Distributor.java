@@ -14,17 +14,17 @@ public class Distributor extends DistributorTemplate {
     }
 
     @Override
-    protected int check(Message m) throws XPathEvaluationException{
+    protected int check(Message m) throws XPathEvaluationException {
         int outPin = -1, i = 0;
         while (outPin == -1 && i < conditions.length) {
             if (conditions[i].checkCondition(m)) {
                 outPin = i;
-            }else{
+            } else {
                 i++;
             }
         }
         if (outPin == -1) {
-            outPin = nOutputs()-1;
+            outPin = nOutputs() - 1;
         }
         return outPin;
     }

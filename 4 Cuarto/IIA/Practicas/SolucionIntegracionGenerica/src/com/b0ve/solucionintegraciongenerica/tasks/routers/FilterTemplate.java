@@ -1,10 +1,9 @@
 package com.b0ve.solucionintegraciongenerica.tasks.routers;
 
-import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 
 public abstract class FilterTemplate extends Task {
 

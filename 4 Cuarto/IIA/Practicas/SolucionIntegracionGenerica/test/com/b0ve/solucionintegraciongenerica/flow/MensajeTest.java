@@ -3,23 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.b0ve.solucionintegraciongenerica.utils.flujo;
+package com.b0ve.solucionintegraciongenerica.flow;
 
-import com.b0ve.solucionintegraciongenerica.flow.FragmentInfo;
-import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import org.junit.Test;
 import static org.junit.Assert.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import org.junit.Test;
 
 /**
  *

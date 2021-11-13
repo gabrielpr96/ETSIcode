@@ -1,6 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.utils.condiciones;
 
-public class FilterConditionNotEquals extends FilterCondition{
+public class FilterConditionNotEquals extends FilterCondition {
+
     private final String value;
 
     public FilterConditionNotEquals(String xpath, String value) {

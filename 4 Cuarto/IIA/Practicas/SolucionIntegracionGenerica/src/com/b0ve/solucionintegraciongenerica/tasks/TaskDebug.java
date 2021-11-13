@@ -7,11 +7,11 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 public class TaskDebug extends Task {
 
     private final boolean continuar;
-    
+
     public TaskDebug() {
         this(false);
     }
-    
+
     public TaskDebug(boolean continuar) {
         super(1, 1);
         this.continuar = continuar;
@@ -23,7 +23,7 @@ public class TaskDebug extends Task {
         while (!entrada.empty()) {
             Message mensaje = entrada.retrive();
             debugLog(mensaje.getBodyString());
-            if(continuar){
+            if (continuar) {
                 output(0).push(mensaje);
             }
         }

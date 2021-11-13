@@ -1,8 +1,8 @@
 package com.b0ve.solucionintegraciongenerica.adapters;
 
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.JDBCUtil;
 import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
-import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,11 +38,11 @@ public class AdapterMySQL extends Adapter {
             rs.close();
             stmt.close();
             return doc;
-        } catch (SQLException  ex) {
+        } catch (SQLException ex) {
             handleException(new SIGException("SQL Exception ", m, ex));
         } catch (ParserConfigurationException ex) {
             handleException(new SIGException("JDBCUtil Exception ", m, ex));
-        } catch (SIGException  ex) {
+        } catch (SIGException ex) {
             handleException(ex);
         }
         return null;

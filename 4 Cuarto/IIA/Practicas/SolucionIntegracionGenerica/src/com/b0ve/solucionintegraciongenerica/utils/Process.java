@@ -1,34 +1,35 @@
 package com.b0ve.solucionintegraciongenerica.utils;
 
-import com.b0ve.solucionintegraciongenerica.tasks.transformers.Chopper;
-import com.b0ve.solucionintegraciongenerica.tasks.transformers.Aggregator;
-import com.b0ve.solucionintegraciongenerica.tasks.transformers.Assembler;
-import com.b0ve.solucionintegraciongenerica.tasks.transformers.Translator;
-import com.b0ve.solucionintegraciongenerica.tasks.transformers.Splitter;
-import com.b0ve.solucionintegraciongenerica.tasks.routers.Merger;
-import com.b0ve.solucionintegraciongenerica.tasks.routers.Filter;
-import com.b0ve.solucionintegraciongenerica.tasks.routers.Distributor;
-import com.b0ve.solucionintegraciongenerica.tasks.routers.Replicator;
-import com.b0ve.solucionintegraciongenerica.tasks.routers.Correlator;
-import com.b0ve.solucionintegraciongenerica.tasks.modifiers.CorrelationIDSetter;
-import com.b0ve.solucionintegraciongenerica.tasks.modifiers.ContextSlimmer;
-import com.b0ve.solucionintegraciongenerica.tasks.modifiers.ContextEnricher;
-import com.b0ve.solucionintegraciongenerica.flow.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
-import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.ports.PortInput;
 import com.b0ve.solucionintegraciongenerica.ports.PortOutput;
 import com.b0ve.solucionintegraciongenerica.ports.PortRequest;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.tasks.TaskDebug;
-import java.util.ArrayList;
-import java.util.List;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.ContextEnricher;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.ContextSlimmer;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.CorrelationIDSetter;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.Enricher;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.Slimmer;
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Correlator;
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Distributor;
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Filter;
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Merger;
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Replicator;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Aggregator;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Assembler;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Chopper;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Splitter;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Translator;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.Checkeable;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.DefaultExceptionHandler;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.ExceptionHandleable;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Process {
 
@@ -44,6 +45,7 @@ public abstract class Process {
         REPLICATOR,
         SLIMMER,
         CONTEXT_SLIMMER,
+        ENRICHER,
         CONTEXT_ENRICHER,
         CORRELATION_ID_SETTER,
         TRANSLATOR,
@@ -53,7 +55,7 @@ public abstract class Process {
         ASSEMBLER,
         DEBUG
     }
-    
+
     public enum PORTS {
         INPUT,
         OUTPUT,
@@ -98,8 +100,14 @@ public abstract class Process {
             case REPLICATOR:
                 task = new Replicator();
                 break;
+            case SLIMMER:
+                task = new Slimmer((String[]) configuration);
+                break;
             case CONTEXT_SLIMMER:
                 task = new ContextSlimmer();
+                break;
+            case ENRICHER:
+                task = new Enricher(configuration);
                 break;
             case CONTEXT_ENRICHER:
                 task = new ContextEnricher();
@@ -142,7 +150,7 @@ public abstract class Process {
 
     public Port createPort(Adapter adapter) throws ConfigurationException {
         Port puerto;
-        switch(adapter.getCompatiblePortType()){
+        switch (adapter.getCompatiblePortType()) {
             case INPUT:
                 puerto = new PortInput(adapter);
                 break;
@@ -153,7 +161,7 @@ public abstract class Process {
                 puerto = new PortRequest(adapter);
                 break;
             default:
-                throw new ConfigurationException("Adapter did not provide a valid compatible port type.", "Option given by adapter: "+adapter.getCompatiblePortType(), null);
+                throw new ConfigurationException("Adapter did not provide a valid compatible port type.", "Option given by adapter: " + adapter.getCompatiblePortType(), null);
         }
         addTask(puerto);
         return puerto;
@@ -176,12 +184,12 @@ public abstract class Process {
             System.out.println("DEBUG: " + log);
         }
     }
-    
-    public void setHandler(ExceptionHandleable handler){
+
+    public void setHandler(ExceptionHandleable handler) {
         this.exceptionHandler = handler;
     }
-    
-    public void handleException(SIGException exception){
+
+    public void handleException(SIGException exception) {
         exceptionHandler.handleException(exception);
     }
 }
