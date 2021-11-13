@@ -66,50 +66,98 @@ public final class Message {
         addFragmentInfo(m.getFragmentInfoStack());
     }
 
+    /**
+     * Returns ID of the message
+     * @return 
+     */
     public long getID() {
         return ID;
     }
 
+    /**
+     * Returns the correlation ID of the message
+     * @return 
+     */
     public long getCorrelationID() {
         return correlationID;
     }
 
+    /**
+     * Returns the body as document
+     * @return 
+     */
     public Document getBody() {
         return body;
     }
 
+    /**
+     * Returns the body as XML String
+     * @return 
+     */
     public String getBodyString() {
         return serialiceXML(body);
     }
 
+    /**
+     * Returns the topmost fragment info. Null if there is message is not a fragment.
+     * @return 
+     */
     public FragmentInfo getFragmentInfo() {
         return fragmentInfo.isEmpty() ? null : fragmentInfo.peek();
     }
 
+    /**
+     * Returns topmost fragment id
+     * @return 
+     */
     public long getFragmentID() {
         return fragmentInfo.isEmpty() ? -1 : fragmentInfo.peek().getFragmentID();
     }
 
+    /**
+     * Returns topmost fragment size
+     * @return 
+     */
     public long getFragmentSize() {
         return fragmentInfo.isEmpty() ? -1 : fragmentInfo.peek().getFragmentSize();
     }
 
+    /**
+     * Returns an iterator to walk over all the fragment info.
+     * @return 
+     */
     public Iterator<FragmentInfo> getFragmentInfoStack() {
         return fragmentInfo.iterator();
     }
 
+    /**
+     * Sets the body of the message. Document is passed by reference, be carefull.
+     * @param body 
+     */
     public void setBody(Document body) {
         this.body = body;
     }
 
+    /**
+     * Sets correlation ID
+     * @param correlationID 
+     */
     public void setCorrelationID(long correlationID) {
         this.correlationID = correlationID;
     }
 
+    /**
+     * Adds a layer to the fragment info
+     * @param finfo 
+     */
     public void addFragmentInfo(FragmentInfo finfo) {
         fragmentInfo.push(finfo);
     }
 
+    /**
+     * Adds a list of fragment info in the same order
+     * @param finfo 
+     */
     public void addFragmentInfo(Iterator<FragmentInfo> finfo) {
         for (; finfo.hasNext();) {
             fragmentInfo.push(finfo.next());
@@ -117,26 +165,51 @@ public final class Message {
 
     }
 
+    /**
+     * Removes topmost fragment info
+     * @return 
+     */
     public FragmentInfo removeFragmentInfo() {
         return fragmentInfo.isEmpty() ? null : fragmentInfo.pop();
     }
 
+    /**
+     * Returns true if the message is fragmented
+     * @return 
+     */
     public boolean isFragment() {
         return fragmentInfo.isEmpty();
     }
 
+    /**
+     * Returns a nodelist of tags that matches the XPath expression, applied to the body.
+     * @param expresion XPath expression
+     * @return
+     * @throws XPathEvaluationException 
+     */
     public NodeList evaluateXPath(String expresion) throws XPathEvaluationException {
         return evaluateXPath(body, expresion);
     }
 
+    /**
+     * Returns the text content of all the nodes selected by the XPath expression, applied to the body.
+     * @param expresion XPath expression
+     * @return
+     * @throws XPathEvaluationException 
+     */
     public String evaluateXPathString(String expresion) throws XPathEvaluationException {
         NodeList res = evaluateXPath(expresion);
         if (res == null || res.getLength() < 1) {
             return null;
         }
-        return res.item(0).getTextContent();
+        return res.item(0).getTextContent().trim();
     }
 
+    /**
+     * Applies a XSLTransformation to the body of the message, changes are stored in same message.
+     * @param style XSLT
+     * @throws XSLTransformationException 
+     */
     public void transformBody(String style) throws XSLTransformationException {
         try {
             Source xslt = new StreamSource(new StringReader(style)); //El XLT con el formato
@@ -164,6 +237,12 @@ public final class Message {
         return "Mensaje{" + "ID=" + ID + ", correlationID=" + correlationID + ", fragmentInfo=" + fragmentInfo + ", body=" + serialiceXML(body) + '}';
     }
 
+    /**
+     * XML String to W3C Document
+     * @param xml XML String
+     * @return W3C Document
+     * @throws ParseException 
+     */
     public static Document parseXML(String xml) throws ParseException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -175,6 +254,11 @@ public final class Message {
         }
     }
 
+    /**
+     * W3C Document to XML String
+     * @param document W3C Document
+     * @return XML String
+     */
     public static String serialiceXML(Document document) {
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
@@ -187,6 +271,13 @@ public final class Message {
         }
     }
 
+    /**
+     * Evaluates an Xpath expression in a Document
+     * @param documento W3C Document
+     * @param expresion XPath expression
+     * @return NodeList
+     * @throws XPathEvaluationException 
+     */
     public static NodeList evaluateXPath(Document documento, String expresion) throws XPathEvaluationException {
         try {
             XPath xpath = XPathFactory.newInstance().newXPath();
@@ -196,6 +287,13 @@ public final class Message {
         }
     }
 
+    /**
+     * Merges two W3C Document together
+     * @param xml1 W3C Document
+     * @param xml2 W3C Document
+     * @return W3C Document
+     * @throws XMLMergeException 
+     */
     public static Document mergeXML(Document xml1, Document xml2) throws XMLMergeException {
         try {
             XmlCombiner combiner = new XmlCombiner();
@@ -207,6 +305,13 @@ public final class Message {
         }
     }
 
+    /**
+     * Creates a document where root is the node passed by parameter.
+     * References are broken in this process.
+     * @param node
+     * @return W3C Document
+     * @throws ParseException 
+     */
     public static Document node2document(Node node) throws ParseException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -221,14 +326,32 @@ public final class Message {
         }
     }
 
+    /**
+     * Returns first element of Document as a Node
+     * @param doc Node
+     * @return 
+     */
     public static Node document2node(Document doc) {
         return doc.getFirstChild();
     }
 
+    /**
+     * Returns an identical document to the one passed by parameter
+     * @param doc W3C Document
+     * @return W3C Document
+     * @throws ParseException 
+     */
     public static Document cloneDocument(Document doc) throws ParseException {
         return node2document(document2node(doc));
     }
 
+    /**
+     * Creates a new message with custom ID and Correlation ID. For debugging and testing purposes.
+     * @param id Long
+     * @param correlationID Long
+     * @param body XML String
+     * @return 
+     */
     public static Message newMessage(long id, int correlationID, String body) {
         try {
             return new Message(id, correlationID, parseXML(body));

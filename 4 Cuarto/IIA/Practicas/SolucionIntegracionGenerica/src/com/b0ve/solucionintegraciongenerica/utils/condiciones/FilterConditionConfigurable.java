@@ -1,5 +1,9 @@
 package com.b0ve.solucionintegraciongenerica.utils.condiciones;
 
+/**
+ * Configurable class to use with Filter and Distributor Task.
+ * @author borja
+ */
 public class FilterConditionConfigurable extends FilterCondition {
 
     public static enum CONDITIONS {

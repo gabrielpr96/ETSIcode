@@ -7,6 +7,17 @@ import java.util.HashSet;
 import java.util.Set;
 import org.w3c.dom.Document;
 
+/**
+ * Memmory (HashSet) for the process, 
+ * FORMAT:
+ * <query>
+ *  <action> {create | delete} </action>
+ *  <value> VALUE TO STORE OR DELETE </value>
+ * </query>
+ * RESPONSE: True if the action is create and the value already exists or the action is delete and the value does not exist
+ * <response> {true | false} </response>
+ * @author borja
+ */
 public class AdapterSET extends Adapter {
 
     private final Set<String> set;
@@ -16,24 +27,26 @@ public class AdapterSET extends Adapter {
     }
 
     @Override
-    public Document sendApp(Message m) {
+    public Document sendApp(Message m) throws SIGException {
         try {
-            String accion = m.evaluateXPathString("consulta/accion");
-            String valor = m.evaluateXPathString("consulta/valor");
-            boolean resultado = false;
-            if (accion.equals("crear")) {
-                resultado = set.contains(valor);
-                if (!resultado) {
-                    set.add(valor);
+            String action = m.evaluateXPathString("/query/action");
+            String value = m.evaluateXPathString("/query/value");
+            boolean result = false;
+            if (action.equals("create")) {
+                result = set.contains(value);
+                if (!result) {
+                    set.add(value);
                 }
-            } else if (accion.equals("eliminar")) {
-                resultado = !set.contains(valor);
-                if (!resultado) {
-                    set.remove(valor);
+            } else if (action.equals("delete")) {
+                result = !set.contains(value);
+                if (!result) {
+                    set.remove(value);
                 }
+            }else{
+                throw new SIGException("SET doesnt recognize the action", action, null);
             }
-            System.out.println("Me preguntan por: " + accion + " " + valor + " le digo que " + resultado);
-            return Message.parseXML("<contenido>" + (resultado ? "true" : "false") + "</contenido>");
+            System.out.println("Me preguntan por: " + action + " valor: " + value + " le digo que " + result);
+            return Message.parseXML("<response>" + (result ? "true" : "false") + "</response>");
         } catch (SIGException ex) {
             handleException(ex);
         }

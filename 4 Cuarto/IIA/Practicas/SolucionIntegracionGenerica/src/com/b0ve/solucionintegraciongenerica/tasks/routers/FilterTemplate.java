@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Drops messages that do not fullfill a certain condition
+ * @author borja
+ */
 public abstract class FilterTemplate extends Task {
 
     public FilterTemplate() {

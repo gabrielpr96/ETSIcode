@@ -6,7 +6,12 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.ProcessSync;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import org.w3c.dom.Document;
 
+/**
+ * Ports are tasks that interact with adapters
+ * @author borja
+ */
 public abstract class Port extends Task {
 
     protected final Adapter adapter;
@@ -14,9 +19,14 @@ public abstract class Port extends Task {
     public Port(int entradas, int salidas, Adapter adaptador) {
         super(entradas, salidas);
         this.adapter = adaptador;
-        adaptador.setPuerto(this);
+        adaptador.setPort(this);
     }
 
+    /**
+     * Reads messages from inputs, if it has them, and sends them to the app.
+     * Each message is sent in an independent thread.
+     * @throws SIGException 
+     */
     @Override
     public void process() throws SIGException {
         if (hasInputs()) {
@@ -24,13 +34,13 @@ public abstract class Port extends Task {
             while (!entrada.empty()) {
                 Message mensaje = entrada.retrive();
                 if (process != null && process instanceof ProcessSync) {
-                    sendAdapter(mensaje);
+                    sendApp(mensaje);
                 } else {
                     (new Thread() {
                         @Override
                         public void run() {
                             try {
-                                sendAdapter(mensaje);
+                                sendApp(mensaje);
                             } catch (SIGException ex) {
                                 handleException(ex);
                             }
@@ -41,8 +51,24 @@ public abstract class Port extends Task {
         }
     }
 
-    protected abstract void sendAdapter(Message m) throws SIGException;
+    /**
+     * Sends a message to the app. ot all ports are allowed to do this.
+     * @param m
+     * @throws SIGException 
+     */
+    protected abstract void sendApp(Message m) throws SIGException;
+    
+    /**
+     * Sends a message from the adapter to the process. Not all ports are allowed to do this.
+     * @param doc
+     * @throws SIGException 
+     */
+    public abstract void sendProcess(Document doc) throws SIGException;
 
+    /**
+     * Returns the adapter that is connected to this port.
+     * @return 
+     */
     public Adapter getAdapter() {
         return adapter;
     }

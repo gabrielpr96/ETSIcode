@@ -5,6 +5,16 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationExce
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+/**
+ * Removes all the nodes selected by a list of XPath expressions.
+ * FORMAT:
+ * <list>
+ *  <item> XPath Expression 1 </item>
+ *  <item> XPath Expression 2 </item>
+ * ...
+ * </list>
+ * @author borja
+ */
 public class ContextSlimmer extends ContextSlimmerTemplate {
 
     @Override

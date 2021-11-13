@@ -9,6 +9,10 @@ import java.util.Iterator;
 import java.util.Map;
 import org.w3c.dom.Document;
 
+/**
+ * Receives fragmeneted messages, each fragment from an input, and outputs the content in a single message.
+ * @author borja
+ */
 public abstract class AssemblerTemplate extends Task {
 
     public AssemblerTemplate() {

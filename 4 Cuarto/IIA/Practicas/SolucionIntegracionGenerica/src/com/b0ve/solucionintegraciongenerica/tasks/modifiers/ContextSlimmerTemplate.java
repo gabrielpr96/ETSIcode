@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Slims content off of messages, slim configuration is provided by a parallel input.
+ * @author borja
+ */
 public abstract class ContextSlimmerTemplate extends Task {
 
     public ContextSlimmerTemplate() {

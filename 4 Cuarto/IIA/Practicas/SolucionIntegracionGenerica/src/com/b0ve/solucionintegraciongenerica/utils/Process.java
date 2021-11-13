@@ -31,6 +31,10 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.ExceptionH
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller class to manage an Integration Process
+ * @author borja
+ */
 public abstract class Process {
 
     private final boolean debug;
@@ -72,16 +76,37 @@ public abstract class Process {
         exceptionHandler = DefaultExceptionHandler.getHandler();
     }
 
+    /**
+     * Starts the process. Tasks, ports and adapters
+     */
     public abstract void execute();
 
+    /**
+     * Waits for the process to finish
+     * @throws InterruptedException 
+     */
     public abstract void waitToEnd() throws InterruptedException;
 
+    /**
+     * Stops the process. Tasks, ports and adapters
+     */
     public abstract void shutdown();
 
+    /**
+     * Creates a task without configuration
+     * @param tipo
+     * @return Task added
+     */
     public Task createTask(TASKS tipo) {
         return createTask(tipo, null);
     }
 
+    /**
+     * Creates a task specified by type with certain configuration
+     * @param type
+     * @param configuration
+     * @return Task added
+     */
     public Task createTask(TASKS type, Object configuration) {
         Task task;
         switch (type) {
@@ -142,12 +167,23 @@ public abstract class Process {
         return task;
     }
 
+    /**
+     * Adds an existing task to the process
+     * @param task
+     * @return Task added
+     */
     public Task addTask(Task task) {
         tasks.add(task);
         task.setProcess(this);
         return task;
     }
 
+    /**
+     * Creates and adds a port for an adapter.
+     * @param adapter
+     * @return
+     * @throws ConfigurationException 
+     */
     public Port createPort(Adapter adapter) throws ConfigurationException {
         Port puerto;
         switch (adapter.getCompatiblePortType()) {
@@ -167,28 +203,49 @@ public abstract class Process {
         return puerto;
     }
 
+    /**
+     * Adds a buffer from one task to another
+     * @param t1 Source
+     * @param t2 Destination
+     */
     public void connect(Task t1, Task t2) {
         Buffer b = new Buffer(t2);
         t1.addOutput(b);
         t2.addInput(b);
     }
 
+    /**
+     * Validates all tasks
+     * @throws ConfigurationException 
+     */
     public void validate() throws ConfigurationException {
         for (Task tarea : tasks) {
             tarea.validate();
         }
     }
 
+    /**
+     * Shows a debug log if debugging is enabled
+     * @param log 
+     */
     public void debugLog(String log) {
         if (debug) {
             System.out.println("DEBUG: " + log);
         }
     }
 
+    /**
+     * Stablishes the exception handler for the process
+     * @param handler 
+     */
     public void setHandler(ExceptionHandleable handler) {
         this.exceptionHandler = handler;
     }
 
+    /**
+     * Handles an exception
+     * @param exception 
+     */
     public void handleException(SIGException exception) {
         exceptionHandler.handleException(exception);
     }

@@ -12,6 +12,10 @@ public class PortInput extends Port {
         super(-1, 1, adaptador);
     }
 
+    /**
+     * Sends a message from the process to the process
+     * @param doc 
+     */
     public void sendProcess(Document doc) {
         try {
             output(0).push(new Message(doc));
@@ -20,8 +24,12 @@ public class PortInput extends Port {
         }
     }
 
+    /**
+     * Input ports cannot send messages to the adapter
+     * @param m 
+     */
     @Override
-    protected void sendAdapter(Message m) {
+    protected void sendApp(Message m) {
         throw new UnsupportedOperationException("Input ports cannot send messages from process to the adapter.");
     }
 

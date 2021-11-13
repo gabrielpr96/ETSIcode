@@ -1,5 +1,11 @@
 package com.b0ve.solucionintegraciongenerica.utils.exceptions;
 
+/**
+ * Use SIGException instead.
+ * @author borja
+ * @deprecated
+ */
+@Deprecated
 public class ParseException extends SIGException {
 
     public ParseException(String string, Object associatedObject, Exception nestedException) {

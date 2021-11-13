@@ -7,6 +7,10 @@ import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 
+/**
+ * Outputs multiple messages with content from a single message
+ * @author borja
+ */
 public abstract class SplitterTemplate extends Task {
 
     public SplitterTemplate() {

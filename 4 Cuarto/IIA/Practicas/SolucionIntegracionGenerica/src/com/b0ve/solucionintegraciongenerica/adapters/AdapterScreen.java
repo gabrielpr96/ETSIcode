@@ -5,6 +5,11 @@ import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
 
+/**
+ * Shows the body of the messages received on the screen
+ * The text is unchanged
+ * @author borja
+ */
 public class AdapterScreen extends Adapter {
 
     @Override

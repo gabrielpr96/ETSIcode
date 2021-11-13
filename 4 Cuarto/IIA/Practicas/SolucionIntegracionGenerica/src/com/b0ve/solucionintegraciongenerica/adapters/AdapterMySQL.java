@@ -14,6 +14,18 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 
+/**
+ * Adapter that executes a query in MySQL server. The response is returned as response, selected column names are not changed.
+ * FORMAT: 
+ * <sql> QUERY </sql>
+ * RESPONSE:
+ * <Results>
+ *  <Row>
+ *    ONE TAG PER COLUMN WITH ITS ORIGINAL NAME
+ *  </Row>
+ * </Results>
+ * @author borja
+ */
 public class AdapterMySQL extends Adapter {
 
     private Connection conn;

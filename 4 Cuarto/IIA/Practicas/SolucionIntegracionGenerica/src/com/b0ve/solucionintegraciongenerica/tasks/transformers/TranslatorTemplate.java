@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Outputs a message with the output of the XSLTransformation performed with the body of received message
+ * @author borja
+ */
 public abstract class TranslatorTemplate extends Task {
 
     public TranslatorTemplate() {

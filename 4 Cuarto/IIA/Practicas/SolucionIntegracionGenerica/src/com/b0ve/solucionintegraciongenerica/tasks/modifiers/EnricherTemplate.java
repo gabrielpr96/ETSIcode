@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Adds a static content to the message
+ * @author borja
+ */
 public abstract class EnricherTemplate extends Task {
 
     public EnricherTemplate() {

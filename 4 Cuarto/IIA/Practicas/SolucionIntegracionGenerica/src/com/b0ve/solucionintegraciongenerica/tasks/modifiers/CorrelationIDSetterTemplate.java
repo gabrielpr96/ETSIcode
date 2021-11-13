@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Sets the correlation ID messages
+ * @author borja
+ */
 public abstract class CorrelationIDSetterTemplate extends Task {
 
     public CorrelationIDSetterTemplate() {

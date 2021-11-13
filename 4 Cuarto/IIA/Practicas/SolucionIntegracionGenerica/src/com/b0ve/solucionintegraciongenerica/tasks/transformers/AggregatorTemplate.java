@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import org.w3c.dom.Document;
 
+/**
+ * Creates original message composed from the fragments collected.
+ * @author borja
+ */
 public abstract class AggregatorTemplate extends Task {
 
     public AggregatorTemplate() {

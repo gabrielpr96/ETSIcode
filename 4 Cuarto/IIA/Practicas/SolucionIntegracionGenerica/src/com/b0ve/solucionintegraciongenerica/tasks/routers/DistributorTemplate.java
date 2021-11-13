@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Forwards messages to different outputs based on conditions.
+ * @author borja
+ */
 public abstract class DistributorTemplate extends Task {
 
     public DistributorTemplate() {

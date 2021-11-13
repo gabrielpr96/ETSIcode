@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Outputs multiples copies of every message received on the input to each output.
+ * @author borja
+ */
 public class Replicator extends Task {
 
     public Replicator() {

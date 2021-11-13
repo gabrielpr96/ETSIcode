@@ -4,6 +4,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.Checkeable;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 
+/**
+ * Applies a Checkeable condition to messages.
+ * @author borja
+ */
 public class Filter extends FilterTemplate {
 
     private final Checkeable condicion;

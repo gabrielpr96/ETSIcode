@@ -4,6 +4,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Finds a different message with the same correlation ID on each input. Sends them to the outputs at the same time. 
+ * @author borja
+ */
 public final class Correlator extends CorrelatorTemplate {
 
     private final String expresion;

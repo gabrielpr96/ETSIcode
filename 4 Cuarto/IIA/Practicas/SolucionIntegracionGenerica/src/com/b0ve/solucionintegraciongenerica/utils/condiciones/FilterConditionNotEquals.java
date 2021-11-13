@@ -1,5 +1,9 @@
 package com.b0ve.solucionintegraciongenerica.utils.condiciones;
 
+/**
+ * Simple class to use with Filter and Distributor Tasks. Value must be different, if it is not the message is droped.
+ * @author borja
+ */
 public class FilterConditionNotEquals extends FilterCondition {
 
     private final String value;

@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 
+/**
+ * Merges a document with the body of a message.
+ * @author borja
+ */
 public class Enricher extends EnricherTemplate {
 
     private Document staticContent;

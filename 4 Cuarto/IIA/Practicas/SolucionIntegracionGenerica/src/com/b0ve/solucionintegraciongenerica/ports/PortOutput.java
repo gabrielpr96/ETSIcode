@@ -11,12 +11,22 @@ public class PortOutput extends Port {
         super(1, -1, adaptador);
     }
 
-    public void enviarProceso(Document doc) {
+    /**
+     * Output ports cannot send messages to the process.
+     * @param doc 
+     */
+    @Override
+    public void sendProcess(Document doc) {
         throw new UnsupportedOperationException("Output ports cannot send messages from adapter to the process.");
     }
 
+    /**
+     * Sends a message to the adapter so it sends it to the app.
+     * @param m
+     * @throws SIGException 
+     */
     @Override
-    protected void sendAdapter(Message m) throws SIGException {
+    protected void sendApp(Message m) throws SIGException {
         adapter.sendApp(m);
     }
 

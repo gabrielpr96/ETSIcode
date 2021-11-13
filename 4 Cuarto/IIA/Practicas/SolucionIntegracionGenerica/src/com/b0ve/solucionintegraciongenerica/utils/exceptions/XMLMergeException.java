@@ -1,5 +1,11 @@
 package com.b0ve.solucionintegraciongenerica.utils.exceptions;
 
+/**
+ * Use SIGException instead.
+ * @author borja
+ * @deprecated
+ */
+@Deprecated
 public class XMLMergeException extends SIGException {
 
     public XMLMergeException(String string, Object associatedObject, Exception nestedException) {

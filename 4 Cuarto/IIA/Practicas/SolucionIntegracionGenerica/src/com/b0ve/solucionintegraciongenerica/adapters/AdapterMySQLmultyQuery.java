@@ -12,6 +12,15 @@ import java.util.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+/**
+ * Adapter that executes a list of queries in a MySQL server. Response is not returned.
+ * FORMAT:
+ * <queries>
+ * <sql> QUERY 1 </sql>
+ * <sql> QUERY 2 </sql>
+ * <queries>
+ * @author borja
+ */
 public class AdapterMySQLmultyQuery extends Adapter {
 
     private Connection conn;
@@ -66,7 +75,7 @@ public class AdapterMySQLmultyQuery extends Adapter {
 
     @Override
     public PORTS getCompatiblePortType() {
-        return PORTS.REQUEST;
+        return PORTS.OUTPUT;
     }
 
 }

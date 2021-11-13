@@ -3,6 +3,10 @@ package com.b0ve.solucionintegraciongenerica.tasks.modifiers;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Merges the body of two messages
+ * @author borja
+ */
 public class ContextEnricher extends ContextEnricherTemplate {
 
     @Override

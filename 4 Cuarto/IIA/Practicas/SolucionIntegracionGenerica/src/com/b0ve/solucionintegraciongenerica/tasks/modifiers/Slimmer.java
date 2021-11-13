@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+/**
+ * Removes all the nodes selected by an array of XPath expressions
+ * @author borja
+ */
 public class Slimmer extends SlimmerTemplate {
 
     private final String[] xpaths;

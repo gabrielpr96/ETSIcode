@@ -7,6 +7,10 @@ import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 
+/**
+ * Outputs multiple messages from the content of a message. Number of elements and outputs must match.
+ * @author borja
+ */
 public abstract class ChopperTemplate extends Task {
 
     public ChopperTemplate() {

@@ -5,6 +5,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Adds content to messages based on other messages provided by a parallel input
+ * @author borja
+ */
 public abstract class ContextEnricherTemplate extends Task {
 
     public ContextEnricherTemplate() {

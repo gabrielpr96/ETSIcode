@@ -4,6 +4,10 @@ import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Outputs messages received from multiple inpuits to the one output.
+ * @author borja
+ */
 public class Merger extends Task {
 
     public Merger() {

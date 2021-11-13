@@ -2,6 +2,10 @@ package com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers;
 
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
+/**
+ * Simple ExceptionHandle that outputs the exceptions to stderr
+ * @author borja
+ */
 public class DefaultExceptionHandler implements ExceptionHandleable {
 
     private final static DefaultExceptionHandler defaultExceptionHandler = new DefaultExceptionHandler();
@@ -16,6 +20,10 @@ public class DefaultExceptionHandler implements ExceptionHandleable {
         }
     }
 
+    /**
+     * Returns singleton reference to the handler
+     * @return 
+     */
     public static ExceptionHandleable getHandler() {
         return defaultExceptionHandler;
     }
