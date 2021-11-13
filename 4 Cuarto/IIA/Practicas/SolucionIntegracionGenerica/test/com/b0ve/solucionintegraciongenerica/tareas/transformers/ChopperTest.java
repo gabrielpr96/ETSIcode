@@ -5,11 +5,12 @@
  */
 package com.b0ve.solucionintegraciongenerica.tareas.transformers;
 
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Chopper;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 
 /**
  *
@@ -19,7 +20,7 @@ public class ChopperTest {
 
     @Test
     public void testChopper1() {
-        Mensaje m1 = newMensaje(0, 0, "<libros>\n"
+        Message m1 = newMessage(0, 0, "<libros>\n"
                 + "	<libro>\n"
                 + "		<titulo>Robotica Vision y Control</titulo>\n"
                 + "		<precio>70</precio>\n"
@@ -54,7 +55,7 @@ public class ChopperTest {
     
     @Test
     public void testChopper2() {
-        Mensaje m1 = newMensaje(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>");
+        Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>");
         Chopper c1 = new Chopper("/a/b");
         Buffer in = new Buffer(null);
         c1.addEntrada(in);

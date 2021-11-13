@@ -1,15 +1,23 @@
 package ejercicio2;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
+import org.w3c.dom.Document;
 
-public class AdaptadorEstimador extends Adaptador {
+public class AdaptadorEstimador extends Adapter {
 
     @Override
-    public void enviarApp(Mensaje m) {
+    public Document sendApp(Message m) {
         String ts = m.evaluateXPathString("/medida/ts");
         String lugar = m.evaluateXPathString("/medida/lugar");
         String valor = m.evaluateXPathString("/medida/valor");
         System.out.println("Procesar medida: "+ts+" "+lugar+" -> "+valor);
+        return null;
+    }
+
+    @Override
+    public Process.PORTS getCompatiblePortType() {
+        return Process.PORTS.OUTPUT;
     }
 }

@@ -1,9 +1,7 @@
 package ejercicio3;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import java.io.IOException;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,12 +14,10 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
-public class AdaptadorCRM3Entrada extends Adaptador {
+public class AdaptadorCRM3Entrada extends Adapter {
 
     private Connection conn;
     private Thread hilo;
@@ -66,12 +62,11 @@ public class AdaptadorCRM3Entrada extends Adaptador {
                                     for (String dni : eliminados) {
                                         createCambio(doc, root, dni, "eliminar");
                                     }
-                                    Mensaje mensaje = new Mensaje(Mensaje.serialiceXML(doc));
-                                    enviarPuerto(mensaje);
+                                    sendPort(Message.cloneDocument(doc));
                                 }
                             }
                             sleep(1000);
-                        } catch (InterruptedException | SQLException | ParserConfigurationException | TransformerException | SAXException | IOException ex) {
+                        } catch (InterruptedException | SQLException | ParserConfigurationException  ex) {
                             Logger.getLogger(AdaptadorCRM3Entrada.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -121,19 +116,14 @@ public class AdaptadorCRM3Entrada extends Adaptador {
     }
 
     @Override
-    public void enviarApp(Mensaje m) {
-        throw new ExecutionException("Este puerto es solo de entrada");
-    }
-
-    @Override
-    public void iniciar() {
+    public void iniciate() {
         if (hilo != null) {
             hilo.start();
         }
     }
 
     @Override
-    public void detener() {
+    public void halt() {
         if (conn != null) try {
             conn.close();
         } catch (SQLException ex) {
@@ -150,6 +140,11 @@ public class AdaptadorCRM3Entrada extends Adaptador {
     
     public synchronized void removeConocido(String dni){
         conocidos.remove(dni);
+    }
+
+    @Override
+    public com.b0ve.solucionintegraciongenerica.utils.Process.PORTS getCompatiblePortType() {
+        return com.b0ve.solucionintegraciongenerica.utils.Process.PORTS.INPUT;
     }
 
 }

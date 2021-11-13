@@ -1,13 +1,14 @@
 package ejercicio3;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.w3c.dom.Document;
 
-public class AdaptadorCRM1Salida extends Adaptador {
+public class AdaptadorCRM1Salida extends Adapter {
 
     private final String dir;
 
@@ -16,7 +17,7 @@ public class AdaptadorCRM1Salida extends Adaptador {
     }
 
     @Override
-    public void enviarApp(Mensaje m) {
+    public Document sendApp(Message m) {
         FileWriter myWriter = null;
         try {
             myWriter = new FileWriter(dir + "/" + m.getID() + ".xml");
@@ -25,5 +26,11 @@ public class AdaptadorCRM1Salida extends Adaptador {
         } catch (IOException ex) {
             Logger.getLogger(AdaptadorCRM1Salida.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
+    }
+
+    @Override
+    public com.b0ve.solucionintegraciongenerica.utils.Process.PORTS getCompatiblePortType() {
+        return com.b0ve.solucionintegraciongenerica.utils.Process.PORTS.OUTPUT;
     }
 }

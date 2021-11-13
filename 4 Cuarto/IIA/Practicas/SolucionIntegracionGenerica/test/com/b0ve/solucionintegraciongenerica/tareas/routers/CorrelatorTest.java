@@ -5,11 +5,12 @@
  */
 package com.b0ve.solucionintegraciongenerica.tareas.routers;
 
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Correlator;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 
 /**
  *
@@ -19,12 +20,12 @@ public class CorrelatorTest {
 
     @Test
     public void testCorrelator1() throws Exception {
-        Mensaje m11 = newMensaje(0, 0, "<m>11</m>"),
-                m12 = newMensaje(1, 1, "<m>12</m>"),
-                m13 = newMensaje(2, 2, "<m>13</m>"),
-                m21 = newMensaje(3, 2, "<m>21</m>"),
-                m22 = newMensaje(4, 1, "<m>22</m>"),
-                m23 = newMensaje(5, 0, "<m>23</m>");
+        Message m11 = newMessage(0, 0, "<m>11</m>");
+        Message m12 = newMessage(1, 1, "<m>12</m>");
+        Message m13 = newMessage(2, 2, "<m>13</m>"),
+                m21 = newMessage(3, 2, "<m>21</m>"),
+                m22 = newMessage(4, 1, "<m>22</m>"),
+                m23 = newMessage(5, 0, "<m>23</m>");
         Correlator correlator = new Correlator();
         Buffer in1 = new Buffer(null);
         Buffer in2 = new Buffer(null);
@@ -52,13 +53,13 @@ public class CorrelatorTest {
     @Test
     public void testCorrelator2() throws Exception {
         Correlator correlator = new Correlator("/cid");
+        Message m11 = newMessage(0, 0, "<cid>0</cid>");
+        Message m12 = newMessage(1, 1, "<cid>1</cid>");
 
-        Mensaje m11 = newMensaje(0, 0, "<cid>0</cid>"),
-                m12 = newMensaje(1, 1, "<cid>1</cid>"),
-                m13 = newMensaje(2, 2, "<cid>2</cid>"),
-                m21 = newMensaje(3, 3, "<cid>2</cid>"),
-                m22 = newMensaje(4, 4, "<cid>1</cid>"),
-                m23 = newMensaje(5, 5, "<cid>0</cid>");
+        Message m13 = newMessage(2, 2, "<cid>2</cid>"),
+                m21 = newMessage(3, 3, "<cid>2</cid>"),
+                m22 = newMessage(4, 4, "<cid>1</cid>"),
+                m23 = newMessage(5, 5, "<cid>0</cid>");
 
         Buffer in1 = new Buffer(null);
         Buffer in2 = new Buffer(null);

@@ -1,8 +1,9 @@
 package ejercicio2;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class AdaptadorBD extends Adaptador {
+public class AdaptadorBD extends Adapter {
 
     private Connection conn;
     private Thread hilo;
@@ -70,8 +71,7 @@ public class AdaptadorBD extends Adaptador {
                                         eValor.setTextContent(rs.getString(2));
                                         root.appendChild(eValor);
 
-                                        Mensaje mensaje = new Mensaje(doc);
-                                        enviarPuerto(mensaje);
+                                        sendPort(doc);
                                     }
                                 }
                             }
@@ -86,20 +86,16 @@ public class AdaptadorBD extends Adaptador {
             ex.printStackTrace();
         }
     }
-    @Override
-    public void enviarApp(Mensaje m) {
-        throw new ExecutionException("Este puerto es solo de entrada");
-    }
 
     @Override
-    public void iniciar() {
+    public void iniciate() {
         if (hilo != null) {
             hilo.start();
         }
     }
 
     @Override
-    public void detener() {
+    public void halt() {
         if (conn != null) try {
             conn.close();
         } catch (SQLException ex) {
@@ -108,6 +104,16 @@ public class AdaptadorBD extends Adaptador {
         if (hilo != null) {
             hilo.interrupt();
         }
+    }
+
+    @Override
+    public Document sendApp(Message m) {
+        throw new ExecutionException("Este puerto es solo de entrada");
+    }
+
+    @Override
+    public Process.PORTS getCompatiblePortType() {
+        return Process.PORTS.OUTPUT;
     }
 
 }

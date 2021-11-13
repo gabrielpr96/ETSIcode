@@ -5,6 +5,8 @@
  */
 package com.b0ve.solucionintegraciongenerica.utils.flujo;
 
+import com.b0ve.solucionintegraciongenerica.flow.FragmentInfo;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Stack;
@@ -28,7 +30,7 @@ public class MensajeTest {
     public void testFragmentInfo() {
         try {
             //Se cumple el orden de inserción y extracción
-            Mensaje m1 = new Mensaje("<n>1</n>");
+            Message m1 = new Message("<n>1</n>");
             m1.addFragmentInfo(new FragmentInfo(1, 0));
             m1.addFragmentInfo(new FragmentInfo(2, 0));
             assertEquals(m1.removeFragmentInfo().getFragmentID(), 2);
@@ -39,7 +41,7 @@ public class MensajeTest {
             //Agregar la pila fragmentos de un mensaje a otro
             m1.addFragmentInfo(new FragmentInfo(1, 0));
             m1.addFragmentInfo(new FragmentInfo(2, 0));
-            Mensaje m2 = new Mensaje("<n>2</n>");
+            Message m2 = new Message("<n>2</n>");
             m2.addFragmentInfo(m1.getFragmentInfoStack());
             m2.addFragmentInfo(new FragmentInfo(3, 0));
             assertEquals(m2.removeFragmentInfo().getFragmentID(), 3);

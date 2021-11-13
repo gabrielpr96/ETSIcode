@@ -5,12 +5,14 @@
  */
 package com.b0ve.solucionintegraciongenerica.tareas.transformers;
 
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Aggregator;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Splitter;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import java.util.Iterator;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 
 /**
  *
@@ -20,7 +22,7 @@ public class AggregatorTest {
 
     @Test
     public void testAggregator1() {
-        Mensaje m1 = newMensaje(0, 0, "<libros>\n"
+        Message m1 = newMessage(0, 0, "<libros>\n"
                 + "	<libro>\n"
                 + "		<titulo>Robotica Vision y Control</titulo>\n"
                 + "		<precio>70</precio>\n"
@@ -46,7 +48,7 @@ public class AggregatorTest {
         aggregator.addSalida(out);
 
         in.push(m1);
-        in.push(new Mensaje(m1));
+        in.push(new Message(m1));
 
         splitter.procesar();
         mid.retrive();
@@ -61,7 +63,7 @@ public class AggregatorTest {
     
     @Test
     public void testAggregator2() {
-        Mensaje m1 = newMensaje(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
+        Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
         
         Splitter s1 = new Splitter("/a/b");
         Buffer sin = new Buffer(null);
@@ -83,12 +85,12 @@ public class AggregatorTest {
         a1.addSalida(aout);
 
         sin.push(m1);
-        sin.push(new Mensaje(m1));
+        sin.push(new Message(m1));
 
         s1.procesar();
         s2.procesar();
         
-        Iterator<Mensaje> iter = sout.getIterator();
+        Iterator<Message> iter = sout.getIterator();
         iter.next();
         iter.next();
         sout.deleteMessage(iter.next());

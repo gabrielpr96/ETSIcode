@@ -1,9 +1,11 @@
 package ejercicio3Mejorado;
 
-import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
-import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.utils.Proceso;
-import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterSET;
+import com.b0ve.solucionintegraciongenerica.ports.Port;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
+import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
+import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
 import ejercicio3.AdaptadorCRM1Entrada;
@@ -19,7 +21,7 @@ public class Ejercicio3MejoradoPlus {
 //<cambios><cambio><tipo>crear</tipo><datos><dni>40144662V</dni><nombre>Carlos</nombre><direccion>Avenida Guatemala</direccion><direccion>Perez Quintero</direccion></datos></cambio></cambios>
 
     public static void main(String[] args) throws Exception {
-        Proceso p = new Proceso(false);
+        Process p = new ProcessAsync(false);
 
         AdaptadorCRM1Entrada crm1In = new AdaptadorCRM1Entrada("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio3\\cambios");
         AdaptadorCRM2Entrada crm2In = new AdaptadorCRM2Entrada();
@@ -27,17 +29,17 @@ public class Ejercicio3MejoradoPlus {
         AdaptadorCRM1Salida crm1Out = new AdaptadorCRM1Salida("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio3\\replicados");
         AdaptadorCRM2Salida crm2Out = new AdaptadorCRM2Salida();
         AdaptadorCRM3Salida crm3Out = new AdaptadorCRM3Salida();
-        AdaptadorSET mem = new AdaptadorSET();
+        AdapterSET mem = new AdapterSET();
 
-        Puerto pCrm1In = p.crearPuerto(crm1In);
-        Puerto pCrm2In = p.crearPuerto(crm2In);
-        Puerto pCrm3In = p.crearPuerto(crm3In);
-        Puerto pCrm1Out = p.crearPuerto(crm1Out);
-        Puerto pCrm2Out = p.crearPuerto(crm2Out);
-        Puerto pCrm3Out = p.crearPuerto(crm3Out);
-        Puerto pMem = p.crearPuerto(mem);
+        Port pCrm1In = p.createPort(crm1In);
+        Port pCrm2In = p.createPort(crm2In);
+        Port pCrm3In = p.createPort(crm3In);
+        Port pCrm1Out = p.createPort(crm1Out);
+        Port pCrm2Out = p.createPort(crm2Out);
+        Port pCrm3Out = p.createPort(crm3Out);
+        Port pMem = p.createPort(mem);
 
-        Tarea translatorCrm1In = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
+        Task translatorCrm1In = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
                 + "    <xsl:template match=\"/cambios\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:for-each-group select=\"cambio\" group-by=\"datos/dni\">\n"
@@ -66,7 +68,7 @@ public class Ejercicio3MejoradoPlus {
                 + "        </cambios>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea translatorCrm2In = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
+        Task translatorCrm2In = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
                 + "    <xsl:template match=\"/cambios\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:for-each select=\"cambio\">\n"
@@ -95,7 +97,7 @@ public class Ejercicio3MejoradoPlus {
                 + "        </cambios>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea translatorCrm3In = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
+        Task translatorCrm3In = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
                 + "    <xsl:template match=\"/cambios\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:for-each select=\"cambio\">\n"
@@ -124,10 +126,10 @@ public class Ejercicio3MejoradoPlus {
                 + "        </cambios>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea mergerCore = p.crearTarea(MERGER);
-        Tarea splitterCore = p.crearTarea(SPLITTER, "/cambios/cambio");
-        Tarea replicatorMem = p.crearTarea(REPLICATOR);
-        Tarea translatorMemIn = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Task mergerCore = p.createTask(MERGER);
+        Task splitterCore = p.createTask(SPLITTER, "/cambios/cambio");
+        Task replicatorMem = p.createTask(REPLICATOR);
+        Task translatorMemIn = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
                 + "    <xsl:template match=\"/cambio\">\n"
                 + "        <consulta>\n"
                 + "            <accion>\n"
@@ -139,7 +141,7 @@ public class Ejercicio3MejoradoPlus {
                 + "        </consulta>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea translatorMemOut = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Task translatorMemOut = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
                 + "    <xsl:template match=\"/contenido\">\n"
                 + "        <cambio>\n"
                 + "            <repetido>\n"
@@ -148,14 +150,14 @@ public class Ejercicio3MejoradoPlus {
                 + "        </cambio>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea correlatorMem = p.crearTarea(CORRELATOR);
-        Tarea enricherMem = p.crearTarea(CONTEXT_ENRICHER);
-        Tarea filterCore = p.crearTarea(FILTER, new FilterConditionEquals("/cambio/repetido", "false"));
-        Tarea replicatorCore = p.crearTarea(REPLICATOR);
-        Tarea filterCrm1Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM1"));
-        Tarea filterCrm2Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM2"));
-        Tarea filterCrm3Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM3"));
-        Tarea translatorCrm1Out = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Task correlatorMem = p.createTask(CORRELATOR);
+        Task enricherMem = p.createTask(CONTEXT_ENRICHER);
+        Task filterCore = p.createTask(FILTER, new FilterConditionEquals("/cambio/repetido", "false"));
+        Task replicatorCore = p.createTask(REPLICATOR);
+        Task filterCrm1Out = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM1"));
+        Task filterCrm2Out = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM2"));
+        Task filterCrm3Out = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM3"));
+        Task translatorCrm1Out = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
                 + "    <xsl:template match=\"/cambio\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:choose>\n"
@@ -191,8 +193,8 @@ public class Ejercicio3MejoradoPlus {
                 + "        </cambios>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea splitterCrm1Out = p.crearTarea(SPLITTER, "/cambios/cambio");
-        Tarea translatorCrm2Out = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Task splitterCrm1Out = p.createTask(SPLITTER, "/cambios/cambio");
+        Task translatorCrm2Out = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
                 + "    <xsl:template match=\"/cambio\">\n"
                 + "        <cambio>\n"
                 + "            <tipo><xsl:value-of select=\"tipo\"/></tipo>\n"
@@ -214,7 +216,7 @@ public class Ejercicio3MejoradoPlus {
                 + "        </cambio>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea translatorCrm3Out = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Task translatorCrm3Out = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
                 + "    <xsl:template match=\"/cambio\">\n"
                 + "        <sql>\n"
                 + "            <xsl:choose>\n"
@@ -245,12 +247,9 @@ public class Ejercicio3MejoradoPlus {
         translatorMemIn.encadenar(pMem);
         pMem.encadenar(translatorMemOut);
         translatorMemOut.encadenar(correlatorMem);
-
         correlatorMem.encadenar(enricherMem);
         correlatorMem.encadenar(enricherMem);
-
         enricherMem.encadenar(filterCore);
-
         filterCore.encadenar(replicatorCore);
         replicatorCore.encadenar(filterCrm1Out);
         replicatorCore.encadenar(filterCrm2Out);
@@ -263,8 +262,8 @@ public class Ejercicio3MejoradoPlus {
         translatorCrm2Out.encadenar(pCrm2Out);
         translatorCrm3Out.encadenar(pCrm3Out);
 
-        p.validar();
-        p.ejecutar();
-        p.esperar();
+        p.validate();
+        p.execute();
+        p.waitToEnd();
     }
 }

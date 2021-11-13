@@ -1,8 +1,6 @@
 package ejercicio3;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -10,7 +8,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
-public class AdaptadorCRM2Entrada extends Adaptador {
+public class AdaptadorCRM2Entrada extends Adapter {
 
     private final Thread watcher;
 
@@ -21,7 +19,7 @@ public class AdaptadorCRM2Entrada extends Adaptador {
                 Scanner s = new Scanner(System.in);
                 while (!isInterrupted()) {
                     try {
-                        enviarPuerto(new Mensaje(s.nextLine()));
+                        sendPort(s.nextLine());
                     } catch (ParserConfigurationException | SAXException | IOException ex) {
                         Logger.getLogger(AdaptadorCRM2Entrada.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -31,22 +29,22 @@ public class AdaptadorCRM2Entrada extends Adaptador {
     }
 
     @Override
-    public void enviarApp(Mensaje m) {
-        throw new ExecutionException("Este puerto es solo de entrada");
-    }
-
-    @Override
-    public void iniciar() {
+    public void iniciate() {
         if (watcher != null) {
             watcher.start();
         }
     }
 
     @Override
-    public void detener() {
+    public void halt() {
         if (watcher != null) {
             watcher.interrupt();
         }
+    }
+
+    @Override
+    public com.b0ve.solucionintegraciongenerica.utils.Process.PORTS getCompatiblePortType() {
+        return com.b0ve.solucionintegraciongenerica.utils.Process.PORTS.INPUT;
     }
 
 }

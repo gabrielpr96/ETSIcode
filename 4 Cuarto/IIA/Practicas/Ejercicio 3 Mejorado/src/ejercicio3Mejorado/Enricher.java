@@ -1,12 +1,12 @@
 package ejercicio3Mejorado;
 
-import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class Enricher extends Tarea {
+public abstract class Enricher extends Task {
 
     public Enricher() {
         super(1, 1);
@@ -17,7 +17,7 @@ public abstract class Enricher extends Tarea {
         Buffer salida = salidas.get(0);
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
-            Mensaje mensaje = entrada.retrive();
+            Message mensaje = entrada.retrive();
             try {
                 enrich(mensaje);
             } catch (Exception ex) {
@@ -27,6 +27,6 @@ public abstract class Enricher extends Tarea {
         }
     }
 
-    protected abstract void enrich(Mensaje mensaje) throws Exception;
+    protected abstract void enrich(Message mensaje) throws Exception;
 
 }

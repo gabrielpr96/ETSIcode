@@ -1,11 +1,11 @@
 package ejercicio3;
 
-import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.tareas.transformers.Splitter;
-import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.FragmentInfo;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Splitter;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.FragmentInfo;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,7 +24,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class SplitterParticionado extends Tarea {
+public class SplitterParticionado extends Task {
 
     private final String xpathDivisor, xpathParticion;
     private int contador;
@@ -41,17 +41,14 @@ public class SplitterParticionado extends Tarea {
         Buffer salida = salidas.get(0);
         Buffer entrada = entradas.get(0);
         while (!entrada.empty()) {
-            Mensaje mensaje = entrada.retrive();
-            if (mensaje.getFragmentSize() != 0) {
-                throw new ExecutionException("No se puede fragmentar un fragmento de mensaje");
-            }
+            Message mensaje = entrada.retrive();
             Map<String, List<String>> parts = split(mensaje);
             for (Map.Entry<String, List<String>> entry : parts.entrySet()) {
                 List<String> mensajes = entry.getValue();
                 for (String doc : mensajes) {
-                    Mensaje parte;
+                    Message parte;
                     try {
-                        parte = new Mensaje(doc);
+                        parte = new Message(doc);
                         parte.addFragmentInfo(new FragmentInfo(contador, mensajes.size()));
                         salida.push(parte);
                     } catch (ParserConfigurationException | SAXException | IOException ex) {
@@ -63,19 +60,19 @@ public class SplitterParticionado extends Tarea {
         }
     }
 
-    protected Map<String, List<String>> split(Mensaje mensaje) {
+    protected Map<String, List<String>> split(Message mensaje) {
         Map<String, List<String>> divisiones = new HashMap<>();
         try {
             NodeList lista = mensaje.evaluateXPath(xpathDivisor);
             for (int i = 0; i < lista.getLength(); i++) {
-                Document doc = Mensaje.node2document(lista.item(i));
-                String fragmento = Mensaje.evaluateXPath(doc, xpathParticion).item(0).getTextContent();
+                Document doc = Message.node2document(lista.item(i));
+                String fragmento = Message.evaluateXPath(doc, xpathParticion).item(0).getTextContent();
                 List<String> particion = divisiones.get(fragmento);
                 if (particion == null) {
                     particion = new ArrayList<>();
                     divisiones.put(fragmento, particion);
                 }
-                particion.add(Mensaje.serialiceXML(doc));
+                particion.add(Message.serialiceXML(doc));
             }
         } catch (TransformerException | ParserConfigurationException | XPathExpressionException | SAXException | IOException ex) {
             Logger.getLogger(SplitterParticionado.class.getName()).log(Level.SEVERE, null, ex);

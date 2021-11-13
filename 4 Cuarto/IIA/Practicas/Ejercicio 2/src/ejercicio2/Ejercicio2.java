@@ -1,52 +1,53 @@
 package ejercicio2;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.AdaptadorFicheroWhatcher;
-import com.b0ve.solucionintegraciongenerica.adaptadores.AdaptadorMySQL;
-import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
-import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.tareas.modifiers.SlimmerTemplate;
-import com.b0ve.solucionintegraciongenerica.utils.Proceso;
-import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterDirWhatcher;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterMySQL;
+import com.b0ve.solucionintegraciongenerica.ports.Port;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.SlimmerTemplate;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
+import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
 import java.time.Instant;
 
 public class Ejercicio2 {
 
     public static void main(String[] args) throws Exception {
-        Proceso p = new Proceso(true);
+        Process p = new ProcessAsync(true);
         
-        AdaptadorFicheroWhatcher aEMS1 = new AdaptadorFicheroWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio2\\in", null);
+        AdapterDirWhatcher aEMS1 = new AdapterDirWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio2\\in");
         AdaptadorBD aEMS2 = new AdaptadorBD();
         AdaptadorExchange aEMS3 = new AdaptadorExchange();
         AdaptadorEstimador aEstimador = new AdaptadorEstimador();
-        AdaptadorMySQL aToGPS = new AdaptadorMySQL("localhost", 3306, "ejercicio2", "root", "");
+        AdapterMySQL aToGPS = new AdapterMySQL("localhost", 3306, "ejercicio2", "root", "");
         
-        Puerto pEMS1 = p.crearPuerto(aEMS1);
-        Puerto pEMS2 = p.crearPuerto(aEMS2);
-        Puerto pEMS3 = p.crearPuerto(aEMS3);
-        Puerto pEstimador = p.crearPuerto(aEstimador);
-        Puerto pToGPS = p.crearPuerto(aToGPS);
+        Port pEMS1 = p.createPort(aEMS1);
+        Port pEMS2 = p.createPort(aEMS2);
+        Port pEMS3 = p.createPort(aEMS3);
+        Port pEstimador = p.createPort(aEstimador);
+        Port pToGPS = p.createPort(aToGPS);
         
-        Tarea merger1 = p.crearTarea(MERGER);
-        Tarea replicator = p.crearTarea(REPLICATOR);
-        Tarea translator1 = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
+        Task merger1 = p.createTask(MERGER);
+        Task replicator = p.createTask(REPLICATOR);
+        Task translator1 = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
         "    <xsl:template match=\"/medida\">\n" +
         "        <sql>\n" +
         "            SELECT `Coordenadas` FROM `lugares` WHERE `Lugar` = '<xsl:value-of select=\"lugar\"/>'\n" +
         "        </sql>\n" +
         "    </xsl:template>\n" +
         "</xsl:stylesheet>");
-        Tarea translator2 = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
+        Task translator2 = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
         "    <xsl:template match=\"/Results/Row\">\n" +
         "        <medida>\n" +
         "            <lugar><xsl:value-of select=\"Coordenadas\"/></lugar>\n" +
         "        </medida>\n" +
         "    </xsl:template>\n" +
         "</xsl:stylesheet>");
-        Tarea slimmer = p.addTarea(new SlimmerTemplate() {
+        Task slimmer = p.addTask(new SlimmerTemplate() {
             @Override
-            protected void slim(Mensaje mensaje) {
+            protected void slim(Message mensaje) {
                 mensaje.transformBody("<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
                 "    <xsl:template match=\"/medida\">\n" +
                 "        <medida>\n" +
@@ -57,35 +58,35 @@ public class Ejercicio2 {
                 "</xsl:stylesheet>");
             }
         });
-        Tarea correlator = p.crearTarea(CORRELATOR);
-        Tarea enricher = p.crearTarea(CONTEXT_ENRICHER);
-        Tarea merger2 = p.crearTarea(MERGER);
-        Tarea filter = p.crearTarea(FILTER, new FilterCondition("/medida/ts") {
+        Task correlator = p.createTask(CORRELATOR);
+        Task enricher = p.createTask(CONTEXT_ENRICHER);
+        Task merger2 = p.createTask(MERGER);
+        Task filter = p.createTask(FILTER, new FilterCondition("/medida/ts") {
             @Override
             protected boolean testValue(String text) {
                 return Long.parseLong(text) > Instant.now().getEpochSecond()-(15*60);
             }
         });
         
-        p.encadenar(pEMS1, merger1);
-        p.encadenar(pEMS2, merger1);
-        p.encadenar(merger1, replicator);
-        p.encadenar(replicator, translator1);
-        p.encadenar(replicator, slimmer);
-        p.encadenar(slimmer, correlator);
-        p.encadenar(translator1, pToGPS);
-        p.encadenar(pToGPS, translator2);
-        p.encadenar(translator2, correlator);
-        p.encadenar(correlator, enricher);
-        p.encadenar(correlator, enricher);
-        p.encadenar(enricher, merger2);
-        p.encadenar(pEMS3, merger2);
-        p.encadenar(merger2, filter);
-        p.encadenar(filter, pEstimador);
+        p.connect(pEMS1, merger1);
+        p.connect(pEMS2, merger1);
+        p.connect(merger1, replicator);
+        p.connect(replicator, translator1);
+        p.connect(replicator, slimmer);
+        p.connect(slimmer, correlator);
+        p.connect(translator1, pToGPS);
+        p.connect(pToGPS, translator2);
+        p.connect(translator2, correlator);
+        p.connect(correlator, enricher);
+        p.connect(correlator, enricher);
+        p.connect(enricher, merger2);
+        p.connect(pEMS3, merger2);
+        p.connect(merger2, filter);
+        p.connect(filter, pEstimador);
         
-        p.validar();
-        p.ejecutar();
-        p.esperar();
+        p.validate();
+        p.execute();
+        p.waitToEnd();
     }
     
 }

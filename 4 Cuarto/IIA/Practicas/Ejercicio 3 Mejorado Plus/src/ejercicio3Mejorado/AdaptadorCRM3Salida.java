@@ -1,15 +1,17 @@
 package ejercicio3Mejorado;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.w3c.dom.Document;
 
-public class AdaptadorCRM3Salida extends Adaptador {
+public class AdaptadorCRM3Salida extends Adapter {
 
     private Connection conn;
 
@@ -23,7 +25,7 @@ public class AdaptadorCRM3Salida extends Adaptador {
     }
 
     @Override
-    public void enviarApp(Mensaje m) {
+    public Document sendApp(Message m) {
         try {
             Statement stmt = conn.createStatement();
             stmt.execute(m.evaluateXPathString("sql"));
@@ -31,15 +33,21 @@ public class AdaptadorCRM3Salida extends Adaptador {
         } catch (SQLException ex) {
             Logger.getLogger(AdaptadorCRM3Salida.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     @Override
-    public void detener() {
+    public void halt() {
         if (conn != null) try {
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(AdaptadorCRM3Salida.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public Process.PORTS getCompatiblePortType() {
+        return Process.PORTS.OUTPUT;
     }
 
 }

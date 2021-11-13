@@ -1,84 +1,88 @@
 package cafe;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.*;
-import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
-import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.utils.Proceso;
-import com.b0ve.solucionintegraciongenerica.utils.ProcesoSync;
-import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterDirOutputter;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterPHP;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterMySQL;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterDirWhatcher;
+import com.b0ve.solucionintegraciongenerica.ports.Port;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
+import com.b0ve.solucionintegraciongenerica.utils.ProcessSync;
+import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
+import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
 
 public class Cafe {
 
     public static void main(String[] args) throws Exception {
-        Proceso p = new Proceso();
+        Process p = new ProcessAsync();
         
-        AdaptadorFicheroWhatcher comandas = new AdaptadorFicheroWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\comandas", null);
-        AdaptadorFicheroWhatcher camarero = new AdaptadorFicheroWhatcher(null, "C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\camarero");
-        AdaptadorMySQL barmanFrio = new AdaptadorMySQL("localhost", 3306, "cafe", "root", "");
-        AdaptadorPHP barmanCaliente = new AdaptadorPHP("http://localhost/cafe/api.php");
+        AdapterDirWhatcher comandas = new AdapterDirWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\comandas");
+        AdapterDirOutputter camarero = new AdapterDirOutputter("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\camarero");
+        AdapterMySQL barmanFrio = new AdapterMySQL("localhost", 3306, "cafe", "root", "");
+        AdapterPHP barmanCaliente = new AdapterPHP("http://localhost/cafe/api.php");
         
-        Puerto pComandas = p.crearPuerto(comandas);
-        Puerto pCamarero = p.crearPuerto(camarero);
-        Puerto pBarmanFrio = p.crearPuerto(barmanFrio);
-        Puerto pBarmanCaliente = p.crearPuerto(barmanCaliente);
+        Port pComandas = p.createPort(comandas);
+        Port pCamarero = p.createPort(camarero);
+        Port pBarmanFrio = p.createPort(barmanFrio);
+        Port pBarmanCaliente = p.createPort(barmanCaliente);
         
-        Tarea divisor = p.crearTarea(SPLITTER, "/cafe_order/drinks/drink");
-        Tarea encauzador = p.crearTarea(DISTRIBUTOR, new FilterConditionEquals[]{new FilterConditionEquals("/drink/type", "cold"), new FilterConditionEquals("/drink/type", "hot")});
+        Task divisor = p.createTask(SPLITTER, "/cafe_order/drinks/drink");
+        Task encauzador = p.createTask(DISTRIBUTOR, new FilterConditionEquals[]{new FilterConditionEquals("/drink/type", "cold"), new FilterConditionEquals("/drink/type", "hot")});
         
-        Tarea replicadorFrio = p.crearTarea(REPLICATOR);
-        Tarea traductorQuerryFrio = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
+        Task replicadorFrio = p.createTask(REPLICATOR);
+        Task traductorQuerryFrio = p.createTask(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
                 + "<sql>SELECT `Stock` FROM `bebidas` WHERE `Nombre` = '<xsl:value-of select=\"name\"/>'</sql>"
                 + "</xsl:template></xsl:stylesheet>");
-        Tarea traductorResultadoFrio = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/Results\">"
+        Task traductorResultadoFrio = p.createTask(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/Results\">"
                 + "<drink><stock><xsl:value-of select=\"Row/Stock\"/></stock></drink>"
                 + "</xsl:template></xsl:stylesheet>");
-        Tarea juntadorFrio = p.crearTarea(CORRELATOR);
-        Tarea combinadorFrio = p.crearTarea(CONTEXT_ENRICHER);
+        Task juntadorFrio = p.createTask(CORRELATOR);
+        Task combinadorFrio = p.createTask(CONTEXT_ENRICHER);
         
-        Tarea replicadorCaliente = p.crearTarea(REPLICATOR);
-        Tarea traductorQuerryCaliente = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
+        Task replicadorCaliente = p.createTask(REPLICATOR);
+        Task traductorQuerryCaliente = p.createTask(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
                 + "<call><action>consultarStock</action><nombre><xsl:value-of select=\"name\"/></nombre></call>"
                 + "</xsl:template></xsl:stylesheet>");
-        Tarea traductorResultadoCaliente = p.crearTarea(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/response\">"
+        Task traductorResultadoCaliente = p.createTask(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/response\">"
                 + "<drink><stock><xsl:value-of select=\"msg\"/></stock></drink>"
                 + "</xsl:template></xsl:stylesheet>");
-        Tarea juntadorCaliente = p.crearTarea(CORRELATOR);
-        Tarea combinadorCaliente = p.crearTarea(CONTEXT_ENRICHER);
+        Task juntadorCaliente = p.createTask(CORRELATOR);
+        Task combinadorCaliente = p.createTask(CONTEXT_ENRICHER);
         
-        Tarea reunidor = p.crearTarea(MERGER);
-        Tarea arrejuntador = p.crearTarea(AGGREGATOR, new String[]{"cafe_order", "drinks"});
+        Task reunidor = p.createTask(MERGER);
+        Task arrejuntador = p.createTask(AGGREGATOR, new String[]{"cafe_order", "drinks"});
         
-        p.encadenar(pComandas, divisor);
-        p.encadenar(divisor, encauzador);
-        p.encadenar(encauzador, replicadorFrio);
-        p.encadenar(encauzador, replicadorCaliente);
+        p.connect(pComandas, divisor);
+        p.connect(divisor, encauzador);
+        p.connect(encauzador, replicadorFrio);
+        p.connect(encauzador, replicadorCaliente);
         
-        p.encadenar(replicadorFrio, traductorQuerryFrio);
-        p.encadenar(traductorQuerryFrio, pBarmanFrio);
-        p.encadenar(replicadorFrio, juntadorFrio);
-        p.encadenar(pBarmanFrio, traductorResultadoFrio);
-        p.encadenar(traductorResultadoFrio, juntadorFrio);
-        p.encadenar(juntadorFrio, combinadorFrio);
-        p.encadenar(juntadorFrio, combinadorFrio);
-        p.encadenar(combinadorFrio, reunidor);
+        p.connect(replicadorFrio, traductorQuerryFrio);
+        p.connect(traductorQuerryFrio, pBarmanFrio);
+        p.connect(replicadorFrio, juntadorFrio);
+        p.connect(pBarmanFrio, traductorResultadoFrio);
+        p.connect(traductorResultadoFrio, juntadorFrio);
+        p.connect(juntadorFrio, combinadorFrio);
+        p.connect(juntadorFrio, combinadorFrio);
+        p.connect(combinadorFrio, reunidor);
         
-        p.encadenar(replicadorCaliente, traductorQuerryCaliente);
-        p.encadenar(traductorQuerryCaliente, pBarmanCaliente);
-        p.encadenar(replicadorCaliente, juntadorCaliente);
-        p.encadenar(pBarmanCaliente, traductorResultadoCaliente);
-        p.encadenar(traductorResultadoCaliente, juntadorCaliente);
-        p.encadenar(juntadorCaliente, combinadorCaliente);
-        p.encadenar(juntadorCaliente, combinadorCaliente);
-        p.encadenar(combinadorCaliente, reunidor);
+        p.connect(replicadorCaliente, traductorQuerryCaliente);
+        p.connect(traductorQuerryCaliente, pBarmanCaliente);
+        p.connect(replicadorCaliente, juntadorCaliente);
+        p.connect(pBarmanCaliente, traductorResultadoCaliente);
+        p.connect(traductorResultadoCaliente, juntadorCaliente);
+        p.connect(juntadorCaliente, combinadorCaliente);
+        p.connect(juntadorCaliente, combinadorCaliente);
+        p.connect(combinadorCaliente, reunidor);
         
-        p.encadenar(reunidor, arrejuntador);
-        p.encadenar(arrejuntador, pCamarero);
+        p.connect(reunidor, arrejuntador);
+        p.connect(arrejuntador, pCamarero);
         
         
-        p.validar();
-        p.ejecutar();
-        p.esperar();
+        p.validate();
+        p.execute();
+        p.waitToEnd();
     }
     
 }

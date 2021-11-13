@@ -1,11 +1,12 @@
 package ejercicio3Mejorado;
 
-import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
-import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.utils.Proceso;
-import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
+import com.b0ve.solucionintegraciongenerica.ports.Port;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
+import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
 import ejercicio3.AdaptadorCRM1Entrada;
 import ejercicio3.AdaptadorCRM1Salida;
 import ejercicio3.AdaptadorCRM2Entrada;
@@ -18,7 +19,7 @@ public class Ejercicio3Mejorado {
 //<cambios><cambio><tipo>crear</tipo><datos><dni>40144664S</dni><nombre>Manolo</nombre><direccion>Alan Turing 2</direccion></datos></cambio></cambios>
 
     public static void main(String[] args) throws Exception {
-        Proceso p = new Proceso(false);
+        Process p = new ProcessAsync(false);
 
         AdaptadorCRM1Entrada crm1In = new AdaptadorCRM1Entrada("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio3\\cambios");
         AdaptadorCRM2Entrada crm2In = new AdaptadorCRM2Entrada();
@@ -27,14 +28,14 @@ public class Ejercicio3Mejorado {
         AdaptadorCRM2Salida crm2Out = new AdaptadorCRM2Salida();
         AdaptadorCRM3Salida crm3Out = new AdaptadorCRM3Salida(crm3In);
 
-        Puerto pCrm1In = p.crearPuerto(crm1In);
-        Puerto pCrm2In = p.crearPuerto(crm2In);
-        Puerto pCrm3In = p.crearPuerto(crm3In);
-        Puerto pCrm1Out = p.crearPuerto(crm1Out);
-        Puerto pCrm2Out = p.crearPuerto(crm2Out);
-        Puerto pCrm3Out = p.crearPuerto(crm3Out);
+        Port pCrm1In = p.createPort(crm1In);
+        Port pCrm2In = p.createPort(crm2In);
+        Port pCrm3In = p.createPort(crm3In);
+        Port pCrm1Out = p.createPort(crm1Out);
+        Port pCrm2Out = p.createPort(crm2Out);
+        Port pCrm3Out = p.createPort(crm3Out);
 
-        Tarea translatorCrm1In = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
+        Task translatorCrm1In = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
                 + "    <xsl:template match=\"/cambios\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:for-each-group select=\"cambio\" group-by=\"datos/dni\">\n"
@@ -62,33 +63,33 @@ public class Ejercicio3Mejorado {
                 + "        </cambios>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea splitterCrm1In = p.crearTarea(SPLITTER, "/cambios/cambio");
-        Tarea splitterCrm2In = p.crearTarea(SPLITTER, "/cambios/cambio");
-        Tarea splitterCrm3In = p.crearTarea(SPLITTER, "/cambios/cambio");
-        Tarea enricherCrm1In = p.addTarea(new Enricher() {
+        Task splitterCrm1In = p.createTask(SPLITTER, "/cambios/cambio");
+        Task splitterCrm2In = p.createTask(SPLITTER, "/cambios/cambio");
+        Task splitterCrm3In = p.createTask(SPLITTER, "/cambios/cambio");
+        Task enricherCrm1In = p.addTask(new Enricher() {
             @Override
-            protected void enrich(Mensaje mensaje) throws Exception {
-                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), Mensaje.parseXML("<cambio><fuente>CRM1</fuente></cambio>")));
+            protected void enrich(Message mensaje) throws Exception {
+                mensaje.setBody(Message.mergeXML(mensaje.getBody(), Message.parseXML("<cambio><fuente>CRM1</fuente></cambio>")));
             }
         });
-        Tarea enricherCrm2In = p.addTarea(new Enricher() {
+        Task enricherCrm2In = p.addTask(new Enricher() {
             @Override
-            protected void enrich(Mensaje mensaje) throws Exception {
-                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), Mensaje.parseXML("<cambio><fuente>CRM2</fuente></cambio>")));
+            protected void enrich(Message mensaje) throws Exception {
+                mensaje.setBody(Message.mergeXML(mensaje.getBody(), Message.parseXML("<cambio><fuente>CRM2</fuente></cambio>")));
             }
         });
-        Tarea enricherCrm3In = p.addTarea(new Enricher() {
+        Task enricherCrm3In = p.addTask(new Enricher() {
             @Override
-            protected void enrich(Mensaje mensaje) throws Exception {
-                mensaje.setBody(Mensaje.mergeXML(mensaje.getBody(), Mensaje.parseXML("<cambio><fuente>CRM3</fuente></cambio>")));
+            protected void enrich(Message mensaje) throws Exception {
+                mensaje.setBody(Message.mergeXML(mensaje.getBody(), Message.parseXML("<cambio><fuente>CRM3</fuente></cambio>")));
             }
         });
-        Tarea merger = p.crearTarea(MERGER);
-        Tarea replicator = p.crearTarea(REPLICATOR);
-        Tarea filterCrm1Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM1"));
-        Tarea filterCrm2Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM2"));
-        Tarea filterCrm3Out = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM3"));
-        Tarea translatorCrm1Out = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
+        Task merger = p.createTask(MERGER);
+        Task replicator = p.createTask(REPLICATOR);
+        Task filterCrm1Out = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM1"));
+        Task filterCrm2Out = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM2"));
+        Task filterCrm3Out = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM3"));
+        Task translatorCrm1Out = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\">\n"
                 + "    <xsl:template match=\"/cambio\">\n"
                 + "        <cambios>\n"
                 + "            <xsl:choose>\n"
@@ -124,33 +125,30 @@ public class Ejercicio3Mejorado {
                 + "        </cambios>\n"
                 + "    </xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea splitterCrm1Out = p.crearTarea(SPLITTER, "/cambios/cambio");
+        Task splitterCrm1Out = p.createTask(SPLITTER, "/cambios/cambio");
 
-        p.encadenar(pCrm1In, translatorCrm1In);
-        Tarea debug = p.crearTarea(DEBUG, true);
-        p.encadenar(translatorCrm1In, debug);
-        p.encadenar(debug, splitterCrm1In);
-        //p.encadenar(translatorCrm1In, splitterCrm1In);
-        p.encadenar(splitterCrm1In, enricherCrm1In);
-        p.encadenar(pCrm2In, splitterCrm2In);
-        p.encadenar(splitterCrm2In, enricherCrm2In);
-        p.encadenar(pCrm3In, splitterCrm3In);
-        p.encadenar(splitterCrm3In, enricherCrm3In);
-        p.encadenar(enricherCrm1In, merger);
-        p.encadenar(enricherCrm2In, merger);
-        p.encadenar(enricherCrm3In, merger);
-        p.encadenar(merger, replicator);
-        p.encadenar(replicator, filterCrm1Out);
-        p.encadenar(replicator, filterCrm2Out);
-        p.encadenar(replicator, filterCrm3Out);
-        p.encadenar(filterCrm1Out, translatorCrm1Out);
-        p.encadenar(translatorCrm1Out, splitterCrm1Out);
-        p.encadenar(splitterCrm1Out, pCrm1Out);
-        p.encadenar(filterCrm2Out, pCrm2Out);
-        p.encadenar(filterCrm3Out, pCrm3Out);
+        p.connect(pCrm1In, translatorCrm1In);
+        p.connect(translatorCrm1In, splitterCrm1In);
+        p.connect(splitterCrm1In, enricherCrm1In);
+        p.connect(pCrm2In, splitterCrm2In);
+        p.connect(splitterCrm2In, enricherCrm2In);
+        p.connect(pCrm3In, splitterCrm3In);
+        p.connect(splitterCrm3In, enricherCrm3In);
+        p.connect(enricherCrm1In, merger);
+        p.connect(enricherCrm2In, merger);
+        p.connect(enricherCrm3In, merger);
+        p.connect(merger, replicator);
+        p.connect(replicator, filterCrm1Out);
+        p.connect(replicator, filterCrm2Out);
+        p.connect(replicator, filterCrm3Out);
+        p.connect(filterCrm1Out, translatorCrm1Out);
+        p.connect(translatorCrm1Out, splitterCrm1Out);
+        p.connect(splitterCrm1Out, pCrm1Out);
+        p.connect(filterCrm2Out, pCrm2Out);
+        p.connect(filterCrm3Out, pCrm3Out);
 
-        p.validar();
-        p.ejecutar();
-        p.esperar();
+        p.validate();
+        p.execute();
+        p.waitToEnd();
     }
 }

@@ -1,7 +1,8 @@
 package ejercicio3;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class AdaptadorCRM3Salida extends Adaptador {
+public class AdaptadorCRM3Salida extends Adapter {
 
     private Connection conn;
     private final AdaptadorCRM3Entrada adaptadorEntrada;
@@ -31,20 +32,20 @@ public class AdaptadorCRM3Salida extends Adaptador {
     }
 
     @Override
-    public void enviarApp(Mensaje m) {
+    public Document sendApp(Message m) {
         try {
             //En realidad por cada mensaje solo hay un cambio, pero es faicilmente modificable
             NodeList cambios = m.evaluateXPath("/cambio");
             for (int i = 0; i < cambios.getLength(); i++) {
-                Document doc = Mensaje.node2document(cambios.item(0));
-                String tipo = Mensaje.evaluateXPath(doc, "/cambio/tipo").item(0).getTextContent();
-                String dni = Mensaje.evaluateXPath(doc, "/cambio/datos/dni").item(0).getTextContent();
+                Document doc = Message.node2document(cambios.item(0));
+                String tipo = Message.evaluateXPath(doc, "/cambio/tipo").item(0).getTextContent();
+                String dni = Message.evaluateXPath(doc, "/cambio/datos/dni").item(0).getTextContent();
                 if (tipo.equals("crear")) {
-                    String nombre = Mensaje.evaluateXPath(doc, "/cambio/datos/nombre").item(0).getTextContent();
+                    String nombre = Message.evaluateXPath(doc, "/cambio/datos/nombre").item(0).getTextContent();
                     Statement stmt = conn.createStatement();
                     stmt.execute("INSERT INTO `Clientes` (`DNI`, `Nombre`) VALUES ('" + dni + "', '" + nombre + "')");
                     stmt.close();
-                    NodeList direcciones = Mensaje.evaluateXPath(doc, "/cambio/datos/direccion");
+                    NodeList direcciones = Message.evaluateXPath(doc, "/cambio/datos/direccion");
                     String dirs = "";
                     for (int j = 0; j < direcciones.getLength(); j++) {
                         dirs += "('" + dni + "', '" + direcciones.item(j).getTextContent() + "'),";
@@ -68,15 +69,21 @@ public class AdaptadorCRM3Salida extends Adaptador {
         } catch (XPathExpressionException | SAXException | IOException ex) {
             Logger.getLogger(AdaptadorCRM3Salida.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     @Override
-    public void detener() {
+    public void halt() {
         if (conn != null) try {
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(AdaptadorCRM3Salida.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public Process.PORTS getCompatiblePortType() {
+        return Process.PORTS.OUTPUT;
     }
 
 }

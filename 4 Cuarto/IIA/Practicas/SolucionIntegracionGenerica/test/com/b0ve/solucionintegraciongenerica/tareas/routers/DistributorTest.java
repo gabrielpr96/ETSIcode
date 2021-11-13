@@ -5,12 +5,13 @@
  */
 package com.b0ve.solucionintegraciongenerica.tareas.routers;
 
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Distributor;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 
 /**
  *
@@ -21,13 +22,13 @@ public class DistributorTest {
     @Test
     public void testDistributor1() {
         Distributor distributor = new Distributor(new FilterConditionEquals[]{new FilterConditionEquals("/cid", "0"), new FilterConditionEquals("/cid", "1")});
+        Message m1 = newMessage(0, 0, "<cid>0</cid>");
+        Message m2 = newMessage(1, 1, "<cid>1</cid>");
 
-        Mensaje m1 = newMensaje(0, 0, "<cid>0</cid>"),
-                m2 = newMensaje(1, 1, "<cid>1</cid>"),
-                m3 = newMensaje(2, 2, "<cid>err</cid>"),
-                m4 = newMensaje(3, 3, "<cid>2</cid>"),
-                m5 = newMensaje(4, 5, "<cid>0</cid>"),
-                m6 = newMensaje(5, 4, "<cid>err</cid>");
+        Message m3 = newMessage(2, 2, "<cid>err</cid>"),
+                m4 = newMessage(3, 3, "<cid>2</cid>"),
+                m5 = newMessage(4, 5, "<cid>0</cid>"),
+                m6 = newMessage(5, 4, "<cid>err</cid>");
 
         Buffer in1 = new Buffer(null);
         distributor.addEntrada(in1);

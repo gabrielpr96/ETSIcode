@@ -5,11 +5,12 @@
  */
 package com.b0ve.solucionintegraciongenerica.tareas.modifiers;
 
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.CorrelationIDSetter;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 
 /**
  *
@@ -19,9 +20,9 @@ public class CorrelationIDSetterTest {
 
     @Test
     public void testCorrelationIDSetter1() {
-        Mensaje m1 = newMensaje(0, 0, "<m>1</m>"),
-                m2 = newMensaje(1, 0, "<m>2</m>"),
-                m3 = newMensaje(2, 0, "<m>3</m>");
+        Message m1 = newMessage(0, 0, "<m>1</m>");
+        Message m2 = newMessage(1, 0, "<m>2</m>");
+        Message m3 = newMessage(2, 0, "<m>3</m>");
         CorrelationIDSetter cidSetter = new CorrelationIDSetter();
         Buffer in = new Buffer(null);
         cidSetter.addEntrada(in);

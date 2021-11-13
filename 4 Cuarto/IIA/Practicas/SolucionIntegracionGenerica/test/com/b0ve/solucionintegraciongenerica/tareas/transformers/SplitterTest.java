@@ -5,11 +5,12 @@
  */
 package com.b0ve.solucionintegraciongenerica.tareas.transformers;
 
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Splitter;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 
 /**
  *
@@ -19,7 +20,7 @@ public class SplitterTest {
 
     @Test
     public void testSplitter1() {
-        Mensaje m1 = newMensaje(0, 0, "<libros>\n"
+        Message m1 = newMessage(0, 0, "<libros>\n"
                 + "	<libro>\n"
                 + "		<titulo>Robotica Vision y Control</titulo>\n"
                 + "		<precio>70</precio>\n"
@@ -50,7 +51,7 @@ public class SplitterTest {
 
     @Test
     public void testSplitter2() {
-        Mensaje m1 = newMensaje(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
+        Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
         Splitter s1 = new Splitter("/a/b");
         Buffer in = new Buffer(null);
         s1.addEntrada(in);

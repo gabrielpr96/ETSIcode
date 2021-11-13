@@ -1,8 +1,8 @@
 package com.b0ve.solucionintegraciongenerica.utils.condiciones;
 
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 
-public abstract class FilterCondition implements Comprobable{
+public abstract class FilterCondition implements Checkeable{
     private final String xpath;
 
     public FilterCondition(String xpath) {
@@ -10,8 +10,8 @@ public abstract class FilterCondition implements Comprobable{
     }
     
     @Override
-    public final boolean checkCondition(Mensaje mensaje){
-        return testValue(mensaje.evaluateXPath(xpath).item(0).getTextContent());
+    public final boolean checkCondition(Message mensaje){
+        return testValue(mensaje.evaluateXPathString(xpath));
     }
     
     protected abstract boolean testValue(String text);

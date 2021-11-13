@@ -5,11 +5,12 @@
  */
 package com.b0ve.solucionintegraciongenerica.tareas.routers;
 
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.tasks.routers.Replicator;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 
 /**
  *
@@ -19,7 +20,7 @@ public class ReplicatorTest {
 
     @Test
     public void testReplicator1() {
-        Mensaje m1 = newMensaje(0, 0, "<cid>0</cid>");
+        Message m1 = newMessage(0, 0, "<cid>0</cid>");
 
         Replicator replicator = new Replicator();
         Buffer in1 = new Buffer(null);

@@ -1,0 +1,63 @@
+package com.b0ve.solucionintegraciongenerica.utils.condiciones;
+
+public class FilterConditionConfigurable extends FilterCondition {
+
+    public static enum CONDITIONS {
+        STR_EQUALS,
+        STR_DISTINCT,
+        INTEGER_EQUALS,
+        INTEGER_DISTINCT,
+        INTEGER_LESS_THAN,
+        INTEGER_GREATER_THAN,
+        DECIMAL_LESS_THAN,
+        DECIMAL_GRATER_THAN,
+        EMPTY,
+        NOT_EMPTY,
+        EXISTS,
+        NOT_EXIST
+    }
+
+    private final String value;
+    private final CONDITIONS condition;
+
+    public FilterConditionConfigurable(String xpath, CONDITIONS condition, String value) {
+        super(xpath);
+        this.value = value;
+        this.condition = condition;
+    }
+
+    @Override
+    protected boolean testValue(String text) {
+        try {
+            switch (condition) {
+                case STR_EQUALS:
+                    return text != null && text.equals(value);
+                case STR_DISTINCT:
+                    return text != null && !text.equals(value);
+                case INTEGER_EQUALS:
+                    return Integer.parseInt(text) == Integer.parseInt(value);
+                case INTEGER_DISTINCT:
+                    return Integer.parseInt(text) != Integer.parseInt(value);
+                case INTEGER_LESS_THAN:
+                    return Integer.parseInt(text) < Integer.parseInt(value);
+                case INTEGER_GREATER_THAN:
+                    return Integer.parseInt(text) > Integer.parseInt(value);
+                case DECIMAL_LESS_THAN:
+                    return Float.parseFloat(text) < Float.parseFloat(value);
+                case DECIMAL_GRATER_THAN:
+                    return Float.parseFloat(text) > Float.parseFloat(value);
+                case EMPTY:
+                    return text.isEmpty();
+                case NOT_EMPTY:
+                    return !text.isEmpty();
+                case EXISTS:
+                    return text != null;
+                case NOT_EXIST:
+                    return text == null;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return false;
+    }
+}

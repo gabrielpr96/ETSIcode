@@ -1,19 +1,20 @@
 package ejercicio3;
 
-import com.b0ve.solucionintegraciongenerica.puertos.Puerto;
-import com.b0ve.solucionintegraciongenerica.tareas.Tarea;
-import com.b0ve.solucionintegraciongenerica.tareas.transformers.Aggregator;
-import com.b0ve.solucionintegraciongenerica.utils.Proceso;
-import static com.b0ve.solucionintegraciongenerica.utils.Proceso.TipoTarea.*;
+import com.b0ve.solucionintegraciongenerica.ports.Port;
+import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.tasks.transformers.Aggregator;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
+import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Buffer;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
-import static com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje.newMensaje;
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
 
 public class Ejercicio3 {
 //<cambios><cambio><fuente>CRM1</fuente><tipo>eliminar</tipo><datos><dni>40144663C</dni></datos></cambio></cambios>
     public static void main(String[] args) throws Exception {
-        Proceso p = new Proceso();
+        Process p = new ProcessAsync();
 
         AdaptadorCRM1Entrada crm1In = new AdaptadorCRM1Entrada("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\ejercicio3\\cambios");
         AdaptadorCRM2Entrada crm2In = new AdaptadorCRM2Entrada();
@@ -22,16 +23,16 @@ public class Ejercicio3 {
         AdaptadorCRM2Salida crm2Out = new AdaptadorCRM2Salida();
         AdaptadorCRM3Salida crm3Out = new AdaptadorCRM3Salida(crm3In);
 
-        Puerto pCrm1In = p.crearPuerto(crm1In);
-        Puerto pCrm2In = p.crearPuerto(crm2In);
-        Puerto pCrm3In = p.crearPuerto(crm3In);
-        Puerto pCrm1Out = p.crearPuerto(crm1Out);
-        Puerto pCrm2Out = p.crearPuerto(crm2Out);
-        Puerto pCrm3Out = p.crearPuerto(crm3Out);
+        Port pCrm1In = p.createPort(crm1In);
+        Port pCrm2In = p.createPort(crm2In);
+        Port pCrm3In = p.createPort(crm3In);
+        Port pCrm1Out = p.createPort(crm1Out);
+        Port pCrm2Out = p.createPort(crm2Out);
+        Port pCrm3Out = p.createPort(crm3Out);
 
-        Tarea splitterCrm1 = p.addTarea(new SplitterParticionado("/cambios/cambio", "/cambio/datos/dni"));
-        Tarea aggregatorCrm1 = p.crearTarea(AGGREGATOR, "cambios");
-        Tarea translatorCrm1 = p.crearTarea(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
+        Task splitterCrm1 = p.addTask(new SplitterParticionado("/cambios/cambio", "/cambio/datos/dni"));
+        Task aggregatorCrm1 = p.createTask(AGGREGATOR, "cambios");
+        Task translatorCrm1 = p.createTask(TRANSLATOR, "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
                 + "	<xsl:template match=\"/cambios\">\n"
                 + "		<cambio>\n"
                 + "			<tipo><xsl:value-of select=\"cambio[1]/tipo\"/></tipo>\n"
@@ -46,37 +47,37 @@ public class Ejercicio3 {
                 + "		</cambio>\n"
                 + "	</xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Tarea splitterCrm2 = p.crearTarea(SPLITTER, "/cambios/cambio");
-        Tarea splitterCrm3 = p.crearTarea(SPLITTER, "/cambios/cambio");
-        Tarea merger = p.crearTarea(MERGER);
-        Tarea replicator = p.crearTarea(REPLICATOR);
-        Tarea filterCrm1 = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM1"));
-        Tarea filterCrm2 = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM2"));
-        Tarea filterCrm3 = p.crearTarea(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM3"));
+        Task splitterCrm2 = p.createTask(SPLITTER, "/cambios/cambio");
+        Task splitterCrm3 = p.createTask(SPLITTER, "/cambios/cambio");
+        Task merger = p.createTask(MERGER);
+        Task replicator = p.createTask(REPLICATOR);
+        Task filterCrm1 = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM1"));
+        Task filterCrm2 = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM2"));
+        Task filterCrm3 = p.createTask(FILTER, new FilterConditionNotEquals("/cambio/fuente", "CRM3"));
 
-        p.encadenar(pCrm1In, splitterCrm1);
-        p.encadenar(splitterCrm1, aggregatorCrm1);
-        p.encadenar(aggregatorCrm1, translatorCrm1);
-        p.encadenar(pCrm2In, splitterCrm2);
-        p.encadenar(pCrm3In, splitterCrm3);
-        p.encadenar(translatorCrm1, merger);
-        p.encadenar(splitterCrm2, merger);
-        p.encadenar(splitterCrm3, merger);
-        p.encadenar(merger, replicator);
-        p.encadenar(replicator, filterCrm1);
-        p.encadenar(replicator, filterCrm2);
-        p.encadenar(replicator, filterCrm3);
-        p.encadenar(filterCrm1, pCrm1Out);
-        p.encadenar(filterCrm2, pCrm2Out);
-        p.encadenar(filterCrm3, pCrm3Out);
+        p.connect(pCrm1In, splitterCrm1);
+        p.connect(splitterCrm1, aggregatorCrm1);
+        p.connect(aggregatorCrm1, translatorCrm1);
+        p.connect(pCrm2In, splitterCrm2);
+        p.connect(pCrm3In, splitterCrm3);
+        p.connect(translatorCrm1, merger);
+        p.connect(splitterCrm2, merger);
+        p.connect(splitterCrm3, merger);
+        p.connect(merger, replicator);
+        p.connect(replicator, filterCrm1);
+        p.connect(replicator, filterCrm2);
+        p.connect(replicator, filterCrm3);
+        p.connect(filterCrm1, pCrm1Out);
+        p.connect(filterCrm2, pCrm2Out);
+        p.connect(filterCrm3, pCrm3Out);
 
-        p.validar();
-        p.ejecutar();
-        p.esperar();
+        p.validate();
+        p.execute();
+        p.waitToEnd();
     }
 
     private static void test1() throws Exception {
-        Mensaje m1 = newMensaje(0, 0, "<cambios>\n"
+        Message m1 = newMessage(0, 0, "<cambios>\n"
                 + "	<cambio>\n"
                 + "		<tipo>agregar</tipo>\n"
                 + "		<fuente>CRM1</fuente>\n"

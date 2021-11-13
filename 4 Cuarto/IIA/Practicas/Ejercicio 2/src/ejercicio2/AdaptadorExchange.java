@@ -1,16 +1,18 @@
 package ejercicio2;
 
-import com.b0ve.solucionintegraciongenerica.adaptadores.Adaptador;
-import com.b0ve.solucionintegraciongenerica.utils.excepciones.ExecutionException;
-import com.b0ve.solucionintegraciongenerica.utils.flujo.Mensaje;
+import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.Process;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-public class AdaptadorExchange extends Adaptador {
+public class AdaptadorExchange extends Adapter {
 
     private final Thread watcher;
 
@@ -21,7 +23,7 @@ public class AdaptadorExchange extends Adaptador {
                 Scanner s = new Scanner(System.in);
                 while (!isInterrupted()) {
                     try {
-                        enviarPuerto(new Mensaje(s.nextLine()));
+                        sendPort(s.nextLine());
                     } catch (ParserConfigurationException | SAXException | IOException ex) {
                         Logger.getLogger(AdaptadorExchange.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -31,22 +33,22 @@ public class AdaptadorExchange extends Adaptador {
     }
 
     @Override
-    public void enviarApp(Mensaje m) {
-        throw new ExecutionException("Este puerto es solo de entrada");
-    }
-
-    @Override
-    public void iniciar() {
+    public void iniciate() {
         if (watcher != null) {
             watcher.start();
         }
     }
 
     @Override
-    public void detener() {
+    public void halt() {
         if (watcher != null) {
             watcher.interrupt();
         }
+    }
+
+    @Override
+    public Process.PORTS getCompatiblePortType() {
+        return Process.PORTS.INPUT;
     }
 
 }
