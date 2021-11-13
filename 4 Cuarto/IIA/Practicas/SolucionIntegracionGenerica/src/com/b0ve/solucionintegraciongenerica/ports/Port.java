@@ -22,7 +22,7 @@ public abstract class Port extends Task {
             Buffer entrada = entradas.get(0);
             while (!entrada.empty()) {
                 Message mensaje = entrada.retrive();
-                if (proceso != null && proceso instanceof ProcessSync) {
+                if (process != null && process instanceof ProcessSync) {
                     sendAdapter(mensaje);
                 } else {
                     (new Thread() {

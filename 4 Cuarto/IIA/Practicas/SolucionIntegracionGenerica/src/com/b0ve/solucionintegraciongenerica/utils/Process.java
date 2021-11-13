@@ -16,6 +16,7 @@ import com.b0ve.solucionintegraciongenerica.tasks.modifiers.ContextEnricher;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.ports.PortInput;
 import com.b0ve.solucionintegraciongenerica.ports.PortOutput;
@@ -25,11 +26,14 @@ import com.b0ve.solucionintegraciongenerica.tasks.TaskDebug;
 import java.util.ArrayList;
 import java.util.List;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.Checkeable;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.DefaultExceptionHandler;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExceptionHandleable;
 
 public abstract class Process {
 
     private final boolean debug;
     protected final List<Task> tasks;
+    private ExceptionHandleable exceptionHandler;
 
     public enum TASKS {
         CORRELATOR,
@@ -62,6 +66,7 @@ public abstract class Process {
     public Process(boolean debug) {
         this.debug = debug;
         this.tasks = new ArrayList<>();
+        exceptionHandler = DefaultExceptionHandler.getHandler();
     }
 
     public abstract void execute();
@@ -169,5 +174,13 @@ public abstract class Process {
         if (debug) {
             System.out.println("DEBUG: " + log);
         }
+    }
+    
+    public void setHandler(ExceptionHandleable handler){
+        this.exceptionHandler = handler;
+    }
+    
+    public void handleException(String message, Message associatedMessage, Exception associatedException){
+        exceptionHandler.handleException(message, associatedMessage, associatedException);
     }
 }

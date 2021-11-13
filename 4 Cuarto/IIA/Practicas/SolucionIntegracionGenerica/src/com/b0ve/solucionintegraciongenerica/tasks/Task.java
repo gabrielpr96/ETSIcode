@@ -2,6 +2,7 @@ package com.b0ve.solucionintegraciongenerica.tasks;
 
 import com.b0ve.solucionintegraciongenerica.utils.Process;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.concurrent.Semaphore;
 
 abstract public class Task implements Runnable, Notifiable {
 
-    protected Process proceso;
+    protected Process process;
     protected final List<Buffer> entradas, salidas;
     private final Semaphore s;
     protected final int maxEntradas, maxSalidas;
@@ -65,7 +66,7 @@ abstract public class Task implements Runnable, Notifiable {
     }
 
     public void setProcess(Process p) {
-        proceso = p;
+        process = p;
     }
 
     protected void lockPushes() {
@@ -80,14 +81,19 @@ abstract public class Task implements Runnable, Notifiable {
     }
 
     protected void debugLog(String log) {
-        if (proceso != null) {
-            proceso.debugLog(log);
+        if (process != null) {
+            process.debugLog(log);
+        }
+    }
+    protected void handleException(String message, Message associatedMessage, Exception associatedException) {
+        if (process != null) {
+            process.handleException(message, associatedMessage, associatedException);
         }
     }
     
-    public void encadenar(Task tarea) throws ConfigurationException{
-        if(proceso == null) throw new ConfigurationException("Esta tarea no pertenece a ningun proceso, no se puede encadenar");
-        proceso.connect(this, tarea);
+    public void connect(Task tarea) throws ConfigurationException{
+        if(process == null) throw new ConfigurationException("Esta tarea no pertenece a ningun proceso, no se puede encadenar");
+        process.connect(this, tarea);
     }
 
 }
