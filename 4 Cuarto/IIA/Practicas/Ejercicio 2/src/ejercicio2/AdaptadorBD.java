@@ -107,11 +107,6 @@ public class AdaptadorBD extends Adapter {
     }
 
     @Override
-    public Document sendApp(Message m) {
-        throw new ExecutionException("Este puerto es solo de entrada");
-    }
-
-    @Override
     public Process.PORTS getCompatiblePortType() {
         return Process.PORTS.OUTPUT;
     }

@@ -13,14 +13,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
-public class AdapterMySQL extends Adapter {
+public class AdapterMySQLmultyQuery extends Adapter {
 
     private Connection conn;
     private final String ip, db, user, pass;
     private final int puerto;
 
-    public AdapterMySQL(String ip, int puerto, String db, String user, String pass) {
+    public AdapterMySQLmultyQuery(String ip, int puerto, String db, String user, String pass) {
         this.ip = ip;
         this.puerto = puerto;
         this.db = db;
@@ -31,17 +32,15 @@ public class AdapterMySQL extends Adapter {
     @Override
     public Document sendApp(Message m) {
         try {
-            String sql = m.evaluateXPathString("/sql");
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            Document doc = JDBCUtil.toDocument(rs);
-            rs.close();
-            stmt.close();
-            return doc;
+            NodeList queries = m.evaluateXPath("/queries/sql");
+            for (int i = 0; i < queries.getLength(); i++) {
+                String sql = queries.item(i).getTextContent();
+                Statement stmt = conn.createStatement();
+                stmt.executeQuery(sql);
+                stmt.close();
+            }
         } catch (SQLException  ex) {
             handleException(new SIGException("SQL Exception ", m, ex));
-        } catch (ParserConfigurationException ex) {
-            handleException(new SIGException("JDBCUtil Exception ", m, ex));
         } catch (SIGException  ex) {
             handleException(ex);
         }
@@ -64,7 +63,7 @@ public class AdapterMySQL extends Adapter {
         try {
             conn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(AdapterMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdapterMySQLmultyQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

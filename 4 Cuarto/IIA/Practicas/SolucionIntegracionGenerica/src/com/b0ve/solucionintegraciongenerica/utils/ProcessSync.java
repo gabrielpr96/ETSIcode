@@ -2,6 +2,9 @@ package com.b0ve.solucionintegraciongenerica.utils;
 
 import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProcessSync extends Process{
 
@@ -19,7 +22,11 @@ public class ProcessSync extends Process{
             public void run() {
                 while (!isInterrupted()) {                    
                     for (Task tarea : tasks) {
-                        tarea.procesar();
+                        try {
+                            tarea.process();
+                        } catch (SIGException ex) {
+                            handleException(ex);
+                        }
                     }
                 }
             }

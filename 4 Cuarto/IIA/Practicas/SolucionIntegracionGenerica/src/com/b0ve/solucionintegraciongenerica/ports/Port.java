@@ -5,6 +5,9 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.ProcessSync;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Port extends Task {
 
@@ -17,9 +20,9 @@ public abstract class Port extends Task {
     }
 
     @Override
-    public void procesar() {
-        if (entradas.size() > 0) {
-            Buffer entrada = entradas.get(0);
+    public void process() throws SIGException {
+        if (hasInputs()) {
+            Buffer entrada = input(0);
             while (!entrada.empty()) {
                 Message mensaje = entrada.retrive();
                 if (process != null && process instanceof ProcessSync) {
@@ -28,7 +31,11 @@ public abstract class Port extends Task {
                     (new Thread() {
                         @Override
                         public void run() {
-                            sendAdapter(mensaje);
+                            try {
+                                sendAdapter(mensaje);
+                            } catch (SIGException ex) {
+                                handleException(ex);
+                            }
                         }
                     }).start();
                 }
@@ -36,7 +43,7 @@ public abstract class Port extends Task {
         }
     }
 
-    protected abstract void sendAdapter(Message m);
+    protected abstract void sendAdapter(Message m) throws SIGException;
 
     public Adapter getAdapter() {
         return adapter;

@@ -11,6 +11,7 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -19,7 +20,7 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class SplitterTest {
 
     @Test
-    public void testSplitter1() {
+    public void testSplitter1() throws SIGException {
         Message m1 = newMessage(0, 0, "<libros>\n"
                 + "	<libro>\n"
                 + "		<titulo>Robotica Vision y Control</titulo>\n"
@@ -36,13 +37,13 @@ public class SplitterTest {
                 + "</libros>");
         Splitter splitter = new Splitter("/libros/libro");
         Buffer in = new Buffer(null);
-        splitter.addEntrada(in);
+        splitter.addInput(in);
         Buffer out = new Buffer(null);
-        splitter.addSalida(out);
+        splitter.addOutput(out);
 
         in.push(m1);
 
-        splitter.procesar();
+        splitter.process();
 
         assertTrue(out.retrive().evaluateXPath("/libro").item(0).getTextContent().contains("Robotica Vision y Control"));
         assertTrue(out.retrive().evaluateXPath("/libro").item(0).getTextContent().contains("Interspecies Reviewers"));
@@ -50,22 +51,22 @@ public class SplitterTest {
     }
 
     @Test
-    public void testSplitter2() {
+    public void testSplitter2() throws SIGException {
         Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
         Splitter s1 = new Splitter("/a/b");
         Buffer in = new Buffer(null);
-        s1.addEntrada(in);
+        s1.addInput(in);
         Buffer mid = new Buffer(null);
-        s1.addSalida(mid);
+        s1.addOutput(mid);
         Splitter s2 = new Splitter("/b/c");
-        s2.addEntrada(mid);
+        s2.addInput(mid);
         Buffer out = new Buffer(null);
-        s2.addSalida(out);
+        s2.addOutput(out);
 
         in.push(m1);
 
-        s1.procesar();
-        s2.procesar();
+        s1.process();
+        s2.process();
 
         assertEquals(out.retrive().evaluateXPath("/c").item(0).getTextContent(), "b1c1");
         assertEquals(out.retrive().evaluateXPath("/c").item(0).getTextContent(), "b1c2");

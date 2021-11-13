@@ -3,6 +3,8 @@ package com.b0ve.solucionintegraciongenerica.tasks.routers;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 
 public abstract class FilterTemplate extends Task {
 
@@ -11,19 +13,19 @@ public abstract class FilterTemplate extends Task {
     }
 
     @Override
-    public final void procesar() {
-        Buffer salida = salidas.get(0);
-        Buffer entrada = entradas.get(0);
-        while (!entrada.empty()) {
-            Message mensaje = entrada.retrive();
-            if (comprobar(mensaje)) {
-                salida.push(mensaje);
+    public final void process() throws SIGException {
+        Buffer output = output(0);
+        Buffer input = input(0);
+        while (!input.empty()) {
+            Message mensaje = input.retrive();
+            if (check(mensaje)) {
+                output.push(mensaje);
             } else {
-                debugLog("Filtro elimino: " + mensaje.toString());
+                debugLog("Filtro deleted: " + mensaje.toString());
             }
         }
     }
 
-    protected abstract boolean comprobar(Message mensaje);
+    protected abstract boolean check(Message mensaje) throws SIGException;
 
 }

@@ -12,6 +12,7 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -20,7 +21,7 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class AssemblerTest {
 
     @Test
-    public void testAssembler1() {
+    public void testAssembler1() throws SIGException {
         Message m1 = newMessage(0, 0, "<libros>\n"
                 + "	<libro>\n"
                 + "		<titulo>Robotica Vision y Control</titulo>\n"
@@ -37,27 +38,27 @@ public class AssemblerTest {
                 + "</libros>");
         Chopper chopper = new Chopper("/libros/libro");
         Buffer in = new Buffer(null);
-        chopper.addEntrada(in);
+        chopper.addInput(in);
         Buffer mid1 = new Buffer(null);
         Buffer mid2 = new Buffer(null);
         Buffer mid3 = new Buffer(null);
-        chopper.addSalida(mid1);
-        chopper.addSalida(mid2);
-        chopper.addSalida(mid3);
+        chopper.addOutput(mid1);
+        chopper.addOutput(mid2);
+        chopper.addOutput(mid3);
 
         Assembler assembler = new Assembler("coleccion");
-        assembler.addEntrada(mid1);
-        assembler.addEntrada(mid2);
-        assembler.addEntrada(mid3);
+        assembler.addInput(mid1);
+        assembler.addInput(mid2);
+        assembler.addInput(mid3);
         Buffer out = new Buffer(null);
-        assembler.addSalida(out);
+        assembler.addOutput(out);
 
         in.push(m1);
         in.push(new Message(m1));
 
-        chopper.procesar();
+        chopper.process();
         mid2.retrive();
-        assembler.procesar();
+        assembler.process();
 
         assertEquals(out.retrive().evaluateXPath("/coleccion/libro").getLength(), 3);
         assertTrue(out.empty());
@@ -67,54 +68,54 @@ public class AssemblerTest {
     }
     
     @Test
-    public void testAssembler2() {
+    public void testAssembler2() throws SIGException {
         Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>");
         Chopper c1 = new Chopper("/a/b");
         Buffer in = new Buffer(null);
-        c1.addEntrada(in);
+        c1.addInput(in);
         Buffer cmid1 = new Buffer(null);
         Buffer cmid2 = new Buffer(null);
-        c1.addSalida(cmid1);
-        c1.addSalida(cmid2);
+        c1.addOutput(cmid1);
+        c1.addOutput(cmid2);
         Chopper c2a = new Chopper("/b/c");
         Chopper c2b = new Chopper("/b/c");
-        c2a.addEntrada(cmid1);
-        c2b.addEntrada(cmid2);
+        c2a.addInput(cmid1);
+        c2b.addInput(cmid2);
         Buffer cout1 = new Buffer(null);
         Buffer cout2 = new Buffer(null);
         Buffer cout3 = new Buffer(null);
         Buffer cout4 = new Buffer(null);
-        c2a.addSalida(cout1);
-        c2a.addSalida(cout2);
-        c2b.addSalida(cout3);
-        c2b.addSalida(cout4);
+        c2a.addOutput(cout1);
+        c2a.addOutput(cout2);
+        c2b.addOutput(cout3);
+        c2b.addOutput(cout4);
 
         Assembler a1a = new Assembler("b");
         Assembler a1b = new Assembler("b");
-        a1a.addEntrada(cout1);
-        a1a.addEntrada(cout2);
-        a1b.addEntrada(cout3);
-        a1b.addEntrada(cout4);
+        a1a.addInput(cout1);
+        a1a.addInput(cout2);
+        a1b.addInput(cout3);
+        a1b.addInput(cout4);
         Buffer amid1 = new Buffer(null);
         Buffer amid2 = new Buffer(null);
-        a1a.addSalida(amid1);
-        a1b.addSalida(amid2);
+        a1a.addOutput(amid1);
+        a1b.addOutput(amid2);
         Assembler a2 = new Assembler("a");
-        a2.addEntrada(amid1);
-        a2.addEntrada(amid2);
+        a2.addInput(amid1);
+        a2.addInput(amid2);
         Buffer aout = new Buffer(null);
-        a2.addSalida(aout);
+        a2.addOutput(aout);
 
         in.push(m1);
         in.push(new Message(m1));
 
-        c1.procesar();
-        c2a.procesar();
-        c2b.procesar();
+        c1.process();
+        c2a.process();
+        c2b.process();
         cout4.retrive();
-        a1a.procesar();
-        a1b.procesar();
-        a2.procesar();
+        a1a.process();
+        a1b.process();
+        a2.process();
 
         assertTrue(aout.retrive().getBodyString().contains("<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>"));
         assertTrue(aout.empty());

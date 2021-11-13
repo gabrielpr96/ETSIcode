@@ -2,6 +2,7 @@ package com.b0ve.solucionintegraciongenerica.tasks.routers;
 
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public class Merger extends Task {
 
@@ -10,11 +11,12 @@ public class Merger extends Task {
     }
 
     @Override
-    public void procesar() {
-        Buffer salida = salidas.get(0);
-        for (Buffer entrada : entradas) {
-            while (!entrada.empty()) {
-                salida.push(entrada.retrive());
+    public void process() throws SIGException {
+        Buffer output = output(0);
+        for (int i = 0; i < nInputs(); i++) {
+            Buffer input = input(i);
+            while (!input.empty()) {
+                output.push(input.retrive());
             }
         }
     }

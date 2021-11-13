@@ -1,8 +1,10 @@
 package com.b0ve.solucionintegraciongenerica.utils.exceptions;
 
-public class ExecutionException extends RuntimeException {
+import com.b0ve.solucionintegraciongenerica.flow.Message;
 
-    public ExecutionException(String string) {
-        super(string);
+public class ExecutionException extends SIGException {
+
+    public ExecutionException(String string, Object associatedObject, Exception nestedException) {
+        super("Execution Exception: "+string, associatedObject, nestedException);
     }
 }

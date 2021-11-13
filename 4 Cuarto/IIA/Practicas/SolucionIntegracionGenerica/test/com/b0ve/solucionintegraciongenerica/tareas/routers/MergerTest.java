@@ -11,6 +11,7 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -19,7 +20,7 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class MergerTest {
 
     @Test
-    public void testMerger1() {
+    public void testMerger1() throws SIGException {
         Message m1 = newMessage(0, 0, "<cid>0</cid>");
         Message m2 = newMessage(1, 1, "<cid>1</cid>");
         Message m3 = newMessage(2, 2, "<cid>2</cid>");
@@ -27,16 +28,16 @@ public class MergerTest {
         Merger merger = new Merger();
         Buffer in1 = new Buffer(null);
         Buffer in2 = new Buffer(null);
-        merger.addEntrada(in1);
-        merger.addEntrada(in2);
+        merger.addInput(in1);
+        merger.addInput(in2);
         Buffer out1 = new Buffer(null);
-        merger.addSalida(out1);
+        merger.addOutput(out1);
 
         in1.push(m1);
         in2.push(m2);
         in1.push(m3);
 
-        merger.procesar();
+        merger.process();
 
         assertEquals(out1.retrive().getID(), 0);
         assertEquals(out1.retrive().getID(), 2);

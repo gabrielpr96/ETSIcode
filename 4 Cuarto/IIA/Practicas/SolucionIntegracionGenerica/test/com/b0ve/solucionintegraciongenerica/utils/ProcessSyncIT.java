@@ -20,6 +20,10 @@ import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.TRANSLATO
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XSLTransformationException;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -36,11 +40,11 @@ import org.xml.sax.SAXException;
  *
  * @author borja
  */
-public class ProcesoIT {
+public class ProcessSyncIT {
 
     @Test
-    public void testProcesoEjercicio1() {
-        Process p = new ProcessAsync();
+    public void testProcessAsyncEjercicio1() {
+        Process p = new ProcessSync();
 
         ArrayList<String> correosEnviados = new ArrayList<>();
         ArrayList<String> smssEnviados = new ArrayList<>();
@@ -62,8 +66,8 @@ public class ProcesoIT {
                             + "        </alumno>\n"
                             + "    </alumnos>\n"
                             + "</acta>");
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                    Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -88,8 +92,8 @@ public class ProcesoIT {
                         doc = Message.parseXML("<Results><Row><Email>email2@example.org</Email><Telefono>null</Telefono></Row></Results>");
                     }
                     return doc;
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                    Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SIGException ex) {
+                    Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 return null;
             }
@@ -101,7 +105,7 @@ public class ProcesoIT {
         };
         Adapter aMail = new Adapter() {
             @Override
-            public Document sendApp(Message m) {
+            public Document sendApp(Message m) throws XPathEvaluationException {
                 correosEnviados.add(m.evaluateXPathString("/alumno/email"));
                 return null;
             }
@@ -113,7 +117,7 @@ public class ProcesoIT {
         };
         Adapter aSMS = new Adapter() {
             @Override
-            public Document sendApp(Message m) {
+            public Document sendApp(Message m) throws XPathEvaluationException {
                 smssEnviados.add(m.evaluateXPathString("/alumno/telefono"));
                 return null;
             }
@@ -131,7 +135,7 @@ public class ProcesoIT {
             pMail = p.createPort(aMail);
             pSMS = p.createPort(aSMS);
         } catch (ConfigurationException ex) {
-            Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
             fail("Port setup failed");
             return;
         }
@@ -195,7 +199,7 @@ public class ProcesoIT {
         try {
             p.validate();
         } catch (ConfigurationException ex) {
-            Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
             fail("Proceso invalido");
         }
         p.execute();
@@ -204,7 +208,7 @@ public class ProcesoIT {
             p.shutdown();
             p.waitToEnd();
         } catch (InterruptedException ex) {
-            Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
             fail("Problema esperando a que termine el proceso");
         }
 
@@ -215,8 +219,8 @@ public class ProcesoIT {
     }
 
     @Test
-    public void testProcesoEjercicio2() {
-        Process p = new ProcessAsync();
+    public void testProcessAsyncEjercicio2() {
+        Process p = new ProcessSync();
 
         ArrayList<String> medidas = new ArrayList<>();
 
@@ -234,8 +238,8 @@ public class ProcesoIT {
                             + "    <lugar>Av. Guatemala, 41</lugar>\n"
                             + "    <valor>400</valor>\n"
                             + "</medida>");
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                    Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -263,8 +267,8 @@ public class ProcesoIT {
                             + "    <lugar>Av. Guatemala, 43</lugar>\n"
                             + "    <valor>260</valor>\n"
                             + "</medida>");
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                    Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -292,8 +296,8 @@ public class ProcesoIT {
                             + "    <lugar>37.25740833367934, -6.954137427758186</lugar>\n"
                             + "    <valor>110</valor>\n"
                             + "</medida>");
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                    Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -328,13 +332,8 @@ public class ProcesoIT {
         };
         Adapter aToGPS = new Adapter() {
             @Override
-            public Document sendApp(Message m) {
-                try {
-                    return Message.parseXML("<Results><Row><Coordenadas>37.2533675195021, -6.93658688591096</Coordenadas></Row></Results>");
-                } catch (ParserConfigurationException | SAXException | IOException ex) {
-                    Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                return null;
+            public Document sendApp(Message m) throws ParseException {
+                return Message.parseXML("<Results><Row><Coordenadas>37.2533675195021, -6.93658688591096</Coordenadas></Row></Results>");
             }
 
             @Override
@@ -351,7 +350,7 @@ public class ProcesoIT {
             pEstimador = p.createPort(aEstimador);
             pToGPS = p.createPort(aToGPS);
         } catch (ConfigurationException ex) {
-            Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
             fail("Failed to setup ports.");
             return;
         }
@@ -374,7 +373,7 @@ public class ProcesoIT {
                 + "</xsl:stylesheet>");
         Task slimmer = p.addTask(new SlimmerTemplate() {
             @Override
-            protected void slim(Message mensaje) {
+            protected void slim(Message mensaje) throws XSLTransformationException {
                 mensaje.transformBody("<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
                         + "    <xsl:template match=\"/medida\">\n"
                         + "        <medida>\n"
@@ -414,7 +413,7 @@ public class ProcesoIT {
         try {
             p.validate();
         } catch (ConfigurationException ex) {
-            Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
             fail("Proceso invalido");
         }
         p.execute();
@@ -423,7 +422,7 @@ public class ProcesoIT {
             p.shutdown();
             p.waitToEnd();
         } catch (InterruptedException ex) {
-            Logger.getLogger(ProcesoIT.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcessSyncIT.class.getName()).log(Level.SEVERE, null, ex);
             fail("Problema esperando a que termine el proceso");
         }
 

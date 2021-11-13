@@ -6,6 +6,9 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.FragmentInfo;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -37,9 +40,9 @@ public class SplitterParticionado extends Task {
     }
 
     @Override
-    public final void procesar() {
-        Buffer salida = salidas.get(0);
-        Buffer entrada = entradas.get(0);
+    public final void process() throws SIGException {
+        Buffer salida = output(0);
+        Buffer entrada = input(0);
         while (!entrada.empty()) {
             Message mensaje = entrada.retrive();
             Map<String, List<String>> parts = split(mensaje);
@@ -47,35 +50,27 @@ public class SplitterParticionado extends Task {
                 List<String> mensajes = entry.getValue();
                 for (String doc : mensajes) {
                     Message parte;
-                    try {
-                        parte = new Message(doc);
-                        parte.addFragmentInfo(new FragmentInfo(contador, mensajes.size()));
-                        salida.push(parte);
-                    } catch (ParserConfigurationException | SAXException | IOException ex) {
-                        Logger.getLogger(SplitterParticionado.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    parte = new Message(doc);
+                    parte.addFragmentInfo(new FragmentInfo(contador, mensajes.size()));
+                    salida.push(parte);
                 }
                 contador++;
             }
         }
     }
 
-    protected Map<String, List<String>> split(Message mensaje) {
+    protected Map<String, List<String>> split(Message mensaje) throws SIGException {
         Map<String, List<String>> divisiones = new HashMap<>();
-        try {
-            NodeList lista = mensaje.evaluateXPath(xpathDivisor);
-            for (int i = 0; i < lista.getLength(); i++) {
-                Document doc = Message.node2document(lista.item(i));
-                String fragmento = Message.evaluateXPath(doc, xpathParticion).item(0).getTextContent();
-                List<String> particion = divisiones.get(fragmento);
-                if (particion == null) {
-                    particion = new ArrayList<>();
-                    divisiones.put(fragmento, particion);
-                }
-                particion.add(Message.serialiceXML(doc));
+        NodeList lista = mensaje.evaluateXPath(xpathDivisor);
+        for (int i = 0; i < lista.getLength(); i++) {
+            Document doc = Message.node2document(lista.item(i));
+            String fragmento = Message.evaluateXPath(doc, xpathParticion).item(0).getTextContent();
+            List<String> particion = divisiones.get(fragmento);
+            if (particion == null) {
+                particion = new ArrayList<>();
+                divisiones.put(fragmento, particion);
             }
-        } catch (TransformerException | ParserConfigurationException | XPathExpressionException | SAXException | IOException ex) {
-            Logger.getLogger(SplitterParticionado.class.getName()).log(Level.SEVERE, null, ex);
+            particion.add(Message.serialiceXML(doc));
         }
         return divisiones;
     }

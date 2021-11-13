@@ -2,6 +2,7 @@ package com.b0ve.solucionintegraciongenerica.ports;
 
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 
 public class PortRequest extends Port {
@@ -15,12 +16,12 @@ public class PortRequest extends Port {
     }
 
     @Override
-    protected void sendAdapter(Message m) {
+    protected void sendAdapter(Message m) throws SIGException {
         Document doc = adapter.sendApp(m);
         if (doc != null) {
             Message response = new Message(doc);
             response.setCorrelationID(m.getCorrelationID());
-            salidas.get(0).push(response);
+            output(0).push(response);
         }
     }
 

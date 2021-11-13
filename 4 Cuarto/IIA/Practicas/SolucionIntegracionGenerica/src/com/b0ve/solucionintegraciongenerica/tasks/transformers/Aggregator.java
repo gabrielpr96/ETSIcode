@@ -1,17 +1,13 @@
 package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 
 import com.b0ve.solucionintegraciongenerica.flow.Message;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 public final class Aggregator extends AggregatorTemplate {
 
@@ -23,7 +19,7 @@ public final class Aggregator extends AggregatorTemplate {
     }
 
     @Override
-    protected Document join(Message[] mensajes) {
+    protected Document join(Message[] messages) throws SIGException {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dbf.newDocumentBuilder();
@@ -47,15 +43,14 @@ public final class Aggregator extends AggregatorTemplate {
                 appendPoint = doc.createElement("list");
                 doc.appendChild(appendPoint);
             }
-            for (Message mensaje : mensajes) {
-                Node newChild = Message.document2node(mensaje.getBody());
+            for (Message message : messages) {
+                Node newChild = Message.document2node(message.getBody());
                 Node imported = doc.importNode(newChild, true);
                 appendPoint.appendChild(imported);
             }
             return doc;
         } catch (ParserConfigurationException  ex) {
-            Logger.getLogger(Aggregator.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            throw new SIGException("Messages could not be combined", messages, ex);
         }
     }
 

@@ -3,6 +3,7 @@ package com.b0ve.solucionintegraciongenerica.tasks.modifiers;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public abstract class ContextSlimmerTemplate extends Task {
 
@@ -11,18 +12,18 @@ public abstract class ContextSlimmerTemplate extends Task {
     }
 
     @Override
-    public final void procesar() {
-        Buffer salida = salidas.get(0);
-        Buffer entradaDato = entradas.get(0);
-        Buffer entradaCondicion = entradas.get(1);
-        while (!entradaDato.empty() && !entradaCondicion.empty()) {
-            Message mensajeDato = entradaDato.retrive();
-            Message mensajeCondicion = entradaCondicion.retrive();
-            slim(mensajeDato, mensajeCondicion);
-            salida.push(mensajeDato);
+    public final void process() throws SIGException {
+        Buffer output = output(0);
+        Buffer inputBase = input(0);
+        Buffer inputCondition = input(1);
+        while (!inputBase.empty() && !inputCondition.empty()) {
+            Message mBase = inputBase.retrive();
+            Message mCondition = inputCondition.retrive();
+            slim(mBase, mCondition);
+            output.push(mBase);
         }
     }
 
-    protected abstract void slim(Message mensaje, Message condicion);
+    protected abstract void slim(Message m, Message condition) throws SIGException;
 
 }

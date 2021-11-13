@@ -26,8 +26,9 @@ import com.b0ve.solucionintegraciongenerica.tasks.TaskDebug;
 import java.util.ArrayList;
 import java.util.List;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.Checkeable;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.DefaultExceptionHandler;
-import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExceptionHandleable;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.DefaultExceptionHandler;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.ExceptionHandleable;
 
 public abstract class Process {
 
@@ -152,7 +153,7 @@ public abstract class Process {
                 puerto = new PortRequest(adapter);
                 break;
             default:
-                throw new ConfigurationException("Adapter did not provide a valid compatible port type.");
+                throw new ConfigurationException("Adapter did not provide a valid compatible port type.", "Option given by adapter: "+adapter.getCompatiblePortType(), null);
         }
         addTask(puerto);
         return puerto;
@@ -160,13 +161,13 @@ public abstract class Process {
 
     public void connect(Task t1, Task t2) {
         Buffer b = new Buffer(t2);
-        t1.addSalida(b);
-        t2.addEntrada(b);
+        t1.addOutput(b);
+        t2.addInput(b);
     }
 
     public void validate() throws ConfigurationException {
         for (Task tarea : tasks) {
-            tarea.validar();
+            tarea.validate();
         }
     }
 
@@ -180,7 +181,7 @@ public abstract class Process {
         this.exceptionHandler = handler;
     }
     
-    public void handleException(String message, Message associatedMessage, Exception associatedException){
-        exceptionHandler.handleException(message, associatedMessage, associatedException);
+    public void handleException(SIGException exception){
+        exceptionHandler.handleException(exception);
     }
 }

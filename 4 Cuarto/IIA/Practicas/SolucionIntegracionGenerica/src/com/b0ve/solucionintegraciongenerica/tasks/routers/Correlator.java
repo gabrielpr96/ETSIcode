@@ -2,6 +2,7 @@ package com.b0ve.solucionintegraciongenerica.tasks.routers;
 
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationException;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public final class Correlator extends CorrelatorTemplate {
 
@@ -17,18 +18,18 @@ public final class Correlator extends CorrelatorTemplate {
     }
 
     @Override
-    protected boolean comparar(Message m1, Message m2) {
+    protected boolean route(Message m1, Message m2) throws SIGException {
         if (expresion == null) {
-            return super.comparar(m1, m2);
+            return super.route(m1, m2);
         } else {
             return m1.evaluateXPath(expresion).item(0).getTextContent().equals(m2.evaluateXPath(expresion).item(0).getTextContent());
         }
     }
 
     @Override
-    public void validar() throws ConfigurationException {
-        super.validar();
-        if(this.entradas.size() != this.salidas.size()) throw new ConfigurationException("Error Correlator requiere mismo numero de entradas que de salidas");
+    public void validate() throws ConfigurationException {
+        super.validate();
+        if(nInputs() != nOutputs()) throw new ConfigurationException("Correlator requires the same number of inputs and outputs", null, null);
     }
     
     

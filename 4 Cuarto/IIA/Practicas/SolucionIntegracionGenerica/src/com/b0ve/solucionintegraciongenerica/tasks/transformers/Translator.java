@@ -1,6 +1,7 @@
 package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public final class Translator extends TranslatorTemplate {
 
@@ -12,8 +13,8 @@ public final class Translator extends TranslatorTemplate {
     }
 
     @Override
-    protected void transform(Message mensaje) {
-        mensaje.transformBody(xslt);
+    protected void transform(Message m) throws SIGException {
+        m.transformBody(xslt);
     }
 
 }

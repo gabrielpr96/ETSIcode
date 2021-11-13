@@ -12,6 +12,7 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -20,7 +21,7 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class DistributorTest {
 
     @Test
-    public void testDistributor1() {
+    public void testDistributor1() throws SIGException {
         Distributor distributor = new Distributor(new FilterConditionEquals[]{new FilterConditionEquals("/cid", "0"), new FilterConditionEquals("/cid", "1")});
         Message m1 = newMessage(0, 0, "<cid>0</cid>");
         Message m2 = newMessage(1, 1, "<cid>1</cid>");
@@ -31,13 +32,13 @@ public class DistributorTest {
                 m6 = newMessage(5, 4, "<cid>err</cid>");
 
         Buffer in1 = new Buffer(null);
-        distributor.addEntrada(in1);
+        distributor.addInput(in1);
         Buffer out1 = new Buffer(null);
         Buffer out2 = new Buffer(null);
         Buffer out3 = new Buffer(null);
-        distributor.addSalida(out1);
-        distributor.addSalida(out2);
-        distributor.addSalida(out3);
+        distributor.addOutput(out1);
+        distributor.addOutput(out2);
+        distributor.addOutput(out3);
 
         in1.push(m1);
         in1.push(m2);
@@ -46,7 +47,7 @@ public class DistributorTest {
         in1.push(m5);
         in1.push(m6);
 
-        distributor.procesar();
+        distributor.process();
 
         assertEquals(out1.retrive().getID(), 0);
         assertEquals(out1.retrive().getID(), 4);

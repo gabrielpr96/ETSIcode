@@ -5,6 +5,7 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.FragmentInfo;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import org.w3c.dom.Document;
 
 public abstract class SplitterTemplate extends Task {
@@ -13,23 +14,22 @@ public abstract class SplitterTemplate extends Task {
     }
 
     @Override
-    public final void procesar() {
-        Buffer salida = salidas.get(0);
-        Buffer entrada = entradas.get(0);
-        while (!entrada.empty()) {
-            Message mensaje = entrada.retrive();
-            //if(mensaje.getSequenceSize() != 0) throw new ExecutionException("No se puede fragmentar un fragmento de mensaje");
+    public final void process() throws SIGException {
+        Buffer output = output(0);
+        Buffer input = input(0);
+        while (!input.empty()) {
+            Message mensaje = input.retrive();
             Document[] parts = split(mensaje);
             long fragmentID = FragmentInfo.uniqueID();
             for (int i = 0; i < parts.length; i++) {
-                Message parte = new Message(parts[i]);
-                parte.addFragmentInfo(mensaje.getFragmentInfoStack());
-                parte.addFragmentInfo(new FragmentInfo(fragmentID, parts.length));
-                salida.push(parte);
+                Message part = new Message(parts[i]);
+                part.addFragmentInfo(mensaje.getFragmentInfoStack());
+                part.addFragmentInfo(new FragmentInfo(fragmentID, parts.length));
+                output.push(part);
             }
         }
     }
 
-    protected abstract Document[] split(Message mensaje);
+    protected abstract Document[] split(Message m) throws SIGException ;
 
 }

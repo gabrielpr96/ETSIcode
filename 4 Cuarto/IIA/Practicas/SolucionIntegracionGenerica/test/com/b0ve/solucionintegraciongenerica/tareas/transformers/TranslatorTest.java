@@ -11,6 +11,7 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -19,7 +20,7 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class TranslatorTest {
 
     @Test
-    public void testTranslator1() {
+    public void testTranslator1() throws SIGException {
         Message m1 = newMessage(0, 0, "<libro><titulo>Robotica Vision y Control</titulo><autor>Peter Corke</autor><precio>70</precio></libro>");
         Translator translator = new Translator("<?xml version=\"1.0\"?>\n"
                 + "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"
@@ -35,13 +36,13 @@ public class TranslatorTest {
                 + "</xsl:template>\n"
                 + "</xsl:stylesheet>");
         Buffer in = new Buffer(null);
-        translator.addEntrada(in);
+        translator.addInput(in);
         Buffer out = new Buffer(null);
-        translator.addSalida(out);
+        translator.addOutput(out);
 
         in.push(m1);
 
-        translator.procesar();
+        translator.process();
 
         assertEquals(out.retrive().evaluateXPath("/libro/nombre").item(0).getTextContent(), "Peter Corke - Robotica Vision y Control");
     }

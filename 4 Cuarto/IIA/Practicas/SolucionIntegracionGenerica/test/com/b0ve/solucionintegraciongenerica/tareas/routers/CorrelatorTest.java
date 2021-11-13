@@ -29,12 +29,12 @@ public class CorrelatorTest {
         Correlator correlator = new Correlator();
         Buffer in1 = new Buffer(null);
         Buffer in2 = new Buffer(null);
-        correlator.addEntrada(in1);
-        correlator.addEntrada(in2);
+        correlator.addInput(in1);
+        correlator.addInput(in2);
         Buffer out1 = new Buffer(null);
         Buffer out2 = new Buffer(null);
-        correlator.addSalida(out1);
-        correlator.addSalida(out2);
+        correlator.addOutput(out1);
+        correlator.addOutput(out2);
 
         in1.push(m11);
         in1.push(m12);
@@ -43,7 +43,7 @@ public class CorrelatorTest {
         in2.push(m22);
         in2.push(m23);
 
-        correlator.procesar();
+        correlator.process();
 
         assertEquals(out1.retrive().getCorrelationID(), out2.retrive().getCorrelationID());
         assertEquals(out1.retrive().getCorrelationID(), out2.retrive().getCorrelationID());
@@ -63,12 +63,12 @@ public class CorrelatorTest {
 
         Buffer in1 = new Buffer(null);
         Buffer in2 = new Buffer(null);
-        correlator.addEntrada(in1);
-        correlator.addEntrada(in2);
+        correlator.addInput(in1);
+        correlator.addInput(in2);
         Buffer out1 = new Buffer(null);
         Buffer out2 = new Buffer(null);
-        correlator.addSalida(out1);
-        correlator.addSalida(out2);
+        correlator.addOutput(out1);
+        correlator.addOutput(out2);
 
         in1.push(m11);
         in1.push(m12);
@@ -77,7 +77,7 @@ public class CorrelatorTest {
         in2.push(m22);
         in2.push(m23);
 
-        correlator.procesar();
+        correlator.process();
 
         assertEquals(out1.retrive().evaluateXPathString("/cid"), out2.retrive().evaluateXPathString("/cid"));
         assertEquals(out1.retrive().evaluateXPathString("/cid"), out2.retrive().evaluateXPathString("/cid"));

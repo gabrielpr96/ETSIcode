@@ -5,6 +5,8 @@ import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.ports.PortInput;
 import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.ExecutionException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
@@ -12,26 +14,26 @@ import org.xml.sax.SAXException;
 
 public abstract class Adapter {
 
-    private Port puerto;
+    private Port port;
 
     public Adapter() {
     }
 
     public void setPuerto(Port puerto) {
-        this.puerto = puerto;
+        this.port = puerto;
     }
 
-    public Document sendApp(Message m){
-        throw new ExecutionException("This port does not support sending direct messages to the app");
+    public Document sendApp(Message m) throws SIGException{
+        throw new ExecutionException("This port does not support sending direct messages to the app", null, null);
     }
 
     protected void sendPort(Document doc) {
-        if (puerto != null && puerto instanceof PortInput) {
-            ((PortInput) puerto).enviarProceso(doc);
+        if (port != null && port instanceof PortInput) {
+            ((PortInput) port).sendProcess(doc);
         }
     }
 
-    protected void sendPort(String xml) throws ParserConfigurationException, SAXException, IOException {
+    protected void sendPort(String xml) throws ParseException {
         sendPort(Message.parseXML(xml));
     }
 
@@ -42,4 +44,8 @@ public abstract class Adapter {
     }
     
     public abstract PORTS getCompatiblePortType();
+
+    public void handleException(SIGException exception){
+        if(port != null) port.handleException(exception);
+    }
 }

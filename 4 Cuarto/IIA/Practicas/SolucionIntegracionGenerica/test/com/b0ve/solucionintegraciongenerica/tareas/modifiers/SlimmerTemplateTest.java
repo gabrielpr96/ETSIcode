@@ -17,6 +17,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -25,7 +26,7 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class SlimmerTemplateTest {
 
     @Test
-    public void testSlimmerTemplate1() throws ParserConfigurationException, XPathExpressionException, SAXException, IOException {
+    public void testSlimmerTemplate1() throws ParserConfigurationException, XPathExpressionException, SAXException, IOException, SIGException {
         Message m1 = newMessage(0, 0, "<pelicula><titulo>Crimen Ferpecto</titulo><precio>10.5</precio></pelicula>");
 
         SlimmerTemplate slimer = new SlimmerTemplate() {
@@ -39,13 +40,13 @@ public class SlimmerTemplateTest {
             }
         };
         Buffer in = new Buffer(null);
-        slimer.addEntrada(in);
+        slimer.addInput(in);
         Buffer out = new Buffer(null);
-        slimer.addSalida(out);
+        slimer.addOutput(out);
 
         in.push(m1);
 
-        slimer.procesar();
+        slimer.process();
 
         assertEquals(Message.evaluateXPath(m1.getBody(), "/pelicula/precio").getLength(), 0);
         assertEquals(Message.evaluateXPath(m1.getBody(), "/pelicula/titulo").item(0).getTextContent(), "Crimen Ferpecto");

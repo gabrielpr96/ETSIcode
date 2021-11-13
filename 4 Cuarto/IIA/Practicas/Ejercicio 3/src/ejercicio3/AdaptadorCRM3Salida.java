@@ -3,6 +3,8 @@ package ejercicio3;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.Process;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,7 +34,7 @@ public class AdaptadorCRM3Salida extends Adapter {
     }
 
     @Override
-    public Document sendApp(Message m) {
+    public Document sendApp(Message m) throws SIGException {
         try {
             //En realidad por cada mensaje solo hay un cambio, pero es faicilmente modificable
             NodeList cambios = m.evaluateXPath("/cambio");
@@ -64,10 +66,8 @@ public class AdaptadorCRM3Salida extends Adapter {
                     adaptadorEntrada.removeConocido(dni);
                 }
             }
-        } catch (SQLException | ParserConfigurationException  ex) {
+        } catch (SQLException  ex) {
             Logger.getLogger(AdaptadorCRM3Entrada.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (XPathExpressionException | SAXException | IOException ex) {
-            Logger.getLogger(AdaptadorCRM3Salida.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

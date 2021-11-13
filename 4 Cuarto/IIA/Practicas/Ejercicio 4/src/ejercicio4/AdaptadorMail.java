@@ -3,12 +3,13 @@ package ejercicio4;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.Process;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 import org.w3c.dom.Document;
 
 public class AdaptadorMail extends Adapter {
 
     @Override
-    public Document sendApp(Message m) {
+    public Document sendApp(Message m) throws XPathEvaluationException {
         String destino = m.evaluateXPathString("/llamada/destino");
         String email = m.evaluateXPathString("/llamada/email");
         String minutos = m.evaluateXPathString("/llamada/duracion");

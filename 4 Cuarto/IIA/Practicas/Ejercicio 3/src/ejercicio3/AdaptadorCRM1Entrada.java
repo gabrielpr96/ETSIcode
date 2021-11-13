@@ -2,6 +2,7 @@ package ejercicio3;
 
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +33,7 @@ public class AdaptadorCRM1Entrada extends Adapter {
                         }
                         sleep(1000);
                     }
-                } catch (InterruptedException | IOException | ParserConfigurationException | SAXException ex) {
+                } catch (InterruptedException | IOException | ParseException  ex) {
                     Logger.getLogger(AdaptadorCRM1Entrada.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

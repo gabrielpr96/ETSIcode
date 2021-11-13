@@ -1,0 +1,8 @@
+package com.b0ve.solucionintegraciongenerica.utils.exceptions;
+
+public class XMLMergeException extends SIGException {
+
+    public XMLMergeException(String string, Object associatedObject, Exception nestedException) {
+        super("XML Merge Exception: "+string, associatedObject, nestedException);
+    }
+}

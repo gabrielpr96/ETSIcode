@@ -2,30 +2,31 @@ package com.b0ve.solucionintegraciongenerica.tasks.routers;
 
 import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.Checkeable;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 
 public class Distributor extends DistributorTemplate {
 
-    private final Checkeable[] condiciones;
+    private final Checkeable[] conditions;
 
-    public Distributor(Checkeable[] condiciones) {
+    public Distributor(Checkeable[] conditions) {
         super();
-        this.condiciones = condiciones;
+        this.conditions = conditions;
     }
 
     @Override
-    protected int comprobar(Message mensaje) {
-        int salida = -1, i = 0;
-        while (salida == -1 && i < condiciones.length) {
-            if (condiciones[i].checkCondition(mensaje)) {
-                salida = i;
+    protected int check(Message m) throws XPathEvaluationException{
+        int outPin = -1, i = 0;
+        while (outPin == -1 && i < conditions.length) {
+            if (conditions[i].checkCondition(m)) {
+                outPin = i;
             }else{
                 i++;
             }
         }
-        if (salida == -1) {
-            salida = salidas.size()-1;
+        if (outPin == -1) {
+            outPin = nOutputs()-1;
         }
-        return salida;
+        return outPin;
     }
 
 }

@@ -109,20 +109,20 @@ public class Ejercicio3 {
                 + "</cambios>");
         SplitterParticionado splitter = new SplitterParticionado("/cambios/cambio", "/cambio/datos/dni");
         Buffer in = new Buffer(null);
-        splitter.addEntrada(in);
+        splitter.addInput(in);
         Buffer mid = new Buffer(null);
-        splitter.addSalida(mid);
+        splitter.addOutput(mid);
 
         Aggregator aggregator = new Aggregator("lista");
-        aggregator.addEntrada(mid);
+        aggregator.addInput(mid);
         Buffer out = new Buffer(null);
-        aggregator.addSalida(out);
+        aggregator.addOutput(out);
 
         in.push(m1);
         //in.push(new Mensaje(m1));
 
-        splitter.procesar();
-        aggregator.procesar();
+        splitter.process();
+        aggregator.process();
 
         System.out.println(out.retrive());
         System.out.println(out.retrive());

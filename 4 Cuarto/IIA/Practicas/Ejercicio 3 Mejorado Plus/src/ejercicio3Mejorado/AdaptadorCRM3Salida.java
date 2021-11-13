@@ -3,6 +3,7 @@ package ejercicio3Mejorado;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.Process;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class AdaptadorCRM3Salida extends Adapter {
     }
 
     @Override
-    public Document sendApp(Message m) {
+    public Document sendApp(Message m) throws XPathEvaluationException {
         try {
             Statement stmt = conn.createStatement();
             stmt.execute(m.evaluateXPathString("sql"));

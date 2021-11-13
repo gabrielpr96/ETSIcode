@@ -10,6 +10,7 @@ import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterCondition;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XSLTransformationException;
 import java.time.Instant;
 
 public class Ejercicio2 {
@@ -47,7 +48,7 @@ public class Ejercicio2 {
         "</xsl:stylesheet>");
         Task slimmer = p.addTask(new SlimmerTemplate() {
             @Override
-            protected void slim(Message mensaje) {
+            protected void slim(Message mensaje) throws XSLTransformationException {
                 mensaje.transformBody("<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
                 "    <xsl:template match=\"/medida\">\n" +
                 "        <medida>\n" +

@@ -2,6 +2,7 @@ package com.b0ve.solucionintegraciongenerica.tasks.routers;
 
 import com.b0ve.solucionintegraciongenerica.flow.Message;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.Checkeable;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.XPathEvaluationException;
 
 public class Filter extends FilterTemplate {
 
@@ -13,7 +14,7 @@ public class Filter extends FilterTemplate {
     }
 
     @Override
-    protected boolean comprobar(Message mensaje) {
+    protected boolean check(Message mensaje) throws XPathEvaluationException {
         return condicion.checkCondition(mensaje);
     }
 

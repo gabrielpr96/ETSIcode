@@ -2,6 +2,8 @@ package com.b0ve.solucionintegraciongenerica.adapters;
 
 import com.b0ve.solucionintegraciongenerica.utils.Process;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,8 +35,11 @@ public class AdapterDirWhatcher extends Adapter {
                             }
                             sleep(1000);
                         }
-                    } catch (InterruptedException | IOException | ParserConfigurationException | SAXException ex) {
-                        Logger.getLogger(AdapterDirWhatcher.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ParseException ex) {
+                        handleException(ex);
+                    } catch (IOException ex) {
+                        handleException(new SIGException("Error reading file", null, ex));
+                    } catch (InterruptedException ex) {
                     }
                 }
             };

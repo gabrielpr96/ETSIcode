@@ -11,6 +11,7 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -19,21 +20,21 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class CorrelationIDSetterTest {
 
     @Test
-    public void testCorrelationIDSetter1() {
+    public void testCorrelationIDSetter1() throws SIGException {
         Message m1 = newMessage(0, 0, "<m>1</m>");
         Message m2 = newMessage(1, 0, "<m>2</m>");
         Message m3 = newMessage(2, 0, "<m>3</m>");
         CorrelationIDSetter cidSetter = new CorrelationIDSetter();
         Buffer in = new Buffer(null);
-        cidSetter.addEntrada(in);
+        cidSetter.addInput(in);
         Buffer out = new Buffer(null);
-        cidSetter.addSalida(out);
+        cidSetter.addOutput(out);
 
         in.push(m1);
         in.push(m2);
         in.push(m3);
 
-        cidSetter.procesar();
+        cidSetter.process();
 
         assertEquals(out.retrive().getCorrelationID(), 0);
         assertEquals(out.retrive().getCorrelationID(), 1);

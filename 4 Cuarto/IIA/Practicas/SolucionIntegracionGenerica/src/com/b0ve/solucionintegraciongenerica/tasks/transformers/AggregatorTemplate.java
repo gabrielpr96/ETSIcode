@@ -3,6 +3,7 @@ package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,37 +18,37 @@ public abstract class AggregatorTemplate extends Task {
     }
 
     @Override
-    public final void procesar() {
+    public final void process() throws SIGException {
         //Bloquear las nuevas entradas
         lockPushes();
-        Map<Long, List<Message>> fragmentos = new HashMap<>();
-        Buffer salida = salidas.get(0);
-        Buffer entrada = entradas.get(0);
-        for (Iterator<Message> iterator = entrada.getIterator(); iterator.hasNext();) {
-            Message mensaje = iterator.next();
-            List<Message> lista = fragmentos.get(mensaje.getFragmentID());
-            if (lista == null) {
-                lista = new ArrayList<>();
-                fragmentos.put(mensaje.getFragmentID(), lista);
+        Map<Long, List<Message>> fragments = new HashMap<>();
+        Buffer output = output(0);
+        Buffer input = input(0);
+        for (Iterator<Message> iterator = input.getIterator(); iterator.hasNext();) {
+            Message m = iterator.next();
+            List<Message> list = fragments.get(m.getFragmentID());
+            if (list == null) {
+                list = new ArrayList<>();
+                fragments.put(m.getFragmentID(), list);
             }
-            lista.add(mensaje);
+            list.add(m);
         }
-        for (Map.Entry<Long, List<Message>> fragmento : fragmentos.entrySet()) {
-            List<Message> mensajes = fragmento.getValue();
-            if (mensajes.get(0).getFragmentSize()== mensajes.size()) {
-                for (Message mensaje : mensajes) {
-                    entrada.deleteMessage(mensaje);
+        for (Map.Entry<Long, List<Message>> fragment : fragments.entrySet()) {
+            List<Message> messages = fragment.getValue();
+            if (messages.get(0).getFragmentSize()== messages.size()) {
+                for (Message mensaje : messages) {
+                    input.deleteMessage(mensaje);
                 }
-                Message mensaje = new Message(join(mensajes.toArray(new Message[0])));
-                mensajes.get(0).removeFragmentInfo();
-                mensaje.addFragmentInfo(mensajes.get(0).getFragmentInfoStack());
-                salida.push(mensaje);
+                Message mensaje = new Message(join(messages.toArray(new Message[0])));
+                messages.get(0).removeFragmentInfo();
+                mensaje.addFragmentInfo(messages.get(0).getFragmentInfoStack());
+                output.push(mensaje);
             }
         }
         //Desbloquear las nuevas entradas
         unlockPushes();
     }
 
-    protected abstract Document join(Message[] mensajes);
+    protected abstract Document join(Message[] messages) throws SIGException;
 
 }

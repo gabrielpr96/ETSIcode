@@ -2,6 +2,7 @@ package ejercicio3;
 
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -66,7 +67,7 @@ public class AdaptadorCRM3Entrada extends Adapter {
                                 }
                             }
                             sleep(1000);
-                        } catch (InterruptedException | SQLException | ParserConfigurationException  ex) {
+                        } catch (InterruptedException | SQLException | ParserConfigurationException | ParseException  ex) {
                             Logger.getLogger(AdaptadorCRM3Entrada.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }

@@ -1,45 +1,56 @@
 package com.b0ve.solucionintegraciongenerica.tasks.transformers;
 
 import com.b0ve.solucionintegraciongenerica.flow.Message;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 public final class Assembler extends AssemblerTemplate {
 
-    private final String rootName;
+    private final Object rootName;
 
-    public Assembler(String rootName) {
+    public Assembler(Object rootName) {
         super();
         this.rootName = rootName;
     }
 
     @Override
-    protected Document join(Message[] mensajes) {
+    protected Document join(Message[] messages) throws SIGException {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dbf.newDocumentBuilder();
             Document doc = builder.newDocument();
-            Element root = doc.createElement(rootName);
-            doc.appendChild(root);
-            for (Message mensaje : mensajes) {
-                Node newChild = Message.document2node(mensaje.getBody());
+            Element appendPoint = null;
+            if(rootName instanceof String){
+                appendPoint = doc.createElement((String) rootName);
+                doc.appendChild(appendPoint);
+            }else if(rootName instanceof String[]){
+                String[] rootNames = (String[]) rootName;
+                for (String name : rootNames) {
+                    Element newPoint = doc.createElement(name);
+                    if(appendPoint == null){
+                        doc.appendChild(newPoint);
+                    }else{
+                        appendPoint.appendChild(newPoint);
+                    }
+                    appendPoint = newPoint;
+                }
+            }else{
+                appendPoint = doc.createElement("list");
+                doc.appendChild(appendPoint);
+            }
+            for (Message message : messages) {
+                Node newChild = Message.document2node(message.getBody());
                 Node imported = doc.importNode(newChild, true);
-                root.appendChild(imported);
+                appendPoint.appendChild(imported);
             }
             return doc;
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(Assembler.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        } catch (ParserConfigurationException  ex) {
+            throw new SIGException("Messages could not be combined", messages, ex);
         }
     }
 

@@ -2,6 +2,8 @@ package com.b0ve.solucionintegraciongenerica.adapters;
 
 import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,8 +40,8 @@ public class AdapterPHP extends Adapter {
             JSONObject json = new JSONObject(response);
             String responseXML = XML.toString(json);
             return Message.parseXML(responseXML);
-        } catch (JSONException | ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(AdapterPHP.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SIGException ex) {
+            handleException(ex);
         }
         return null;
     }

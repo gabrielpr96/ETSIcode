@@ -12,6 +12,7 @@ import com.b0ve.solucionintegraciongenerica.flow.Message;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 /**
  *
@@ -20,29 +21,29 @@ import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 public class FilterTest {
 
     @Test
-    public void tetFilter1() {
+    public void tetFilter1() throws SIGException {
         Message m1 = newMessage(0, 0, "<cid>0</cid>");
         Message m2 = newMessage(1, 1, "<cid>1</cid>");
         Message m3 = newMessage(2, 2, "<cid>2</cid>");
 
         Filter filter = new Filter(new FilterConditionEquals("cid", "1"));
         Buffer in = new Buffer(null);
-        filter.addEntrada(in);
+        filter.addInput(in);
         Buffer out = new Buffer(null);
-        filter.addSalida(out);
+        filter.addOutput(out);
 
         in.push(m1);
         in.push(m2);
         in.push(m3);
 
-        filter.procesar();
+        filter.process();
 
         assertTrue(out.retrive().getID() == 1);
         assertTrue(out.retrive() == null);
     }
 
     @Test
-    public void tetFilter2() {
+    public void tetFilter2() throws SIGException {
         Message m1 = newMessage(0, 0, "<cid>0</cid>");
         Message m2 = newMessage(1, 1, "<cid>1</cid>");
         Message m3 = newMessage(2, 2, "<cid>2</cid>");
@@ -51,15 +52,15 @@ public class FilterTest {
             return Integer.parseInt(mensaje.evaluateXPath("/cid").item(0).getTextContent()) >= 1;
         });
         Buffer in = new Buffer(null);
-        filter.addEntrada(in);
+        filter.addInput(in);
         Buffer out = new Buffer(null);
-        filter.addSalida(out);
+        filter.addOutput(out);
 
         in.push(m1);
         in.push(m2);
         in.push(m3);
 
-        filter.procesar();
+        filter.process();
 
         assertEquals(out.retrive().getID(), 1);
         assertEquals(out.retrive().getID(), 2);

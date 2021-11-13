@@ -2,6 +2,7 @@ package com.b0ve.solucionintegraciongenerica.tasks;
 
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public class TaskDebug extends Task {
 
@@ -17,14 +18,13 @@ public class TaskDebug extends Task {
     }
 
     @Override
-    public final void procesar() {
-        Buffer entrada = entradas.get(0);
+    public final void process() throws SIGException {
+        Buffer entrada = input(0);
         while (!entrada.empty()) {
             Message mensaje = entrada.retrive();
             debugLog(mensaje.getBodyString());
             if(continuar){
-                Buffer salida = salidas.get(0);
-                salida.push(mensaje);
+                output(0).push(mensaje);
             }
         }
     }

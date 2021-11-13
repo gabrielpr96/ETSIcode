@@ -6,7 +6,9 @@ import com.b0ve.solucionintegraciongenerica.utils.Process;
 import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.tasks.modifiers.EnricherTemplate;
 import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import ejercicio3.AdaptadorCRM1Entrada;
 import ejercicio3.AdaptadorCRM1Salida;
 import ejercicio3.AdaptadorCRM2Entrada;
@@ -66,21 +68,21 @@ public class Ejercicio3Mejorado {
         Task splitterCrm1In = p.createTask(SPLITTER, "/cambios/cambio");
         Task splitterCrm2In = p.createTask(SPLITTER, "/cambios/cambio");
         Task splitterCrm3In = p.createTask(SPLITTER, "/cambios/cambio");
-        Task enricherCrm1In = p.addTask(new Enricher() {
+        Task enricherCrm1In = p.addTask(new EnricherTemplate() {
             @Override
-            protected void enrich(Message mensaje) throws Exception {
+            protected void enrich(Message mensaje) throws SIGException {
                 mensaje.setBody(Message.mergeXML(mensaje.getBody(), Message.parseXML("<cambio><fuente>CRM1</fuente></cambio>")));
             }
         });
-        Task enricherCrm2In = p.addTask(new Enricher() {
+        Task enricherCrm2In = p.addTask(new EnricherTemplate() {
             @Override
-            protected void enrich(Message mensaje) throws Exception {
+            protected void enrich(Message mensaje) throws SIGException {
                 mensaje.setBody(Message.mergeXML(mensaje.getBody(), Message.parseXML("<cambio><fuente>CRM2</fuente></cambio>")));
             }
         });
-        Task enricherCrm3In = p.addTask(new Enricher() {
+        Task enricherCrm3In = p.addTask(new EnricherTemplate() {
             @Override
-            protected void enrich(Message mensaje) throws Exception {
+            protected void enrich(Message mensaje) throws SIGException {
                 mensaje.setBody(Message.mergeXML(mensaje.getBody(), Message.parseXML("<cambio><fuente>CRM3</fuente></cambio>")));
             }
         });

@@ -2,6 +2,7 @@ package ejercicio1;
 
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.utils.Process;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -21,7 +22,7 @@ public class AdaptadorGMS extends Adapter {
                 while (!isInterrupted()) {
                     try {
                         sendPort(s.nextLine());
-                    } catch (ParserConfigurationException | SAXException | IOException ex) {
+                    } catch (ParseException ex) {
                         Logger.getLogger(AdaptadorGMS.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }

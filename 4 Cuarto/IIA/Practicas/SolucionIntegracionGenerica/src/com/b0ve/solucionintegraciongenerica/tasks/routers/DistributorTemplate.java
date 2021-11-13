@@ -3,6 +3,7 @@ package com.b0ve.solucionintegraciongenerica.tasks.routers;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 
 public abstract class DistributorTemplate extends Task {
     
@@ -11,14 +12,14 @@ public abstract class DistributorTemplate extends Task {
     }
 
     @Override
-    public final void procesar() {
-        Buffer entrada = entradas.get(0);
-        while(!entrada.empty()){
-            Message mensaje = entrada.retrive();
-            salidas.get(comprobar(mensaje)).push(mensaje);
+    public final void process() throws SIGException {
+        Buffer ouput = input(0);
+        while(!ouput.empty()){
+            Message m = ouput.retrive();
+            output(check(m)).push(m);
         }
     }
     
-    protected abstract int comprobar(Message mensaje);
+    protected abstract int check(Message mensaje) throws SIGException;
 
 }

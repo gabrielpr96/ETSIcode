@@ -2,6 +2,8 @@ package com.b0ve.solucionintegraciongenerica.adapters;
 
 import com.b0ve.solucionintegraciongenerica.utils.Process.PORTS;
 import com.b0ve.solucionintegraciongenerica.flow.Message;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.ParseException;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -23,10 +25,10 @@ public class AdapterConsole extends Adapter{
                     texto = es.nextLine();
                     try {
                         sendPort(texto);
-                    } catch (ParserConfigurationException | SAXException | IOException ex) {
-                        Logger.getLogger(AdapterConsole.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SIGException ex) {
+                        handleException(ex);
                     }
-                }while(!texto.equals("salir") && !isInterrupted());
+                }while(!texto.equals("exit") && !isInterrupted());
             }
         };
     }
@@ -44,10 +46,5 @@ public class AdapterConsole extends Adapter{
     @Override
     public PORTS getCompatiblePortType() {
         return PORTS.INPUT;
-    }
-
-    @Override
-    public Document sendApp(Message m) {
-        throw new UnsupportedOperationException("This adapter does not support sending messages to the app.");
     }
 }
