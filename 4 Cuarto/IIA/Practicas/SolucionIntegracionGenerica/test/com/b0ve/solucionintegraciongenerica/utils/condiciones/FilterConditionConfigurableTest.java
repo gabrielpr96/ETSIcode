@@ -10,10 +10,10 @@ public class FilterConditionConfigurableTest {
     public void testFilterConditionConfigurable1() {
         FilterCondition f1 = new FilterConditionConfigurable("", STR_EQUALS, "Trucu Trucu");
         FilterCondition f2 = new FilterConditionConfigurable("", STR_DISTINCT, "Trucu Trucu");
-        FilterCondition f3 = new FilterConditionConfigurable("", INTEGER_EQUALS, "144");
-        FilterCondition f4 = new FilterConditionConfigurable("", INTEGER_DISTINCT, "144");
-        FilterCondition f5 = new FilterConditionConfigurable("", INTEGER_LESS_THAN, "144");
-        FilterCondition f6 = new FilterConditionConfigurable("", INTEGER_GREATER_THAN, "144");
+        FilterCondition f3 = new FilterConditionConfigurable("", INT_EQUALS, "144");
+        FilterCondition f4 = new FilterConditionConfigurable("", INT_DISTINCT, "144");
+        FilterCondition f5 = new FilterConditionConfigurable("", INT_LESS_THAN, "144");
+        FilterCondition f6 = new FilterConditionConfigurable("", INT_GREATER_THAN, "144");
         FilterCondition f7 = new FilterConditionConfigurable("", DECIMAL_LESS_THAN, "1.44");
         FilterCondition f8 = new FilterConditionConfigurable("", DECIMAL_GRATER_THAN, "1.44");
         FilterCondition f9 = new FilterConditionConfigurable("", EMPTY, "");

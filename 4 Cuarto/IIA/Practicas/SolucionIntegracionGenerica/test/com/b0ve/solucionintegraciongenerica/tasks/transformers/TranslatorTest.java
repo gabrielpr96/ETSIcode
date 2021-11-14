@@ -34,9 +34,9 @@ public class TranslatorTest {
                 + "</libro>\n"
                 + "</xsl:template>\n"
                 + "</xsl:stylesheet>");
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         translator.addInput(in);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         translator.addOutput(out);
 
         in.push(m1);

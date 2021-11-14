@@ -26,12 +26,12 @@ public class CorrelatorTest {
                 m22 = newMessage(4, 1, "<m>22</m>"),
                 m23 = newMessage(5, 0, "<m>23</m>");
         Correlator correlator = new Correlator();
-        Buffer in1 = new Buffer(null);
-        Buffer in2 = new Buffer(null);
+        Buffer in1 = new Buffer(null, null);
+        Buffer in2 = new Buffer(null, null);
         correlator.addInput(in1);
         correlator.addInput(in2);
-        Buffer out1 = new Buffer(null);
-        Buffer out2 = new Buffer(null);
+        Buffer out1 = new Buffer(null, null);
+        Buffer out2 = new Buffer(null, null);
         correlator.addOutput(out1);
         correlator.addOutput(out2);
 
@@ -60,12 +60,12 @@ public class CorrelatorTest {
                 m22 = newMessage(4, 4, "<cid>1</cid>"),
                 m23 = newMessage(5, 5, "<cid>0</cid>");
 
-        Buffer in1 = new Buffer(null);
-        Buffer in2 = new Buffer(null);
+        Buffer in1 = new Buffer(null, null);
+        Buffer in2 = new Buffer(null, null);
         correlator.addInput(in1);
         correlator.addInput(in2);
-        Buffer out1 = new Buffer(null);
-        Buffer out2 = new Buffer(null);
+        Buffer out1 = new Buffer(null, null);
+        Buffer out2 = new Buffer(null, null);
         correlator.addOutput(out1);
         correlator.addOutput(out2);
 

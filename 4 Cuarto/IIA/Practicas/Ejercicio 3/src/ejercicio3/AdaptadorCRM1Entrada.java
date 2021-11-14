@@ -27,7 +27,7 @@ public class AdaptadorCRM1Entrada extends Adapter {
                         for (final File fileEntry : folder.listFiles()) {
                             if (fileEntry.isFile()) {
                                 Document doc = Message.parseXML(new String(Files.readAllBytes(fileEntry.toPath()), StandardCharsets.UTF_8));
-                                sendPort(doc);
+                                sendProcess(doc);
                                 fileEntry.delete();
                             }
                         }

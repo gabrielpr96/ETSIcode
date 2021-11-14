@@ -63,7 +63,7 @@ public class AdaptadorCRM3Entrada extends Adapter {
                                     for (String dni : eliminados) {
                                         createCambio(doc, root, dni, "eliminar");
                                     }
-                                    sendPort(Message.cloneDocument(doc));
+                                    sendProcess(Message.cloneDocument(doc));
                                 }
                             }
                             sleep(1000);

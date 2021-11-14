@@ -22,7 +22,7 @@ public class AdapterConsole extends Adapter {
                 do {
                     texto = es.nextLine();
                     try {
-                        sendPort(texto);
+                        sendProcess(texto);
                     } catch (SIGException ex) {
                         handleException(ex);
                     }

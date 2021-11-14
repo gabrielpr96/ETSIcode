@@ -1,13 +1,12 @@
 package cafe;
 
 import com.b0ve.solucionintegraciongenerica.adapters.AdapterDirOutputter;
-import com.b0ve.solucionintegraciongenerica.adapters.AdapterPHP;
+import com.b0ve.solucionintegraciongenerica.adapters.AdapterWebAPI;
 import com.b0ve.solucionintegraciongenerica.adapters.AdapterMySQL;
 import com.b0ve.solucionintegraciongenerica.adapters.AdapterDirWhatcher;
 import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.Process;
-import com.b0ve.solucionintegraciongenerica.utils.ProcessSync;
 import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
 import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionEquals;
@@ -20,7 +19,7 @@ public class Cafe {
         AdapterDirWhatcher comandas = new AdapterDirWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\comandas");
         AdapterDirOutputter camarero = new AdapterDirOutputter("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\camarero");
         AdapterMySQL barmanFrio = new AdapterMySQL("localhost", 3306, "cafe", "root", "");
-        AdapterPHP barmanCaliente = new AdapterPHP("http://localhost/cafe/api.php");
+        AdapterWebAPI barmanCaliente = new AdapterWebAPI("http://localhost/cafe/api.php");
         
         Port pComandas = p.createPort(comandas);
         Port pCamarero = p.createPort(camarero);

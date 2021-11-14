@@ -178,8 +178,9 @@ abstract public class Task implements Runnable, Notifiable {
 
     /**
      * Locks all the inputs
+     * @throws java.lang.InterruptedException
      */
-    protected void lockPushes() {
+    protected void lockPushes() throws InterruptedException {
         for (Buffer entrada : inputs) {
             entrada.lockPushes();
         }
@@ -224,6 +225,14 @@ abstract public class Task implements Runnable, Notifiable {
             throw new ConfigurationException("Esta tarea no pertenece a ningun proceso, no se puede encadenar", null, null);
         }
         process.connect(this, tarea);
+    }
+    
+    public List<Buffer> getInputs(){
+        return inputs;
+    }
+    
+    public List<Buffer> getOutputs(){
+        return outputs;
     }
 
 }

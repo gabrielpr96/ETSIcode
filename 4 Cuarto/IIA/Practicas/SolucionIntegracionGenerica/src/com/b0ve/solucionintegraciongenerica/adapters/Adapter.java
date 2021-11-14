@@ -39,7 +39,7 @@ public abstract class Adapter {
      * Sends a document to the port.
      * @param doc The body of the message
      */
-    protected void sendPort(Document doc) {
+    protected void sendProcess(Document doc) {
         if (port != null && port instanceof PortInput) {
             ((PortInput) port).sendProcess(doc);
         }
@@ -50,16 +50,8 @@ public abstract class Adapter {
      * @param xml The body of the msasage as a string
      * @throws ParseException 
      */
-    protected void sendPort(String xml) throws ParseException {
-        sendPort(Message.parseXML(xml));
-    }
-    
-    /**
-     * Sends a message already existing to the port.
-     * @param m
-     */
-    protected void sendPort(Message m) {
-        sendPort(m);
+    protected void sendProcess(String xml) throws ParseException {
+        Adapter.this.sendProcess(Message.parseXML(xml));
     }
 
     /**

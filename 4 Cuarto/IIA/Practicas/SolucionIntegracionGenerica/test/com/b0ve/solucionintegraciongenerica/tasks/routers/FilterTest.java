@@ -26,9 +26,9 @@ public class FilterTest {
         Message m3 = newMessage(2, 2, "<cid>2</cid>");
 
         Filter filter = new Filter(new FilterConditionEquals("cid", "1"));
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         filter.addInput(in);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         filter.addOutput(out);
 
         in.push(m1);
@@ -50,9 +50,9 @@ public class FilterTest {
         Filter filter = new Filter((mensaje) -> {
             return Integer.parseInt(mensaje.evaluateXPath("/cid").item(0).getTextContent()) >= 1;
         });
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         filter.addInput(in);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         filter.addOutput(out);
 
         in.push(m1);

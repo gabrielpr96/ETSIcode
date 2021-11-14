@@ -36,14 +36,14 @@ public class AggregatorTest {
                 + "	</libro>\n"
                 + "</libros>");
         Splitter splitter = new Splitter("/libros/libro");
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         splitter.addInput(in);
-        Buffer mid = new Buffer(null);
+        Buffer mid = new Buffer(null, null);
         splitter.addOutput(mid);
 
         Aggregator aggregator = new Aggregator("coleccion");
         aggregator.addInput(mid);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         aggregator.addOutput(out);
 
         in.push(m1);
@@ -65,22 +65,22 @@ public class AggregatorTest {
         Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
         
         Splitter s1 = new Splitter("/a/b");
-        Buffer sin = new Buffer(null);
+        Buffer sin = new Buffer(null, null);
         s1.addInput(sin);
-        Buffer smid = new Buffer(null);
+        Buffer smid = new Buffer(null, null);
         s1.addOutput(smid);
         Splitter s2 = new Splitter("/b/c");
         s2.addInput(smid);
-        Buffer sout = new Buffer(null);
+        Buffer sout = new Buffer(null, null);
         s2.addOutput(sout);
         
         Aggregator a2 = new Aggregator("b");
         a2.addInput(sout);
-        Buffer amid = new Buffer(null);
+        Buffer amid = new Buffer(null, null);
         a2.addOutput(amid);
         Aggregator a1 = new Aggregator("a");
         a1.addInput(amid);
-        Buffer aout = new Buffer(null);
+        Buffer aout = new Buffer(null, null);
         a1.addOutput(aout);
 
         sin.push(m1);

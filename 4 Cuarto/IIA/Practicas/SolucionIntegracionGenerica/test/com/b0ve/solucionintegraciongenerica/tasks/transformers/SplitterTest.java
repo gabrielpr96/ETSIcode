@@ -35,9 +35,9 @@ public class SplitterTest {
                 + "	</libro>\n"
                 + "</libros>");
         Splitter splitter = new Splitter("/libros/libro");
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         splitter.addInput(in);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         splitter.addOutput(out);
 
         in.push(m1);
@@ -53,13 +53,13 @@ public class SplitterTest {
     public void testSplitter2() throws SIGException {
         Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c></b></a>");
         Splitter s1 = new Splitter("/a/b");
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         s1.addInput(in);
-        Buffer mid = new Buffer(null);
+        Buffer mid = new Buffer(null, null);
         s1.addOutput(mid);
         Splitter s2 = new Splitter("/b/c");
         s2.addInput(mid);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         s2.addOutput(out);
 
         in.push(m1);

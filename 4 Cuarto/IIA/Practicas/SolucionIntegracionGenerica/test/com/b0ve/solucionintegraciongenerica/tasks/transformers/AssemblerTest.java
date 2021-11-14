@@ -35,11 +35,11 @@ public class AssemblerTest {
                 + "	</libro>\n"
                 + "</libros>");
         Chopper chopper = new Chopper("/libros/libro");
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         chopper.addInput(in);
-        Buffer mid1 = new Buffer(null);
-        Buffer mid2 = new Buffer(null);
-        Buffer mid3 = new Buffer(null);
+        Buffer mid1 = new Buffer(null, null);
+        Buffer mid2 = new Buffer(null, null);
+        Buffer mid3 = new Buffer(null, null);
         chopper.addOutput(mid1);
         chopper.addOutput(mid2);
         chopper.addOutput(mid3);
@@ -48,7 +48,7 @@ public class AssemblerTest {
         assembler.addInput(mid1);
         assembler.addInput(mid2);
         assembler.addInput(mid3);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         assembler.addOutput(out);
 
         in.push(m1);
@@ -69,20 +69,20 @@ public class AssemblerTest {
     public void testAssembler2() throws SIGException {
         Message m1 = newMessage(0, 0, "<a><b><c>b1c1</c><c>b1c2</c></b><b><c>b2c1</c><c>b2c2</c></b></a>");
         Chopper c1 = new Chopper("/a/b");
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         c1.addInput(in);
-        Buffer cmid1 = new Buffer(null);
-        Buffer cmid2 = new Buffer(null);
+        Buffer cmid1 = new Buffer(null, null);
+        Buffer cmid2 = new Buffer(null, null);
         c1.addOutput(cmid1);
         c1.addOutput(cmid2);
         Chopper c2a = new Chopper("/b/c");
         Chopper c2b = new Chopper("/b/c");
         c2a.addInput(cmid1);
         c2b.addInput(cmid2);
-        Buffer cout1 = new Buffer(null);
-        Buffer cout2 = new Buffer(null);
-        Buffer cout3 = new Buffer(null);
-        Buffer cout4 = new Buffer(null);
+        Buffer cout1 = new Buffer(null, null);
+        Buffer cout2 = new Buffer(null, null);
+        Buffer cout3 = new Buffer(null, null);
+        Buffer cout4 = new Buffer(null, null);
         c2a.addOutput(cout1);
         c2a.addOutput(cout2);
         c2b.addOutput(cout3);
@@ -94,14 +94,14 @@ public class AssemblerTest {
         a1a.addInput(cout2);
         a1b.addInput(cout3);
         a1b.addInput(cout4);
-        Buffer amid1 = new Buffer(null);
-        Buffer amid2 = new Buffer(null);
+        Buffer amid1 = new Buffer(null, null);
+        Buffer amid2 = new Buffer(null, null);
         a1a.addOutput(amid1);
         a1b.addOutput(amid2);
         Assembler a2 = new Assembler("a");
         a2.addInput(amid1);
         a2.addInput(amid2);
-        Buffer aout = new Buffer(null);
+        Buffer aout = new Buffer(null, null);
         a2.addOutput(aout);
 
         in.push(m1);

@@ -20,11 +20,11 @@ import org.w3c.dom.Document;
  * Adapter that makes request to a Web API. Endpoint is specified in constructor, the body of the message is sent in json and response is received in json but transformed to xml before it is returned in a message.
  * @author borja
  */
-public class AdapterPHP extends Adapter {
+public class AdapterWebAPI extends Adapter {
 
     private final String gateway;
 
-    public AdapterPHP(String gateway) {
+    public AdapterWebAPI(String gateway) {
         this.gateway = gateway;
     }
 

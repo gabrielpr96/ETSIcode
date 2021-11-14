@@ -71,7 +71,7 @@ public class AdaptadorBD extends Adapter {
                                         eValor.setTextContent(rs.getString(2));
                                         root.appendChild(eValor);
 
-                                        sendPort(doc);
+                                        sendProcess(doc);
                                     }
                                 }
                             }

@@ -56,9 +56,9 @@ public class SlimmerTest {
                 + "	</cambio>\n"
                 + "</cambios>");
         Slimmer slimmer = new Slimmer(new String[]{"/cambios/cambio[tipo='eliminar']/datos/nombre", "/cambios/cambio[3]"});
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         slimmer.addInput(in);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         slimmer.addOutput(out);
 
         in.push(m1);

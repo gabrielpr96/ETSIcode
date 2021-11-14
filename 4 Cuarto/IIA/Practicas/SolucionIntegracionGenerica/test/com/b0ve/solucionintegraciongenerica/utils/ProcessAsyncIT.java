@@ -49,7 +49,7 @@ public class ProcessAsyncIT {
             @Override
             public void iniciate() {
                 try {
-                    sendPort("<acta>\n"
+                    sendProcess("<acta>\n"
                             + "    <asignatura>PVWB</asignatura>\n"
                             + "    <alumnos>\n"
                             + "        <alumno>\n"
@@ -224,12 +224,12 @@ public class ProcessAsyncIT {
             @Override
             public void iniciate() {
                 try {
-                    sendPort("<medida>\n"
+                    sendProcess("<medida>\n"
                             + "    <ts>" + Instant.now().getEpochSecond() + "</ts>\n"
                             + "    <lugar>Av. Guatemala, 40</lugar>\n"
                             + "    <valor>144</valor>\n"
                             + "</medida>");
-                    sendPort("<medida>\n"
+                    sendProcess("<medida>\n"
                             + "    <ts>" + Instant.now().getEpochSecond() + "</ts>\n"
                             + "    <lugar>Av. Guatemala, 41</lugar>\n"
                             + "    <valor>400</valor>\n"
@@ -253,12 +253,12 @@ public class ProcessAsyncIT {
             @Override
             public void iniciate() {
                 try {
-                    sendPort("<medida>\n"
+                    sendProcess("<medida>\n"
                             + "    <ts>" + (Instant.now().getEpochSecond() - (15 * 61)) + "</ts>\n"
                             + "    <lugar>Av. Guatemala, 42</lugar>\n"
                             + "    <valor>250</valor>\n"
                             + "</medida>");
-                    sendPort("<medida>\n"
+                    sendProcess("<medida>\n"
                             + "    <ts>" + Instant.now().getEpochSecond() + "</ts>\n"
                             + "    <lugar>Av. Guatemala, 43</lugar>\n"
                             + "    <valor>260</valor>\n"
@@ -282,12 +282,12 @@ public class ProcessAsyncIT {
             @Override
             public void iniciate() {
                 try {
-                    sendPort("<medida>\n"
+                    sendProcess("<medida>\n"
                             + "    <ts>" + (Instant.now().getEpochSecond() - (15 * 61)) + "</ts>\n"
                             + "    <lugar>37.2533675195021, -6.93658688591096</lugar>\n"
                             + "    <valor>120</valor>\n"
                             + "</medida>");
-                    sendPort("<medida>\n"
+                    sendProcess("<medida>\n"
                             + "    <ts>" + Instant.now().getEpochSecond() + "</ts>\n"
                             + "    <lugar>37.25740833367934, -6.954137427758186</lugar>\n"
                             + "    <valor>110</valor>\n"

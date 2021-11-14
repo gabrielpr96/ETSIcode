@@ -24,9 +24,9 @@ public class CorrelationIDSetterTest {
         Message m2 = newMessage(1, 0, "<m>2</m>");
         Message m3 = newMessage(2, 0, "<m>3</m>");
         CorrelationIDSetter cidSetter = new CorrelationIDSetter();
-        Buffer in = new Buffer(null);
+        Buffer in = new Buffer(null, null);
         cidSetter.addInput(in);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         cidSetter.addOutput(out);
 
         in.push(m1);

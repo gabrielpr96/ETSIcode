@@ -23,7 +23,7 @@ public class AdaptadorCCS extends Adapter {
                 Scanner s = new Scanner(System.in);
                 while (!isInterrupted()) {
                     try {
-                        sendPort(s.nextLine());
+                        sendProcess(s.nextLine());
                     } catch (ParseException ex) {
                         Logger.getLogger(AdaptadorCCS.class.getName()).log(Level.SEVERE, null, ex);
                     }

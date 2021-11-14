@@ -23,10 +23,10 @@ public class ReplicatorTest {
         Message m1 = newMessage(0, 0, "<cid>0</cid>");
 
         Replicator replicator = new Replicator();
-        Buffer in1 = new Buffer(null);
+        Buffer in1 = new Buffer(null, null);
         replicator.addInput(in1);
-        Buffer out1 = new Buffer(null);
-        Buffer out2 = new Buffer(null);
+        Buffer out1 = new Buffer(null, null);
+        Buffer out2 = new Buffer(null, null);
         replicator.addOutput(out1);
         replicator.addOutput(out2);
 

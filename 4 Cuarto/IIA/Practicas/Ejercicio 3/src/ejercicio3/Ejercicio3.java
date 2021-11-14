@@ -2,17 +2,14 @@ package ejercicio3;
 
 import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
-import com.b0ve.solucionintegraciongenerica.tasks.transformers.Aggregator;
 import com.b0ve.solucionintegraciongenerica.utils.Process;
 import static com.b0ve.solucionintegraciongenerica.utils.Process.TASKS.*;
 import com.b0ve.solucionintegraciongenerica.utils.condiciones.FilterConditionNotEquals;
-import com.b0ve.solucionintegraciongenerica.flow.Buffer;
-import com.b0ve.solucionintegraciongenerica.flow.Message;
-import static com.b0ve.solucionintegraciongenerica.flow.Message.newMessage;
 import com.b0ve.solucionintegraciongenerica.utils.ProcessAsync;
 
 public class Ejercicio3 {
 //<cambios><cambio><fuente>CRM1</fuente><tipo>eliminar</tipo><datos><dni>40144663C</dni></datos></cambio></cambios>
+
     public static void main(String[] args) throws Exception {
         Process p = new ProcessAsync();
 
@@ -74,59 +71,5 @@ public class Ejercicio3 {
         p.validate();
         p.execute();
         p.waitToEnd();
-    }
-
-    private static void test1() throws Exception {
-        Message m1 = newMessage(0, 0, "<cambios>\n"
-                + "	<cambio>\n"
-                + "		<tipo>agregar</tipo>\n"
-                + "		<fuente>CRM1</fuente>\n"
-                + "		<datos>\n"
-                + "			<nombre>Pepe</nombre>\n"
-                + "			<dni>40144661E</dni>\n"
-                + "			<direccion>Avenida Guatemala 40</direccion>\n"
-                + "		</datos>\n"
-                + "	</cambio>\n"
-                + "	<cambio>\n"
-                + "		<tipo>agregar</tipo>\n"
-                + "		<fuente>CRM1</fuente>\n"
-                + "		<datos>\n"
-                + "			<nombre>Juan</nombre>\n"
-                + "			<dni>40144662V</dni>\n"
-                + "			<direccion>Raul Cimas 5</direccion>\n"
-                + "			<direccion>Calle Venavente 45</direccion>\n"
-                + "		</datos>\n"
-                + "	</cambio>\n"
-                + "	<cambio>\n"
-                + "		<tipo>agregar</tipo>\n"
-                + "		<fuente>CRM1</fuente>\n"
-                + "		<datos>\n"
-                + "			<nombre>Pepe</nombre>\n"
-                + "			<dni>40144661E</dni>\n"
-                + "			<direccion>Calle Plus Ultra 9</direccion>\n"
-                + "		</datos>\n"
-                + "	</cambio>\n"
-                + "</cambios>");
-        SplitterParticionado splitter = new SplitterParticionado("/cambios/cambio", "/cambio/datos/dni");
-        Buffer in = new Buffer(null);
-        splitter.addInput(in);
-        Buffer mid = new Buffer(null);
-        splitter.addOutput(mid);
-
-        Aggregator aggregator = new Aggregator("lista");
-        aggregator.addInput(mid);
-        Buffer out = new Buffer(null);
-        aggregator.addOutput(out);
-
-        in.push(m1);
-        //in.push(new Mensaje(m1));
-
-        splitter.process();
-        aggregator.process();
-
-        System.out.println(out.retrive());
-        System.out.println(out.retrive());
-        System.out.println(out.retrive());
-        System.out.println(out.retrive());
     }
 }

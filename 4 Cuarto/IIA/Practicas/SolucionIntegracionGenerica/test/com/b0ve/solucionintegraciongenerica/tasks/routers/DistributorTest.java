@@ -30,11 +30,11 @@ public class DistributorTest {
                 m5 = newMessage(4, 5, "<cid>0</cid>"),
                 m6 = newMessage(5, 4, "<cid>err</cid>");
 
-        Buffer in1 = new Buffer(null);
+        Buffer in1 = new Buffer(null, null);
         distributor.addInput(in1);
-        Buffer out1 = new Buffer(null);
-        Buffer out2 = new Buffer(null);
-        Buffer out3 = new Buffer(null);
+        Buffer out1 = new Buffer(null, null);
+        Buffer out2 = new Buffer(null, null);
+        Buffer out3 = new Buffer(null, null);
         distributor.addOutput(out1);
         distributor.addOutput(out2);
         distributor.addOutput(out3);

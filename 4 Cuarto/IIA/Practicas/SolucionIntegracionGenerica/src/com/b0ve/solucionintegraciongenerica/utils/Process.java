@@ -28,18 +28,22 @@ import com.b0ve.solucionintegraciongenerica.utils.exceptions.ConfigurationExcept
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.DefaultExceptionHandler;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.ExceptionHandleable;
+import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.LogSink;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Controller class to manage an Integration Process
+ *
  * @author borja
  */
 public abstract class Process {
 
     private final boolean debug;
     protected final List<Task> tasks;
+    private final List<Buffer> buffers;
     private ExceptionHandleable exceptionHandler;
+    private LogSink logSink;
 
     public enum TASKS {
         CORRELATOR,
@@ -72,7 +76,8 @@ public abstract class Process {
 
     public Process(boolean debug) {
         this.debug = debug;
-        this.tasks = new ArrayList<>();
+        tasks = new ArrayList<>();
+        buffers = new ArrayList<>();
         exceptionHandler = DefaultExceptionHandler.getHandler();
     }
 
@@ -83,7 +88,8 @@ public abstract class Process {
 
     /**
      * Waits for the process to finish
-     * @throws InterruptedException 
+     *
+     * @throws InterruptedException
      */
     public abstract void waitToEnd() throws InterruptedException;
 
@@ -94,6 +100,7 @@ public abstract class Process {
 
     /**
      * Creates a task without configuration
+     *
      * @param tipo
      * @return Task added
      */
@@ -103,6 +110,7 @@ public abstract class Process {
 
     /**
      * Creates a task specified by type with certain configuration
+     *
      * @param type
      * @param configuration
      * @return Task added
@@ -153,7 +161,7 @@ public abstract class Process {
                 task = new Chopper((String) configuration);
                 break;
             case ASSEMBLER:
-                task = new Assembler((String) configuration);
+                task = new Assembler(configuration);
                 break;
             case DEBUG:
                 task = new TaskDebug((boolean) configuration);
@@ -169,6 +177,7 @@ public abstract class Process {
 
     /**
      * Adds an existing task to the process
+     *
      * @param task
      * @return Task added
      */
@@ -180,9 +189,10 @@ public abstract class Process {
 
     /**
      * Creates and adds a port for an adapter.
+     *
      * @param adapter
      * @return
-     * @throws ConfigurationException 
+     * @throws ConfigurationException
      */
     public Port createPort(Adapter adapter) throws ConfigurationException {
         Port puerto;
@@ -205,38 +215,55 @@ public abstract class Process {
 
     /**
      * Adds a buffer from one task to another
+     *
      * @param t1 Source
      * @param t2 Destination
      */
     public void connect(Task t1, Task t2) {
-        Buffer b = new Buffer(t2);
+        Buffer b = new Buffer(t1, t2);
+        buffers.add(b);
         t1.addOutput(b);
         t2.addInput(b);
     }
 
     /**
      * Validates all tasks
-     * @throws ConfigurationException 
+     *
+     * @throws ConfigurationException
      */
     public void validate() throws ConfigurationException {
         for (Task tarea : tasks) {
             tarea.validate();
         }
     }
+    
+    /**
+     * Stablishes a LogSink. Debug log will be sent to this sink.
+     * @param sink 
+     */
+    public void setLogSink(LogSink sink){
+        this.logSink = sink;
+    }
 
     /**
      * Shows a debug log if debugging is enabled
-     * @param log 
+     *
+     * @param log
      */
     public void debugLog(String log) {
         if (debug) {
-            System.out.println("DEBUG: " + log);
+            if (logSink == null) {
+                System.out.println("DEBUG: " + log);
+            } else {
+                logSink.debugLog(log);
+            }
         }
     }
 
     /**
      * Stablishes the exception handler for the process
-     * @param handler 
+     *
+     * @param handler
      */
     public void setHandler(ExceptionHandleable handler) {
         this.exceptionHandler = handler;
@@ -244,9 +271,22 @@ public abstract class Process {
 
     /**
      * Handles an exception
-     * @param exception 
+     *
+     * @param exception
      */
     public void handleException(SIGException exception) {
         exceptionHandler.handleException(exception);
+    }
+    
+    /**
+     * Counts the number of messages that are stored in buffers. A way to find stuck messages or measure load.
+     * @return Number of messages in buffers
+     */
+    public int messageCount(){
+        int nMensajes = 0;
+        for (Buffer buffer : buffers) {
+            nMensajes += buffer.size();
+        }
+        return nMensajes;
     }
 }

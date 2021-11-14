@@ -29,11 +29,11 @@ public class ContextEnricherTest {
         Message m2 = newMessage(0, 0, "<pelicula><precio>10.5</precio></pelicula>");
 
         ContextEnricher enricher = new ContextEnricher();
-        Buffer in1 = new Buffer(null);
-        Buffer in2 = new Buffer(null);
+        Buffer in1 = new Buffer(null, null);
+        Buffer in2 = new Buffer(null, null);
         enricher.addInput(in1);
         enricher.addInput(in2);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         enricher.addOutput(out);
 
         in1.push(m1);

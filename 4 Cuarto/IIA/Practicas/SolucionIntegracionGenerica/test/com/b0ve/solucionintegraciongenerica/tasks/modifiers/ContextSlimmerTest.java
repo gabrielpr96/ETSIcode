@@ -58,11 +58,11 @@ public class ContextSlimmerTest {
                 + "</cambios>");
         Message m2 = newMessage(1, 1, "<list><item>/cambios/cambio[tipo='eliminar']/datos/nombre</item><item>/cambios/cambio[3]</item></list>");
         ContextSlimmer cSlimmer = new ContextSlimmer();
-        Buffer in1 = new Buffer(null);
-        Buffer in2 = new Buffer(null);
+        Buffer in1 = new Buffer(null, null);
+        Buffer in2 = new Buffer(null, null);
         cSlimmer.addInput(in1);
         cSlimmer.addInput(in2);
-        Buffer out = new Buffer(null);
+        Buffer out = new Buffer(null, null);
         cSlimmer.addOutput(out);
 
         in1.push(m1);

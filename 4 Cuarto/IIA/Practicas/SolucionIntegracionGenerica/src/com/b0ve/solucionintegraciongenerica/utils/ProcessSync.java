@@ -1,12 +1,22 @@
 package com.b0ve.solucionintegraciongenerica.utils;
 
+import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.ports.Port;
 import com.b0ve.solucionintegraciongenerica.tasks.Task;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
+import java.util.ArrayList;
 
 public class ProcessSync extends Process {
 
     private Thread ejecucion;
+
+    public ProcessSync(boolean debug) {
+        super(debug);
+    }
+
+    public ProcessSync() {
+        this(false);
+    }
 
     @Override
     public void execute() {
@@ -19,9 +29,18 @@ public class ProcessSync extends Process {
             @Override
             public void run() {
                 while (!isInterrupted()) {
-                    for (Task tarea : tasks) {
+                    for (Task task : tasks) {
                         try {
-                            tarea.process();
+                            boolean hasMessages = false;
+                            for (Buffer input : task.getInputs()) {
+                                if (!input.empty()) {
+                                    hasMessages = true;
+                                }
+                            }
+
+                            if (hasMessages) {
+                                task.process();
+                            }
                         } catch (SIGException ex) {
                             handleException(ex);
                         }

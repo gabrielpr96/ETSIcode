@@ -28,7 +28,7 @@ public class AdapterDirWhatcher extends Adapter {
                         while (!isInterrupted()) {
                             for (final File fileEntry : folder.listFiles()) {
                                 if (fileEntry.isFile()) {
-                                    sendPort(new String(Files.readAllBytes(fileEntry.toPath()), StandardCharsets.UTF_8));
+                                    sendProcess(new String(Files.readAllBytes(fileEntry.toPath()), StandardCharsets.UTF_8));
                                     fileEntry.delete();
                                 }
                             }

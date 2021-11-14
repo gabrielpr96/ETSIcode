@@ -24,7 +24,7 @@ public class AdaptadorExchange extends Adapter {
                 Scanner s = new Scanner(System.in);
                 while (!isInterrupted()) {
                     try {
-                        sendPort(s.nextLine());
+                        sendProcess(s.nextLine());
                     } catch (ParseException ex) {
                         Logger.getLogger(AdaptadorExchange.class.getName()).log(Level.SEVERE, null, ex);
                     }

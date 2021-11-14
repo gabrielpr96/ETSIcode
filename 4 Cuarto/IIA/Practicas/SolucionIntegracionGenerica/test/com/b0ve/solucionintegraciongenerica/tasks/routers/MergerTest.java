@@ -25,11 +25,11 @@ public class MergerTest {
         Message m3 = newMessage(2, 2, "<cid>2</cid>");
 
         Merger merger = new Merger();
-        Buffer in1 = new Buffer(null);
-        Buffer in2 = new Buffer(null);
+        Buffer in1 = new Buffer(null, null);
+        Buffer in2 = new Buffer(null, null);
         merger.addInput(in1);
         merger.addInput(in2);
-        Buffer out1 = new Buffer(null);
+        Buffer out1 = new Buffer(null, null);
         merger.addOutput(out1);
 
         in1.push(m1);

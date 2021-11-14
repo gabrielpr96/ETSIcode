@@ -9,10 +9,10 @@ public class FilterConditionConfigurable extends FilterCondition {
     public static enum CONDITIONS {
         STR_EQUALS,
         STR_DISTINCT,
-        INTEGER_EQUALS,
-        INTEGER_DISTINCT,
-        INTEGER_LESS_THAN,
-        INTEGER_GREATER_THAN,
+        INT_EQUALS,
+        INT_DISTINCT,
+        INT_LESS_THAN,
+        INT_GREATER_THAN,
         DECIMAL_LESS_THAN,
         DECIMAL_GRATER_THAN,
         EMPTY,
@@ -38,13 +38,13 @@ public class FilterConditionConfigurable extends FilterCondition {
                     return text != null && text.equals(value);
                 case STR_DISTINCT:
                     return text != null && !text.equals(value);
-                case INTEGER_EQUALS:
+                case INT_EQUALS:
                     return Integer.parseInt(text) == Integer.parseInt(value);
-                case INTEGER_DISTINCT:
+                case INT_DISTINCT:
                     return Integer.parseInt(text) != Integer.parseInt(value);
-                case INTEGER_LESS_THAN:
+                case INT_LESS_THAN:
                     return Integer.parseInt(text) < Integer.parseInt(value);
-                case INTEGER_GREATER_THAN:
+                case INT_GREATER_THAN:
                     return Integer.parseInt(text) > Integer.parseInt(value);
                 case DECIMAL_LESS_THAN:
                     return Float.parseFloat(text) < Float.parseFloat(value);
