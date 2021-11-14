@@ -1,4 +1,4 @@
-package autosig.stubs;
+package com.b0ve.autosig.stubs;
 
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Message;

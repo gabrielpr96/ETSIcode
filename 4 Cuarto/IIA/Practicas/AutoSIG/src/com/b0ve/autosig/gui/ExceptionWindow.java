@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package autosig.gui;
+package com.b0ve.autosig.gui;
 
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.io.PrintWriter;

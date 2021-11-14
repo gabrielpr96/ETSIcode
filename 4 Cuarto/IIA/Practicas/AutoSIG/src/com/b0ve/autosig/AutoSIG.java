@@ -1,6 +1,6 @@
-package autosig;
+package com.b0ve.autosig;
 
-import autosig.gui.MainWindow;
+import com.b0ve.autosig.gui.MainWindow;
 
 public class AutoSIG {
 

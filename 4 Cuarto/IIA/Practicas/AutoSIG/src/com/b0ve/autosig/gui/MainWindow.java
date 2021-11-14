@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package autosig.gui;
+package com.b0ve.autosig.gui;
 
-import autosig.AutoExceptionHandle;
-import autosig.AutoProcess;
-import autosig.gui.models.ExceptionListModel;
-import autosig.stubs.AdapterStubInput;
-import autosig.stubs.AdapterStubOutput;
+import com.b0ve.autosig.AutoExceptionHandle;
+import com.b0ve.autosig.AutoProcess;
+import com.b0ve.autosig.gui.models.ExceptionListModel;
+import com.b0ve.autosig.stubs.AdapterStubInput;
+import com.b0ve.autosig.stubs.AdapterStubOutput;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.flow.Buffer;
 import com.b0ve.solucionintegraciongenerica.flow.Message;

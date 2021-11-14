@@ -1,4 +1,4 @@
-package autosig.gui.models;
+package com.b0ve.autosig.gui.models;
 
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.util.ArrayList;

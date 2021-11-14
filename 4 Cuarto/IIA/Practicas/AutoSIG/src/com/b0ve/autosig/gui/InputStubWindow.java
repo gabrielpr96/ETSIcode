@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package autosig.gui;
+package com.b0ve.autosig.gui;
 
-import autosig.stubs.AdapterStubInput;
+import com.b0ve.autosig.stubs.AdapterStubInput;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

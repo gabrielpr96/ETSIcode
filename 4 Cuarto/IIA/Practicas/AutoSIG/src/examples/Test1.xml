@@ -1,0 +1,34 @@
+<process>
+    <name>Test 1</name>
+    <config>
+        <debug>false</debug>
+        <async>true</async>
+    </config>
+    <tasks>
+        <task>
+            <name>Replicator1</name>
+            <type>replicator</type>
+            <outputs>
+                <output>Output1</output>
+                <output>Output2</output>
+            </outputs>
+        </task>
+    </tasks>
+    <adapters>
+        <adapter>
+            <name>Input1</name>
+            <type>stub_input</type>
+            <outputs>
+                <output>Replicator1</output>
+            </outputs>
+        </adapter>
+        <adapter>
+            <name>Output1</name>
+            <type>stub_output</type>
+        </adapter>
+        <adapter>
+            <name>Output2</name>
+            <type>stub_output</type>
+        </adapter>
+    </adapters>
+</process>

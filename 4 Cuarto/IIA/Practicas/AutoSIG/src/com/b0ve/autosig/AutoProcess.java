@@ -1,7 +1,7 @@
-package autosig;
+package com.b0ve.autosig;
 
-import autosig.stubs.AdapterStubInput;
-import autosig.stubs.AdapterStubOutput;
+import com.b0ve.autosig.stubs.AdapterStubInput;
+import com.b0ve.autosig.stubs.AdapterStubOutput;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
 import com.b0ve.solucionintegraciongenerica.adapters.AdapterConsole;
 import com.b0ve.solucionintegraciongenerica.adapters.AdapterDirOutputter;

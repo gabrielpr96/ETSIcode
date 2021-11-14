@@ -1,6 +1,6 @@
-package autosig;
+package com.b0ve.autosig;
 
-import autosig.gui.MainWindow;
+import com.b0ve.autosig.gui.MainWindow;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.SIGException;
 import com.b0ve.solucionintegraciongenerica.utils.exceptions.handlers.ExceptionHandleable;
 
