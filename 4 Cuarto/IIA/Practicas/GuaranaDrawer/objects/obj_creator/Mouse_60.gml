@@ -1,13 +1,14 @@
 /// @description Seleccionar arriba
 
-if(selected == -1)
-	selected = 0;
-
 selected++;
 
-if(selected >= 14){
-	selected = 0;
+if(selectMode == 1){
+	if(selected > 14){
+		selected = 14;
+	}
+} else if(selectMode == 2) {
+	if(selected > 9){
+		selected = 9;
+	}
 }
-
-window_set_cursor(cr_none);
 

@@ -6,11 +6,9 @@ if(isPairing){
 	if(position_meeting(mouse_x, mouse_y, self)){
 		instance_destroy(self);
 	}
-	if(target != noone){
-		var pos = ds_list_find_index(conectados, target);
-		if(pos == -1)
-			ds_list_add(conectados, target);
-		else
-			ds_list_delete(conectados, pos);
+	if(target == noone){
+		ds_list_clear(conectados);
+	} else {
+		ds_list_add(conectados, target);
 	}
 }

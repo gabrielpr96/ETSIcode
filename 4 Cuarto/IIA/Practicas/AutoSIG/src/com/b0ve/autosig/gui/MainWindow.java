@@ -7,7 +7,6 @@ package com.b0ve.autosig.gui;
 
 import com.b0ve.autosig.AutoExceptionHandle;
 import com.b0ve.autosig.AutoProcess;
-import com.b0ve.autosig.gui.models.ExceptionListModel;
 import com.b0ve.autosig.stubs.AdapterStubInput;
 import com.b0ve.autosig.stubs.AdapterStubOutput;
 import com.b0ve.solucionintegraciongenerica.adapters.Adapter;
@@ -50,7 +49,7 @@ public class MainWindow extends javax.swing.JFrame {
                 logListModel.addElement(log);
             }
         };
-        load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Cafe.xml"));
+        load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Ejercicio1.xml"));
     }
 
     /**
@@ -109,8 +108,9 @@ public class MainWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AutoSIG");
 
-        exceptionListModel = new ExceptionListModel();
+        exceptionListModel = new DefaultListModel();
         exceptionList.setModel(exceptionListModel);
+        exceptionList.setForeground(new java.awt.Color(255, 0, 51));
         exceptionList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 exceptionListMouseClicked(evt);
@@ -453,7 +453,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void exceptionListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exceptionListMouseClicked
         if (evt.getClickCount() == 2) {
-            ExceptionWindow window = new ExceptionWindow(exceptionListModel.get(exceptionList.getSelectedIndex()));
+            ExceptionWindow window = new ExceptionWindow(exceptionList.getSelectedValue());
             window.setLocationRelativeTo(this);
             window.setVisible(true);
         }
@@ -556,6 +556,7 @@ public class MainWindow extends javax.swing.JFrame {
                 portListModel.addElement(iterator.next().getKey());
             }
 
+            setTitle("AutoSIG "+p.getName());
             statusLabel.setText("Cargado");
         } catch (SIGException ex) {
             exceptionHandle.handleException(ex);
@@ -608,7 +609,8 @@ public class MainWindow extends javax.swing.JFrame {
     //Acceso publico para el ExceptionHandler
 
     public void addException(SIGException ex) {
-        exceptionListModel.add(ex);
+        System.out.println("Add exception");
+        exceptionListModel.addElement(ex);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -619,7 +621,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JList<BufferListItem> bufferList;
     private DefaultListModel bufferListModel;
     private javax.swing.JList<SIGException> exceptionList;
-    private ExceptionListModel exceptionListModel;
+    private DefaultListModel exceptionListModel;
     private javax.swing.JScrollPane exceptionListScroll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

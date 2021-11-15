@@ -192,12 +192,17 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JList" name="exceptionList">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="0" red="ff" type="rgb"/>
+                    </Property>
+                  </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="exceptionListMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private ExceptionListModel exceptionListModel;"/>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="exceptionListModel = new ExceptionListModel();&#xa;exceptionList.setModel(exceptionListModel);"/>
+                    <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private DefaultListModel exceptionListModel;"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="exceptionListModel = new DefaultListModel();&#xa;exceptionList.setModel(exceptionListModel);"/>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;SIGException&gt;"/>
                   </AuxValues>
                 </Component>

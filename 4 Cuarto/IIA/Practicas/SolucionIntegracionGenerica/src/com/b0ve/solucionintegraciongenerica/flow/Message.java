@@ -213,7 +213,7 @@ public final class Message {
     public void transformBody(String style) throws XSLTransformationException {
         try {
             Source xslt = new StreamSource(new StringReader(style)); //El XLT con el formato
-            Source text = new StreamSource(new StringReader(serialiceXML(body))); //El XML con los datos
+            Source text = new StreamSource(new StringReader(getBodyString())); //El XML con los datos
             StringWriter outWriter = new StringWriter();
 
             Processor processor = new Processor(false);
@@ -228,7 +228,7 @@ public final class Message {
             StringBuffer sb = outWriter.getBuffer();
             body = parseXML(sb.toString());
         } catch (SaxonApiException | ParseException ex) {
-            throw new XSLTransformationException(ex.getMessage(), style, ex);
+            throw new XSLTransformationException(ex.getMessage(), new String[]{style, getBodyString()}, ex);
         }
     }
 

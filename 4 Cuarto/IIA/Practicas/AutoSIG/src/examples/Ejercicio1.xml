@@ -1,0 +1,160 @@
+<!--Documento de configuración AutoSIG. Generado mediante GuaranaDrawer.-->
+<process>
+    <name>Autogenerado</name>
+    <config>
+        <debug>false</debug>
+        <async>true</async>
+    </config>
+    <tasks>
+        <task>
+            <name>Translator1</name>
+            <type>translator</type>
+            <config>
+                <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                    <xsl:template match="/acta">
+                        <alumnos>
+                            <xsl:for-each select="alumnos/alumno">
+                                <alumno>
+                                    <asignatura>
+                                        <xsl:value-of select="/acta/asignatura"/>
+                                    </asignatura>
+                                    <id>
+                                        <xsl:value-of select="id"/>
+                                    </id>
+                                    <nota>
+                                        <xsl:value-of select="nota"/>
+                                    </nota>
+                                </alumno>
+                            </xsl:for-each>
+                        </alumnos>
+                    </xsl:template>
+                </xsl:stylesheet>
+            </config>
+            <outputs>
+                <output>Splitter</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Splitter</name>
+            <type>splitter</type>
+            <config>/alumnos/alumno</config>
+            <outputs>
+                <output>Replicator1</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Replicator1</name>
+            <type>replicator</type>
+            <outputs>
+                <output>Translator2</output>
+                <output>Correlator</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Translator2</name>
+            <type>translator</type>
+            <config>
+                <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                    <xsl:template match="/alumno">
+                        <sql>
+                    SELECT `Email`, `Telefono` FROM `alumnos` WHERE `ID` = '<xsl:value-of select="id"/>
+                    '
+                        </sql>
+                    </xsl:template>
+                </xsl:stylesheet>
+            </config>
+            <outputs>
+                <output>MySQL</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Translator3</name>
+            <type>translator</type>
+            <config>
+                <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                    <xsl:template match="/Results/Row">
+                        <alumno>
+                            <email>
+                                <xsl:value-of select="Email"/>
+                            </email>
+                            <telefono>
+                                <xsl:value-of select="Telefono"/>
+                            </telefono>
+                        </alumno>
+                    </xsl:template>
+                </xsl:stylesheet>
+            </config>
+            <outputs>
+                <output>Correlator</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Correlator</name>
+            <type>correlator</type>
+            <outputs>
+                <output>Enricher</output>
+                <output>Enricher</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Enricher</name>
+            <type>context_enricher</type>
+            <outputs>
+                <output>Replicator2</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Replicator2</name>
+            <type>replicator</type>
+            <outputs>
+                <output>Filter</output>
+                <output>Mail</output>
+            </outputs>
+        </task>
+        <task>
+            <name>Filter</name>
+            <type>filter</type>
+            <config>
+                <selector>/alumno/telefono</selector>
+                <condition>str_distinct</condition>
+                <value>null</value>
+            </config>
+            <outputs>
+                <output>SMS</output>
+            </outputs>
+        </task>
+    </tasks>
+    <adapters>
+        <adapter>
+            <name>GMS</name>
+            <type>stub_input</type>
+            <outputs>
+                <output>Translator1</output>
+            </outputs>
+        </adapter>
+        <adapter>
+            <name>MySQL</name>
+            <type>mysql</type>
+            <config>
+                <host>localhost</host>
+                <port>3306</port>
+                <db>ejercicio1</db>
+                <user>root</user>
+                <pass></pass>
+            </config>
+            <outputs>
+                <output>Translator3</output>
+            </outputs>
+        </adapter>
+        <adapter>
+            <name>Mail</name>
+            <type>stub_output</type>
+            <outputs></outputs>
+        </adapter>
+        <adapter>
+            <name>SMS</name>
+            <type>stub_output</type>
+            <outputs></outputs>
+        </adapter>
+    </adapters>
+</process>

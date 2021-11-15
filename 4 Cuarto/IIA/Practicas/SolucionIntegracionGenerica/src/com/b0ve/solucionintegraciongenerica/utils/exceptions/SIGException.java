@@ -30,4 +30,11 @@ public class SIGException extends Exception {
         return nestedException;
     }
 
+    @Override
+    public String toString() {
+        return getMessage();
+    }
+    
+    
+
 }

@@ -1,14 +1,13 @@
 /// @description Crear
 
-if(selected >= 0){
+if (selectMode == 1) {
 	var inst = instance_create_depth(mouse_x, mouse_y, -101, obj_task);
 	inst.image_index = selected;
 	window_set_cursor(cr_default);
-	selected = -1;
-}
-
-if(selected == -2){
-	instance_create_depth(mouse_x, mouse_y, -101, obj_port);
+	selectMode = 0;
+} else if (selectMode == 2) {
+	var inst = instance_create_depth(mouse_x, mouse_y, -101, obj_adapter);
+	inst.image_index = selected;
 	window_set_cursor(cr_default);
-	selected = -1;
+	selectMode = 0;
 }
