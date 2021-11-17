@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="src/css/global.css">
+    <title>Practica 4: Borja Lopez Pineda</title>
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Practica 4</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav" id="navBarItems">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row justify-content-center mb-3">
+            <div class="col-12 col-md-8">
+                <h1>Practica 2: Borja Lopez Pineda</h1>
+                <img src="src/img/banner.jpg" alt="Imagen del header" style="width: 100%;" />
+            </div>
+        </div>
+        <div class="row justify-content-center text-center">
+            <h2>Formulario</h2>
+            <form target="noImplementado.php" novalidate>
+                <div class="text-danger visually-hidden" id="errorDiv">
+                    <h3>Error</h3>
+                    <ul id="errores"></ul>
+                </div>
+                <fieldset title="Datos Personales" class="d-flex flex-column align-items-center justify-content-center">
+                    <div class="col-md-4 mb-2">
+                        <label for="nombre" class="form-label">Nombre y apellidos</label>
+                        <input type="text" class="form-control" id="nombre" required>
+                        <div class="invalid-feedback">
+                            El nombre no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="dni" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="dni" required>
+                        <div class="invalid-feedback">
+                            El DNI debe tener un formato valido
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" required>
+                        <div class="invalid-feedback">
+                            El correo electronico debe ser valido
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="telefono" required>
+                        <div class="invalid-feedback">
+                            El telefono debe ser valido
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="cp" class="form-label">Codigo postal</label>
+                        <input type="text" class="form-control" id="cp" required>
+                        <div class="invalid-feedback">
+                            El codigo postal no puede estar vacio
+                        </div>
+                    </div>
+                    <span class="mt-2">Provincia:</span>
+                    <select class="form-select mb-2" style="max-width: 50%;" id="provincia">
+                    </select>
+                    <div class="col-md-4 mb-2">
+                        <label for="pass1" class="form-label">Contraseña</label>
+                        <input type="text" class="form-control" id="pass1" required>
+                        <div class="invalid-feedback">
+                            La contraseña debe tener 6 caracteres
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="pass2" class="form-label">Repetir contraseña</label>
+                        <input type="text" class="form-control" id="pass2" required>
+                        <div class="invalid-feedback">
+                            Las contraseñas deben coincidir
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset title="Tus intereses" class="d-flex flex-column align-items-center justify-content-center">
+                    <div class="col-md-4 mb-2">
+                        <label for="telefono" class="form-label">Saldo</label>
+                        <input type="number" min="600" max="2000" class="form-control" id="telefono" required>
+                        <div class="invalid-feedback">
+                            El saldo debe estar entre 600 y 2000
+                        </div>
+                    </div>
+                    <span>Categoria:</span>
+                    <div class="d-flex flex-row justify-content-around">
+                        <div class="form-check m-1">
+                            <input class="form-check-input" type="checkbox" id="categoriaElectronica">
+                            <label class="form-check-label" for="categoriaElectronica">
+                                Electronica
+                            </label>
+                        </div>
+                        <div class="form-check m-1">
+                            <input class="form-check-input" type="checkbox" value="" id="categoriaJuegos" checked>
+                            <label class="form-check-label" for="categoriaJuegos">
+                                Juegos
+                            </label>
+                        </div>
+                        <div class="form-check m-1">
+                            <input class="form-check-input" type="checkbox" id="categoriaLectura">
+                            <label class="form-check-label" for="categoriaLectura">
+                                Lectura
+                            </label>
+                        </div>
+                        <div class="form-check m-1">
+                            <input class="form-check-input" type="checkbox" value="" id="categoriaOtros" checked>
+                            <label class="form-check-label" for="categoriaOtros">
+                                Otros
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-primary" onclick="return validar();">Enviar</button>
+
+            </form>
+        </div>
+        <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
+            <span class="text-muted">© B0vE 2021 DAW - Borja Lopez Pineda</span>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="src/js/global.js"></script>
+    <script>
+        window.onload = () => {
+            innitNavbar("Formulario");
+
+            const provincias = ["Álava", "Albacete", "Alicante", "Almería", "Ávila",
+                "Badajoz", "Baleares", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón",
+                "Ciudad Real", "Córdoba", "Coruña", "Cuenca", "Girona", "Granada", "Guadalajara",
+                "Guipúzcoa", "Huelva", "Huesca", "Jaén", "León", "Lleida", "Rioja", "Lugo",
+                "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Asturias", "Palencia", "LasPalmas", "Pontevedra", "Salamanca", "Tenerife", "Cantabria", "Segovia", "Sevilla",
+                "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya",
+                "Zamora", "Zaragoza", "Ceuta", "Melilla"];
+            let cp = document.getElementById("cp");
+            let selectProvincia = document.getElementById("provincia");
+            provincias.forEach((provincia, i) => {
+                let option = document.createElement("option");
+                option.value = i + 1;
+                option.text = provincia;
+                selectProvincia.appendChild(option);
+            });
+            cp.addEventListener("keypress", () => {
+                selectProvincia.value = cp.value.substring(0, 2);
+            });
+        }
+
+        function validar() {
+            let errores = [];
+
+            let nombre = document.getElementById("nombre");
+            let dni = document.getElementById("dni");
+            let email = document.getElementById("email");
+            let telefono = document.getElementById("telefono");
+            let cp = document.getElementById("cp");
+            let provincia = document.getElementById("provincia");
+            let pass1 = document.getElementById("pass1");
+            let pass2 = document.getElementById("pass2");
+
+            nombre.classList.remove("is-invalid");
+            dni.classList.remove("is-invalid");
+            email.classList.remove("is-invalid");
+            telefono.classList.remove("is-invalid");
+            cp.classList.remove("is-invalid");
+            pass1.classList.remove("is-invalid");
+            pass2.classList.remove("is-invalid");
+
+            if (nombre.value.length < 3) {
+                errores.push("El nombre debe tener al menos 3 caracteres");
+                nombre.classList.add("is-invalid");
+            }
+            if (dni.value.length < 9) {
+                errores.push("El DNI debe tener al menos 9 caracteres");
+                dni.classList.add("is-invalid");
+            }
+            if (email.value.length < 5) {
+                errores.push("El email debe tener al menos 5 caracteres");
+                email.classList.add("is-invalid");
+            }
+            if (telefono.value.length < 9) {
+                errores.push("El telefono debe tener al menos 9 caracteres");
+                telefono.classList.add("is-invalid");
+            }
+            if (cp.value.length < 5) {
+                errores.push("El CP debe tener al menos 5 caracteres");
+                cp.classList.add("is-invalid");
+            }
+            if (pass1.value.length < 6) {
+                errores.push("La contraseña debe tener al menos 6 caracteres");
+                pass1.classList.add("is-invalid");
+            }
+            if (pass1.value != pass2.value) {
+                errores.push("Las contraseñas no coinciden");
+                pass2.classList.add("is-invalid");
+            }
+
+            let errorDiv = document.getElementById("errorDiv");
+            if (errores.length > 0) {
+                let erroresUL = document.getElementById("errores");
+                erroresUL.innerHTML = "";
+                errores.forEach(error => {
+                    let li = document.createElement("li");
+                    li.innerText = error;
+                    erroresUL.appendChild(li);
+                });
+                errorDiv.classList.remove("visually-hidden");
+            } else {
+                errorDiv.classList.add("visually-hidden");
+            }
+
+            return errores.length == 0;
+        }
+
+    </script>
+</body>
+
+</html>
