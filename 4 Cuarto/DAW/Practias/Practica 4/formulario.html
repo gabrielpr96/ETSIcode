@@ -36,7 +36,7 @@
             <form target="noImplementado.php" novalidate>
                 <div class="text-danger visually-hidden" id="errorDiv">
                     <h3>Error</h3>
-                    <ul id="errores"></ul>
+                    <div id="errores"></div>
                 </div>
                 <fieldset title="Datos Personales" class="d-flex flex-column align-items-center justify-content-center">
                     <div class="col-md-4 mb-2">
@@ -79,14 +79,14 @@
                     </select>
                     <div class="col-md-4 mb-2">
                         <label for="pass1" class="form-label">Contraseña</label>
-                        <input type="text" class="form-control" id="pass1" required>
+                        <input type="password" class="form-control" id="pass1" required>
                         <div class="invalid-feedback">
                             La contraseña debe tener 6 caracteres
                         </div>
                     </div>
                     <div class="col-md-4 mb-2">
                         <label for="pass2" class="form-label">Repetir contraseña</label>
-                        <input type="text" class="form-control" id="pass2" required>
+                        <input type="password" class="form-control" id="pass2" required>
                         <div class="invalid-feedback">
                             Las contraseñas deben coincidir
                         </div>
@@ -220,9 +220,18 @@
                 let erroresUL = document.getElementById("errores");
                 erroresUL.innerHTML = "";
                 errores.forEach(error => {
-                    let li = document.createElement("li");
-                    li.innerText = error;
-                    erroresUL.appendChild(li);
+                    let warning = document.createElement("div");
+                    warning.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
+                    warning.setAttribute("role", "alert");
+                    let strong = document.createElement("strong");
+                    strong.innerHTML = error;
+                    warning.appendChild(strong);
+                    let button = document.createElement("button");
+                    button.classList.add("btn-close");
+                    button.setAttribute("data-bs-dismiss", "alert");
+                    button.type = "button";
+                    warning.appendChild(button);
+                    erroresUL.appendChild(warning);
                 });
                 errorDiv.classList.remove("visually-hidden");
             } else {
