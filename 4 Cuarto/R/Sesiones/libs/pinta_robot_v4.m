@@ -1,16 +1,18 @@
-function pinta_robot_v1(x, y, theta, alpha)
-    persistent SR_robot SR_rueda_izquierda SR_rueda_derecha  SR_cabeza SR_ojo_izq SR_ojo_der;
+function mapa = pinta_robot_v4(x, y, theta, alpha, distancia, mapa)
+    persistent SR_robot SR_rueda_izquierda SR_rueda_derecha  SR_cabeza SR_ojo_izq SR_ojo_der SR_bumper;
 
     %Esquina inferior izquierda (-1.5, -1.5) y tamaño anchura 3, altura 3 (Centrado)
-    robot_size = [-1.5 -1.5 3 3];
-    rueda_size = [-0.5 -0.1 1 0.2];
-    rueda_izquierda_pos = [0 -1 0];
-    rueda_derecha_pos = [0 1 0];
-    cabeza_size =[-0.25 -0.5 0.5 1];
-    cabeza_pos = [1 0 0];
-    ojo_size = [-0.15, -0.15, 0.3, 0.3];
-    ojo_izq_pos = [0.15 -0.25 0];
-    ojo_der_pos = [0.15 0.25 0];
+    robot_size = [-12 -8.5 21 17];
+    rueda_size = [-3 -1.5 6 3];
+    rueda_izquierda_pos = [0 -6 0];
+    rueda_derecha_pos = [0 6 0];
+    cabeza_size =[-1 -2.75 2 5.5];
+    cabeza_pos = [5 -5.5 0];
+    ojo_size = [-.5, -1, 1, 2];
+    ojo_izq_pos = [0.75 -1.25 0];
+    ojo_der_pos = [0.75 1.25 0];
+    bumper_size = [-4, -8.5, 8, 17];
+    bumper_pos = [13 0 0];
 
     if isempty(SR_robot) || ~isvalid(SR_robot)
         SR_robot = hgtransform;
@@ -48,7 +50,20 @@ function pinta_robot_v1(x, y, theta, alpha)
     end
     SR_ojo_der.Matrix = makehgtform('translate', ojo_der_pos);
 
-    axis([-10 10 -10 10]);
+    if isempty(SR_bumper) || ~isvalid(SR_bumper)
+        SR_bumper = hgtransform('Parent', SR_robot);
+        rectangle('Position', bumper_size, 'Parent', SR_bumper);
+    end
+    SR_bumper.Matrix = makehgtform('translate', bumper_pos);
+
+    axis([-100 100 -100 100]);
+
+    if(distancia < 2.55)
+        T = SR_robot.Matrix * SR_cabeza.Matrix;
+        punto = T*[distancia*100, 0, 0, 1]';
+        mapa = [mapa; punto(1), punto(2)];
+        animatedline(mapa(:, 1), mapa(:, 2), 'Marker','*', 'LineStyle','none');
+    end
+
     drawnow;
 end
-
