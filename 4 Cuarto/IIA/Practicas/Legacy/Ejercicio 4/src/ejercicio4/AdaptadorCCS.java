@@ -50,5 +50,4 @@ public class AdaptadorCCS extends Adapter {
     public Process.PORTS getCompatiblePortType() {
         return Process.PORTS.INPUT;
     }
-
 }

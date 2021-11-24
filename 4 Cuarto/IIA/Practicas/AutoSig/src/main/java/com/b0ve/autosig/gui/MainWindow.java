@@ -9,8 +9,8 @@ import com.b0ve.autosig.AutoExceptionHandle;
 import com.b0ve.autosig.AutoProcess;
 import static com.b0ve.autosig.AutoSIG.prettyPrintMessage;
 import com.b0ve.sig.adapters.Adapter;
-import com.b0ve.sig.adapters.AdapterStubInput;
-import com.b0ve.sig.adapters.AdapterStubOutput;
+import com.b0ve.sig.adapters.test.AdapterStubInput;
+import com.b0ve.sig.adapters.test.AdapterStubOutput;
 import com.b0ve.sig.flow.Buffer;
 import com.b0ve.sig.flow.Message;
 import com.b0ve.sig.ports.Port;
@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map.Entry;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -43,7 +44,8 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         exceptionHandle = new AutoExceptionHandle(this);
         logSink = logListModel::addElement;
-        load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Ejercicio1.xml"));
+        load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\WP-MC.xml"));
+        //load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Cafe.xml"));
     }
 
     /**
@@ -127,6 +129,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         logListModel = new DefaultListModel();
         logList.setModel(logListModel);
+        logList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logListMouseClicked(evt);
+            }
+        });
         logListScroll.setViewportView(logList);
 
         javax.swing.GroupLayout panelOutputLogLayout = new javax.swing.GroupLayout(panelOutputLog);
@@ -535,6 +542,11 @@ public class MainWindow extends javax.swing.JFrame {
         nMensajesLabel.setText(Integer.toString(p.messageCount()));
     }//GEN-LAST:event_actStatusBtnActionPerformed
 
+    private void logListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logListMouseClicked
+        String message = logList.getModel().getElementAt(logList.locationToIndex(evt.getPoint()));
+        System.out.println(message);
+    }//GEN-LAST:event_logListMouseClicked
+
     private void load(Path path) {
         p = new AutoProcess(exceptionHandle);
         try {
@@ -568,22 +580,21 @@ public class MainWindow extends javax.swing.JFrame {
             String taskName = (String) list.getModel().getElementAt(list.locationToIndex(evt.getPoint()));
             Task task = (Task) p.getByName(taskName);
             if (task != null) {
-                List<Buffer> inputs = task.getInputs();
-                for (Buffer input : inputs) {
+                for (ListIterator<Buffer> iter = task.inputs(); iter.hasNext();) {
+                    Buffer input = iter.next();
                     String in = p.findName(input.getIn());
                     if (in != null) {
                         bufferListModel.addElement(new BufferListItem(input, in, taskName));
                     }
                 }
 
-                List<Buffer> outputs = task.getOutputs();
-                for (Buffer output : outputs) {
+                for (ListIterator<Buffer> iter = task.outputs(); iter.hasNext();) {
+                    Buffer output = iter.next();
                     String out = p.findName(output.getOut());
                     if (out != null) {
                         bufferListModel.addElement(new BufferListItem(output, taskName, out));
                     }
                 }
-
             }
         }
     }

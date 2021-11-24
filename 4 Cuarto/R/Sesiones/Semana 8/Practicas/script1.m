@@ -14,7 +14,8 @@ resetRotation(motor_cabeza);
 x = -5;
 y = -5;
 theta = 0;
-pinta_robot_v2(x, y, theta, 0, 2.55);
+%pinta_robot_v2(x, y, theta, 0, 2.55);
+pinta_robot_v4(x, y, theta, 0, 2.55, []);
 
 % Esperar para iniciar el script
 disp 'Pulsa para comenzar'
@@ -58,7 +59,8 @@ while (isempty(t) || (t(s) < tiempo_final) && (readTouch(touchSensor(robot,2)) =
     motor_cabeza.Speed = velocidad(s);
     
     %Pintar robot y punto
-    pinta_robot_v2(x, y, theta, deg2rad(double(alpha(s))), readDistance(sonar));
+    %pinta_robot_v2(x, y, theta, deg2rad(double(alpha(s))), readDistance(sonar));
+    pinta_robot_v4(x, y, theta, deg2rad(double(alpha(s))), readDistance(sonar), []);
 end
 
 %Dibujar los resultados

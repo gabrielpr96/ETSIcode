@@ -60,7 +60,7 @@ function mapa = pinta_robot_v4(x, y, theta, alpha, distancia, mapa)
 
     if(distancia < 2.55)
         T = SR_robot.Matrix * SR_cabeza.Matrix;
-        punto = T*[distancia*100, 0, 0, 1]';
+        punto = T*[double(distancia)*100, 0, 0, 1]';
         mapa = [mapa; punto(1), punto(2)];
         animatedline(mapa(:, 1), mapa(:, 2), 'Marker','*', 'LineStyle','none');
     end

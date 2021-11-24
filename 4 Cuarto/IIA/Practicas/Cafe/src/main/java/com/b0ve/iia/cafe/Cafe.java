@@ -1,16 +1,17 @@
 package com.b0ve.iia.cafe;
 
 import com.b0ve.sig.adapters.Adapter;
-import com.b0ve.sig.adapters.AdapterDirOutputter;
-import com.b0ve.sig.adapters.AdapterDirWhatcher;
-import com.b0ve.sig.adapters.AdapterMySQL;
-import com.b0ve.sig.adapters.AdapterWebAPI;
+import com.b0ve.sig.adapters.basic.AdapterDirOutputter;
+import com.b0ve.sig.adapters.basic.AdapterDirWhatcher;
+import com.b0ve.sig.adapters.basic.AdapterMySQL;
+import com.b0ve.sig.adapters.basic.AdapterWebAPI;
 import com.b0ve.sig.ports.Port;
 import com.b0ve.sig.tasks.Task;
 import com.b0ve.sig.utils.ProcessAsync;
 import com.b0ve.sig.utils.Process;
 import static com.b0ve.sig.utils.Process.TASKS.*;
-import com.b0ve.sig.utils.condiciones.FilterConditionEquals;
+import com.b0ve.sig.utils.condiciones.Checkeable;
+import com.b0ve.sig.utils.condiciones.FilterConditionConfigurable;
 
 public class Cafe {
     public static void main(String[] args) throws Exception {
@@ -18,8 +19,8 @@ public class Cafe {
         
         Adapter comandas = new AdapterDirWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\comandas");
         Adapter camarero = new AdapterDirOutputter("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\camarero");
-        Adapter barmanFrio = new AdapterMySQL("localhost", 3306, "cafe", "root", "");
-        Adapter barmanCaliente = new AdapterWebAPI("http://localhost/cafe/api.php");
+        Adapter barmanFrio = new AdapterMySQL("b0ve.com", 3306, "cafe", "cafe", "TSVn3KZPje4TYthd");
+        Adapter barmanCaliente = new AdapterWebAPI("https://cafe.b0ve.com/api.php");
         
         Port pComandas = p.createPort(comandas);
         Port pCamarero = p.createPort(camarero);
@@ -27,11 +28,11 @@ public class Cafe {
         Port pBarmanCaliente = p.createPort(barmanCaliente);
         
         Task divisor = p.createTask(SPLITTER, "/cafe_order/drinks/drink");
-        Task encauzador = p.createTask(DISTRIBUTOR, new FilterConditionEquals[]{new FilterConditionEquals("/drink/type", "cold"), new FilterConditionEquals("/drink/type", "hot")});
+        Task encauzador = p.createTask(DISTRIBUTOR, new Checkeable[]{new FilterConditionConfigurable("/drink/type", FilterConditionConfigurable.CONDITIONS.STR_EQUALS, "cold")});
         
         Task replicadorFrio = p.createTask(REPLICATOR);
         Task traductorQuerryFrio = p.createTask(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/drink\">"
-                + "<sql>SELECT `Stock` FROM `bebidas` WHERE `Nombre` = '<xsl:value-of select=\"name\"/>'</sql>"
+                + "<sql>SELECT `Stock` FROM `drinks_cold` WHERE `Name` = '<xsl:value-of select=\"name\"/>'</sql>"
                 + "</xsl:template></xsl:stylesheet>");
         Task traductorResultadoFrio = p.createTask(TRANSLATOR, "<?xml version=\"1.0\"?><xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\"><xsl:template match=\"/Results\">"
                 + "<drink><stock><xsl:value-of select=\"Row/Stock\"/></stock></drink>"

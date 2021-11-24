@@ -97,12 +97,6 @@ while(!ds_priority_empty(queue)){
 			break;
 			case 12: // Aggregator
 				DerpXmlWrite_LeafElement("type", "aggregator");
-				DerpXmlWrite_Comment("TODO: Agregar la etiqueta raiz y, opcionalmente, más hijos antes del contenido.");
-				DerpXmlWrite_OpenTag("config");
-				DerpXmlWrite_LeafElement("root", "RootElement");
-				DerpXmlWrite_LeafElement("root", "ChildElement");
-				DerpXmlWrite_LeafElement("root", " ");
-				DerpXmlWrite_CloseTag();
 			break
 			case 13: // Chopper
 				DerpXmlWrite_LeafElement("type", "chopper");
@@ -111,12 +105,6 @@ while(!ds_priority_empty(queue)){
 			break;
 			case 14: // Assembler
 				DerpXmlWrite_LeafElement("type", "assembler");
-				DerpXmlWrite_Comment("TODO: Agregar la etiqueta raiz y, opcionalmente, más hijos antes del contenido.");
-				DerpXmlWrite_OpenTag("config");
-				DerpXmlWrite_LeafElement("root", "RootElement");
-				DerpXmlWrite_LeafElement("root", "ChildElement");
-				DerpXmlWrite_LeafElement("root", " ");
-				DerpXmlWrite_CloseTag();
 			break;
 		}
 	
@@ -187,19 +175,27 @@ while(!ds_priority_empty(queue)){
 				DerpXmlWrite_Comment("TODO: Definir el endpoint (gateway) de la API.");
 				DerpXmlWrite_LeafElement("config", "https://example.com/endpoint");
 			break;
-			case 5: // Set
+			case 5: // REST API
+				DerpXmlWrite_LeafElement("type", "rest_api");
+			break;
+			case 6: // Set
 				DerpXmlWrite_LeafElement("type", "set");
 			break;
-			case 6: // Console
+			case 7: // Clock
+				DerpXmlWrite_LeafElement("type", "clock");
+				DerpXmlWrite_Comment("TODO: Definir el intervalo entre mensajes.");
+				DerpXmlWrite_LeafElement("config", "1000");
+			break;
+			case 8: // Console
 				DerpXmlWrite_LeafElement("type", "console");
 			break;
-			case 7: // Screen
+			case 9: // Screen
 				DerpXmlWrite_LeafElement("type", "screen");
 			break;
-			case 8: // Stub Input
+			case 10: // Stub Input
 				DerpXmlWrite_LeafElement("type", "stub_input");
 			break;
-			case 9: // Stub Output
+			case 11: // Stub Output
 				DerpXmlWrite_LeafElement("type", "stub_output");
 			break;
 		}

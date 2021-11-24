@@ -1,21 +1,19 @@
 package com.b0ve.autosig;
 
 import com.b0ve.sig.adapters.Adapter;
-import com.b0ve.sig.adapters.AdapterConsole;
-import com.b0ve.sig.adapters.AdapterDirOutputter;
-import com.b0ve.sig.adapters.AdapterDirWhatcher;
-import com.b0ve.sig.adapters.AdapterMySQL;
-import com.b0ve.sig.adapters.AdapterMySQLmultyQuery;
-import com.b0ve.sig.adapters.AdapterSET;
-import com.b0ve.sig.adapters.AdapterScreen;
-import com.b0ve.sig.adapters.AdapterStubInput;
-import com.b0ve.sig.adapters.AdapterStubOutput;
-import com.b0ve.sig.adapters.AdapterWebAPI;
-import com.b0ve.sig.flow.Message;
-import static com.b0ve.sig.flow.Message.evaluateXPath;
-import static com.b0ve.sig.flow.Message.node2document;
-import static com.b0ve.sig.flow.Message.parseXML;
-import static com.b0ve.sig.flow.Message.serialiceXML;
+import com.b0ve.sig.adapters.test.AdapterConsole;
+import com.b0ve.sig.adapters.basic.AdapterDirOutputter;
+import com.b0ve.sig.adapters.basic.AdapterDirWhatcher;
+import com.b0ve.sig.adapters.basic.AdapterMySQL;
+import com.b0ve.sig.adapters.basic.AdapterMySQLmultyQuery;
+import com.b0ve.sig.adapters.basic.AdapterREST;
+import com.b0ve.sig.adapters.mem.AdapterSET;
+import com.b0ve.sig.adapters.test.AdapterScreen;
+import com.b0ve.sig.adapters.test.AdapterStubInput;
+import com.b0ve.sig.adapters.test.AdapterStubOutput;
+import com.b0ve.sig.adapters.basic.AdapterWebAPI;
+import com.b0ve.sig.adapters.extra.AdapterWordpressWatcher;
+import com.b0ve.sig.adapters.mem.AdapterClock;
 import com.b0ve.sig.ports.Port;
 import com.b0ve.sig.tasks.Task;
 import com.b0ve.sig.tasks.TaskDebug;
@@ -33,10 +31,12 @@ import com.b0ve.sig.tasks.transformers.Aggregator;
 import com.b0ve.sig.tasks.transformers.Assembler;
 import com.b0ve.sig.tasks.transformers.Chopper;
 import com.b0ve.sig.tasks.transformers.Splitter;
+import com.b0ve.sig.tasks.transformers.SplitterTemplate;
 import com.b0ve.sig.tasks.transformers.Translator;
 import com.b0ve.sig.utils.Process;
 import com.b0ve.sig.utils.ProcessAsync;
 import com.b0ve.sig.utils.ProcessSync;
+import com.b0ve.sig.utils.XMLUtils;
 import com.b0ve.sig.utils.condiciones.Checkeable;
 import com.b0ve.sig.utils.condiciones.FilterConditionConfigurable;
 import com.b0ve.sig.utils.condiciones.FilterConditionConfigurable.CONDITIONS;
@@ -77,7 +77,7 @@ public class AutoProcess {
         } catch (IOException ex) {
             throw new SIGException("File could no be oppened to read", filePath, ex);
         }
-        build(parseXML(xml));
+        build(XMLUtils.parse(xml));
     }
 
     private void build(Document doc) throws SIGException {
@@ -96,9 +96,9 @@ public class AutoProcess {
             p.setHandler(exceptionHandle);
 
             //Crear tareas con su configuración
-            NodeList list = evaluateXPath(doc, "/process/tasks/task");
+            NodeList list = XMLUtils.eval(doc, "/process/tasks/task");
             for (int i = 0; i < list.getLength(); i++) {
-                Document taskElem = node2document(list.item(i));
+                Document taskElem = XMLUtils.node2document(list.item(i));
                 Task task;
                 switch (Process.TASKS.valueOf(eval(taskElem, "/task/type").toUpperCase())) {
                     case CORRELATOR:
@@ -111,10 +111,10 @@ public class AutoProcess {
                         task = new Filter(new FilterConditionConfigurable(eval(taskElem, "/task/config/selector"), CONDITIONS.valueOf(eval(taskElem, "/task/config/condition").toUpperCase()), eval(taskElem, "/task/config/value")));
                         break;
                     case DISTRIBUTOR:
-                        NodeList caseList = evaluateXPath(taskElem, "/task/config/case");
+                        NodeList caseList = XMLUtils.eval(taskElem, "/task/config/case");
                         Checkeable[] cases = new Checkeable[caseList.getLength()];
                         for (int j = 0; j < caseList.getLength(); j++) {
-                            Document caseElem = node2document(caseList.item(j));
+                            Document caseElem = XMLUtils.node2document(caseList.item(j));
                             cases[j] = new FilterConditionConfigurable(eval(caseElem, "/case/selector"), CONDITIONS.valueOf(eval(caseElem, "/case/condition").toUpperCase()), eval(caseElem, "/case/value"));
                         }
                         task = new Distributor(cases);
@@ -123,7 +123,7 @@ public class AutoProcess {
                         task = new Replicator();
                         break;
                     case SLIMMER:
-                        NodeList slimList = evaluateXPath(taskElem, "/task/config/selector");
+                        NodeList slimList = XMLUtils.eval(taskElem, "/task/config/selector");
                         String[] slims = new String[slimList.getLength()];
                         for (int j = 0; j < slimList.getLength(); j++) {
                             slims[j] = slimList.item(j).getTextContent().trim();
@@ -134,7 +134,7 @@ public class AutoProcess {
                         task = new ContextSlimmer();
                         break;
                     case ENRICHER:
-                        task = new Enricher(node2document(evaluateXPath(taskElem, "/task/config/*[1]").item(0)));
+                        task = new Enricher(XMLUtils.node2document(XMLUtils.eval(taskElem, "/task/config/*[1]").item(0)));
                         break;
                     case CONTEXT_ENRICHER:
                         task = new ContextEnricher();
@@ -143,29 +143,19 @@ public class AutoProcess {
                         task = new CorrelationIDSetter();
                         break;
                     case TRANSLATOR:
-                        task = new Translator(serialiceXML(node2document(evaluateXPath(taskElem, "/task/config/*[1]").item(0))));
+                        task = new Translator(XMLUtils.serialize(XMLUtils.node2document(XMLUtils.eval(taskElem, "/task/config/*[1]").item(0))));
                         break;
                     case SPLITTER:
                         task = new Splitter(eval(taskElem, "/task/config"));
                         break;
                     case AGGREGATOR:
-                        NodeList aggRoots = evaluateXPath(taskElem, "/task/config/root");
-                        String[] aggs = new String[aggRoots.getLength()];
-                        for (int j = 0; j < aggRoots.getLength(); j++) {
-                            aggs[j] = aggRoots.item(j).getTextContent().trim();
-                        }
-                        task = new Aggregator(aggs);
+                        task = new Aggregator();
                         break;
                     case CHOPPER:
                         task = new Chopper(eval(taskElem, "/task/config"));
                         break;
                     case ASSEMBLER:
-                        NodeList assRoots = evaluateXPath(taskElem, "/task/config/root");
-                        String[] asss = new String[assRoots.getLength()];
-                        for (int j = 0; j < assRoots.getLength(); j++) {
-                            asss[j] = assRoots.item(j).getTextContent().trim();
-                        }
-                        task = new Assembler(asss);
+                        task = new Assembler();
                         break;
                     case DEBUG:
                         task = new TaskDebug(bool(taskElem, "/task/config", true));
@@ -178,9 +168,9 @@ public class AutoProcess {
             }
 
             //Crear los adaptadores y sus puertos
-            list = evaluateXPath(doc, "/process/adapters/adapter");
+            list = XMLUtils.eval(doc, "/process/adapters/adapter");
             for (int i = 0; i < list.getLength(); i++) {
-                Document adapterElem = node2document(list.item(i));
+                Document adapterElem = XMLUtils.node2document(list.item(i));
                 Adapter adapter;
                 switch (eval(adapterElem, "/adapter/type").toLowerCase()) {
                     case "dir_watcher":
@@ -198,8 +188,14 @@ public class AutoProcess {
                     case "web_api":
                         adapter = new AdapterWebAPI(eval(adapterElem, "/adapter/config"));
                         break;
+                    case "rest_api":
+                        adapter = new AdapterREST();
+                        break;
                     case "set":
                         adapter = new AdapterSET();
+                        break;
+                    case "clock":
+                        adapter = new AdapterClock(Long.parseLong(eval(adapterElem, "/adapter/config")));
                         break;
                     case "console":
                         adapter = new AdapterConsole();
@@ -213,6 +209,9 @@ public class AutoProcess {
                     case "stub_output":
                         adapter = new AdapterStubOutput();
                         break;
+                    case "wordpress_watcher":
+                        adapter = new AdapterWordpressWatcher(eval(adapterElem, "/adapter/config/url"), eval(adapterElem, "/adapter/config/username"), eval(adapterElem, "/adapter/config/password"));
+                        break;
                     default:
                         throw new SIGException("Adapter type not recognized", eval(adapterElem, "/adapter/type"), null);
                 }
@@ -222,11 +221,11 @@ public class AutoProcess {
             }
 
             //Establecer las conexiones tarea - tarea o tarea - puerto
-            list = evaluateXPath(doc, "/process/tasks/task");
+            list = XMLUtils.eval(doc, "/process/tasks/task");
             for (int i = 0; i < list.getLength(); i++) {
-                Document taskElem = node2document(list.item(i));
+                Document taskElem = XMLUtils.node2document(list.item(i));
                 String task1 = eval(taskElem, "/task/name");
-                NodeList outputs = evaluateXPath(taskElem, "/task/outputs/output");
+                NodeList outputs = XMLUtils.eval(taskElem, "/task/outputs/output");
                 for (int j = 0; j < outputs.getLength(); j++) {
                     String task2 = outputs.item(j).getTextContent().trim();
                     Task other;
@@ -235,18 +234,30 @@ public class AutoProcess {
                     } else {
                         other = ports.get("p" + task2);
                     }
+                    if(tasks.get(task1) == null){
+                        throw new SIGException("Could not find task or adapter to connect to", task1, null);
+                    }
+                    if(other == null){
+                        throw new SIGException("Could not find task to connect to task or port", task2, null);
+                    }
                     p.connect(tasks.get(task1), other);
                 }
             }
 
             //Establecer conexiones puerto - tarea (puerto - puerto no esta permitido)
-            list = evaluateXPath(doc, "/process/adapters/adapter");
+            list = XMLUtils.eval(doc, "/process/adapters/adapter");
             for (int i = 0; i < list.getLength(); i++) {
-                Document adapterElem = node2document(list.item(i));
+                Document adapterElem = XMLUtils.node2document(list.item(i));
                 String port1 = "p" + eval(adapterElem, "/adapter/name");
-                NodeList outputs = evaluateXPath(adapterElem, "/adapter/outputs/output");
+                NodeList outputs = XMLUtils.eval(adapterElem, "/adapter/outputs/output");
                 for (int j = 0; j < outputs.getLength(); j++) {
                     String task2 = outputs.item(j).getTextContent().trim();
+                    if(ports.get(port1) == null){
+                        throw new SIGException("Could not find source port to connect to", port1, null);
+                    }
+                    if(tasks.get(task2) == null){
+                        throw new SIGException("Could not find task to connect to port", task2, null);
+                    }
                     p.connect(ports.get(port1), tasks.get(task2));
                 }
             }
@@ -260,7 +271,7 @@ public class AutoProcess {
     }
 
     private String eval(Document doc, String xpath, String def) throws SIGException {
-        NodeList res = evaluateXPath(doc, xpath);
+        NodeList res = XMLUtils.eval(doc, xpath);
         if (res.getLength() > 0) {
             return res.item(0).getTextContent().strip();
         } else {
@@ -269,7 +280,7 @@ public class AutoProcess {
     }
 
     private boolean bool(Document doc, String xpath, boolean def) throws SIGException {
-        NodeList res = evaluateXPath(doc, xpath);
+        NodeList res = XMLUtils.eval(doc, xpath);
         if (res.getLength() > 0) {
             return res.item(0).getTextContent().strip().toLowerCase().equals("true");
         } else {

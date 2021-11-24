@@ -7,8 +7,8 @@ if(selectMode == 1){
 		selected = 14;
 	}
 } else if(selectMode == 2) {
-	if(selected > 9){
-		selected = 9;
+	if(selected > 11){
+		selected = 11;
 	}
 }
 

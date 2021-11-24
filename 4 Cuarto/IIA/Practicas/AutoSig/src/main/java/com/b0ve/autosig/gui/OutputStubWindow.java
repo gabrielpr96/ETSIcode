@@ -6,9 +6,7 @@
 package com.b0ve.autosig.gui;
 
 import com.b0ve.autosig.AutoSIG;
-import static com.b0ve.autosig.AutoSIG.prettyPrintMessage;
-import com.b0ve.sig.adapters.AdapterStubOutput;
-import com.b0ve.sig.flow.Message;
+import com.b0ve.sig.adapters.test.AdapterStubOutput;
 import javax.swing.DefaultListModel;
 import org.w3c.dom.Document;
 

@@ -5,7 +5,7 @@
  */
 package com.b0ve.autosig.gui;
 
-import com.b0ve.sig.adapters.AdapterStubInput;
+import com.b0ve.sig.adapters.test.AdapterStubInput;
 import com.b0ve.sig.utils.exceptions.SIGException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

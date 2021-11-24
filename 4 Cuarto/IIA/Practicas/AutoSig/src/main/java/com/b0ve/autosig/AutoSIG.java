@@ -3,6 +3,7 @@ package com.b0ve.autosig;
 import com.b0ve.autosig.gui.MainWindow;
 import com.b0ve.sig.flow.FragmentInfo;
 import com.b0ve.sig.flow.Message;
+import com.b0ve.sig.utils.XMLUtils;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Iterator;
@@ -41,7 +42,7 @@ public class AutoSIG {
     
     public static String prettyPrintDocument(Document doc) {
         try {
-            Source source = new StreamSource(new StringReader(Message.serialiceXML(doc)));
+            Source source = new StreamSource(new StringReader(XMLUtils.serialize(doc)));
             StringWriter outWriter = new StringWriter();
             Processor processor = new Processor(false);
             Serializer serializer = processor.newSerializer(outWriter);
