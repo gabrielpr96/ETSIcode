@@ -6,6 +6,7 @@
 % 28/11/2020. FGB.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     clc
+    cla
     clear t
 %variables control movimiento cabeza
     clear giro_cabeza
@@ -21,17 +22,16 @@
     clear x y theta
     clear giro_derecho giro_izquierdo giro_robot
 
-    global radio_rueda
+    global r
     global l %distancia entre ruedas
 
     l=6;
-    radio_rueda=3;
+    r=3;
 
 % Declaración de sensores
     Detecta_colision = touchSensor(mi_Robot,1); %Switch conectado al puerto 1.
     Pulsador = touchSensor(mi_Robot,2); %Switch conectado al puerto 2.
     Sonar = sonicSensor(mi_Robot); %definición del sonar
-    Gyro = gyroSensor(mi_Robot);
 
 % Declaración de los motores
     motor_cabeza = motor(mi_Robot,'A') %motor de la cabeza
@@ -53,7 +53,6 @@
     resetRotation(motor_cabeza);
     resetRotation(motor_izquierdo);
     resetRotation(motor_derecho);
-    resetRotationAngle(Gyro)
 
 %indice inicial
     i=1;
@@ -62,7 +61,7 @@
     tstart = tic;
 
 %posición inicial cabeza
-    giro_cabeza(i)=readRotation(motor_cabeza);
+    giro_cabeza(i)=0;
     giro_cabeza_target = 0;
 
 %valores iniciales de los encoders
@@ -70,6 +69,8 @@
     giro_izquierdo(i)=0;
     giro_robot(i) = 0;
     giro_robot_target = 0;
+    x(i) = 0;
+    y(i) = 0;
 
 %medida incial
     distancia(i) = readDistance(Sonar)*100;
@@ -87,8 +88,8 @@
     transicion=1;% inicializa la variable que marca el inicio el mov de la cabeza
     t_giro_cabeza=6; %Girar la cabeza tarda 6 segundos
     KP_CABEZA = 0.6;
-    KP_GIRO = 1.5;
-    giro_robot_margen = 2;
+    KP_GIRO = 2.5;
+    giro_robot_margen = 3;
 
 
 %comienza el bucle
@@ -115,9 +116,12 @@ while  (readTouch(Pulsador)==0)
     
     Signal_reading_odo;
 
+    [x(i), y(i), giro_robot(i)] = calculo_odometria(giro_derecho, giro_izquierdo, x, y, giro_robot, i);
 
-    estado %muestra el estado del sistema
+    estado; %muestra el estado del sistema
     
+    giro_robot_error = giro_robot_target-rad2deg(giro_robot(i));
+
     %--------------------------------------------------------
     % TRANSICIONES DE ESTADO
     %1-> marchando para adelante
@@ -161,7 +165,7 @@ while  (readTouch(Pulsador)==0)
                 end
                 
             case 4 %girando robot
-                if (giro_robot(i)>=giro_robot_target-giro_robot_margen && giro_robot(i)<=giro_robot_target+giro_robot_margen)                  
+                if (abs(giro_robot_error) <= giro_robot_margen)                  
                     estado=2; %la transición a parado
                     transicion=i; %indice que marca el inicio del estado 5           
                 end
@@ -191,6 +195,7 @@ while  (readTouch(Pulsador)==0)
                 vel=20;
                 Power1=vel;
                 Power2=vel;
+                Power_cabeza = 0;
                 
               %---------------------
               %Manda los comandos de control a los motores
@@ -202,6 +207,7 @@ while  (readTouch(Pulsador)==0)
                 vel=0;
                 Power1=vel;
                 Power2=vel;
+                Power_cabeza = 0;
                 
               %---------------------
               %Manda los comandos de control a los motores
@@ -218,19 +224,21 @@ while  (readTouch(Pulsador)==0)
                 vel=0;
                 Power1=vel;
                 Power2=vel;
+                Power_cabeza = (giro_cabeza_target - giro_cabeza(i)) * KP_CABEZA;
 
             case 4 %girando sobre si mismo
                     
-            
-               vel = (giro_robot_target - giro_robot(i)) * KP_GIRO;
+               vel = giro_robot_error * KP_GIRO;
                Power1=vel;
                Power2=-vel;
+               Power_cabeza = 0;
                
             case 5 %andando hacia atrás
                 %establece los valores de control 
                vel=-20;
                Power1=vel;
                Power2=vel;
+               Power_cabeza = 0;
                 
               %---------------------
               %Manda los comandos de control a los motores
@@ -239,13 +247,14 @@ while  (readTouch(Pulsador)==0)
           
         end %del siwtch
 
-        Power_cabeza = (giro_cabeza_target - giro_cabeza(i)) * KP_CABEZA;
-    [giro_robot(i) giro_robot_target]
+        pinta_robot_v4(x(i), y(i), giro_robot(i), deg2rad(double(giro_cabeza(i))), distancia(i), []);
 
       %---------------------
         %Manda los comandos de control a los motores
       %-------------        
         Traction_motor_control;   
+
+        [rad2deg(giro_robot(i)) giro_robot_target]
     
 end %del while
 %catch ME

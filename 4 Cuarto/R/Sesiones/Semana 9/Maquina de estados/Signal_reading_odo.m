@@ -12,17 +12,15 @@
     %lectura de encoders de los motores de las ruedas y de la cabeza
     
     if (estado==3) %cuando giro la cabeza no leo encoders de las ruedas
-        
         giro_derecho(i)=giro_derecho(i-1);
         giro_izquierdo(i)=giro_izquierdo(i-1);
-        
-        
-        
+        giro_cabeza(i)=double(readRotation(motor_cabeza));
     else %cuando leo encoders de las ruedas no leo el giro de la cabeza     
         giro_derecho(i)=double(readRotation(motor_derecho))*pi/180;
         giro_izquierdo(i)=double(readRotation(motor_izquierdo))*pi/180;
+        giro_cabeza(i)=giro_cabeza(i-1);
     end
-        giro_cabeza(i)=double(readRotation(motor_cabeza));  
-    giro_robot(i) = -readRotationAngle(Gyro);
+
+        
 
         
