@@ -23,10 +23,12 @@
     clear giro_derecho giro_izquierdo giro_robot
 
     global radio_rueda
-    global l_semi %distancia entre ruedas
+    global l_semi %semi distancia entre ruedas
 
     l_semi=6;
     radio_rueda=3;
+
+    N_SUBDIVISIONES = 1;
 
 % Declaración de sensores
     Detecta_colision = touchSensor(mi_Robot,1); %Switch conectado al puerto 1.
@@ -34,9 +36,9 @@
     Sonar = sonicSensor(mi_Robot); %definición del sonar
 
 % Declaración de los motores
-    motor_cabeza = motor(mi_Robot,'A') %motor de la cabeza
-    motor_izquierdo = motor(mi_Robot,'B') %Motor izquierdo
-    motor_derecho = motor(mi_Robot,'C') %Motor_derecho
+    motor_cabeza = motor(mi_Robot,'A'); %motor de la cabeza
+    motor_izquierdo = motor(mi_Robot,'B'); %Motor izquierdo
+    motor_derecho = motor(mi_Robot,'C'); %Motor_derecho
 
 %Activacion de los motores
     start(motor_cabeza);
@@ -83,7 +85,7 @@
 
     estado=1; %estado inicial
 
-    stop_distance=35; %distancia de para ante obstáculo
+    stop_distance=15; %distancia de para ante obstáculo
     t_marcha_atras=0.5; %tiempo de marcha hacia atrás.
     transicion=1;% inicializa la variable que marca el inicio el mov de la cabeza
     t_giro_cabeza=6; %Girar la cabeza tarda 6 segundos
@@ -154,11 +156,19 @@ while  (readTouch(Pulsador)==0)
             case 3 %girando cabeza
                 if (t(i)-t(transicion)>t_giro_cabeza)
 
-                    if distance_max > stop_distance
-                        giro_robot_target = giro_robot(i) + distance_max_deg;
-                    else
-                        giro_robot_target = giro_robot(i);
+                    %TODO: Subdividir en un for y luego hacer media
+                    %ponderada para calcular el giro_robot_target
+
+                    %Subdividir para que la media salga mejor
+                    degInicio = 90;
+                    degFin = -90;
+                    for s=1:N_SUBDIVISIONES
+                        [degInicio, degFin] = escoger_mitad(distancia_raw, degInicio, degFin);
                     end
+                    [degInicio, degFin];
+                    %Obtener el mejor angulo con la media
+                    deg_mejor = media_ponderada(distancia_raw, degInicio, degFin)
+                    giro_robot_target = giro_robot(i) + deg_mejor;
 
                     estado=4; %la transición a estado girando robot
                     transicion=i; %indice que marca el inicio del estado 3              
@@ -173,8 +183,8 @@ while  (readTouch(Pulsador)==0)
            case 5 %marcha atrás
                 if (t(i)-t(transicion)>t_marcha_atras)
 
-                    distance_max = 0;
-                    distance_max_deg = 0;
+                    distancia_raw = [];
+                    distancia_i = 1;
 
                     estado=3; %transición a estado girando cabeza
                     transicion=i; %indice que marca el inicio del estado 2                 
@@ -215,10 +225,10 @@ while  (readTouch(Pulsador)==0)
                %Traction_motor_control;
         
             case 3 %girando cabeza
-                if distancia(i) > distance_max
-                    distance_max = distancia(i);
-                    distance_max_deg = giro_cabeza(i);
-                end
+                distancia_raw(distancia_i, 1) = giro_cabeza(i);
+                distancia_raw(distancia_i, 2) = distancia(i);
+                distancia_i = distancia_i + 1;
+                
                 giro_cabeza_target = signal_vf(t(i)-t(transicion), 0, t_giro_cabeza, 90);
                 
                 vel=0;
@@ -254,7 +264,8 @@ while  (readTouch(Pulsador)==0)
       %-------------        
         Traction_motor_control;   
 
-        [rad2deg(giro_robot(i)) giro_robot_target]
+        %TODO: Quitar esta salida
+        %[rad2deg(giro_robot(i)) giro_robot_target];
     
 end %del while
 %catch ME
