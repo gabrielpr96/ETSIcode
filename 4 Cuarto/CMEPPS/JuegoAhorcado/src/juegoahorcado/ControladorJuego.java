@@ -61,6 +61,7 @@ public class ControladorJuego implements KeyListener {
     }
 
     private void adivinarLetra(char letra) {
+        letra = Character.toLowerCase(letra);
         if (letra != '\b' && letra != ' ' && letra != '\r' && letra != '\n') {
             if (!canvas.addLetraProbada(letra)) {
                 canvas.addLinea();
@@ -143,6 +144,7 @@ public class ControladorJuego implements KeyListener {
 
     public void transicionAdivinarPalabra() {
         estado = ADIVINANDO_PALABRA;
+        canvas.setPalabra(canvas.getPalabra().toLowerCase());
         canvas.setOcultarPalabra(true);
         canvas.resetLineas();
         if (nJuego % 2 == 1) {

@@ -201,6 +201,10 @@ public class CanvasAhorcado extends Canvas {
     public void setOcultarPalabra(boolean ocultarPalabra) {
         this.ocultarPalabra = ocultarPalabra;
     }
+    
+    public String getPalabra(){
+        return palabra;
+    }
 
     public String getJugador1() {
         return jugador1;
