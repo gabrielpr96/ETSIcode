@@ -193,7 +193,7 @@ public class ApiController extends HttpServlet {
                     }
                     request.setAttribute("carrito", carrito);
                     request.setAttribute("base64Images", base64Images);
-                    RequestDispatcher rd = request.getRequestDispatcher("/carritoContenido.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/carritoContenido.jsp");
                     rd.forward(request, response);
                     return;
                 default:
