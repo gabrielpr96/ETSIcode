@@ -135,8 +135,7 @@ while  (readTouch(Pulsador)==0)
         switch estado
             
             case 1 %andando hacia delante
-                %if (readDistance(Sonar)<stop_distance) %si la distancia es menor que 35 para
-                 if (distancia(i)<stop_distance) %si la distancia es menor que 35 para
+                 if (distancia(i)<stop_distance) %si la distancia es menor que stop_distance para
                     estado=2; %transición de estado de paro
                     transicion=i; %indice que marca el inicio del estado 2
                 end
@@ -155,9 +154,6 @@ while  (readTouch(Pulsador)==0)
              
             case 3 %girando cabeza
                 if (t(i)-t(transicion)>t_giro_cabeza)
-
-                    %TODO: Subdividir en un for y luego hacer media
-                    %ponderada para calcular el giro_robot_target
 
                     %Subdividir para que la media salga mejor
                     degInicio = 90;
@@ -229,7 +225,7 @@ while  (readTouch(Pulsador)==0)
                 distancia_raw(distancia_i, 2) = distancia(i);
                 distancia_i = distancia_i + 1;
                 
-                giro_cabeza_target = signal_vf(t(i)-t(transicion), 0, t_giro_cabeza, 90);
+                giro_cabeza_target = signal_vf(t(i)-t(transicion), 0, t_giro_cabeza, 100);
                 
                 vel=0;
                 Power1=vel;

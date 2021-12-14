@@ -6,7 +6,9 @@
 package com.b0ve.autosig.gui;
 
 import com.b0ve.autosig.AutoSIG;
-import com.b0ve.sig.connectors.test.StubOutput;
+import static com.b0ve.autosig.AutoSIG.prettyPrintMessage;
+import com.b0ve.sig.flow.Message;
+import com.b0ve.sig.tasks.TaskFlowInterrupter;
 import javax.swing.DefaultListModel;
 import org.w3c.dom.Document;
 
@@ -14,12 +16,12 @@ import org.w3c.dom.Document;
  *
  * @author borja
  */
-public class OutputStubWindow extends javax.swing.JFrame {
+public class FlowInterrupterWindow extends javax.swing.JFrame {
 
-    private final StubOutput adapter;
+    private final TaskFlowInterrupter task;
 
-    public OutputStubWindow(StubOutput adapter) {
-        this.adapter = adapter;
+    public FlowInterrupterWindow(TaskFlowInterrupter task) {
+        this.task = task;
         initComponents();
         act();
     }
@@ -35,11 +37,10 @@ public class OutputStubWindow extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         bodyTest = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
         actBtn = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        list = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
+        deleteBtn = new javax.swing.JButton();
+        sendBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Input Stub");
@@ -48,25 +49,30 @@ public class OutputStubWindow extends javax.swing.JFrame {
         bodyTest.setRows(5);
         jScrollPane1.setViewportView(bodyTest);
 
-        jLabel1.setText("Mensajes");
-
-        actBtn.setText("Actualizar Mensajes");
+        actBtn.setText("Actualizar Mensaje");
         actBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actBtnActionPerformed(evt);
             }
         });
 
-        listModel = new DefaultListModel();
-        list.setModel(listModel);
-        list.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listMouseClicked(evt);
+        jLabel2.setText("Mensaje");
+
+        deleteBtn.setForeground(new java.awt.Color(204, 0, 51));
+        deleteBtn.setText("Eliminar");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
             }
         });
-        jScrollPane2.setViewportView(list);
 
-        jLabel2.setText("Mensaje");
+        sendBtn.setForeground(new java.awt.Color(0, 102, 0));
+        sendBtn.setText("Reenviar");
+        sendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,32 +81,31 @@ public class OutputStubWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(deleteBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sendBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(actBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel2)
+                        .addGap(0, 450, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(actBtn)
-                .addGap(16, 16, 16))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(actBtn)
+                    .addComponent(deleteBtn)
+                    .addComponent(sendBtn))
+                .addContainerGap())
         );
 
         pack();
@@ -110,26 +115,32 @@ public class OutputStubWindow extends javax.swing.JFrame {
         act();
     }//GEN-LAST:event_actBtnActionPerformed
 
-    private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
-        Document doc = list.getModel().getElementAt(list.locationToIndex(evt.getPoint()));
-        bodyTest.setText(AutoSIG.prettyPrintDocument(doc));
-    }//GEN-LAST:event_listMouseClicked
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        task.drop();
+        act();
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
+        task.forward();
+        act();
+    }//GEN-LAST:event_sendBtnActionPerformed
 
     private void act() {
-        Document[] docs = adapter.getMessages();
-        for (Document message : docs) {
-            listModel.addElement(message);
+        Message m = task.peek();
+        if(m == null){
+            bodyTest.setText("");
+        }else{
+            bodyTest.setText(prettyPrintMessage(m));
         }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actBtn;
     private javax.swing.JTextArea bodyTest;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<Document> list;
-    private DefaultListModel listModel;
+    private javax.swing.JButton sendBtn;
     // End of variables declaration//GEN-END:variables
 }

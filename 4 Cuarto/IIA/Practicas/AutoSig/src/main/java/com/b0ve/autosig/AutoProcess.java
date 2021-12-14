@@ -1,22 +1,29 @@
 package com.b0ve.autosig;
 
-import com.b0ve.sig.adapters.Adapter;
-import com.b0ve.sig.adapters.test.AdapterConsole;
-import com.b0ve.sig.adapters.basic.AdapterDirOutputter;
-import com.b0ve.sig.adapters.basic.AdapterDirWhatcher;
-import com.b0ve.sig.adapters.basic.AdapterMySQL;
-import com.b0ve.sig.adapters.basic.AdapterMySQLmultyQuery;
-import com.b0ve.sig.adapters.basic.AdapterREST;
-import com.b0ve.sig.adapters.mem.AdapterSET;
-import com.b0ve.sig.adapters.test.AdapterScreen;
-import com.b0ve.sig.adapters.test.AdapterStubInput;
-import com.b0ve.sig.adapters.test.AdapterStubOutput;
-import com.b0ve.sig.adapters.basic.AdapterWebAPI;
-import com.b0ve.sig.adapters.extra.AdapterWordpressWatcher;
-import com.b0ve.sig.adapters.mem.AdapterClock;
+import com.b0ve.sig.connectors.Connector;
+import com.b0ve.sig.connectors.test.Console;
+import com.b0ve.sig.connectors.basic.DirOutputter;
+import com.b0ve.sig.connectors.basic.DirWhatcher;
+import com.b0ve.sig.connectors.basic.MySQL;
+import com.b0ve.sig.connectors.basic.MySQLmultyQuery;
+import com.b0ve.sig.connectors.basic.REST;
+import com.b0ve.sig.connectors.meta.SET;
+import com.b0ve.sig.connectors.test.Screen;
+import com.b0ve.sig.connectors.test.StubInput;
+import com.b0ve.sig.connectors.test.StubOutput;
+import com.b0ve.sig.connectors.basic.WebAPI;
+import com.b0ve.sig.connectors.extra.SFTPUploader;
+import com.b0ve.sig.connectors.extra.SendMail;
+import com.b0ve.sig.connectors.extra.TumblrWatcher;
+import com.b0ve.sig.connectors.extra.TwitterPutter;
+import com.b0ve.sig.connectors.extra.TwitterWatcher;
+import com.b0ve.sig.connectors.extra.WordpressWatcher;
+import com.b0ve.sig.connectors.meta.Clock;
 import com.b0ve.sig.ports.Port;
 import com.b0ve.sig.tasks.Task;
+import com.b0ve.sig.tasks.TaskBlackhole;
 import com.b0ve.sig.tasks.TaskDebug;
+import com.b0ve.sig.tasks.TaskFlowInterrupter;
 import com.b0ve.sig.tasks.modifiers.ContextEnricher;
 import com.b0ve.sig.tasks.modifiers.ContextSlimmer;
 import com.b0ve.sig.tasks.modifiers.CorrelationIDSetter;
@@ -31,7 +38,6 @@ import com.b0ve.sig.tasks.transformers.Aggregator;
 import com.b0ve.sig.tasks.transformers.Assembler;
 import com.b0ve.sig.tasks.transformers.Chopper;
 import com.b0ve.sig.tasks.transformers.Splitter;
-import com.b0ve.sig.tasks.transformers.SplitterTemplate;
 import com.b0ve.sig.tasks.transformers.Translator;
 import com.b0ve.sig.utils.Process;
 import com.b0ve.sig.utils.ProcessAsync;
@@ -55,11 +61,13 @@ import org.w3c.dom.NodeList;
 
 public class AutoProcess {
 
+    private Document lastDoc;
+    
     private String name;
     private Process p;
     private final BidiMap<String, Task> tasks;
     private final BidiMap<String, Port> ports;
-    private final BidiMap<String, Adapter> adapters;
+    private final BidiMap<String, Connector> adapters;
 
     private final AutoExceptionHandle exceptionHandle;
 
@@ -81,6 +89,7 @@ public class AutoProcess {
     }
 
     private void build(Document doc) throws SIGException {
+        lastDoc = doc;
         try {
             //Leer los datos basicos
             name = eval(doc, "/process/name", "Unnamed");
@@ -157,8 +166,14 @@ public class AutoProcess {
                     case ASSEMBLER:
                         task = new Assembler();
                         break;
+                    case BLACKHOLE:
+                        task = new TaskBlackhole();
+                        break;
                     case DEBUG:
                         task = new TaskDebug(bool(taskElem, "/task/config", true));
+                        break;
+                    case FLOW_INTERRUPTER:
+                        task = new TaskFlowInterrupter();
                         break;
                     default:
                         throw new SIGException("Task type not recognized", eval(taskElem, "/task/type"), null);
@@ -171,46 +186,61 @@ public class AutoProcess {
             list = XMLUtils.eval(doc, "/process/adapters/adapter");
             for (int i = 0; i < list.getLength(); i++) {
                 Document adapterElem = XMLUtils.node2document(list.item(i));
-                Adapter adapter;
+                Connector adapter;
                 switch (eval(adapterElem, "/adapter/type").toLowerCase()) {
                     case "dir_watcher":
-                        adapter = new AdapterDirWhatcher(eval(adapterElem, "/adapter/config"));
+                        adapter = new DirWhatcher(eval(adapterElem, "/adapter/config"));
                         break;
                     case "dir_outputter":
-                        adapter = new AdapterDirOutputter(eval(adapterElem, "/adapter/config"));
+                        adapter = new DirOutputter(eval(adapterElem, "/adapter/config"));
                         break;
                     case "mysql":
-                        adapter = new AdapterMySQL(eval(adapterElem, "/adapter/config/host"), Integer.parseInt(eval(adapterElem, "/adapter/config/port")), eval(adapterElem, "/adapter/config/db"), eval(adapterElem, "/adapter/config/user"), eval(adapterElem, "/adapter/config/pass"));
+                        adapter = new MySQL(eval(adapterElem, "/adapter/config/host"), Integer.parseInt(eval(adapterElem, "/adapter/config/port")), eval(adapterElem, "/adapter/config/db"), eval(adapterElem, "/adapter/config/user"), eval(adapterElem, "/adapter/config/pass"));
                         break;
                     case "mysql_multi_query":
-                        adapter = new AdapterMySQLmultyQuery(eval(adapterElem, "/adapter/config/host"), Integer.parseInt(eval(adapterElem, "/adapter/config/port")), eval(adapterElem, "/adapter/config/db"), eval(adapterElem, "/adapter/config/user"), eval(adapterElem, "/adapter/config/pass"));
+                        adapter = new MySQLmultyQuery(eval(adapterElem, "/adapter/config/host"), Integer.parseInt(eval(adapterElem, "/adapter/config/port")), eval(adapterElem, "/adapter/config/db"), eval(adapterElem, "/adapter/config/user"), eval(adapterElem, "/adapter/config/pass"));
                         break;
                     case "web_api":
-                        adapter = new AdapterWebAPI(eval(adapterElem, "/adapter/config"));
+                        adapter = new WebAPI(eval(adapterElem, "/adapter/config"));
                         break;
                     case "rest_api":
-                        adapter = new AdapterREST();
+                        adapter = new REST();
                         break;
                     case "set":
-                        adapter = new AdapterSET();
+                        adapter = new SET();
                         break;
                     case "clock":
-                        adapter = new AdapterClock(Long.parseLong(eval(adapterElem, "/adapter/config")));
+                        adapter = new Clock(Long.parseLong(eval(adapterElem, "/adapter/config")));
                         break;
                     case "console":
-                        adapter = new AdapterConsole();
+                        adapter = new Console();
                         break;
                     case "screen":
-                        adapter = new AdapterScreen();
+                        adapter = new Screen();
                         break;
                     case "stub_input":
-                        adapter = new AdapterStubInput();
+                        adapter = new StubInput();
                         break;
                     case "stub_output":
-                        adapter = new AdapterStubOutput();
+                        adapter = new StubOutput();
                         break;
                     case "wordpress_watcher":
-                        adapter = new AdapterWordpressWatcher(eval(adapterElem, "/adapter/config/url"), eval(adapterElem, "/adapter/config/username"), eval(adapterElem, "/adapter/config/password"));
+                        adapter = new WordpressWatcher(eval(adapterElem, "/adapter/config/url"), eval(adapterElem, "/adapter/config/username"), eval(adapterElem, "/adapter/config/password"));
+                        break;
+                    case "tumblr_watcher":
+                        adapter = new TumblrWatcher(eval(adapterElem, "/adapter/config/consumer-key"), eval(adapterElem, "/adapter/config/consumer-secret"), eval(adapterElem, "/adapter/config/oauth-token"), eval(adapterElem, "/adapter/config/oauth-token-secret"));
+                        break;
+                    case "twitter_watcher":
+                        adapter = new TwitterWatcher(eval(adapterElem, "/adapter/config/consumer-key"), eval(adapterElem, "/adapter/config/consumer-secret"), eval(adapterElem, "/adapter/config/oauth-token"), eval(adapterElem, "/adapter/config/oauth-token-secret"));
+                        break;
+                    case "twitter_putter":
+                        adapter = new TwitterPutter(eval(adapterElem, "/adapter/config/consumer-key"), eval(adapterElem, "/adapter/config/consumer-secret"), eval(adapterElem, "/adapter/config/oauth-token"), eval(adapterElem, "/adapter/config/oauth-token-secret"));
+                        break;
+                    case "send_mail":
+                        adapter = new SendMail(eval(adapterElem, "/adapter/config/smtp-host"), Integer.parseInt(eval(adapterElem, "/adapter/config/smtp-port")), eval(adapterElem, "/adapter/config/uses-tls").toLowerCase().equals("true"), eval(adapterElem, "/adapter/config/from"), eval(adapterElem, "/adapter/config/from-name"), eval(adapterElem, "/adapter/config/from-pass"), eval(adapterElem, "/adapter/config/reply"), eval(adapterElem, "/adapter/config/reply-name"));
+                        break;
+                    case "sftp_uploader":
+                        adapter = new SFTPUploader(eval(adapterElem, "/adapter/config/host"), Integer.parseInt(eval(adapterElem, "/adapter/config/port")), eval(adapterElem, "/adapter/config/username"), eval(adapterElem, "/adapter/config/password"));
                         break;
                     default:
                         throw new SIGException("Adapter type not recognized", eval(adapterElem, "/adapter/type"), null);
@@ -292,9 +322,10 @@ public class AutoProcess {
         p.execute();
     }
 
-    public void stop() throws InterruptedException {
+    public void stop() throws InterruptedException, SIGException {
         p.shutdown();
         p.waitToEnd();
+        build(lastDoc);
     }
 
     public void validate() {
@@ -314,7 +345,7 @@ public class AutoProcess {
         return tasks.entrySet().iterator();
     }
 
-    public Iterator<Map.Entry<String, Adapter>> getAdapters() {
+    public Iterator<Map.Entry<String, Connector>> getAdapters() {
         return adapters.entrySet().iterator();
     }
 

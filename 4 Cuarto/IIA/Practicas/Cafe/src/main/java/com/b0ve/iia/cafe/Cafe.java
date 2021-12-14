@@ -1,10 +1,10 @@
 package com.b0ve.iia.cafe;
 
-import com.b0ve.sig.adapters.Adapter;
-import com.b0ve.sig.adapters.basic.AdapterDirOutputter;
-import com.b0ve.sig.adapters.basic.AdapterDirWhatcher;
-import com.b0ve.sig.adapters.basic.AdapterMySQL;
-import com.b0ve.sig.adapters.basic.AdapterWebAPI;
+import com.b0ve.sig.connectors.Connector;
+import com.b0ve.sig.connectors.basic.DirOutputter;
+import com.b0ve.sig.connectors.basic.DirWhatcher;
+import com.b0ve.sig.connectors.basic.MySQL;
+import com.b0ve.sig.connectors.basic.WebAPI;
 import com.b0ve.sig.ports.Port;
 import com.b0ve.sig.tasks.Task;
 import com.b0ve.sig.utils.ProcessAsync;
@@ -17,10 +17,10 @@ public class Cafe {
     public static void main(String[] args) throws Exception {
         Process p = new ProcessAsync();
         
-        Adapter comandas = new AdapterDirWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\comandas");
-        Adapter camarero = new AdapterDirOutputter("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\camarero");
-        Adapter barmanFrio = new AdapterMySQL("b0ve.com", 3306, "cafe", "cafe", "TSVn3KZPje4TYthd");
-        Adapter barmanCaliente = new AdapterWebAPI("https://cafe.b0ve.com/api.php");
+        Connector comandas = new DirWhatcher("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\comandas");
+        Connector camarero = new DirOutputter("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\cafe\\camarero");
+        Connector barmanFrio = new MySQL("b0ve.com", 3306, "cafe", "cafe", "TSVn3KZPje4TYthd");
+        Connector barmanCaliente = new WebAPI("https://cafe.b0ve.com/api.php");
         
         Port pComandas = p.createPort(comandas);
         Port pCamarero = p.createPort(camarero);

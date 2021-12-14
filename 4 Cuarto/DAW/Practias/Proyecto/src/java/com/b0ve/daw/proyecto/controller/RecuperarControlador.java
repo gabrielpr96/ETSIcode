@@ -33,7 +33,7 @@ public class RecuperarControlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String codigo = request.getPathInfo().substring(1);
         request.setAttribute("codigo", codigo);
-        RequestDispatcher rd = request.getRequestDispatcher("/recuperar.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/recuperar.jsp");
         rd.forward(request, response);
     }
 

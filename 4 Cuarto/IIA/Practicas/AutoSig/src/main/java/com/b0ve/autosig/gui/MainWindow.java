@@ -8,23 +8,24 @@ package com.b0ve.autosig.gui;
 import com.b0ve.autosig.AutoExceptionHandle;
 import com.b0ve.autosig.AutoProcess;
 import static com.b0ve.autosig.AutoSIG.prettyPrintMessage;
-import com.b0ve.sig.adapters.Adapter;
-import com.b0ve.sig.adapters.test.AdapterStubInput;
-import com.b0ve.sig.adapters.test.AdapterStubOutput;
-import com.b0ve.sig.flow.Buffer;
+import com.b0ve.sig.connectors.Connector;
+import com.b0ve.sig.connectors.test.StubInput;
+import com.b0ve.sig.connectors.test.StubOutput;
+import com.b0ve.sig.flow.Slot;
 import com.b0ve.sig.flow.Message;
 import com.b0ve.sig.ports.Port;
 import com.b0ve.sig.tasks.Task;
+import com.b0ve.sig.tasks.TaskFlowInterrupter;
 import com.b0ve.sig.utils.exceptions.SIGException;
 import com.b0ve.sig.utils.exceptions.LogSink;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -44,8 +45,6 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         exceptionHandle = new AutoExceptionHandle(this);
         logSink = logListModel::addElement;
-        load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\WP-MC.xml"));
-        //load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Cafe.xml"));
     }
 
     /**
@@ -436,6 +435,8 @@ public class MainWindow extends javax.swing.JFrame {
                     p.stop();
                     statusLabel.setText("Detenido");
                 } catch (InterruptedException ex) {
+                } catch (SIGException ex) {
+                    p.handleException(ex);
                 }
             }).start();
         }
@@ -467,6 +468,13 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void taskListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taskListMouseClicked
         showBuffers(taskList, evt);
+        if(evt.getClickCount() == 2){
+            String taskName = (String) taskList.getModel().getElementAt(taskList.locationToIndex(evt.getPoint()));
+            Task task = (Task) p.getByName(taskName);
+            if(task instanceof TaskFlowInterrupter){
+                new FlowInterrupterWindow((TaskFlowInterrupter) task).setVisible(true);
+            }
+        }
     }//GEN-LAST:event_taskListMouseClicked
 
     /**
@@ -478,12 +486,12 @@ public class MainWindow extends javax.swing.JFrame {
     private void adapterListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adapterListMouseClicked
         if (evt.getClickCount() == 2) {
             String name = adapterList.getModel().getElementAt(adapterList.locationToIndex(evt.getPoint()));
-            Adapter adapter = (Adapter) p.getByName(name);
+            Connector adapter = (Connector) p.getByName(name);
             JFrame window = null;
-            if (adapter instanceof AdapterStubInput) {
-                window = new InputStubWindow((AdapterStubInput) adapter);
-            } else if (adapter instanceof AdapterStubOutput) {
-                window = new OutputStubWindow((AdapterStubOutput) adapter);
+            if (adapter instanceof StubInput) {
+                window = new InputStubWindow(p, (StubInput) adapter);
+            } else if (adapter instanceof StubOutput) {
+                window = new OutputStubWindow((StubOutput) adapter);
             }
             if (window != null) {
                 window.setLocationRelativeTo(this);
@@ -547,7 +555,7 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println(message);
     }//GEN-LAST:event_logListMouseClicked
 
-    private void load(Path path) {
+    public void load(Path path) {
         p = new AutoProcess(exceptionHandle);
         try {
             p.build(path);
@@ -558,7 +566,7 @@ public class MainWindow extends javax.swing.JFrame {
                 taskListModel.addElement(iterator.next().getKey());
             }
             adapterListModel.clear();
-            for (Iterator<Entry<String, Adapter>> iterator = p.getAdapters(); iterator.hasNext();) {
+            for (Iterator<Entry<String, Connector>> iterator = p.getAdapters(); iterator.hasNext();) {
                 adapterListModel.addElement(iterator.next().getKey());
             }
             portListModel.clear();
@@ -580,16 +588,16 @@ public class MainWindow extends javax.swing.JFrame {
             String taskName = (String) list.getModel().getElementAt(list.locationToIndex(evt.getPoint()));
             Task task = (Task) p.getByName(taskName);
             if (task != null) {
-                for (ListIterator<Buffer> iter = task.inputs(); iter.hasNext();) {
-                    Buffer input = iter.next();
+                for (ListIterator<Slot> iter = task.inputs(); iter.hasNext();) {
+                    Slot input = iter.next();
                     String in = p.findName(input.getIn());
                     if (in != null) {
                         bufferListModel.addElement(new BufferListItem(input, in, taskName));
                     }
                 }
 
-                for (ListIterator<Buffer> iter = task.outputs(); iter.hasNext();) {
-                    Buffer output = iter.next();
+                for (ListIterator<Slot> iter = task.outputs(); iter.hasNext();) {
+                    Slot output = iter.next();
                     String out = p.findName(output.getOut());
                     if (out != null) {
                         bufferListModel.addElement(new BufferListItem(output, taskName, out));
@@ -599,7 +607,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    private void showBufferContent(Buffer buffer) {
+    private void showBufferContent(Slot buffer) {
         try {
             buffer.lockPushes();
             messageListModel.clear();
@@ -678,15 +686,15 @@ public class MainWindow extends javax.swing.JFrame {
 
 class BufferListItem {
 
-    private final Buffer buffer;
+    private final Slot buffer;
     private final String name;
 
-    public BufferListItem(Buffer buffer, String task1, String task2) {
+    public BufferListItem(Slot buffer, String task1, String task2) {
         this.buffer = buffer;
         this.name = task1 + " -> " + task2;
     }
 
-    public Buffer getBuffer() {
+    public Slot getBuffer() {
         return buffer;
     }
 

@@ -6,6 +6,7 @@ import com.b0ve.sig.flow.Message;
 import com.b0ve.sig.utils.XMLUtils;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -21,6 +22,11 @@ public class AutoSIG {
         MainWindow mainWindow = new MainWindow();
         mainWindow.setLocationRelativeTo(null);
         mainWindow.setVisible(true);
+        
+        //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\WP-MC.xml"));
+        //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Cafe.xml"));
+        //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\RedesSociales.xml"));
+        mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\PS-CSV.xml"));
     }
 
     public static String prettyPrintMessage(Message m) {

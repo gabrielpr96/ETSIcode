@@ -6,14 +6,17 @@
     <h3>Articulos recientes:</h3>
     <div class="d-flex flex-row flex-wrap justify-content-center mb-3" id="articulosDiv"></div>
     <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-outline-primary" onclick="location.href='/Proyecto/articulos'">Ver todos los articulos</button>
+        <button type="button" class="btn btn-outline-primary" onclick="location.href = '/Proyecto/articulos'">Ver todos los articulos</button>
     </div>
     <script>
+        globalLoaderShow();
         window.addEventListener("load", () => {
             const articulosDiv = document.getElementById("articulosDiv");
             listarArticulos()
-                    .then(msg => msg.articulos.forEach(articulo => articulosDiv.appendChild(newArticuloCard(articulo)))
-                    ).catch(generalUnespectedError);
+                    .then(msg => {
+                        msg.articulos.forEach(articulo => articulosDiv.appendChild(newArticuloCard(articulo)))
+                        globalLoaderHide();
+                    }).catch(generalUnespectedError);
         });
     </script>
 </t:main>

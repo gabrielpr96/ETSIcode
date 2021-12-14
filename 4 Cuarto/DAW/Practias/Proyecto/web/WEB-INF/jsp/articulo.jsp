@@ -22,7 +22,7 @@
             <h5 class="mt-3">Categoria: ${articulo.categoria.nombre}</h5>
             <h5 class="mt-3">Precio: ${articulo.precio}€</h5>
             <h5 class="mt-3">Usuario: <a href="#" onclick="mostrarUsuario('${articulo.usuario.id}')">${articulo.usuario.nombre}</a></h5>
-            <div id="heartDiv"></div>
+            <div id="buttonsDiv"></div>
         </div>
     </div>
     <div class="row mt-3">
@@ -57,8 +57,10 @@
     </div>
     <script>
         window.addEventListener("load", () => {
-            const heartDiv = document.getElementById("heartDiv");
-            heartDiv.appendChild(newFavBtn("${articulo.id}", true));
+            const buttonsDiv = document.getElementById("buttonsDiv");
+            buttonsDiv.appendChild(newFavBtn("${articulo.id}", true));
+            buttonsDiv.appendChild(newCarritoBtn(${articulo.id}, true));
+            [...buttonsDiv.getElementsByTagName("button")].forEach(btn => btn.classList.add("m-2"));
 
             const comentarBtn = document.getElementById("comentarBtn");
             comentarBtn.addEventListener("click", () => {

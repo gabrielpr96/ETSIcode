@@ -40,7 +40,7 @@ public class ArticulosControlador extends HttpServlet {
         List<Categoria> categorias = q.getResultList();
         request.setAttribute("categorias", categorias);
         
-        RequestDispatcher rd = request.getRequestDispatcher("/articulos.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/articulos.jsp");
         rd.forward(request, response);
     }
 

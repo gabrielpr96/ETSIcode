@@ -30,8 +30,31 @@ function fetchAPI(method, url, data) {
     });
 }
 
+function fetchHtmlAPI(method, url, data) {
+    return new Promise((resolve, reject) => {
+        fetch(API_ENDPOINT + url, {
+            method: method,
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            body: method==="GET"?null:JSON.stringify(data)
+        })
+                .then(response => response.text())
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(error => {
+                    console.log("close error", error);
+                    reject(error);
+                });
+    });
+}
+
 function generalUnespectedError(error) {
     showMSG("Error en el proceso", "La acción no terminó satisfactoriamente debido al siguiente error:", error);
+    console.log(error)
 }
 
 function registrarUsuario(email, pass, nombre, direccion, cp, telefono, facebook, twitter, captcha) {
@@ -107,5 +130,11 @@ function solicitarRecuperacion(email) {
 function recuperarPass(secreto, pass) {
     return fetchAPI("POST", "/cambiar-pass", {
         secreto, pass
+    });
+}
+
+function pintarCarrito(carrito) {
+    return fetchHtmlAPI("POST", "/carrito", {
+        carrito
     });
 }

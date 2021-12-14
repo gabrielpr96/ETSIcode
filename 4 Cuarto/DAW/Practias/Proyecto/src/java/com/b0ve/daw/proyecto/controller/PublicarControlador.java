@@ -50,7 +50,7 @@ public class PublicarControlador extends HttpServlet {
         List<String> estados = Arrays.stream(EstadoArticulo.values()).map(EstadoArticulo::getNombre).collect(Collectors.toList());
         request.setAttribute("estados", estados);
         
-        RequestDispatcher rd = request.getRequestDispatcher("/publicar.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/publicar.jsp");
         rd.forward(request, response);
     }
 

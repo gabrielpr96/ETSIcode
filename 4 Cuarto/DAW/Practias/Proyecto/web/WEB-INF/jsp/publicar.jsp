@@ -41,7 +41,7 @@
                 <div class="mb-3">
                     <label for="categoria" class="form-label"><i class="fas fa-asterisk me-2"></i>Categoria</label>
                     <select class="form-select" id="categoria">
-                        <c:forEach var="categoria" items="${requestScope.categorias}">
+                        <c:forEach var="categoria" items="${categorias}">
                             <option value="${categoria.id}">${categoria.nombre}</option>
                         </c:forEach>
                     </select>
@@ -50,7 +50,7 @@
                     <label for="estado" class="form-label">Estado</label>
                     <select class="form-select" id="estado">
                         <option value="null">Sin especificar</option>
-                        <c:forEach var="estado" items="${requestScope.estados}">
+                        <c:forEach var="estado" items="${estados}">
                             <option>${estado}</option>
                         </c:forEach>
                     </select>

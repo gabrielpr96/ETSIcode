@@ -394,7 +394,18 @@
                         }
                     });
                 }
+
+                const carritoBtn = document.getElementById("carritoBtn");
+                if (carritoBtn !== null) {
+                    carritoBtn.addEventListener("click", showCarrito);
+                }
             });
+
+            function showCarrito() {
+                pintarCarrito(getCarrito())
+                        .then(msg => showMSG("Carrito", msg, null, true))
+                //.catch(generalUnespectedError());
+            }
         </script>
 
         <!-- Navegacion -->
@@ -431,6 +442,7 @@
                             <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="#modalLogin">Iniciar sesión</button>
                             <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="#modalRegistrar">Registrar</button>
                             <%}%>
+                            <button type="button" class="btn btn-outline-dark mx-1" id="carritoBtn"><i class="fas fa-shopping-cart"></i></button>
                         </div>
                     </span>
                 </div>

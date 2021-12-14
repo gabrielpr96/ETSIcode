@@ -47,23 +47,27 @@ while (t0+h*k) < tf,
     %actualización
     k=k+1;
 
+    p = minima_distancia(camino, pose(:, k)');%+16
+    while sqrt(power(pose(1, k)-camino(p, 1), 2) + power(pose(2, k)-camino(p, 2), 2)) < 2
+        p = p + 1;
+        if p > caminoSize
+            p = p - caminoSize;
+        end
+    end
+
+    punto = camino(p, :);
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %valores de los parámetros de control
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%     velocidad_derecha=2.1;
-%     velocidad_izquierda=k*0.05;
-    %R=10;
-    %rho=1/R;
-
-    punto=[camino(p, 1) camino(p, 2)];
 
     delta = ((pose(1, k)-punto(1))*sin(pose(3, k))) - ((pose(2, k)-punto(2))*cos(pose(3, k)));
     lh = sqrt(power(pose(1, k)-punto(1), 2) + power(pose(2, k)-punto(2), 2));
 
     rho = (2*delta)/power(lh, 2);
 
-    V = lh*1.5;
+    V = 5;
     W = rho*V;
 
     velocidad_derecha = (1/radio_rueda)*(V+W*l);
@@ -73,18 +77,9 @@ while (t0+h*k) < tf,
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    %para representar el punto onjetivo sobre la trayectoria
-
-    
-
     %metodo de integración ruge-kuta
 
     pose(:,k+1)=kuta_diferencial(t(k),pose(:,k),h,conduccion);
-
-    p = p + 3;
-    if p > caminoSize
-        p = 1;
-    end
 end
 
 

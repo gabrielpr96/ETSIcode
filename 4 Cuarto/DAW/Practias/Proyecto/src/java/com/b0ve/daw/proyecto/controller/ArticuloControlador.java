@@ -61,7 +61,7 @@ public class ArticuloControlador extends HttpServlet {
         List<String> visibilidades = Arrays.stream(VisibilidadComentario.values()).map(VisibilidadComentario::getNombre).collect(Collectors.toList());
         request.setAttribute("visibilidades", visibilidades);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/articulo.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/articulo.jsp");
         rd.forward(request, response);
     }
 

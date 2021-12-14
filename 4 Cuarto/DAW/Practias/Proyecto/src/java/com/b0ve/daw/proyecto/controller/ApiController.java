@@ -37,6 +37,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -178,6 +179,23 @@ public class ApiController extends HttpServlet {
                 case "/cambiar-pass":
                     cambiarPassRecuperada(payload.getString("secreto"), payload.getString("pass"));
                     break;
+                case "/carrito":
+                    List<Articulo> carrito = new ArrayList<>();
+                    List<String> base64Images = new ArrayList<>();
+                    System.out.println(payload.toString());
+                    for (Object object : payload.getJSONArray("carrito")) {
+                        Long id = Long.valueOf((int) object);
+                        Articulo articulo = em.find(Articulo.class, id);
+                        if (articulo != null) {
+                            carrito.add(articulo);
+                            base64Images.add(new String(articulo.getImagen(), StandardCharsets.UTF_8));
+                        }
+                    }
+                    request.setAttribute("carrito", carrito);
+                    request.setAttribute("base64Images", base64Images);
+                    RequestDispatcher rd = request.getRequestDispatcher("/carritoContenido.jsp");
+                    rd.forward(request, response);
+                    return;
                 default:
                     error = "404";
             }
@@ -208,11 +226,13 @@ public class ApiController extends HttpServlet {
         String gRecaptchaResponse = datos.getString("captcha");
         try {
             boolean verificado = captchaServicio.verificar(gRecaptchaResponse);
-            if(!verificado) throw new IllegalStateException("La captcha no es correcta.");
+            if (!verificado) {
+                throw new IllegalStateException("La captcha no es correcta.");
+            }
         } catch (IOException ex) {
-            throw new IllegalStateException("Error al verificar chaptcha: "+ex.getMessage());
+            throw new IllegalStateException("Error al verificar chaptcha: " + ex.getMessage());
         }
-        
+
         Usuario usuario = new Usuario();
         usuario.setEmail(datos.getString("email"));
         usuario.setNombre(datos.getString("nombre"));
@@ -233,8 +253,8 @@ public class ApiController extends HttpServlet {
         codigo.setCodigo(encriptacionServicio.codigoAleatorio());
         codigo.setUsuario(usuario);
         persist(codigo);
-        
-        mailingService.sendMail(usuario.getEmail(), usuario.getNombre(), "Cuenta creada en Proyecto DAW", "Utiliza este código para verificar tu cuenta: "+codigo.getCodigo());
+
+        mailingService.sendMail(usuario.getEmail(), usuario.getNombre(), "Cuenta creada en Proyecto DAW", "Utiliza este código para verificar tu cuenta: " + codigo.getCodigo());
     }
 
     private boolean activarUsuario(String codigo) {
@@ -462,22 +482,24 @@ public class ApiController extends HttpServlet {
         try {
             Usuario u = qu.getSingleResult();
             String codigo = encriptacionServicio.coficarSecreto(u.getId().toString());
-            String url = "http://"+request.getServerName()+":"+request.getServerPort()+"/Proyecto/recuperar/"+codigo;
-            mailingService.sendMail(email, email, "Recuperación de contraseña", "Se ha solicitado la recuperación de su contraseña. Utilice el siguiente enlace para cambiar la contraseña: <a href='"+url+"'>"+url+"</a>");
+            String url = "http://" + request.getServerName() + ":" + request.getServerPort() + "/Proyecto/recuperar/" + codigo;
+            mailingService.sendMail(email, email, "Recuperación de contraseña", "Se ha solicitado la recuperación de su contraseña. Utilice el siguiente enlace para cambiar la contraseña: <a href='" + url + "'>" + url + "</a>");
         } catch (NoResultException e) {
-            throw new IllegalStateException("No existe ningun usuario con el correo: "+email);
+            throw new IllegalStateException("No existe ningun usuario con el correo: " + email);
         }
     }
 
     private void cambiarPassRecuperada(String secreto, String pass) {
         String idString = encriptacionServicio.decodificarSecreto(secreto);
-        try{
+        try {
             Long id = Long.parseLong(idString);
             Usuario u = em.find(Usuario.class, id);
-            if(u == null) throw new IllegalStateException("No se ha encontrado al usuario asociado al codigo de recuperacion");
+            if (u == null) {
+                throw new IllegalStateException("No se ha encontrado al usuario asociado al codigo de recuperacion");
+            }
             u.setPass(encriptacionServicio.encriptar(pass));
             merge(u);
-        }catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             ex.printStackTrace();
             throw new IllegalStateException("El enlace de recuperacion no es correcto");
         }

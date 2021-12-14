@@ -5,10 +5,9 @@
  */
 package com.b0ve.autosig.gui;
 
-import com.b0ve.sig.adapters.test.AdapterStubInput;
+import com.b0ve.autosig.AutoProcess;
+import com.b0ve.sig.connectors.test.StubInput;
 import com.b0ve.sig.utils.exceptions.SIGException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,9 +15,11 @@ import java.util.logging.Logger;
  */
 public class InputStubWindow extends javax.swing.JFrame {
 
-    private final AdapterStubInput adapter;
+    private final AutoProcess process;
+    private final StubInput adapter;
 
-    public InputStubWindow(AdapterStubInput adapter) {
+    public InputStubWindow(AutoProcess process, StubInput adapter) {
+        this.process = process;
         this.adapter = adapter;
         initComponents();
     }
@@ -90,7 +91,7 @@ public class InputStubWindow extends javax.swing.JFrame {
             adapter.sendText(xml);
             bodyTest.setText("");
         } catch (SIGException ex) {
-            Logger.getLogger(InputStubWindow.class.getName()).log(Level.SEVERE, null, ex);
+            process.handleException(ex);
         }
     }//GEN-LAST:event_sendBtnActionPerformed
 

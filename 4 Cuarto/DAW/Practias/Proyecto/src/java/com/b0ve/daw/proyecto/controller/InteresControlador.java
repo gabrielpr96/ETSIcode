@@ -50,7 +50,7 @@ public class InteresControlador extends HttpServlet {
             return;
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/interes.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/interes.jsp");
         rd.forward(request, response);
     }
     

@@ -217,6 +217,22 @@ Esta tarea no requiere configuración, restraura completamente el mensaje origin
 </task>
 ```
 
+### Blackhole
+Esta tarea no requiere configuración, se traga todos los mensajes que le llegan, puede tener mas de una entrada.
+ ```xml
+<task>
+    <type>blackhole</type>
+</task>
+```
+
+### Flow Interrupter
+Esta tarea es única de AutoSIG. Intercepta y almacena todos los mesajes que recibe hasta que se borran o dejan pasar manualmente.  
+ ```xml
+<task>
+    <type>flow_interrupter</type>
+</task>
+```
+
 ## Adapters
 Los adaptadores siguen una estructura similar a las tareas, el sistema de nombres es el mismo y las conexiones mediante la etiqueta outputs también.
  ```xml
@@ -362,7 +378,7 @@ El adaptador responderá con verdadero si no ha sido necesaria ninguna acción e
 Es un adaptador de entrada. Introduce mensajes periodicamente en intervalos de milisegundos configurables.
 ```xml
 <adapter>
-    <type>web_api</type>
+    <type>clock</type>
     <config>1000</config>
 </adapter>
 ```
@@ -437,21 +453,96 @@ Envia un mensaje por cada post nuevo con el siguiente formato.
 </post>
 ```
 
-## Ejemplos
-La siguiente es una lista de los ficheros de configuración existentes.
+### Tumblr Watcher
+Es un adaptador de entrada. Vigila las publicaciones de un un blog de Tumblr e inserta un mensaje por cada publicación nueva que detecta.
+ ```xml
+<adapter>
+    <type>tumblr_watcher</type>
+    <config>
+        <consumer-key> </consumer-key>
+        <consumer-secret> </consumer-secret>
+        <oauth-token> </oauth-token>
+        <oauth-token-secret> </oauth-token-secret>
+    </config>
+</adapter>
+```
+Envia un mensaje por cada post nuevo con el siguiente formato. Los extras se rellenan con informacion adicional dependediendo del tipo de publicacion.
+ ```xml
+<post>
+    <id />
+    <type />
+    <body />
+    <extras />
+</post>
+```
 
-- Cafe
-- Ejercicio 1
-- Ejercicio 2
-- Ejercicio 3
-- Ejercicio 4
+### Twitter Watcher
+Es un adaptador de entrada. Vigila las publicaciones de un una cuenta de Twitter e inserta un mensaje por cada tweet nueva que detecta.
+ ```xml
+<adapter>
+    <type>twitter_watcher</type>
+    <config>
+        <consumer-key> </consumer-key>
+        <consumer-secret> </consumer-secret>
+        <oauth-token> </oauth-token>
+        <oauth-token-secret> </oauth-token-secret>
+    </config>
+</adapter>
+```
+Envia un mensaje por cada tweet nuevo con el siguiente formato.
+ ```xml
+<post>
+    <id />
+    <body />
+</post>
+```
 
+### Twitter Putter
+Es un adaptador de salida. Envia un tweet con los datos del mensaje que recibe.
+ ```xml
+<adapter>
+    <type>twitter_putter</type>
+    <config>
+        <consumer-key> </consumer-key>
+        <consumer-secret> </consumer-secret>
+        <oauth-token> </oauth-token>
+        <oauth-token-secret> </oauth-token-secret>
+    </config>
+</adapter>
+```
+Recibe mensajes con el siguiente formato.
+ ```xml
+<tweet>
+    <text />
+</tweet>
+```
 
-
-
-
-
-
+### Send Mail
+Es un adaptador de salida. Envia correos electrónicos.
+ ```xml
+<adapter>
+    <type>send-mail</type>
+    <config>
+        <smtp-host />
+        <smtp-port />
+        <uses-tls > {true | false} </uses-tls>
+        <from />
+        <from-name />
+        <from-pass />
+        <reply />
+        <reply-name />
+    </config>
+</adapter>
+```
+Recibe mensajes con el siguiente formato.
+ ```xml
+<tweet>
+    <to />
+    <to-name />
+    <subject />
+    <body />
+</tweet>
+```
 
 
 

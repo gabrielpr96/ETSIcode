@@ -33,7 +33,7 @@ public class UsuarioControlador extends HttpServlet {
         String vista;
         switch (path) {
             case "/registro":
-                vista = "/usuarioRegistro.jsp";
+                vista = "/WEB-INF/jsp/usuarioRegistro.jsp";
                 break;
             default:
                 vista = "/404.html";
