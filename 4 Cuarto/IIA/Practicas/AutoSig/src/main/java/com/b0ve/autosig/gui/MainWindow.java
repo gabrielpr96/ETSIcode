@@ -7,7 +7,7 @@ package com.b0ve.autosig.gui;
 
 import com.b0ve.autosig.AutoExceptionHandle;
 import com.b0ve.autosig.AutoProcess;
-import static com.b0ve.autosig.AutoSIG.prettyPrintMessage;
+import static com.b0ve.autosig.PrettyPrinting.prettyPrintMessage;
 import com.b0ve.sig.connectors.Connector;
 import com.b0ve.sig.connectors.test.StubInput;
 import com.b0ve.sig.connectors.test.StubOutput;
@@ -314,6 +314,11 @@ public class MainWindow extends javax.swing.JFrame {
         menuFile.add(menuItemLoad);
 
         menuItemExit.setText("Salir");
+        menuItemExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemExitActionPerformed(evt);
+            }
+        });
         menuFile.add(menuItemExit);
 
         menuBar.add(menuFile);
@@ -554,6 +559,10 @@ public class MainWindow extends javax.swing.JFrame {
         String message = logList.getModel().getElementAt(logList.locationToIndex(evt.getPoint()));
         System.out.println(message);
     }//GEN-LAST:event_logListMouseClicked
+
+    private void menuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_menuItemExitActionPerformed
 
     public void load(Path path) {
         p = new AutoProcess(exceptionHandle);

@@ -77,7 +77,7 @@ public class ApiController extends HttpServlet {
 
             switch (path) {
                 case "/logout":
-                    request.getSession().removeAttribute("id");
+                    request.getSession().invalidate();
                     break;
                 default:
                     error = "404";

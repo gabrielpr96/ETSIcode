@@ -5,7 +5,7 @@
  */
 package com.b0ve.autosig.gui;
 
-import com.b0ve.autosig.AutoSIG;
+import static com.b0ve.autosig.PrettyPrinting.prettyPrintDocument;
 import com.b0ve.sig.connectors.test.StubOutput;
 import javax.swing.DefaultListModel;
 import org.w3c.dom.Document;
@@ -112,7 +112,7 @@ public class OutputStubWindow extends javax.swing.JFrame {
 
     private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
         Document doc = list.getModel().getElementAt(list.locationToIndex(evt.getPoint()));
-        bodyTest.setText(AutoSIG.prettyPrintDocument(doc));
+        bodyTest.setText(prettyPrintDocument(doc));
     }//GEN-LAST:event_listMouseClicked
 
     private void act() {

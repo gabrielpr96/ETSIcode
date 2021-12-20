@@ -275,6 +275,7 @@
                             twitterVal = null;
 
                         if (errores.childElementCount === 0) {
+                            globalLoaderShow();
                             registrarUsuario(emailVal, pass1Val, nombreVal, direccionVal, cpVal, telefonoVal, facebookVal, twitterVal, grecaptcha.getResponse())
                                     .then(() => {
                                         document.getElementById("modalActivarEmail").value = emailVal;
@@ -418,17 +419,17 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link ${pageContext.request.contextPath == "/Proyecto"?"active":""}" href="/Proyecto">Home</a>
+                            <a class="nav-link ${requestScope['javax.servlet.forward.request_uri'] == null?"active":""}" href="/Proyecto">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link ${fn:contains(pageContext.request.contextPath, '/articulos')?"active":""}" href="/Proyecto/articulos">Articulos</a>
+                            <a class="nav-link ${requestScope['javax.servlet.forward.request_uri'] == "/Proyecto/articulos"?"active":""}" href="/Proyecto/articulos">Articulos</a>
                         </li>
                         <% if (request.getSession().getAttribute("id") != null) { %>
                         <li class="nav-item">
-                            <a class="nav-link ${fn:contains(pageContext.request.contextPath, '/publicar')?"active":""}" href="/Proyecto/publicar">Publicar</a>
+                            <a class="nav-link ${requestScope['javax.servlet.forward.request_uri'] == "/Proyecto/publicar"?"active":""}" href="/Proyecto/publicar">Publicar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link ${fn:contains(pageContext.request.contextPath, '/interes')?"active":""}" href="/Proyecto/interes">Interés</a>
+                            <a class="nav-link ${requestScope['javax.servlet.forward.request_uri'] == "/Proyecto/interes"?"active":""}" href="/Proyecto/interes">Interés</a>
                         </li>
                         <%}%>
                     </ul>

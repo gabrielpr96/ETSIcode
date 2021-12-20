@@ -85,13 +85,13 @@ function publicarArticulo(nombre, descripcion, precio, categoria, estado, ano, i
     });
 }
 
-function listarArticulos(categoria = null, cp = null, precioMin = null, precioMax = null, pagina = 0, cantidad = 10) {
+function listarArticulos(categoria = null, cp = null, precioMin = null, precioMax = null, pagina = 0, cantidad = 6) {
     return fetchAPI("POST", "/articulo", {
         categoria, cp, precioMin, precioMax, pagina, cantidad
     });
 }
 
-function listarIntereses(categoria = null, cp = null, precioMin = null, precioMax = null, pagina = 0, cantidad = 10) {
+function listarIntereses(categoria = null, cp = null, precioMin = null, precioMax = null, pagina = 0, cantidad = 6) {
     return fetchAPI("POST", "/intereses", {
         categoria, cp, precioMin, precioMax, pagina, cantidad
     });

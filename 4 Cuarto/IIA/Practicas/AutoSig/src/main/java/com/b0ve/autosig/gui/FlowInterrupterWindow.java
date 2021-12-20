@@ -6,7 +6,7 @@
 package com.b0ve.autosig.gui;
 
 import com.b0ve.autosig.AutoSIG;
-import static com.b0ve.autosig.AutoSIG.prettyPrintMessage;
+import static com.b0ve.autosig.PrettyPrinting.prettyPrintMessage;
 import com.b0ve.sig.flow.Message;
 import com.b0ve.sig.tasks.TaskFlowInterrupter;
 import javax.swing.DefaultListModel;
