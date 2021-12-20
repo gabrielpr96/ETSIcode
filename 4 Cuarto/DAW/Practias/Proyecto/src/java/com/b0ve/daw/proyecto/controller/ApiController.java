@@ -12,6 +12,7 @@ import com.b0ve.daw.proyecto.model.CodigoActivacion;
 import com.b0ve.daw.proyecto.model.Usuario;
 import com.b0ve.daw.proyecto.model.Categoria;
 import com.b0ve.daw.proyecto.model.Comentario;
+import com.b0ve.daw.proyecto.service.helpers.B0vEMailingApiServicio;
 import com.b0ve.daw.proyecto.service.helpers.CaptchaServicio;
 import com.b0ve.daw.proyecto.service.helpers.EncriptacionServicio;
 import com.b0ve.daw.proyecto.service.helpers.MailingServicio;
@@ -21,13 +22,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -64,7 +63,7 @@ public class ApiController extends HttpServlet {
     private javax.transaction.UserTransaction utx;
 
     private final EncriptacionServicio encriptacionServicio = EncriptacionServicio.instance();
-    private final MailingServicio mailingService = MailingServicio.instance();
+    private final B0vEMailingApiServicio mailingService = B0vEMailingApiServicio.instance();
     private final CaptchaServicio captchaServicio = CaptchaServicio.instance();
 
     @Override
@@ -254,7 +253,7 @@ public class ApiController extends HttpServlet {
         codigo.setUsuario(usuario);
         persist(codigo);
 
-        mailingService.sendMail(usuario.getEmail(), usuario.getNombre(), "Cuenta creada en Proyecto DAW", "Utiliza este código para verificar tu cuenta: " + codigo.getCodigo());
+        mailingService.sendMail(usuario.getEmail(), "Cuenta creada en Proyecto DAW", "Utiliza este código para verificar tu cuenta: " + codigo.getCodigo());
     }
 
     private boolean activarUsuario(String codigo) {
@@ -483,7 +482,7 @@ public class ApiController extends HttpServlet {
             Usuario u = qu.getSingleResult();
             String codigo = encriptacionServicio.coficarSecreto(u.getId().toString());
             String url = "http://" + request.getServerName() + ":" + request.getServerPort() + "/Proyecto/recuperar/" + codigo;
-            mailingService.sendMail(email, email, "Recuperación de contraseña", "Se ha solicitado la recuperación de su contraseña. Utilice el siguiente enlace para cambiar la contraseña: <a href='" + url + "'>" + url + "</a>");
+            mailingService.sendMail(email, "Recuperación de contraseña", "Se ha solicitado la recuperación de su contraseña. Utilice el siguiente enlace para cambiar la contraseña: <a href='" + url + "'>" + url + "</a>");
         } catch (NoResultException e) {
             throw new IllegalStateException("No existe ningun usuario con el correo: " + email);
         }

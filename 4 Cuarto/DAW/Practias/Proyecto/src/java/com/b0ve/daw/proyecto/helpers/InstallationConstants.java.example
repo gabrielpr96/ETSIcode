@@ -9,4 +9,6 @@ public class InstallationConstants1 {
     public static final String EMAIL_REPLY_NAME = "";
     public static final String EMAIL_SMTP_SERVER = "";
     public static final int EMAIL_SMTP_PORT = 0;
+    
+    public static final String B0VE_MAILING_API_KEY = "";
 }

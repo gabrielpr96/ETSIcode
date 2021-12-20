@@ -7,6 +7,7 @@ import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
 import static com.b0ve.daw.proyecto.helpers.InstallationConstants.*;
 
+@Deprecated
 public class MailingServicio {
     
     private final static MailingServicio instance = new MailingServicio();
@@ -15,6 +16,7 @@ public class MailingServicio {
         return instance;
     }
 
+    @Deprecated
     public void sendMail(String to, String toName, String subject, String body) {
         Email email = EmailBuilder.startingBlank()
                 .to(toName, to)
