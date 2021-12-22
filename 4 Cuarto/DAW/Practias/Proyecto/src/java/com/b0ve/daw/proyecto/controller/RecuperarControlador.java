@@ -6,7 +6,7 @@
 package com.b0ve.daw.proyecto.controller;
 
 import com.b0ve.daw.proyecto.model.Usuario;
-import com.b0ve.daw.proyecto.service.helpers.EncriptacionServicio;
+import com.b0ve.daw.proyecto.service.EncriptacionServicio;
 import java.io.IOException;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;

@@ -11,8 +11,8 @@ public class AutoSIG {
         mainWindow.setLocationRelativeTo(null);
         mainWindow.setVisible(true);
         
-        mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\WP-MC.xml"));
-        //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Cafe.xml"));
+        mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\Cafe.xml"));
+        //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\WP-MC.xml"));
         //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\RedesSociales.xml"));
         //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\RedesSocialesInterrups.xml"));
         //mainWindow.load(Paths.get("C:\\PROYECTOS\\UNI\\IIA\\Simulaciones\\PS-CSV.xml"));

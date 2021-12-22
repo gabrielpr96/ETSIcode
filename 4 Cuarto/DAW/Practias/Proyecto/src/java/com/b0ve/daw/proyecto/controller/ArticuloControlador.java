@@ -8,7 +8,7 @@ package com.b0ve.daw.proyecto.controller;
 import com.b0ve.daw.proyecto.helpers.VisibilidadComentario;
 import com.b0ve.daw.proyecto.model.Articulo;
 import com.b0ve.daw.proyecto.model.Comentario;
-import com.b0ve.daw.proyecto.service.helpers.EncriptacionServicio;
+import com.b0ve.daw.proyecto.service.EncriptacionServicio;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

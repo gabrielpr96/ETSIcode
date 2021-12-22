@@ -1,4 +1,4 @@
-package com.b0ve.daw.proyecto.service.helpers;
+package com.b0ve.daw.proyecto.service;
 
 import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;

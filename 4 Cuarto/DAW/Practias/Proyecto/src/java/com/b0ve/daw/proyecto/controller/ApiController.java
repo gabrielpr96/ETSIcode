@@ -12,10 +12,10 @@ import com.b0ve.daw.proyecto.model.CodigoActivacion;
 import com.b0ve.daw.proyecto.model.Usuario;
 import com.b0ve.daw.proyecto.model.Categoria;
 import com.b0ve.daw.proyecto.model.Comentario;
-import com.b0ve.daw.proyecto.service.helpers.B0vEMailingApiServicio;
-import com.b0ve.daw.proyecto.service.helpers.CaptchaServicio;
-import com.b0ve.daw.proyecto.service.helpers.EncriptacionServicio;
-import com.b0ve.daw.proyecto.service.helpers.MailingServicio;
+import com.b0ve.daw.proyecto.service.B0vEMailingApiServicio;
+import com.b0ve.daw.proyecto.service.CaptchaServicio;
+import com.b0ve.daw.proyecto.service.EncriptacionServicio;
+import com.b0ve.daw.proyecto.service.MailingServicio;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -481,7 +481,7 @@ public class ApiController extends HttpServlet {
         try {
             Usuario u = qu.getSingleResult();
             String codigo = encriptacionServicio.coficarSecreto(u.getId().toString());
-            String url = "http://" + request.getServerName() + ":" + request.getServerPort() + "/Proyecto/recuperar/" + codigo;
+            String url = "https://" + request.getServerName() + ":" + request.getServerPort() + "/Proyecto/recuperar/" + codigo;
             mailingService.sendMail(email, "Recuperación de contraseña", "Se ha solicitado la recuperación de su contraseña. Utilice el siguiente enlace para cambiar la contraseña: <a href='" + url + "'>" + url + "</a>");
         } catch (NoResultException e) {
             throw new IllegalStateException("No existe ningun usuario con el correo: " + email);

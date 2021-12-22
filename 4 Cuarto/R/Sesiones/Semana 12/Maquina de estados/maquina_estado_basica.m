@@ -87,9 +87,9 @@
     t_marcha_atras=0.2; %tiempo de marcha hacia atrás.
     transicion=1;% inicializa la variable que marca el inicio el mov de la cabeza
     t_giro_cabeza=10; %Girar la cabeza tarda 6 segundos
-    t_max_giro_robot=10;
-    KP_CABEZA = 0.6;
-    KP_GIRO = 0.6;
+    t_max_giro_robot=8;
+    KP_CABEZA = 0.7;
+    KP_GIRO = 1.2;
     giro_robot_margen = 5;
 
 
@@ -139,7 +139,7 @@ while  readTouch(Pulsador)==0
                     transicion=i; %indice que marca el inicio del estado 2
                     mi_Robot.beep();
                  elseif readTouch(Detecta_colision)==1
-                    estado=5; %transición de estado de paro
+                    estado=5; %transición a marcha atras
                     transicion=i; %indice que marca el inicio del estado 2
                     mi_Robot.beep();
                 end

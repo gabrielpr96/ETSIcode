@@ -1,4 +1,4 @@
-package com.b0ve.daw.proyecto.service.helpers;
+package com.b0ve.daw.proyecto.service;
 
 import com.b0ve.daw.proyecto.helpers.InstallationConstants;
 import java.io.IOException;
@@ -9,11 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -102,10 +99,5 @@ public class B0vEMailingApiServicio {
         } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
             throw new IllegalStateException("No se ha podido comunicar con la API: " + ex.getMessage());
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        B0vEMailingApiServicio servicio = B0vEMailingApiServicio.instance();
-        System.out.println(servicio.sendMail("borjainlive@gmail.com", "test", "Test test"));
     }
 }

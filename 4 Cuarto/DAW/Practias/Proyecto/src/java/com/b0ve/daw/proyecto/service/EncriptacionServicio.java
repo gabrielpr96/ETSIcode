@@ -1,4 +1,4 @@
-package com.b0ve.daw.proyecto.service.helpers;
+package com.b0ve.daw.proyecto.service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
